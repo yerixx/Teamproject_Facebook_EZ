@@ -1,0 +1,232 @@
+{
+  "users": [
+    {
+      "userId": "1",
+      "id": "1",
+      "name": {
+        "firstName": "김",
+        "lastName": "정하"
+      },
+      "emailOrPhone": "example@example.com",
+      "password": "securepassword123",
+      "profileImage": "path/to/profileImage.jpg",
+      "bio": "용어로도 들어가는 프로젝트 채워지기 디자인 무언가를 결과물에 문장 그리킹이라고도 실제적인 프로젝트 표준 차지하는 보여줄 디자인 용어로도 무언가를 시각적 공간만 들어가는 연출을 출판이나 레이아웃 사용하는 문장 공간만 모형의 ",
+      "wallet": {
+        "point": 105670
+      },
+      "gender": "female",
+      "birthdate": "1990-10-05",
+      "region": "서울특별시",
+      "posts": ["1", "2", "3"],
+      "likeCategory": ["반려동물", "해외축구", "여행"]
+    },
+    {
+      "userId": "2",
+      "id": "2",
+      "name": {
+        "firstName": "박",
+        "lastName": "미림"
+      },
+      "emailOrPhone": "example2@example.com",
+      "password": "securepassword456",
+      "profileImage": "path/to/profileImage2.jpg",
+      "bio": "디테일 페이지 사용자 소개",
+      "wallet": {
+        "point": 500000
+      },
+      "gender": "female",
+      "birthdate": "1992-03-20",
+      "region": "부산광역시",
+      "posts": [],
+      "likeCategory": ["반려동물", "해외축구", "여행"]
+    }
+  ],
+
+  "posts": [
+    {
+      "id": "1",
+      "userId": "1",
+      "content": "추석 잘 보냈나요?",
+      "image": [null],
+      "video": [null],
+      "createdAt": "2024-09-22T09:00:00Z",
+      "likes": 10,
+      "comments": [
+        {
+          "id": "1",
+          "userId": "2",
+          "content": "네! 잘 보냈어요!",
+          "createdAt": "2024-09-22T10:00:00Z"
+        },
+        {
+          "id": "2",
+          "userId": "3",
+          "content": "네!! 잘 보냈어요!",
+          "createdAt": "2024-09-22T10:00:11Z"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "userId": "1",
+      "content": "",
+      "image": "path/to/postImage1.jpg",
+      "createdAt": "2024-09-22T08:00:00Z",
+      "likes": 25,
+      "comments": []
+    },
+    {
+      "id": "3",
+      "userId": "1",
+      "content": "",
+      "image": "path/to/postImage2.jpg",
+      "createdAt": "2024-09-22T07:30:00Z",
+      "likes": 30,
+      "comments": []
+    }
+  ],
+
+  "stories": [
+    {
+      "id": "1",
+      "userId": "1",
+      "image": "path/to/story1.jpg",
+      "userImg": "path/to/story1.jpg",
+      "text": "김정하"
+    },
+    {
+      "id": "2",
+      "userId": "2",
+      "image": "path/to/story2.jpg",
+      "text": "이승연"
+    },
+    {
+      "id": "3",
+      "userId": "3",
+      "image": "path/to/story2.jpg",
+      "text": "박태환"
+    },
+    {
+      "id": "4",
+      "userId": "4",
+      "image": "path/to/story2.jpg",
+      "text": "김성준"
+    },
+    {
+      "id": "5",
+      "userId": "5",
+      "image": "path/to/story2.jpg",
+      "text": "김예지"
+    },
+    {
+      "id": "6",
+      "userId": "6",
+      "image": "path/to/story2.jpg",
+      "text": "박예림"
+    }
+  ],
+
+  "groups": [
+    {
+      "id": "1",
+      "name": "참여하는 세계여행",
+      "description": "참여하는 여행 그룹입니다.",
+      "image": "path/to/group1.jpg",
+      "members": 42150
+    },
+    {
+      "id": "2",
+      "name": "반려동물",
+      "description": "반려동물 애호가들의 모임.",
+      "image": "path/to/group2.jpg",
+      "members": 32240
+    },
+    {
+      "id": "3",
+      "name": "해외축구 모음집!",
+      "image": "path/to/group3.jpg",
+      "members": 15450
+    },
+    {
+      "id": "4",
+      "name": "사진을 좋아하는 사람들",
+      "image": "path/to/group3.jpg",
+      "members": 15450
+    },
+    {
+      "id": "5",
+      "name": "자연은 아름답다",
+      "image": "path/to/group3.jpg",
+      "members": 15450
+    },
+    {
+      "id": "6",
+      "name": "쉽게하는 쿠킹클래스",
+      "image": "path/to/group3.jpg",
+      "members": 15450
+    },
+    {
+      "id": "7",
+      "name": "예능.ZIF",
+      "image": "path/to/group3.jpg",
+      "members": 15450
+    },
+    {
+      "id": "8",
+      "name": "영화를 사랑하는 모음",
+      "image": "path/to/group3.jpg",
+      "members": 15450
+    },
+    {
+      "id": "9",
+      "name": "전국 맛집 어디어디 있을까",
+      "image": "path/to/group3.jpg",
+      "members": 15450
+    }
+  ],
+
+  "liveCommerce": [
+    {
+      "liveStream": {
+        "title": "Autumn Holiday 10% Sale",
+        "currentViewers": 34,
+        "description": "한가위를 맞이하여 의류스타일 특가 할인 혜택! 10% 추가 이벤트 놓치지 마세요!",
+        "videoUrl": "path/to/liveVideo.mp4",
+        "broadcaster": {
+          "name": "미니멀데이",
+          "profileImage": "path/to/profileImage.jpg"
+        }
+      },
+      "products": [
+        {
+          "id": 1,
+          "name": "가을 윈터 스프라이트 백 팩",
+          "originalPrice": 19900,
+          "discountPrice": 15900,
+          "discountRate": "30%",
+          "productImage": "path/to/productImage.jpg"
+        },
+        {
+          "id": 2,
+          "name": "메디슨 클래식 클러치백",
+          "originalPrice": 34000,
+          "discountPrice": 34000,
+          "discountRate": null,
+          "productImage": "path/to/productImage2.jpg"
+        }
+      ],
+      "comments": [
+        {
+          "id": 1,
+          "userId": 1,
+          "content": "이 옷 너무 예뻐요!"
+        },
+        {
+          "id": 2,
+          "userId": 2,
+          "content": "구매하고 싶네요!"
+        }
+      ]
+    }
+  ]
+}
