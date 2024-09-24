@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import logoImg from "../img/Logo.png";
+import logoImg from "../../img/Logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
