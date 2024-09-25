@@ -7,23 +7,9 @@ const Wrapper = styled.div`
   align-items: center;
   gap: 30px;
 `;
-const Logo = styled.img`
-  width: 210px;
-`;
-const LoginFrame = styled.div`
-  background: var(--color-white);
-  padding: 80px 60px;
-  border: 1px solid #f00;
-  border-radius: var(--border-radius-30);
-`;
 
 const Login = () => {
-  return (
-    <Wrapper>
-      <Logo />
-      <LoginFrame></LoginFrame>
-    </Wrapper>
-  );
+  return <Wrapper></Wrapper>;
 };
 
 export default Login;
