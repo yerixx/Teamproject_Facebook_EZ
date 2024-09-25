@@ -5,16 +5,17 @@ import { FaEarthAmericas } from "react-icons/fa6";
 import { IoCloseOutline } from "react-icons/io5";
 
 const Wrapper = styled.div`
-  width: 1050px;
+  width: 100%;
   display: flex;
   justify-content: center;
+  margin-top: 20px;
 `;
 
 const Inner = styled.div`
   box-shadow: var(--box-shadow-01);
   border: 1px solid red;
   border-radius: var(--border-radius-08);
-  width: 100%;
+  width: 1000px;
   max-width: 833px;
   height: 419px;
   padding: 27px 30px 0;
@@ -44,11 +45,12 @@ const PostInfo = styled.div`
     display: flex;
     flex-direction: column;
     .profileitem {
-      border: 1px solid red;
+      /* border: 1px solid red; */
       display: flex;
-    }
-    .name {
-      font-size: 18px;
+      justify-content: space-between;
+      .name {
+        font-size: 18px;
+      }
     }
   }
 `;
