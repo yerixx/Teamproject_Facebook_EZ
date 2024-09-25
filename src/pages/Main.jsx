@@ -14,6 +14,7 @@ const Main = () => {
       <HeaderTop1 />
       <HeaderBottom1 />
       <Mainpage />
+      <Mainpage />
     </Wrapper>
   );
 };

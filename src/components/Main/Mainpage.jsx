@@ -3,6 +3,10 @@ import styled from "styled-components";
 import { BsThreeDots } from "react-icons/bs";
 import { FaEarthAmericas } from "react-icons/fa6";
 import { IoCloseOutline } from "react-icons/io5";
+import { FaRegHeart } from "react-icons/fa";
+import { FaRegComment } from "react-icons/fa";
+import { FiShare } from "react-icons/fi";
+import { FaRegBookmark } from "react-icons/fa6";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -12,45 +16,95 @@ const Wrapper = styled.div`
 `;
 
 const Inner = styled.div`
-  box-shadow: var(--box-shadow-01);
-  border: 1px solid red;
+  /* box-shadow: var(--box-shadow-01); */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius-08);
   width: 1000px;
-  max-width: 833px;
   height: 419px;
   padding: 27px 30px 0;
-  .ControlsIcon {
-    /* border: 1px solid red; */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  .icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
     display: flex;
-    justify-content: flex-end;
-    gap: 5px;
+    gap: 10px;
+    font-size: var(--font-size-paragraph);
+  }
+  @media screen and (max-width: 1050px) {
+    width: 768px;
   }
 `;
 
 const PostInfo = styled.div`
-  border: 1px solid red;
   display: flex;
   align-items: center;
   gap: 14px;
   width: 200px;
-  height: 70px;
-  padding: 5px;
+  height: 50px;
   .profile {
     border-radius: 90%;
     background: var(--color-gray-02);
-    width: 50px;
-    height: 50px;
+    width: 44px;
+    height: 44px;
   }
   .info {
     display: flex;
     flex-direction: column;
-    .profileitem {
-      /* border: 1px solid red; */
+    .name {
+      font-size: var(--font-size-title-04);
+      font-weight: var(--font-weight-bold);
+    }
+    .item {
       display: flex;
-      justify-content: space-between;
-      .name {
-        font-size: 18px;
+      gap: 5px;
+      .clock {
+        font-size: var(--font-size-subtitle);
       }
+      .menuIcon {
+        font-size: var(--font-size-subtitle);
+      }
+    }
+  }
+`;
+const PostText = styled.div`
+  margin-left: 63px;
+`;
+
+const ImgItem = styled.div`
+  .postImg {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    img {
+      background: var(--color-gray-02);
+      width: 100%;
+      height: 205px;
+      gap: 8px;
+      border: 1px solid red;
+    }
+  }
+`;
+
+const SocialBtnIcon = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  padding: 10px 20px;
+  font-size: var(--font-size-paragraph);
+  border-top: 1px solid var(--color-light-gray-01);
+  .socialIcon {
+    cursor: pointer;
+    display: flex;
+    gap: 10px;
+    &:hover {
+      color: var(--color-facebookblue);
     }
   }
 `;
@@ -59,30 +113,48 @@ const MainPost = () => {
   return (
     <Wrapper>
       <Inner>
+        <div className="icon">
+          <BsThreeDots />
+          <IoCloseOutline />
+        </div>
         <PostInfo>
           <div className="profile"></div>
           <div className="info">
-            <div className="profileitem">
-              <div className="name">김정하</div>
-              <div className="ControlsIcon">
-                <div>
-                  <BsThreeDots />
-                </div>
-                <div>
-                  <IoCloseOutline />
-                </div>
-              </div>
-            </div>
+            <div className="name">김정하</div>
             <div className="item">
-              <div className="clock">1시간전</div>
-              <div className="icon">
+              <span className="clock">1시간전</span>
+              <span className="menuIcon">
                 <FaEarthAmericas />
-              </div>
+              </span>
             </div>
           </div>
         </PostInfo>
-
-        <div></div>
+        <PostText>내 최애</PostText>
+        <ImgItem>
+          <div className="postImg">
+            <img />
+            <img />
+            <img />
+          </div>
+        </ImgItem>
+        <SocialBtnIcon>
+          <div className="socialIcon">
+            <FaRegHeart />
+            좋아요
+          </div>
+          <div className="socialIcon">
+            <FaRegComment />
+            댓글
+          </div>
+          <div className="socialIcon">
+            <FiShare />
+            공유하기
+          </div>
+          <div className="socialIcon">
+            <FaRegBookmark />
+            저장하기
+          </div>
+        </SocialBtnIcon>
       </Inner>
     </Wrapper>
   );

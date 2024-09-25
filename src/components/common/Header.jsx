@@ -20,8 +20,10 @@ const Header = styled.div`
   img {
     height: 26px;
   }
+  z-index: 5;
 `;
 const HeaderSticky = styled.div`
+  z-index: 5;
   padding: 0 15px;
   width: 100%;
   height: 88px;
