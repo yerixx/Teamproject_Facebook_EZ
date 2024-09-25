@@ -50,6 +50,10 @@ a{
     --line-weight-01: 1px;
     --line-weight-03: 3px;
     --line-weight-05: 5px;
+    
+    /* box-shadow */
+    --box-shadow-01: 3px 5px 10px 0px rgba(15, 22, 30, 0.07);
+    --box-shadow-02:  3px 8px 10px 0px rgba(15, 22, 30, 0.11);
 }
 `;
 
