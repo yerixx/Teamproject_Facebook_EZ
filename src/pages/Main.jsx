@@ -21,7 +21,6 @@ const Main = () => {
       <MainSection>
         <LeftSideBar />
         <MainContents />
-
         <LeftSideBar />
       </MainSection>
     </Wrapper>
