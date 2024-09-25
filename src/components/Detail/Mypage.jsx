@@ -8,6 +8,8 @@ import { FaRegHeart } from "react-icons/fa";
 import { FaRegComment } from "react-icons/fa";
 import { FiShare } from "react-icons/fi";
 import { FaRegBookmark } from "react-icons/fa6";
+import { SlArrowDown } from "react-icons/sl";
+import { CiCamera } from "react-icons/ci";
 
 const Wrapper = styled.section`
 width:100%;
@@ -71,8 +73,8 @@ padding:30px 0 0;
   justify-content:space-between;
   padding:30px 0;
   .contentImg {
-    width:285px;
-    height:200px;
+    width:850px;
+    height:340px;
     background:var(--color-light-gray-01);
   }
 }
@@ -112,6 +114,7 @@ const SocialBtnIcon = styled.div`
   font-size:var(--font-size-paragraph);
   border-bottom:1px solid var(--color-light-gray-01);
   .socialIcon{
+    font-size:var(--font-size-paragraph);
     cursor: pointer;
     display: flex;
     gap:10px;
@@ -120,7 +123,176 @@ const SocialBtnIcon = styled.div`
     }
   }
 `
+const CommentTop = styled.div`
+  padding:40px 0;
+  display:flex;
+  justify-content:space-between;
+  font-size:var(--font-size-paragraph);
+  .commentTopRight{
+    display:flex;
+    align-items: center;
+    gap:10px;
+    .SlArrowDown{
+      font-size:16px;
+      cursor: pointer;
+    }
+  }
 
+`
+const CommentLists = styled.div`
+  display: flex;
+  flex-direction:column;
+  gap:30px;
+  font-size:var( --font-size-paragraph);
+  .commentList{
+    display: flex;
+    align-items: center;
+    gap:30px;
+    .commentFirstImg{
+      width:80px;
+      height:80px;
+      background: var(--color-light-gray-01);
+      border-radius:50%;
+    }
+    .commentFirstDesc{
+      display: flex;
+      flex-direction:column;
+      gap:10px;
+      .firstDescTop{
+        display: flex;
+        flex-direction:column;
+        gap:10px;
+        position: relative;
+        background: var(--color-light-gray-01);
+        border-radius: 8px;
+        padding: 14px 20px;
+        width: fit-content;
+        height:fit-content;
+        color: black; 
+        &:after {
+          content: '';
+        position: absolute;
+        bottom: -5px;
+        left: -10px; 
+        width: 30px; 
+        height: 12px;
+        background: var(--color-light-gray-01);;
+        border-radius: 0 15px 0 20px ;
+        transform: rotate(-30deg); 
+      }
+      }
+      .firstDescBottom{
+        display: flex;
+        gap:10px;
+        padding:0 20px;
+        color:var(--color-gray-02);
+        cursor: pointer;
+        transition: color 0.5s;
+        *:hover{
+        color:var(--color-black);
+        }
+
+      }
+    }
+    .commentSecImg{
+      width:80px;
+      height:80px;
+      background: var(--color-light-gray-01);
+      border-radius:50%;
+    }
+    .commentSecDesc{
+      display: flex;
+      flex-direction:column;
+      gap:10px;
+      .secDescTop{
+        margin-top:30px;
+        display: flex;
+        gap:5px;
+        position: relative;
+        border: 1px solid var(--color-light-gray-01);
+        background: var(--color-white);
+        border-radius: 8px;
+        padding: 14px 20px;
+        width: fit-content;
+        height:fit-content;
+        color: black; 
+        &:after {
+          content: '';
+        position: absolute;
+        top: -4px;
+        left: -10px; 
+        width: 30px; 
+        height: 14px;
+        border-left: 1px solid var(--color-light-gray-01);
+        border-top: 1px solid var(--color-light-gray-01);
+        background: var(--color-white);
+        border-radius: 0 0 0 60px ;
+        transform: rotate(10deg);
+         
+      }
+      }
+      .secDescBottom{
+        display: flex;
+        gap:10px;
+        padding:0 20px;
+        color:var(--color-gray-02);
+        cursor: pointer;
+        transition: color 0.5s;
+        *:hover{
+        color:var(--color-black);
+        }
+      }
+    }
+  }
+  
+`
+const CommentUpLoad = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    padding:60px 0%;
+    .commentUpLoadprofile{
+      display: flex;
+      align-items: center;
+      gap:30px;
+    .profileImg{
+      width:80px;
+      height:80px;
+      background:var(--color-light-gray-01);
+      border-radius:100px;
+      }
+    .profileInputText{
+      width:640px;
+      height:60px;
+      background:var(--color-light-gray-01);
+      color:var(--color-gray-01);
+      border:none;
+      border-radius:50px;
+      padding:0 30px;
+      font-size:var( --font-size-paragraph);
+      &:focus{
+        outline:none
+      }
+    }
+    .ciCamera,.gif{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width:55px;
+      height: 55px;
+      background:var(--color-light-gray-01);
+      border-radius:50px;
+      cursor: pointer;
+    }
+    .ciCamera{
+      padding: 10px;
+    }
+    .gif{
+      font-size:var( --font-size-paragraph);
+    }
+    }
+    
+`
 const Mypage = () => {
   return (
       <Wrapper>
@@ -145,13 +317,11 @@ const Mypage = () => {
             </div>
             <div className='contentImgs'>
               <div className='contentImg'>.</div>
-              <div className='contentImg'>.</div>
-              <div className='contentImg'>.</div>
             </div>
-            <div className='Buttons'>
+            {/* <div className='Buttons'>
               <div className='btnLeft'><SlArrowLeft/></div>
               <div className='btnRight'><SlArrowRight/></div>
-            </div>
+            </div> */}
           </Contents>
           <SocialBtnIcon>
             <div className='socialIcon'>
@@ -167,6 +337,53 @@ const Mypage = () => {
               <FaRegBookmark/>저장하기
             </div>
           </SocialBtnIcon>
+          <CommentTop>
+                <div>총 29개의 댓글</div>
+                 <div className='commentTopRight'>
+                  <div>최신순</div>
+                  <div><SlArrowDown className='SlArrowDown' /></div>
+                </div>
+          </CommentTop>
+          <CommentLists>
+            <div className='commentList'>
+              <div className='commentFirstImg'>
+              </div>
+              <div className='commentFirstDesc'>
+                <div className='firstDescTop'>
+                  <b>김예지</b>
+                  <span>
+                    <b>김정하</b> <span>여기 가보는 거 어때?</span>
+                  </span>
+                </div>
+                <div className='firstDescBottom'>
+                  <div>좋아요</div>
+                  <div>답글달기</div>
+                </div>
+              </div>
+            </div>
+            <div className='commentList'>
+              <div className='commentSecImg'>
+              </div>
+              <div className='commentSecDesc'>
+                <div className='secDescTop'>
+                  <b>김정하</b> <span>완전 좋아요!!</span>
+                </div>
+                <div className='secDescBottom'>
+                  <div>좋아요</div>
+                  <div>답글달기</div>
+                </div>
+            </div>
+            </div>
+          </CommentLists>
+          <CommentUpLoad>
+            <div className='commentUpLoadprofile' >
+              <div className='profileImg'>.</div>
+              <input className='profileInputText' type='text' placeholder='댓글을 입력하세요' >
+              </input>
+              <div><CiCamera className='ciCamera' /></div>
+              <div className='gif'>GIF</div>
+            </div>
+          </CommentUpLoad>
         </Inner>
       </Wrapper>
   )
