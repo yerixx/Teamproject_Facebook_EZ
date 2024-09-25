@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import logoImg from "../img/Logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+// import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 const Wrapper = styled.div`
   height: 80px;
@@ -51,9 +50,9 @@ const Header = () => {
   return (
     <Wrapper>
       <Left>
-        <img src={logoImg} alt="" />
+        <img/>
         <div>
-          <FontAwesomeIcon className="glass" icon={faMagnifyingGlass} />
+          {/* <FontAwesomeIcon className="glass" icon={faMagnifyingGlass} /> */}
           <input type="text" placeholder="Search Facebook" />
         </div>
       </Left>
