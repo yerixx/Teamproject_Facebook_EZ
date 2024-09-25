@@ -6,6 +6,7 @@ import Signup from "./pages/Signup";
 import Detail from "./pages/Detail";
 import GlobalStyles from "./styles/GlobalStyles.styles";
 import React, { useEffect, useReducer } from "react";
+import ModalCont from "./components/Modal/ModalCont";
 
 const Wrapper = styled.div``;
 
@@ -139,6 +140,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/detail" element={<Detail />} />
+              <Route path="/modal01" element={<ModalCont />} />
             </Routes>
           </Wrapper>
         </DataDispatchContext.Provider>
