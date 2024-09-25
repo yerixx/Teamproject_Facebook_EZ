@@ -96,6 +96,42 @@ const LeftSideBar = () => {
           <span>팔로우</span>
         </GroupContents>
       </Group>
+      <Group>
+        <h3>추천그룹</h3>
+        <GroupContents>
+          <img />
+          <GroupTitle>
+            <h2>여행</h2>
+            <div>
+              <span>동영상 크리에이터</span> ・ <span>팔로워 10만명</span>
+            </div>
+          </GroupTitle>
+
+          <span>팔로우</span>
+        </GroupContents>
+        <GroupContents>
+          <img />
+          <GroupTitle>
+            <h2>여행에 미치다</h2>
+            <div>
+              <span>동영상 크리에이터</span> ・ <span>팔로워 6111만명</span>
+            </div>
+          </GroupTitle>
+
+          <span>팔로우</span>
+        </GroupContents>
+        <GroupContents>
+          <img />
+          <GroupTitle>
+            <h2>여행 다녀왔습니다.</h2>
+            <div>
+              <span>동영상 크리에이터</span> ・ <span>팔로워 1만명</span>
+            </div>
+          </GroupTitle>
+
+          <span>팔로우</span>
+        </GroupContents>
+      </Group>
     </Wrapper>
   );
 };

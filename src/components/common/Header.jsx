@@ -37,8 +37,9 @@ const HeaderSticky = styled.div`
 `;
 
 const Left = styled.div`
-  flex: 1;
+  width: 100%;
   display: flex;
+  justify-content: flex-start;
   gap: 20px;
   img {
     height: 40px;
@@ -63,10 +64,12 @@ const Left = styled.div`
   }
 `;
 const Center = styled.div`
-  flex: 1.4;
   display: flex;
-  justify-content: space-evenly;
   align-items: center;
+  position: absolute;
+  gap: 10px;
+  left: 50%;
+  transform: translateX(-50%);
   /* border: 1px solid #ddd; */
   height: 100%;
   div {
@@ -83,18 +86,17 @@ const Center = styled.div`
   }
 `;
 const Right = styled.div`
+  width: 100%;
   height: 100%;
-  flex: 1;
   display: flex;
   justify-content: flex-end;
-  gap: 20px;
+  gap: 15px;
 `;
 const RightFirst = styled.div`
-  width: 156px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
   span {
     cursor: pointer;
     font-size: 14px;
@@ -106,7 +108,7 @@ const ProfileWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 3px;
   div {
     background: #999;
     width: 40px;
@@ -120,16 +122,16 @@ const ProfileWrap = styled.div`
 `;
 
 const RightSecond = styled.div`
-  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 12px;
+  gap: 5px;
   svg {
     font-size: 18px;
   }
 `;
 const IconWrap = styled.div`
+  cursor: pointer;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -139,7 +141,7 @@ const IconWrap = styled.div`
   align-items: center;
 `;
 
-export const HeaderTop1 = () => {
+export const HeaderTop = () => {
   return (
     <Header>
       <img src={HeaderlogoImg} alt="" />
@@ -147,7 +149,7 @@ export const HeaderTop1 = () => {
   );
 };
 
-export const HeaderBottom1 = () => {
+export const HeaderBottom = () => {
   return (
     <HeaderSticky>
       <Left>
