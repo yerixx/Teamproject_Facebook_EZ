@@ -11,6 +11,7 @@ height:fit-content;
 display:flex;
 justify-content: center;
 align-items: center;
+
 `
 const Inner = styled.article`
     width:1050px;
@@ -75,7 +76,7 @@ const MypageUpload = ({placeholder}) => {
         <Inner>
           <CommentCont>
               <div className='commentUpLoadprofile' >
-                <div className='profileImg'>.</div>
+                <div className='profileImg'></div>
                 <input className='profileInputText' type='text' placeholder={placeholder||'댓글을 입력하세요'} >
                 </input>
                 <div><CiCamera className='ciCamera' /></div>

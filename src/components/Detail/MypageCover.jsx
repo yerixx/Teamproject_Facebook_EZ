@@ -5,20 +5,21 @@ import MypageProfile from './MypageProfile';
 
 const Wrapper = styled.section`
   width:100%;
-  height:fit-content;
+  height:575px;
   display:flex;
   justify-content: center;
   align-items: center;
+  margin-bottom:140px;
 `
 const Inner = styled.article`
     width:1050px;
     height:100%;
-    padding:0 90px;
+    /* padding:0 90px; */
 `
 const CoverImg =styled.img`
   position:relative;
   width:100%;
-  height:375px;
+  height:550px;
   object-fit:cover;
   
 `

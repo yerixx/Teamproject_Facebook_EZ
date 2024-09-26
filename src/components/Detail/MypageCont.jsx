@@ -24,6 +24,7 @@ const Inner = styled.article`
     width:1050px;
     height:100%;
     padding:0 90px;
+
 `
 const Profile = styled.div`
     display: flex;
