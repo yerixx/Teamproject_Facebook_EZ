@@ -22,6 +22,7 @@ a{
 }
 input{
   font-family: 'Noto Sans KR', sans-serif;
+  letter-spacing: -1px;
 }
 body{
     font-family: 'Noto Sans KR', sans-serif;
