@@ -4,7 +4,7 @@ import Main from "./pages/Main";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Detail from "./pages/Detail";
-import GlobalStyles from "./styles/GlobalStyles.styles";
+import GlobalStyles from "./styles/GlobalStyles.styles.js";
 import React, { useEffect, useReducer } from "react";
 
 const Wrapper = styled.div``;
