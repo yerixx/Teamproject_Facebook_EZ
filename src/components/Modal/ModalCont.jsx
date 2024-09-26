@@ -10,7 +10,7 @@ import Reply from "../ModalConts/Reply";
 const Wrapper = styled.div`
   display: flex;
   border: 1px solid #f00;
-  background: #f00;
+  background: ;
   height: 100vh;
   width: 100%;
 `;
@@ -18,12 +18,12 @@ const Wrapper = styled.div`
 const ModalCont = () => {
   return (
     <Wrapper>
-      <ContentsSec></ContentsSec>
+      <ContentsSec>123</ContentsSec>
       <PostSec>
-        <PostCont></PostCont>
-        <Buttons></Buttons>
-        <PostReply></PostReply>
-        <Reply></Reply>
+        <PostCont />
+        <Buttons />
+        <PostReply />
+        <Reply />
       </PostSec>
     </Wrapper>
   );

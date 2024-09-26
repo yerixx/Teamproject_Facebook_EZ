@@ -140,7 +140,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/detail" element={<Detail />} />
-              <Route path="/contmodal" element={<ModalCont />} />
+              <Route path="/modalcont" element={<ModalCont />} />
             </Routes>
           </Wrapper>
         </DataDispatchContext.Provider>
