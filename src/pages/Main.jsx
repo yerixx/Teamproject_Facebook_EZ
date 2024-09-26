@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { HeaderBottom, HeaderTop } from "../components/common/Header";
 // import LeftSideBar from "../components/common/LeftSideBar";
-import MainContents from "../components/MainPage/MainContents";
+
 import ModalCont from "../components/Modal/ModalCont";
+import RightSideBar from "../components/common/RightSideBar";
 
 const Wrapper = styled.div`
   height: 2000px;
@@ -13,6 +14,10 @@ const MainSection = styled.section`
   justify-content: center;
   padding: 28px 20px;
 `;
+const Maintest = styled.div`
+  width: 1000px;
+  border: 1px solid #f00;
+`;
 const Main = () => {
   return (
     <Wrapper>
@@ -20,8 +25,8 @@ const Main = () => {
       <HeaderBottom />
       <MainSection>
         {/* <LeftSideBar /> */}
-        <MainContents />
-        {/* <LeftSideBar /> */}
+        <Maintest>test</Maintest>
+        <RightSideBar />
       </MainSection>
       <ModalCont />
     </Wrapper>
