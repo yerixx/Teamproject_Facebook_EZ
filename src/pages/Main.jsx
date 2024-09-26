@@ -8,6 +8,10 @@ const Wrapper = styled.div`
   height: 2000px;
 `;
 
+const MainHeader = styled.h1`
+  ${MainHeaderStyle}
+`;
+
 const Main = () => {
   return (
     <Wrapper>
