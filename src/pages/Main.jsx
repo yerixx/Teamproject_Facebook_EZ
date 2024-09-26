@@ -1,29 +1,19 @@
+import React from "react";
+import Header from "../components/common/Header";
+import { MainHeaderStyle } from "../styles/GlobalStyles.styles";
 import styled from "styled-components";
-import { HeaderBottom1, HeaderTop1 } from "../components/common/Header";
-import LeftSideBar from "../components/common/LeftSideBar";
-import MainContents from "../components/MainPage/MainContents";
 
-const Wrapper = styled.div`
-  height: 2000px;
+const MainHeader = styled.h1`
+  ${MainHeaderStyle}
 `;
-const MainSection = styled.section`
-  display: flex;
-  justify-content: space-between;
-  padding: 28px 20px;
-`;
+
 const Main = () => {
   return (
-    <Wrapper>
-      <header>
-        <HeaderTop1 />
-        <HeaderBottom1 />
-      </header>
-      <MainSection>
-        <LeftSideBar />
-        <MainContents />
-        <LeftSideBar />
-      </MainSection>
-    </Wrapper>
+    <div>
+      <Header />
+      <MainHeader>정면돌파</MainHeader>
+      <h1>화이팅</h1>
+    </div>
   );
 };
 

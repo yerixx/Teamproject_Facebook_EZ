@@ -8,7 +8,7 @@ export const FormTitle = styled.h3`
 export const FormDesc = styled.p`
   margin: 10px 0;
   font: var(--font-weight-regular) var(--font-size-description-01) / 1.3
-    "notosans";
+    "Noto Sans KR";
 `;
 export const FormItemTitle = styled.h5`
   font-size: var(--font-size-paragraph);
