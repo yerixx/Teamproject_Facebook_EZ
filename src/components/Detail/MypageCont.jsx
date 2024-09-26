@@ -13,18 +13,19 @@ import { FaRegBookmark } from "react-icons/fa6";
 import { SlArrowDown } from "react-icons/sl";
 import { CiCamera } from "react-icons/ci";
 
+//font
+import { MainHeader_32_n,Paragraph_20_n } from '../../styles/GlobalStyles.styles'
+
 const Wrapper = styled.section`
 width:100%;
 height:100vh;
 display:flex;
 justify-content: center;
 align-items: center;
-border:1px solid #f00;
 `
 const Inner = styled.article`
     width:1050px;
     height:100%;
-    border:1px solid #f00;
     padding:75px 90px;
 `
 const Profile = styled.div`
@@ -36,18 +37,18 @@ const Profile = styled.div`
       align-items: center;
       gap:30px;
     .profileImg{
-      width:120px;
-      height:120px;
+      width:80px;
+      height:80px;
       background:var(--color-gray-01);
       border-radius:100px;
       }
     .profileName{
-      font-size:var(--font-size-header-02);
+      ${MainHeader_32_n}
       color:var(--color-gray-01);
     }
     .profileDesc{
+      ${Paragraph_20_n}
       padding:4px 0;
-      font-size:var(--font-size-paragraph);
       color:var(--color-gray-02);
       }
     }
@@ -151,8 +152,8 @@ const CommentLists = styled.div`
     align-items: center;
     gap:30px;
     .commentFirstImg{
-      width:80px;
-      height:80px;
+      width:60px;
+      height:60px;
       background: var(--color-light-gray-01);
       border-radius:50%;
     }
@@ -197,8 +198,8 @@ const CommentLists = styled.div`
       }
     }
     .commentSecImg{
-      width:80px;
-      height:80px;
+      width:60px;
+      height:60px;
       background: var(--color-light-gray-01);
       border-radius:50%;
     }
@@ -258,8 +259,8 @@ const CommentUpLoad = styled.div`
       align-items: center;
       gap:30px;
     .profileImg{
-      width:80px;
-      height:80px;
+      width:60px;
+      height:60px;
       background:var(--color-light-gray-01);
       border-radius:100px;
       }

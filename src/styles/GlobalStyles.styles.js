@@ -1,11 +1,12 @@
 import { createGlobalStyle, css } from "styled-components";
-import Font from "../font/NotoSansKR-VariableFont_wght.ttf";
+import font from "../font/NotoSansKR-VariableFont_wght.ttf";
 
 const GlobalStyles = createGlobalStyle`
+
 @font-face {
-    font-family: 'Noto Sans KR';
-    src: url(${Font});
-  }
+  font-family: 'Noto Sans KR';
+  src: url(${font});
+}
 
 *{
     margin: 0;
@@ -21,8 +22,6 @@ a{
 }
 input{
   font-family: 'Noto Sans KR', sans-serif;
-  letter-spacing:-1px;
-  
 }
 body{
     font-family: 'Noto Sans KR', sans-serif;
@@ -38,13 +37,13 @@ body{
     --color-light-gray-02: #F4F4F4;
     --color-white: #FFFFFF;
    /* Border Radius */
-    --border-radius-00: 0px;
     --border-radius-08: 8px;
     --border-radius-30: 30px;
    /* Line Weight */
     --line-weight-01: 1px;
     --line-weight-03: 3px;
     --line-weight-05: 5px;
+
     /* box-shadow */
     --box-shadow-01: 3px 5px 10px 0px rgba(15, 22, 30, 0.07);
     --box-shadow-02:  3px 8px 10px 0px rgba(15, 22, 30, 0.11);

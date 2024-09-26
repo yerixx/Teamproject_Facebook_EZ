@@ -1,9 +1,9 @@
 import React from "react";
-import Mypage from "../components/Detail/Mypage";
+import MypageCont from "../components/detail/MypageCont";
 
 const Detail = () => {
   return <div>
-    <Mypage/>
+    <MypageCont />
   </div>;
 };
 
