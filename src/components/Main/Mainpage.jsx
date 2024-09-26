@@ -1,12 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { BsThreeDots } from "react-icons/bs";
-import { FaEarthAmericas } from "react-icons/fa6";
+import { FaEarthAmericas, FaRegBookmark } from "react-icons/fa6";
 import { IoCloseOutline } from "react-icons/io5";
-import { FaRegHeart } from "react-icons/fa";
-import { FaRegComment } from "react-icons/fa";
+import { FaRegHeart, FaRegComment } from "react-icons/fa";
 import { FiShare } from "react-icons/fi";
-import { FaRegBookmark } from "react-icons/fa6";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -16,16 +14,15 @@ const Wrapper = styled.div`
 `;
 
 const Inner = styled.div`
-  /* box-shadow: var(--box-shadow-01); */
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-  border-radius: var(--border-radius-08);
   width: 1000px;
   height: 419px;
   padding: 27px 30px 0;
-  position: relative;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius-08);
+  position: relative;
   .icon {
     position: absolute;
     top: 20px;
@@ -40,16 +37,16 @@ const Inner = styled.div`
 `;
 
 const PostInfo = styled.div`
+  width: 200px;
+  height: 50px;
   display: flex;
   align-items: center;
   gap: 14px;
-  width: 200px;
-  height: 50px;
   .profile {
-    border-radius: 90%;
-    background: var(--color-gray-02);
     width: 44px;
     height: 44px;
+    border-radius: 90%;
+    background: var(--color-gray-02);
   }
   .info {
     display: flex;
@@ -81,9 +78,9 @@ const ImgItem = styled.div`
     gap: 10px;
     margin-bottom: 10px;
     img {
-      background: var(--color-gray-02);
       width: 100%;
       height: 205px;
+      background: var(--color-gray-02);
       gap: 8px;
       border: 1px solid red;
     }
