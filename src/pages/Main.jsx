@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../components/common/Header";
-import { MainHeaderStyle } from "../styles/GlobalStyles";
+import { MainHeaderStyle } from "../styles/GlobalStyles.styles";
 import styled from "styled-components";
 
 
