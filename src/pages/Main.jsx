@@ -1,13 +1,23 @@
-import React from "react";
-import Header from "../components/common/Header";
+import styled from "styled-components";
+import { HeaderBottom1, HeaderTop1 } from "../components/common/Header";
+// import LeftSideBar from "../components/common/LeftSideBar";
+import Mainpage from "../components/Main/Mainpage";
+import Mainupload from "../components/Main/Mainupload";
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 2000px;
+`;
 
 const Main = () => {
   return (
-    <div>
-      <Header />
-      <div>정면돌파</div>
-      <h1>화이팅</h1>
-    </div>
+    <Wrapper>
+      <HeaderTop1 />
+      <HeaderBottom1 />
+      <Mainupload />
+      <Mainpage />
+      <Mainpage />
+    </Wrapper>
   );
 };
 
