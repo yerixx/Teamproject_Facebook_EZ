@@ -4,21 +4,18 @@ import styled from 'styled-components'
 // react-icon
 import { IoCloseOutline } from "react-icons/io5";
 import { BsThreeDots } from "react-icons/bs";
-import { SlArrowLeft } from "react-icons/sl";
-import { SlArrowRight } from "react-icons/sl";
 import { FaRegHeart } from "react-icons/fa";
 import { FaRegComment } from "react-icons/fa";
 import { FiShare } from "react-icons/fi";
 import { FaRegBookmark } from "react-icons/fa6";
 import { SlArrowDown } from "react-icons/sl";
-import { CiCamera } from "react-icons/ci";
 
 //font
-import { MainHeader_32_n,Paragraph_20_n } from '../../styles/GlobalStyles.styles'
+import { MainTitle_26_b,Paragraph_20_n,MainTitle_18_b,MainTitle_18_n ,SubDescription_16_n} from '../../styles/GlobalStyles.styles.js';
 
 const Wrapper = styled.section`
 width:100%;
-height:100vh;
+height:fit-content;
 display:flex;
 justify-content: center;
 align-items: center;
@@ -26,7 +23,8 @@ align-items: center;
 const Inner = styled.article`
     width:1050px;
     height:100%;
-    padding:75px 90px;
+    padding:0 90px;
+
 `
 const Profile = styled.div`
     display: flex;
@@ -43,7 +41,7 @@ const Profile = styled.div`
       border-radius:100px;
       }
     .profileName{
-      ${MainHeader_32_n}
+      ${MainTitle_26_b}
       color:var(--color-gray-01);
     }
     .profileDesc{
@@ -68,7 +66,8 @@ const Contents = styled.div`
 position:relative;
 padding:30px 0 0;
 .contentDesc{
-  font-size:var(--font-size-paragraph);
+  ${MainTitle_18_b};
+  font-weight: normal;
   word-break: break-all;
 }
 .contentImgs{
@@ -108,18 +107,19 @@ padding:30px 0 0;
 }
 `
 const SocialBtnIcon = styled.div`
+  ${Paragraph_20_n}
   display:flex;
   justify-content: space-between;
   align-items: center;
   width:100%;
   height:80px;
   padding:0 10px 20px;
-  font-size:var(--font-size-paragraph);
   border-bottom:1px solid var(--color-light-gray-01);
   .socialIcon{
-    font-size:var(--font-size-paragraph);
+    ${Paragraph_20_n}
     cursor: pointer;
     display: flex;
+    align-items: center;
     gap:10px;
     &:hover{
       color:var(--color-facebookblue);
@@ -127,26 +127,26 @@ const SocialBtnIcon = styled.div`
   }
 `
 const CommentTop = styled.div`
+  ${Paragraph_20_n}
   padding:40px 0;
   display:flex;
   justify-content:space-between;
-  font-size:var(--font-size-paragraph);
   .commentTopRight{
     display:flex;
     align-items: center;
     gap:10px;
     .SlArrowDown{
-      font-size:16px;
+     ${SubDescription_16_n}
       cursor: pointer;
     }
   }
 
 `
 const CommentLists = styled.div`
+  ${MainTitle_18_n}
   display: flex;
   flex-direction:column;
   gap:30px;
-  font-size:var( --font-size-paragraph);
   .commentList{
     display: flex;
     align-items: center;
@@ -230,9 +230,8 @@ const CommentLists = styled.div`
         border-top: 1px solid var(--color-light-gray-01);
         background: var(--color-white);
         border-radius: 0 0 0 60px ;
-        transform: rotate(10deg);
-         
-      }
+        transform: rotate(10deg); 
+        }
       }
       .secDescBottom{
         display: flex;
@@ -249,53 +248,7 @@ const CommentLists = styled.div`
   }
   
 `
-const CommentUpLoad = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content:space-between;
-    padding:60px 0%;
-    .commentUpLoadprofile{
-      display: flex;
-      align-items: center;
-      gap:30px;
-    .profileImg{
-      width:60px;
-      height:60px;
-      background:var(--color-light-gray-01);
-      border-radius:100px;
-      }
-    .profileInputText{
-      width:640px;
-      height:60px;
-      background:var(--color-light-gray-01);
-      color:var(--color-gray-01);
-      border:none;
-      border-radius:50px;
-      padding:0 30px;
-      font-size:var( --font-size-paragraph);
-      &:focus{
-        outline:none
-      }
-    }
-    .ciCamera,.gif{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width:55px;
-      height: 55px;
-      background:var(--color-light-gray-01);
-      border-radius:50px;
-      cursor: pointer;
-    }
-    .ciCamera{
-      padding: 10px;
-    }
-    .gif{
-      font-size:var( --font-size-paragraph);
-    }
-    }
-    
-`
+
 const Mypage = () => {
   return (
       <Wrapper>
@@ -315,7 +268,7 @@ const Mypage = () => {
           </Profile>
           <Contents>
             <div className='contentDesc'>
-            우리의 여행 sub folder만 몇 개인지 모르겠다. <br/>
+            우리의 여행 sub folder만 몇 개인지 모르겠다.<br/>
             가만히 둘이서 강을 바라보던 모습이 폰디체리 바다를 하염없이 바라보던 내 틴 시절과 겹쳐져서 한참을 바라봤었다. 
             </div>
             <div className='contentImgs'>
@@ -378,15 +331,6 @@ const Mypage = () => {
             </div>
             </div>
           </CommentLists>
-          <CommentUpLoad>
-            <div className='commentUpLoadprofile' >
-              <div className='profileImg'>.</div>
-              <input className='profileInputText' type='text' placeholder='댓글을 입력하세요' >
-              </input>
-              <div><CiCamera className='ciCamera' /></div>
-              <div className='gif'>GIF</div>
-            </div>
-          </CommentUpLoad>
         </Inner>
       </Wrapper>
   )

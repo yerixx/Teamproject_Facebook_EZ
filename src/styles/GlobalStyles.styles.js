@@ -89,6 +89,12 @@ export const MainTitle_18_b = css`
   font-weight: bold;
   font-size: 18px;
 `;
+// Main-title 04
+export const MainTitle_18_n = css`
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: normal;
+  font-size: 18px;
+`;
 // Main-description
 export const MainDescription_36_n = css`
   font-family: 'Noto Sans KR', sans-serif;
