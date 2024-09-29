@@ -33,7 +33,6 @@ const Storyitem = styled.div`
   .mystory {
     border-radius: 8px 8px 0 0;
     .humanicon {
-      /* border: 1px solid red; */
       width: 100%;
       height: 158px;
       font-size: 167px;
@@ -77,6 +76,61 @@ const Storyitem = styled.div`
   }
 `;
 
+const Storyfriend = styled.div`
+  width: 150px;
+  height: 252px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+
+  .storyinfo {
+    position: relative;
+    img {
+      width: 100%;
+      height: 252px;
+      border-radius: 8px;
+      object-fit: cover;
+      opacity: 0.8;
+    }
+
+    .story {
+      width: 44px;
+      height: 44px;
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      border-radius: 50%;
+      border: 3px solid var(--color-facebookblue);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #fff;
+
+      .storyprofile {
+        width: 100%;
+        height: 100%;
+        background: var(--color-gray-01);
+        border-radius: 50%;
+      }
+    }
+
+    .storyname {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 36px;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding-left: 10px;
+      line-height: 36px;
+      font-size: 14px;
+      border-radius: 0 0 8px 8px;
+    }
+  }
+`;
+
 const Mainstory = () => {
   return (
     <Wrapper>
@@ -95,9 +149,51 @@ const Mainstory = () => {
             <div className="text">스토리 만들기</div>
           </div>
         </Storyitem>
-        <Storyitem>
-          <div className="mystory"></div>
-        </Storyitem>
+        <Storyfriend>
+          <div className="storyinfo">
+            <img src="../public/img/test.jpg" alt="testimg" />
+            <div className="story">
+              <div className="storyprofile"></div>
+            </div>
+            <div className="storyname">김정하</div>
+          </div>
+        </Storyfriend>
+        <Storyfriend>
+          <div className="storyinfo">
+            <img src="../public/img/test.jpg" alt="testimg" />
+            <div className="story">
+              <div className="storyprofile"></div>
+            </div>
+            <div className="storyname">김정하</div>
+          </div>
+        </Storyfriend>
+        <Storyfriend>
+          <div className="storyinfo">
+            <img src="../public/img/test.jpg" alt="testimg" />
+            <div className="story">
+              <div className="storyprofile"></div>
+            </div>
+            <div className="storyname">김정하</div>
+          </div>
+        </Storyfriend>
+        <Storyfriend>
+          <div className="storyinfo">
+            <img src="../public/img/test.jpg" alt="testimg" />
+            <div className="story">
+              <div className="storyprofile"></div>
+            </div>
+            <div className="storyname">김정하</div>
+          </div>
+        </Storyfriend>
+        <Storyfriend>
+          <div className="storyinfo">
+            <img src="../public/img/test.jpg" alt="testimg" />
+            <div className="story">
+              <div className="storyprofile"></div>
+            </div>
+            <div className="storyname">김정하</div>
+          </div>
+        </Storyfriend>
       </Inner>
     </Wrapper>
   );
