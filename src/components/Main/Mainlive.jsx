@@ -110,7 +110,7 @@ const Livecard = styled.div`
         gap: 10px;
 
         .price {
-          font-size: 14px;
+          font-size: 12px;
           display: flex;
           gap: 3px;
           span {

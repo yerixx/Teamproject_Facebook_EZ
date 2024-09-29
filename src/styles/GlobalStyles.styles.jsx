@@ -1,19 +1,13 @@
-<<<<<<< HEAD:src/styles/GlobalStyles.styles.jsx
 import { createGlobalStyle, css } from "styled-components";
-const GlobalStyles = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
-=======
-import { createGlobalStyle ,css } from "styled-components";
-import font from "../font/NotoSansKR-VariableFont_wght.ttf"
+import font from "../font/NotoSansKR-VariableFont_wght.ttf";
 
-const GlobalStyles = createGlobalStyle`
+const GlobalStyles = createGlobalStyle`;
 
 @font-face {
   font-family: 'Noto Sans KR';
   src: url(${font});
 }
 
->>>>>>> develop:src/styles/GlobalStyles.styles.js
 *{
     margin: 0;
     padding: 0;
@@ -49,10 +43,6 @@ body{
     --line-weight-01: 1px;
     --line-weight-03: 3px;
     --line-weight-05: 5px;
-<<<<<<< HEAD:src/styles/GlobalStyles.styles.jsx
-=======
-
->>>>>>> develop:src/styles/GlobalStyles.styles.js
     /* box-shadow */
     --box-shadow-01: 3px 5px 10px 0px rgba(15, 22, 30, 0.07);
     --box-shadow-02:  3px 8px 10px 0px rgba(15, 22, 30, 0.11);
@@ -61,135 +51,81 @@ body{
 // Font
 // Main-header 01
 export const MainHeader_48_b = css`
-<<<<<<< HEAD:src/styles/GlobalStyles.styles.jsx
   font-family: "Noto Sans KR", sans-serif;
-=======
-  font-family: 'Noto Sans KR', sans-serif;
->>>>>>> develop:src/styles/GlobalStyles.styles.js
   font-weight: bold;
   font-size: 48px;
 `;
 // Main-header 02
 export const MainHeader_32_n = css`
-<<<<<<< HEAD:src/styles/GlobalStyles.styles.jsx
   font-family: "Noto Sans KR", sans-serif;
-=======
-  font-family: 'Noto Sans KR', sans-serif;
->>>>>>> develop:src/styles/GlobalStyles.styles.js
   font-weight: normal;
   font-size: 32px;
 `;
 // Main-title 01
 export const MainTitle_26_b = css`
-<<<<<<< HEAD:src/styles/GlobalStyles.styles.jsx
   font-family: "Noto Sans KR", sans-serif;
-=======
-  font-family: 'Noto Sans KR', sans-serif;
->>>>>>> develop:src/styles/GlobalStyles.styles.js
   font-weight: bold;
   font-size: 26px;
 `;
 // Main-title 02
 export const MainTitle_24_m = css`
-<<<<<<< HEAD:src/styles/GlobalStyles.styles.jsx
   font-family: "Noto Sans KR", sans-serif;
-=======
-  font-family: 'Noto Sans KR', sans-serif;
->>>>>>> develop:src/styles/GlobalStyles.styles.js
   font-weight: 500; /* Medium */
   font-size: 24px;
 `;
 // Main-title 03
 export const MainTitle_22_b = css`
-<<<<<<< HEAD:src/styles/GlobalStyles.styles.jsx
   font-family: "Noto Sans KR", sans-serif;
-=======
-  font-family: 'Noto Sans KR', sans-serif;
->>>>>>> develop:src/styles/GlobalStyles.styles.js
   font-weight: bold;
   font-size: 22px;
 `;
 // Main-title 04
 export const MainTitle_18_b = css`
-<<<<<<< HEAD:src/styles/GlobalStyles.styles.jsx
   font-family: "Noto Sans KR", sans-serif;
-  font-weight: bold;
-  font-size: 18px;
-`;
-// Main-description
-export const MainDescription_36_n = css`
-  font-family: "Noto Sans KR", sans-serif;
-=======
-  font-family: 'Noto Sans KR', sans-serif;
   font-weight: bold;
   font-size: 18px;
 `;
 // Main-title 04
 export const MainTitle_18_n = css`
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   font-weight: normal;
   font-size: 18px;
 `;
 // Main-description
 export const MainDescription_36_n = css`
-  font-family: 'Noto Sans KR', sans-serif;
->>>>>>> develop:src/styles/GlobalStyles.styles.js
+  font-family: "Noto Sans KR", sans-serif;
   font-weight: normal;
   font-size: 36px;
 `;
 // Sub-title
 export const SubTitle_16_b = css`
-<<<<<<< HEAD:src/styles/GlobalStyles.styles.jsx
   font-family: "Noto Sans KR", sans-serif;
-=======
-  font-family: 'Noto Sans KR', sans-serif;
->>>>>>> develop:src/styles/GlobalStyles.styles.js
   font-weight: bold;
   font-size: 16px;
 `;
 // Sub-description 01
 export const SubDescription_16_n = css`
-<<<<<<< HEAD:src/styles/GlobalStyles.styles.jsx
   font-family: "Noto Sans KR", sans-serif;
-=======
-  font-family: 'Noto Sans KR', sans-serif;
->>>>>>> develop:src/styles/GlobalStyles.styles.js
   font-weight: normal;
   font-size: 16px;
 `;
 // Sub-description 02
 export const SubDescription_22_n = css`
-<<<<<<< HEAD:src/styles/GlobalStyles.styles.jsx
   font-family: "Noto Sans KR", sans-serif;
-=======
-  font-family: 'Noto Sans KR', sans-serif;
->>>>>>> develop:src/styles/GlobalStyles.styles.js
   font-weight: normal;
   font-size: 22px;
 `;
 // Sub-description 02
 export const SubDescription_12_m = css`
-<<<<<<< HEAD:src/styles/GlobalStyles.styles.jsx
   font-family: "Noto Sans KR", sans-serif;
-=======
-  font-family: 'Noto Sans KR', sans-serif;
->>>>>>> develop:src/styles/GlobalStyles.styles.js
   font-weight: 500; /* Medium */
   font-size: 12px;
 `;
 // Paragraph
 export const Paragraph_20_n = css`
-<<<<<<< HEAD:src/styles/GlobalStyles.styles.jsx
   font-family: "Noto Sans KR", sans-serif;
-  font-weight: normal;
-  font-size: 20px;
-`;
-export default GlobalStyles;
-=======
-  font-family: 'Noto Sans KR', sans-serif;
   font-weight: normal;
   font-size: 20px;
 `;
 
 export default GlobalStyles;
->>>>>>> develop:src/styles/GlobalStyles.styles.js
