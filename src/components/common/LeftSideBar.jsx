@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 const Wrapper = styled.div`
+  position: absolute;
+  left: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;

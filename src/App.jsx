@@ -114,6 +114,8 @@ function App() {
     });
   };
 
+  // onCreatePost()
+
   const onCreateComment = (postId, userId, content) => {
     const newCommentId = Date.now().toString(); // 고유한 댓글 ID 생성
     dispatch({
