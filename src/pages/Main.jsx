@@ -4,11 +4,14 @@ import { HeaderBottom, HeaderTop } from "../components/common/Header";
 import ModalCont from "../components/Modal/ModalCont";
 import { useContext } from "react";
 import { DataDispatchContext, DataStateContext } from "../App";
+import MainPage from "../components/Main/Mainpage";
 // import SideBarGroup from "../components/common/SideBarGroup";
 // import SideBarWallet from "../components/common/SideBarWallet";
 import SideBarMenu from "../components/common/SideBarMenu";
+import Mainupload from "../components/Main/Mainupload";
 
 const Wrapper = styled.div`
+  width: 100%;
   height: 2000px;
   width: 100%;
   display: flex;
@@ -18,7 +21,7 @@ const Wrapper = styled.div`
 const MainSection = styled.section`
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   padding: 28px 20px;
   position: absolute;
   top: 140px;
@@ -29,11 +32,11 @@ const Maintest = styled.div`
 `;
 
 const Main = () => {
-  const { onCreatePost } = useContext(DataDispatchContext);
-  const { posts } = useContext(DataStateContext);
-  const create = () => {
-    onCreatePost("1", "sldkjf");
-  };
+  // const { onCreatePost } = useContext(DataDispatchContext);
+  // const { posts } = useContext(DataStateContext);
+  // const create = () => {
+  //   onCreatePost("1", "sldkjf");
+  // };
   return (
     <Wrapper>
       <HeaderTop />
@@ -42,12 +45,14 @@ const Main = () => {
       {/* <SideBarGroup /> */}
       <SideBarMenu />
       <MainSection>
-        <Maintest>
+        <Mainupload />
+        <MainPage />
+        {/* <Maintest>
           <button onClick={create}>생성</button>
           {posts.map((item, i) => (
             <div key={i}>{item.content}</div>
           ))}
-        </Maintest>
+        </Maintest> */}
       </MainSection>
 
       <ModalCont />

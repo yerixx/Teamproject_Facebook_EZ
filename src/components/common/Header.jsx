@@ -22,6 +22,7 @@ const Header = styled.div`
   img {
     height: 26px;
   }
+  z-index: 5;
 `;
 const HeaderSticky = styled.div`
   background-color: var(--color-white);
