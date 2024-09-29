@@ -5,8 +5,9 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   display: flex;
   gap: 22px;
-  justify-content: center;
   align-items: center;
+  margin: 40px 0;
+  border: 1px solid #f0f;
   .profile_img {
     width: 110px;
     height: 110px;
@@ -19,6 +20,12 @@ const Wrapper = styled.div`
   .profile_name {
     display: flex;
     flex-direction: column;
+    .name {
+      /* font-size: ; */
+    }
+    .last_time {
+      /* font-size: ; */
+    }
   }
 `;
 

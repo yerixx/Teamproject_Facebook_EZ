@@ -15,15 +15,69 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
+const WrapperRight = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 34%;
+  border: 2px solid #f00;
+  align-items: center;
+  position: relative;
+`;
+
+const Inner = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const WrapperPost = styled.div`
+  width: 502px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border: 1px solid aqua;
+`;
+
+const Line = styled.hr`
+  margin-top: 65px;
+  margin-bottom: 35px;
+`;
+
+const Inner02 = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 44px;
+`;
+
+const ReplyNum = styled.div``;
+
+const Latest = styled.div``;
+
 const ModalCont = () => {
   return (
     <Wrapper>
-      <ContentsSec>123</ContentsSec>
-      <TopProfile />
-      <PostCont />
-      <Buttons />
-      <PostReply />
-      <Reply />
+      <ContentsSec />
+      <WrapperRight>
+        <Inner>
+          <TopProfile />
+          <WrapperPost>
+            <PostCont />
+            <Buttons />
+          </WrapperPost>
+          <Line />
+          <Inner02>
+            <ReplyNum>
+              <div>총 개의 갯글</div>
+            </ReplyNum>
+            <Latest>
+              <div>최신순🔽</div>
+            </Latest>
+          </Inner02>
+          <PostReply />
+        </Inner>
+        <Reply />
+      </WrapperRight>
     </Wrapper>
   );
 };
