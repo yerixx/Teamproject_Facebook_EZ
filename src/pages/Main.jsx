@@ -1,21 +1,27 @@
 import styled from "styled-components";
 import { HeaderBottom, HeaderTop } from "../components/common/Header";
 // import LeftSideBar from "../components/common/LeftSideBar";
-
 import ModalCont from "../components/Modal/ModalCont";
-import RightSideBar from "../components/common/RightSideBar";
-import LeftSideBar from "../components/common/LeftSideBar";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { DataDispatchContext, DataStateContext } from "../App";
+// import SideBarGroup from "../components/common/SideBarGroup";
+// import SideBarWallet from "../components/common/SideBarWallet";
+import SideBarMenu from "../components/common/SideBarMenu";
 
 const Wrapper = styled.div`
   height: 2000px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
 `;
 const MainSection = styled.section`
+  width: 100%;
   display: flex;
   justify-content: center;
   padding: 28px 20px;
+  position: absolute;
+  top: 140px;
 `;
 const Maintest = styled.div`
   width: 1000px;
@@ -25,8 +31,6 @@ const Maintest = styled.div`
 const Main = () => {
   const { onCreatePost } = useContext(DataDispatchContext);
   const { posts } = useContext(DataStateContext);
-  console.log(posts);
-
   const create = () => {
     onCreatePost("1", "sldkjf");
   };
@@ -34,16 +38,18 @@ const Main = () => {
     <Wrapper>
       <HeaderTop />
       <HeaderBottom />
+      {/* <SideBarWallet /> */}
+      {/* <SideBarGroup /> */}
+      <SideBarMenu />
       <MainSection>
-        {/* <LeftSideBar /> */}
         <Maintest>
           <button onClick={create}>생성</button>
           {posts.map((item, i) => (
             <div key={i}>{item.content}</div>
           ))}
         </Maintest>
-        {/* <RightSideBar /> */}
       </MainSection>
+
       <ModalCont />
     </Wrapper>
   );

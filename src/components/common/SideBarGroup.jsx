@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Paragraph_20_n } from "../../styles/GlobalStyles.styles";
 
 const Wrapper = styled.div`
   z-index: 3;
@@ -13,6 +14,24 @@ const Wrapper = styled.div`
   padding: 28px 20px;
   border-radius: var(--border-radius-30);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+`;
+
+const TopTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h2 {
+    ${Paragraph_20_n}
+  }
+  span {
+    font-size: 30px;
+    font-weight: 300;
+  }
+  margin-bottom: 10px;
+`;
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Group = styled.div`
@@ -60,16 +79,17 @@ const GroupTitle = styled.div`
     color: var(--color-gray-01);
   }
 `;
-
-const LeftSideBar = () => {
+const SideBarGroup = () => {
   return (
     <Wrapper>
-      <div>
-        <span>회원님을 위한 커뮤니티</span>
+      <TopTitle>
+        <h2>회원님을 위한 커뮤니티</h2>
         <span>+</span>
-      </div>
-      <Group>
+      </TopTitle>
+      <Title>
         <h3>추천그룹</h3>
+      </Title>
+      <Group>
         <GroupContents>
           <img />
           <GroupTitle>
@@ -78,34 +98,33 @@ const LeftSideBar = () => {
               <span>동영상 크리에이터</span> ・ <span>팔로워 10만명</span>
             </div>
           </GroupTitle>
-
           <span>팔로우</span>
         </GroupContents>
         <GroupContents>
           <img />
           <GroupTitle>
-            <h2>여행에 미치다</h2>
+            <h2>여행</h2>
             <div>
-              <span>동영상 크리에이터</span> ・ <span>팔로워 6111만명</span>
+              <span>동영상 크리에이터</span> ・ <span>팔로워 10만명</span>
             </div>
           </GroupTitle>
-
           <span>팔로우</span>
         </GroupContents>
         <GroupContents>
           <img />
           <GroupTitle>
-            <h2>여행 다녀왔습니다.</h2>
+            <h2>여행</h2>
             <div>
-              <span>동영상 크리에이터</span> ・ <span>팔로워 1만명</span>
+              <span>동영상 크리에이터</span> ・ <span>팔로워 10만명</span>
             </div>
           </GroupTitle>
-
           <span>팔로우</span>
         </GroupContents>
       </Group>
+      <Title>
+        <h3>추천페이지</h3>
+      </Title>
       <Group>
-        <h3>추천그룹</h3>
         <GroupContents>
           <img />
           <GroupTitle>
@@ -114,29 +133,26 @@ const LeftSideBar = () => {
               <span>동영상 크리에이터</span> ・ <span>팔로워 10만명</span>
             </div>
           </GroupTitle>
-
           <span>팔로우</span>
         </GroupContents>
         <GroupContents>
           <img />
           <GroupTitle>
-            <h2>여행에 미치다</h2>
+            <h2>여행</h2>
             <div>
-              <span>동영상 크리에이터</span> ・ <span>팔로워 6111만명</span>
+              <span>동영상 크리에이터</span> ・ <span>팔로워 10만명</span>
             </div>
           </GroupTitle>
-
           <span>팔로우</span>
         </GroupContents>
         <GroupContents>
           <img />
           <GroupTitle>
-            <h2>여행 다녀왔습니다.</h2>
+            <h2>여행</h2>
             <div>
-              <span>동영상 크리에이터</span> ・ <span>팔로워 1만명</span>
+              <span>동영상 크리에이터</span> ・ <span>팔로워 10만명</span>
             </div>
           </GroupTitle>
-
           <span>팔로우</span>
         </GroupContents>
       </Group>
@@ -144,4 +160,4 @@ const LeftSideBar = () => {
   );
 };
 
-export default LeftSideBar;
+export default SideBarGroup;
