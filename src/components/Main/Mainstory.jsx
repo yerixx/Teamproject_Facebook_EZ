@@ -12,14 +12,13 @@ const Wrapper = styled.div`
 `;
 
 const Inner = styled.div`
-  border: 1px solid red;
   width: 1000px;
   height: 302px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   display: flex;
   align-items: center;
-  padding: 0 27px;
+  padding: 27px 30px;
   gap: 8px;
 `;
 

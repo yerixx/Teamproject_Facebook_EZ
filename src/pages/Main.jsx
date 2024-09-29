@@ -4,6 +4,7 @@ import { HeaderBottom1, HeaderTop1 } from "../components/common/Header";
 import Mainpage from "../components/Main/Mainpage";
 import Mainupload from "../components/Main/Mainupload";
 import Mainstory from "../components/Main/Mainstory";
+import Mainlive from "../components/Main/Mainlive";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -18,6 +19,7 @@ const Main = () => {
       <Mainstory />
       <Mainupload />
       <Mainpage />
+      <Mainlive />
     </Wrapper>
   );
 };
