@@ -2,13 +2,15 @@ import styled from "styled-components";
 import { HeaderBottom, HeaderTop } from "../components/common/Header";
 // import LeftSideBar from "../components/common/LeftSideBar";
 import ModalCont from "../components/Modal/ModalCont";
-import { useContext } from "react";
-import { DataDispatchContext, DataStateContext } from "../App";
+// import { useContext } from "react";
+// import { DataDispatchContext, DataStateContext } from "../App";
 import MainPage from "../components/Main/Mainpage";
 // import SideBarGroup from "../components/common/SideBarGroup";
 // import SideBarWallet from "../components/common/SideBarWallet";
-import SideBarMenu from "../components/common/SideBarMenu";
+// import SideBarMenu from "../components/common/SideBarMenu";
 import Mainupload from "../components/Main/Mainupload";
+import Mainstory from "../components/Main/Mainstory";
+import MainGroup from "../components/Main/MainGroup";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -26,10 +28,10 @@ const MainSection = styled.section`
   position: absolute;
   top: 140px;
 `;
-const Maintest = styled.div`
-  width: 1000px;
-  border: 1px solid #f00;
-`;
+// const Maintest = styled.div`
+//   width: 1000px;
+//   border: 1px solid #f00;
+// `;
 
 const Main = () => {
   // const { onCreatePost } = useContext(DataDispatchContext);
@@ -43,8 +45,10 @@ const Main = () => {
       <HeaderBottom />
       {/* <SideBarWallet /> */}
       {/* <SideBarGroup /> */}
-      <SideBarMenu />
+      {/* <SideBarMenu /> */}
       <MainSection>
+        <Mainstory />
+        <MainGroup />
         <Mainupload />
         <MainPage />
         {/* <Maintest>

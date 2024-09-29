@@ -20,6 +20,7 @@ const Container = styled.div`
   gap: 30px;
   padding: 27px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
   .uploadProfile {
     border-radius: 50%;
     width: 60px;
@@ -88,7 +89,7 @@ const Mainupload = () => {
         <UploadBtn type="submit" onClick={handleSubmit}>
           {isLoading ? <BsArrowReturnLeft /> : <BsArrowReturnLeft />}
         </UploadBtn>
-        <UploadFile htmlFor="file">
+        <UploadFile htmlFor="file" type="file">
           {file ? file.name : <CiCamera />}
           {/* 파일 이름 또는 아이콘 표시 */}
         </UploadFile>

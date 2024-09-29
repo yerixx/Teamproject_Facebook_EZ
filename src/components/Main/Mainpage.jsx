@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { BsThreeDots } from "react-icons/bs";
 import { FaEarthAmericas, FaRegBookmark } from "react-icons/fa6";
@@ -15,7 +14,7 @@ const Wrapper = styled.div`
 
 const Inner = styled.div`
   width: 1000px;
-  height: 419px;
+  height: 600px;
   padding: 27px 30px 0;
   display: flex;
   flex-direction: column;
@@ -79,10 +78,9 @@ const ImgItem = styled.div`
     margin-bottom: 10px;
     img {
       width: 100%;
-      height: 205px;
+      height: 370px;
       background: var(--color-gray-02);
       gap: 8px;
-      border: 1px solid red;
     }
   }
 `;
@@ -129,8 +127,6 @@ const MainPost = () => {
         <PostText>내 최애</PostText>
         <ImgItem>
           <div className="postImg">
-            <img />
-            <img />
             <img />
           </div>
         </ImgItem>
