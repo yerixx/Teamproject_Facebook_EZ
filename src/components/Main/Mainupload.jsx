@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import { BsArrowReturnLeft } from "react-icons/bs"; // 주석 해제
+import { BsArrowReturnLeft } from "react-icons/bs"; 
 import { CiCamera } from "react-icons/ci";
+import styled from "styled-components";
 
 const Form = styled.form`
   width: 100%;

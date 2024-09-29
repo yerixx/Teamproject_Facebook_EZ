@@ -1,11 +1,13 @@
-import styled from "styled-components";
-import { Routes, Route } from "react-router-dom";
-import Main from "./pages/Main";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Detail from "./pages/Detail";
-import GlobalStyles from "./styles/GlobalStyles.styles.js";
 import React, { useEffect, useReducer } from "react";
+import { Routes, Route } from "react-router-dom";
+import styled from "styled-components";
+
+import Detail from "./pages/Detail";
+import Login from "./pages/Login";
+import Main from "./pages/Main";
+import Signup from "./pages/Signup";
+import GlobalStyles from "./styles/GlobalStyles.styles.js";
+
 
 const Wrapper = styled.div``;
 

@@ -1,6 +1,8 @@
 import styled from "styled-components";
+
 import { HeaderBottom1, HeaderTop1 } from "../components/common/Header";
 // import LeftSideBar from "../components/common/LeftSideBar";
+import PostInputField from "../components/detail/PostInputField"
 import Mainpage from "../components/Main/Mainpage";
 import Mainupload from "../components/Main/Mainupload";
 
@@ -14,6 +16,7 @@ const Main = () => {
     <Wrapper>
       <HeaderTop1 />
       <HeaderBottom1 />
+      <PostInputField/>
       <Mainupload />
       <Mainpage />
       <Mainpage />

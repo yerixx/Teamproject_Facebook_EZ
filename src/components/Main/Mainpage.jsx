@@ -1,10 +1,10 @@
 import React from "react";
-import styled from "styled-components";
 import { BsThreeDots } from "react-icons/bs";
-import { FaEarthAmericas, FaRegBookmark } from "react-icons/fa6";
-import { IoCloseOutline } from "react-icons/io5";
 import { FaRegHeart, FaRegComment } from "react-icons/fa";
+import { FaEarthAmericas, FaRegBookmark } from "react-icons/fa6";
 import { FiShare } from "react-icons/fi";
+import { IoCloseOutline } from "react-icons/io5";
+import styled from "styled-components";
 
 const Wrapper = styled.div`
   width: 100%;

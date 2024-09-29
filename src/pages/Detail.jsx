@@ -1,23 +1,27 @@
 import React from "react";
-import MypageCont from "../components/detail/MypageCont";
-import MypageUpload from "../components/detail/MypageUpload"
-import MypageCover from "../components/detail/MypageCover";
 import styled from "styled-components";
 
-const Wrapper = styled.div`
-  margin:0 auto;
-  width:fit-content;
-  box-shadow:var(--box-shadow-01);
+import { HeaderBottom1, HeaderTop1 } from "../components/common/Header";
+import PhotoVideoList from "../components/detail/PhotoVideoList"
+import PostInputField from "../components/detail/PostInputField"
+import PostList from "../components/detail/PostList";
+import TopCover from "../components/detail/TopCover";
 
-  /* border:1px solid #f00; */
+const Wrapper = styled.div`
+  width: 100%;
+  height:fit-content;
+  margin:0 auto;
+  box-shadow:var(--box-shadow-01);
 `
 const Detail = () => {
   return <Wrapper>
-    <MypageCover/>
-    <MypageUpload placeholder="무슨생각을 하고 계신가요?" />
-    <MypageCont />
-    <MypageUpload />
-  </Wrapper>;
+          <HeaderTop1 />
+          <HeaderBottom1 />
+          <TopCover/>
+          <PostInputField placeholder="무슨생각을 하고 계신가요?" />
+          <PostList />
+          <PhotoVideoList/>
+        </Wrapper>;
 };
 
 export default Detail;
