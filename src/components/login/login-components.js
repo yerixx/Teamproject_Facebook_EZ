@@ -4,6 +4,7 @@ import {
   MainTitle_24_m,
   Paragraph_20_n,
   SubDescription_16_n,
+  MainTitle_18_b,
 } from "../../styles/GlobalStyles.styles";
 
 // Layout
@@ -57,11 +58,17 @@ export const FormTitle = styled.h3`
   text-align: center;
   margin-bottom: 30px;
 `;
+export const FormDesc = styled.p`
+  ${MainTitle_18_b}
+  font-weight: 500;
+  color: var(--color-gray-01);
+  text-align: center;
+`;
 export const FormItemTitle = styled.h5`
   ${Paragraph_20_n}
 `;
 export const FormItemDesc = styled.p`
   ${SubDescription_16_n}
-  margin: 10px 0;
+  margin: 5px 0 10px;
   color: var(--color-gray-01);
 `;

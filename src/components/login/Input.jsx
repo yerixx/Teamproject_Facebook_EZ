@@ -4,6 +4,7 @@ import {
   MainTitle_18_b,
   SubDescription_16_n,
 } from "../../styles/GlobalStyles.styles";
+import checkImg from "../../img/check.svg";
 
 const InputItem = styled.input`
   width: ${({ width }) => `${width}px`};
@@ -11,6 +12,7 @@ const InputItem = styled.input`
   border: 1px solid var(--color-gray-02);
   border-radius: var(--border-radius-08);
   ${SubDescription_16_n}
+  color: var(--color-gray-02);
   transition: box-shadow 0.3s;
   &::placeholder {
     color: var(--color-gray-02);
@@ -37,10 +39,32 @@ const InputItem = styled.input`
     }
   }
 `;
+const Label = styled.label`
+  width: 210px;
+  height: 46px;
+  padding: 15px;
+  border: 1px solid var(--color-gray-02);
+  border-radius: var(--border-radius-08);
+  ${SubDescription_16_n}
+  color: var(--color-gray-02);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--color-gray-02);
+    &:checked {
+      background: url(${checkImg}) center/contain no-repeat;
+    }
+  }
+`;
 
 const onChange = () => {};
 
-const Input = ({ name, type, value, placeholder, required, width }) => {
+export const Input = ({ name, type, value, placeholder, required, width }) => {
   return (
     <InputItem
       name={name}
@@ -50,8 +74,14 @@ const Input = ({ name, type, value, placeholder, required, width }) => {
       required={required || "boolean"}
       width={width}
       onChange={onChange}
-    ></InputItem>
+    />
   );
 };
-
-export default Input;
+export const InputCheckbox = ({ text }) => {
+  return (
+    <Label>
+      {text}
+      <input type="checkbox" />
+    </Label>
+  );
+};

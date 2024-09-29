@@ -1,25 +1,27 @@
 import React from "react";
 import HeaderlogoImg from "../img/HeaderLogo.svg";
-import { SignupForm } from "../components/login/Form";
+import { SignupForm, AdditionalForm } from "../components/login/Form";
 import {
   Wrapper,
   Inner,
   Logo,
   FormContainer,
 } from "../components/login/login-components";
+import LoadingScreen from "../components/LoadingScreen";
 
 const Signup = () => {
   return (
     <Wrapper className="signupWrapper">
-      <Inner>
+      {/* <Inner>
         <Logo>
           <img src={HeaderlogoImg} alt="Logo" />
         </Logo>
         <FormContainer className="signupFormContainer">
           <SignupForm />
-          <SignupForm />
+          <AdditionalForm />
         </FormContainer>
-      </Inner>
+      </Inner> */}
+      <LoadingScreen />
     </Wrapper>
   );
 };
