@@ -1,4 +1,5 @@
 import { createGlobalStyle ,css } from "styled-components";
+
 import font from "../font/NotoSansKR-VariableFont_wght.ttf"
 
 const GlobalStyles = createGlobalStyle`
@@ -48,8 +49,8 @@ body{
     --line-weight-05: 5px;
 
     /* box-shadow */
-    --box-shadow-01: 3px 5px 10px 0px rgba(15, 22, 30, 0.07);
-    --box-shadow-02:  3px 8px 10px 0px rgba(15, 22, 30, 0.11);
+    --box-shadow-01: 0px 0px 8px rgba(0, 0, 0, 0.1);
+    --box-shadow-02: 3px 8px 10px 0px rgba(15, 22, 30, 0.11);
 }
 `;
 // Font

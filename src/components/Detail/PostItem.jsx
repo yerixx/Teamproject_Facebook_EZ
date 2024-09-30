@@ -1,17 +1,18 @@
 import React from 'react'
-import styled from 'styled-components'
 
 // react-icon
-import { IoCloseOutline } from "react-icons/io5";
 import { BsThreeDots } from "react-icons/bs";
-import { FaRegHeart } from "react-icons/fa";
-import { FaRegComment } from "react-icons/fa";
-import { FiShare } from "react-icons/fi";
+import { FaRegHeart , FaRegComment } from "react-icons/fa";
 import { FaRegBookmark } from "react-icons/fa6";
+import { FiShare } from "react-icons/fi";
+import { IoCloseOutline } from "react-icons/io5";
 import { SlArrowDown } from "react-icons/sl";
+import styled from 'styled-components'
 
 //font
 import { MainTitle_26_b,Paragraph_20_n,MainTitle_18_b,MainTitle_18_n ,SubDescription_16_n} from '../../styles/GlobalStyles.styles.js';
+import PostInputField from "../detail/PostInputField"
+import { useState } from 'react';
 
 const Wrapper = styled.section`
 width:100%;
@@ -74,11 +75,6 @@ padding:30px 0 0;
   display: flex;
   justify-content:space-between;
   padding:30px 0;
-  .contentImg {
-    width:850px;
-    height:340px;
-    background:var(--color-light-gray-01);
-  }
 }
 .Buttons{
   width:100%;
@@ -105,6 +101,13 @@ padding:30px 0 0;
   }
 
 }
+`
+const ContImg = styled.img`
+    margin:30px 0;
+    width:850px;
+    height:400px;
+    background:var(--color-light-gray-01);
+    object-fit:cover;
 `
 const SocialBtnIcon = styled.div`
   ${Paragraph_20_n}
@@ -249,7 +252,8 @@ const CommentLists = styled.div`
   
 `
 
-const Mypage = () => {
+
+const PostItem = ({imageSrc,contentDesc}) => {
   return (
       <Wrapper>
         <Inner>
@@ -268,16 +272,9 @@ const Mypage = () => {
           </Profile>
           <Contents>
             <div className='contentDesc'>
-            우리의 여행 sub folder만 몇 개인지 모르겠다.<br/>
-            가만히 둘이서 강을 바라보던 모습이 폰디체리 바다를 하염없이 바라보던 내 틴 시절과 겹쳐져서 한참을 바라봤었다. 
+              {contentDesc || "우리의 여행 sub folder만 몇 개인지 모르겠다. "}
             </div>
-            <div className='contentImgs'>
-              <div className='contentImg'>.</div>
-            </div>
-            {/* <div className='Buttons'>
-              <div className='btnLeft'><SlArrowLeft/></div>
-              <div className='btnRight'><SlArrowRight/></div>
-            </div> */}
+            {imageSrc && <ContImg src={imageSrc} alt={"Content Image"}/>}
           </Contents>
           <SocialBtnIcon>
             <div className='socialIcon'>
@@ -331,9 +328,10 @@ const Mypage = () => {
             </div>
             </div>
           </CommentLists>
+          <PostInputField />
         </Inner>
       </Wrapper>
   )
 }
 
-export default Mypage
+export default PostItem
