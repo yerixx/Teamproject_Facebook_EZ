@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 `;
 
 const Inner = styled.div`
-  width: 1000px;
+  width: 100%;
   height: 440px;
   padding: 27px 30px;
   display: flex;

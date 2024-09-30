@@ -4,20 +4,21 @@ import { FaPlus } from "react-icons/fa";
 
 const Wrapper = styled.div`
   width: 100%;
-  display: flex;
-  justify-content: center;
   margin-top: 20px;
   gap: 10px;
+  background-color: #fff;
 `;
 
 const Inner = styled.div`
-  width: 1000px;
+  width: 100%;
+
   height: 302px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius-30);
   display: flex;
+  justify-content: center;
   align-items: center;
-  padding: 0 27px;
+  /* padding: 0 27px; */
   gap: 8px;
 `;
 
@@ -147,15 +148,6 @@ const Mainstory = () => {
             <div className="text">스토리 만들기</div>
           </div>
         </Storyitem>
-        <Storyfriend>
-          <div className="storyinfo">
-            <img src="../public/img/test.jpg" alt="testimg" />
-            <div className="story">
-              <div className="storyprofile"></div>
-            </div>
-            <div className="storyname">김정하</div>
-          </div>
-        </Storyfriend>
         <Storyfriend>
           <div className="storyinfo">
             <img src="../public/img/test.jpg" alt="testimg" />

@@ -18,10 +18,11 @@ const Wrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: center;
 `;
 const MainSection = styled.section`
-  width: 100%;
+  width: 1050px;
+  padding: 0 90px;
   display: flex;
   flex-direction: column;
   gap: 30px;
