@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Input, InputCheckbox } from "./Input";
+import { Input, Label, SelectItem } from "./Input";
 import { FormTitle, FormItemTitle, FormItemDesc } from "./login-components";
 import { MainTitle_18_b } from "../../styles/GlobalStyles.styles";
 
@@ -64,7 +64,7 @@ const Wrapper = styled.form`
     }
   }
   &.form-signup {
-    height: 680px;
+    height: 685px;
   }
   &.form-Additional {
     width: 480px;
@@ -73,6 +73,9 @@ const Wrapper = styled.form`
     border-radius: var(--border-radius-08);
     background: var(--color-white);
     box-shadow: var(--box-shadow-01);
+    .radioWrapper {
+      position: relative;
+    }
     .slide-btns {
       .pager {
         display: flex;
@@ -273,8 +276,19 @@ export const AdditionalForm = () => {
             언제든지 프로필에서 회원님의 성별을 변경할 수 있습니다.
           </FormItemDesc>
           <div className="inputWrapper">
-            <InputCheckbox text={"여성"} />
-            <InputCheckbox text={"남성"} />
+            <div className="radioWrapper">
+              <Label htmlFor={"woman"} text={"여성"} />
+              <Input
+                name={"gender"}
+                type={"radio"}
+                value={"female"}
+                id={"woman"}
+              />
+            </div>
+            <div className="radioWrapper">
+              <Input name={"gender"} type={"radio"} value={"male"} id={"man"} />
+              <Label htmlFor={"man"} text={"남성"} />
+            </div>
           </div>
         </li>
         <li>
@@ -284,7 +298,7 @@ export const AdditionalForm = () => {
             언제든지 비공개로 변경할 수 있습니다.
           </FormItemDesc>
           <div className="inputWrapper">
-            <Input name={"birth"} type={"date"} width={430} />
+            <Input id={"birth"} name={"birth"} type={"date"} width={430} />
           </div>
         </li>
         <li>
@@ -294,11 +308,14 @@ export const AdditionalForm = () => {
             언제든지 비공개로 변경할 수 있습니다.
           </FormItemDesc>
           <div className="inputWrapper">
-            <select>
-              <option>지역</option>
-              <option>서울</option>
-              <option>경기</option>
-            </select>
+            <SelectItem name="location" id="location">
+              <option value="select">지역</option>
+              <option value="seoul">서울</option>
+              <option value="gyeonggi">경기</option>
+              <option value="daegu">대구</option>
+              <option value="busan">부산</option>
+              <option value="etc">기타</option>
+            </SelectItem>
           </div>
         </li>
       </ul>

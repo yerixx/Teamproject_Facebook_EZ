@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { motion, stagger } from "framer-motion";
+import { motion } from "framer-motion";
+import Logoimg from "../../img/Logo.svg";
 
 const Wrapper = styled.div`
   display: flex;
@@ -17,8 +18,14 @@ const Circle = styled(motion.span)`
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  /* background: var(--color-facebookblue); */
-  background: linear-gradient(to bottom, #16aafd, #016ae1);
+  background: var(--color-facebookblue);
+  box-shadow: var(--box-shadow-02);
+`;
+const CircleLogo = styled(motion.span)`
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: url(${Logoimg}) center/cover no-repeat;
   box-shadow: var(--box-shadow-02);
 `;
 
@@ -36,7 +43,7 @@ const containerVariants = {
 };
 const circleVariants = {
   start: {
-    scale: 0.8,
+    scale: 0.9,
     y: 0,
   },
   end: {
@@ -60,7 +67,7 @@ const LoadingScreen = () => {
         animate={"end"}
       >
         <Circle variants={circleVariants} />
-        <Circle variants={circleVariants} />
+        <CircleLogo variants={circleVariants} />
         <Circle variants={circleVariants} />
       </CircleContainer>
     </Wrapper>
