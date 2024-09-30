@@ -5,9 +5,9 @@ import ModalCont from "../components/Modal/ModalCont";
 // import { useContext } from "react";
 // import { DataDispatchContext, DataStateContext } from "../App";
 import MainPage from "../components/Main/Mainpage";
-// import SideBarGroup from "../components/common/SideBarGroup";
-// import SideBarWallet from "../components/common/SideBarWallet";
-// import SideBarMenu from "../components/common/SideBarMenu";
+import SideBarGroup from "../components/common/SideBarGroup";
+import SideBarWallet from "../components/common/SideBarWallet";
+import SideBarMenu from "../components/common/SideBarMenu";
 import Mainupload from "../components/Main/Mainupload";
 import Mainstory from "../components/Main/Mainstory";
 import MainGroup from "../components/Main/MainGroup";
@@ -24,7 +24,8 @@ const MainSection = styled.section`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 28px 20px;
+  gap: 30px;
+  /* padding: 28px 20px; */
   position: absolute;
   top: 140px;
 `;

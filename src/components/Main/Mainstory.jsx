@@ -14,7 +14,7 @@ const Inner = styled.div`
   width: 1000px;
   height: 302px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  border-radius: var(--border-radius-30);
   display: flex;
   align-items: center;
   padding: 0 27px;

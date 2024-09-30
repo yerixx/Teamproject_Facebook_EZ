@@ -14,12 +14,13 @@ const Wrapper = styled.div`
 
 const Inner = styled.div`
   width: 1000px;
+  height: 440px;
   padding: 27px 30px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-  border-radius: var(--border-radius-08);
+  border-radius: var(--border-radius-30);
   position: relative;
 `;
 const Title = styled.div`
