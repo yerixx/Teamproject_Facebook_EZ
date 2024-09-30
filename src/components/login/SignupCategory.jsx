@@ -1,55 +1,54 @@
 import React from "react";
 import styled from "styled-components";
-import { FormTitle, FormDesc } from "./login-components";
-import { MainTitle_18_b } from "../../styles/GlobalStyles.styles";
+import { FormTitle, FormDesc, Pager, Button } from "./login-components";
+import categoryImg01 from "../../img/signup-category01.jpg";
+import categoryImg02 from "../../img/signup-category02.jpg";
+import categoryImg03 from "../../img/signup-category03.jpg";
+import categoryImg04 from "../../img/signup-category04.jpg";
+import categoryImg05 from "../../img/signup-category05.jpg";
+import categoryImg06 from "../../img/signup-category06.jpg";
+import categoryImg07 from "../../img/signup-category07.jpg";
+import categoryImg08 from "../../img/signup-category08.jpg";
+import categoryImg09 from "../../img/signup-category09.jpg";
+
+const categoryItems = [
+  { id: 1, src: categoryImg01, title: "반려동물" },
+  { id: 2, src: categoryImg02, title: "해외축구" },
+  { id: 3, src: categoryImg03, title: "여행" },
+  { id: 4, src: categoryImg04, title: "사진" },
+  { id: 5, src: categoryImg05, title: "자연" },
+  { id: 6, src: categoryImg06, title: "맛집" },
+  { id: 7, src: categoryImg07, title: "요리" },
+  { id: 8, src: categoryImg08, title: "예능" },
+  { id: 9, src: categoryImg09, title: "영화" },
+];
 
 const Wrapper = styled.div`
-  width: 480px;
-  height: 730px;
+  height: 750px;
   padding: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--color-light-gray-02);
+  box-shadow: var(--box-shadow-02);
   border-radius: var(--border-radius-08);
-  background: var(--color-white);
-  box-shadow: var(--box-shadow-01);
-  .slide-btns {
-    .pager {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 20px;
-      span {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        border: 2px solid transparent;
-        background: var(--color-light-gray-01);
-        transition: all 0.3s;
-        &.active {
-          border: 2px solid var(--color-gray-01);
-          background: var(--color-white);
-        }
-      }
-    }
-    .prevBtn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-      span {
-        width: 430px;
-        padding: 10px 15px;
-        border: 1px solid var(--color-gray-01);
-        border-radius: var(--border-radius-08);
-        ${MainTitle_18_b};
-        text-align: center;
-        background: var(--color-white);
-        color: var(--color-gray-01);
-        cursor: pointer;
-        transition: opacity 0.3s;
-        &:hover {
-          opacity: 0.8;
-        }
-      }
+`;
+const CategoryUl = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 30px;
+  li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    img {
+      width: 114px;
+      height: 114px;
+      object-fit: cover;
+      border-radius: var(--border-radius-08);
     }
   }
 `;
@@ -59,17 +58,20 @@ const SignupCategory = () => {
     <Wrapper>
       <FormTitle>회원님을 위한 맞춤 홈피드를 준비할게요</FormTitle>
       <FormDesc>선택된 3개 분야로 그룹을 추천해 드릴게요</FormDesc>
-      <ul>
-        <li></li>
-      </ul>
-      <div className="slide-btns">
-        <div className="pager">
+      <CategoryUl>
+        {categoryItems.map((item) => (
+          <li key={item.id}>
+            <img src={item.src} />
+            <p>{item.title}</p>
+          </li>
+        ))}
+      </CategoryUl>
+      <div>
+        <Pager>
           <span className="active"></span>
           <span></span>
-        </div>
-        <div className="prevBtn">
-          <span>이전</span>
-        </div>
+        </Pager>
+        <Button>이전</Button>
       </div>
     </Wrapper>
   );

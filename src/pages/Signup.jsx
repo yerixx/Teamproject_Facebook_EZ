@@ -1,29 +1,37 @@
 import React from "react";
+import styled from "styled-components";
 import HeaderlogoImg from "../img/HeaderLogo.svg";
-import { SignupForm, AdditionalForm } from "../components/login/Form";
+import SignupForm from "../components/login/SignupForm";
+import AdditionalForm from "../components/login/AdditionalForm";
 import SignupCategory from "../components/login/SignupCategory";
 import {
-  Wrapper,
   Inner,
   Logo,
   FormContainer,
 } from "../components/login/login-components";
-import LoadingScreen from "../components/common/LoadingScreen";
+
+const Wrapper = styled.section`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 0;
+  background: var(--color-light-gray-02);
+`;
 
 const Signup = () => {
   return (
-    <Wrapper className="signupWrapper">
+    <Wrapper>
       <Inner>
         <Logo>
           <img src={HeaderlogoImg} alt="Logo" />
         </Logo>
-        <FormContainer className="signupFormContainer">
+        <FormContainer>
           <SignupForm />
           {/* <AdditionalForm /> */}
           <SignupCategory />
         </FormContainer>
       </Inner>
-      {/* <LoadingScreen /> */}
     </Wrapper>
   );
 };
