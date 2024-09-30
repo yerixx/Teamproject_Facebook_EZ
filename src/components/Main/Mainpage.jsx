@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { BsThreeDots } from "react-icons/bs";
 import { FaEarthAmericas, FaRegBookmark } from "react-icons/fa6";
@@ -21,7 +20,7 @@ const Inner = styled.div`
   flex-direction: column;
   gap: 10px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-  border-radius: var(--border-radius-08);
+  border-radius: var(--border-radius-30);
   position: relative;
   .icon {
     position: absolute;
@@ -73,6 +72,7 @@ const PostText = styled.div`
 
 const ImgItem = styled.div`
   .postImg {
+    width: 100%;
     display: flex;
     justify-content: center;
     gap: 10px;
@@ -129,6 +129,8 @@ const MainPost = () => {
         <PostText>내 최애</PostText>
         <ImgItem>
           <div className="postImg">
+            <img />
+            <img />
             <img />
           </div>
         </ImgItem>

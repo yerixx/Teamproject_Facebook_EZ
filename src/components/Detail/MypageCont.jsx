@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 // react-icon
@@ -17,7 +16,7 @@ import {
   MainTitle_18_b,
   MainTitle_18_n,
   SubDescription_16_n,
-} from "../../styles/GlobalStyles.styles";
+} from "../../styles/GlobalStyles.styles.js";
 
 const Wrapper = styled.section`
   width: 100%;
