@@ -13,14 +13,22 @@ const Wrapper = styled.div`
   margin:0 auto;
   box-shadow:var(--box-shadow-01);
 `
+const Inner = styled.div`
+  width: 1050px;
+  height:fit-content;
+  margin:0 auto;
+  box-shadow:var(--box-shadow-01);
+`
 const Detail = () => {
   return <Wrapper>
           <HeaderTop1 />
           <HeaderBottom1 />
-          <TopCover/>
-          <PostInputField placeholder="무슨생각을 하고 계신가요?" />
-          <PostList />
-          <PhotoVideoList/>
+          <Inner>
+            <TopCover/>
+            <PostInputField placeholder="무슨생각을 하고 계신가요?" />
+            <PostList />
+            <PhotoVideoList/>
+          </Inner>
         </Wrapper>;
 };
 
