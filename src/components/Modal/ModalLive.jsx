@@ -1,12 +1,14 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {createGlobalStyle, styled} from 'styled-components';
 import GlobalStyles from '../../styles/GlobalStyles.styles';
 
-// const Wrapper = styled.div`
-//   width: 100%;
-//   height: 100vh;
-//   border: 1px solid #00f;
-// `;
+import { faComments } from "@fortawesome/free-solid-svg-icons";
+import LiveProfileImg from "../../img/LiveProfile.jpg";
+import LiveView from "../../img/Live.jpg";
+import SellItem1Img from "../../img/sellItem1.jpg"
+import SellItem2Img from "../../img/sellItem2.jpg"
 
 const Commerce = styled.div`
   width: 1920px;
@@ -24,7 +26,8 @@ const LeftContent = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #f00;
+  background-color:rgba(0,0,0,0.9);
+  /* border: 1px solid #f00; */
 `;
 
 const Live = styled.div`
@@ -34,6 +37,11 @@ const Live = styled.div`
   display: flex;
   flex-direction: column;
   border: 1px solid #000;
+  border-radius: 8px;
+  background-image: url(${LiveView});
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
 `;
 
 const LiveStatus = styled.div`
@@ -42,9 +50,11 @@ const LiveStatus = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   top: 0;
   gap: 5px;
-  border: 1px solid #f00;
+  color: #fff;
+  /* border: 1px solid #f00; */
   .liveViewer {
     margin-left: 13px;
   }
@@ -58,15 +68,19 @@ const LivePoint = styled.div`
   align-items: center;
   position: absolute;
   bottom: 0;
-  border: 1px solid #00f;
-  background-color: #000;
-  opacity: 0.7;
+  background-color: rgba(0,0,0,0.5);
   .point {
     width: 140px;
     height: 36px;
     border: none;
     border-radius: 8px;
     background-color: var(--color-white);
+    cursor: pointer;
+    transition: all 0.3s;
+    &:hover {
+      background-color: var( --color-facebookblue);
+      color: var(--color-white);
+    }
   }
   .pointDS {
     color: var(--color-white);
@@ -98,7 +112,7 @@ const RightContent = styled.section`
 const LiveProfile = styled.div`
   width: 520px;
   height: 110px;
-  border: 1px solid #f00;
+  /* border: 1px solid #f00; */
   display: flex;
   /* padding: 0 15px; */
   .profileImg {
@@ -106,6 +120,11 @@ const LiveProfile = styled.div`
     height: 110px;
     background-color: var(--color-light-gray-02);
     border-radius: 50%;
+    img {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+    }
   }
 `;
 
@@ -135,7 +154,7 @@ const LiveContents = styled.div`
   justify-content: center;
   align-items: start;
   color: var(--color-gray-01);
-  border: 1px solid #f00;
+  /* border: 1px solid #f00; */
   h3 {
     width: 520px;
     border-bottom: 1px solid var(--color-light-gray-01);
@@ -163,8 +182,7 @@ const SellItem = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* position: relative; */
-  border: 1px solid #000;
+  text-align: left;
   h3 {
     width: 520px;
     display: flex;
@@ -177,21 +195,29 @@ const SellItem = styled.div`
   }
 `;
 
+const SellInfos = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+`;
+
 const SellItemInfo = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /* position: absolute;
-  top: 50px;
-  left: 0; */
-  gap: 10px;
-  padding: 20px 0;
+  gap: 15px;
+  margin: 20px 0;
 `;
 
 const SellItemImg = styled.div`
   width: 70px;
   height: 70px;
   background-color: var(--color-light-gray-01);
+  cursor: pointer;
+  &:hover {
+    background-color: #000;
+  }
 `;
 
 const SellItemDesc = styled.div`
@@ -236,11 +262,16 @@ const NoComment = styled.div`
   text-align: center;
   padding: 20px 0;
   color: var(--color-gray-01);
+  border: 1px solid #f00;
   .commentIcon {
     width: 75px;
     height: 68px;
     margin-bottom: 10px;
-    background-color: var(--color-light-gray-01);
+    /* background-color: var(--color-light-gray-01); */
+    .faComments {
+      font-size: 50px;
+      color: var( --color-facebookblue);
+    }
   }
 `;
 
@@ -254,6 +285,7 @@ const ModalLive = () => {
               <div className='fbLogo'>페북</div>
               <div className='liveLogo'>라이브</div>
               <div className='liveViewer'>2,023명 시청 중</div>
+              {/* <img src={LiveView} alt="Live" width="560px" height="860px" /> */}
             </LiveStatus>
             <LivePoint>
               <button className='point'>포인트 더 모으기</button>
@@ -264,7 +296,9 @@ const ModalLive = () => {
         </LeftContent>
         <RightContent>
           <LiveProfile>
-            <div className='profileImg'></div>
+            <div className='profileImg'>
+            <img src={LiveProfileImg} alt="LiveProfileImg" height="110px" width="110px" />
+            </div>
             <LiveProfileSelf>
               <div className='profileName'>미니멀데이</div>
               <div className='profiledesc'>가을옷 보러오세요~~</div>
@@ -277,31 +311,37 @@ const ModalLive = () => {
           <SellItems>
             <SellItem>
               <h3>판매중인 상품</h3>
-              <SellItemInfo>
-                <SellItemImg>
-                  <div className='sellItemImg'></div>
-                  </SellItemImg>
-                <SellItemDesc>
-                  <p>★5%추가할인★스프라이트 백트임 긴팔니트</p>
-                  <b><span>30%</span>19,900원</b>
-                </SellItemDesc>
-              </SellItemInfo>
-              <SellItemInfo>
-                <SellItemImg>
-                  <div className='sellItemImg'></div>
-                  </SellItemImg>
-                <SellItemDesc>
-                  <p>메디슨 클래식 플랩 레더백</p>
-                  <b>34,000원</b>
-                </SellItemDesc>
-              </SellItemInfo>
+              <SellInfos>
+                <SellItemInfo>
+                  <SellItemImg>
+                    <div className='sellItemImg'></div>
+                    <img src={SellItem1Img} alt="SellItem1Img" height="70px" width="70px" />
+                    </SellItemImg>
+                  <SellItemDesc>
+                    <p>★5%추가할인★스프라이트 백트임 긴팔니트</p>
+                    <b><span>30%</span>19,900원</b>
+                  </SellItemDesc>
+                </SellItemInfo>
+                <SellItemInfo>
+                  <SellItemImg>
+                    <div className='sellItemImg'></div>
+                    <img src={SellItem2Img} alt="SellItem2Img" height="70px" width="70px" />
+                    </SellItemImg>
+                  <SellItemDesc>
+                    <p>메디슨 클래식 플랩 레더백</p>
+                    <b>34,000원</b>
+                  </SellItemDesc>
+                </SellItemInfo>
+              </SellInfos>
             </SellItem>
           </SellItems>
           <Comment>
             <h3>댓글</h3>
             <span>영상과 무관하거나 욕설, 비방 등의 댓글은 관리자에 의해 삭제될 수 있습니다.</span>
             <NoComment>
-              <div className='commentIcon'></div>
+              <div className='commentIcon'>
+              <FontAwesomeIcon className='faComments' icon={faComments} />
+              </div>
               <p>댓글이 없습니다. <br/> 첫 번째 댓글을 남겨주세요.</p>
             </NoComment>
           </Comment>
