@@ -82,6 +82,7 @@ const ImgItem = styled.div`
       height: 370px;
       background: var(--color-gray-02);
       gap: 8px;
+      cursor: pointer;
     }
   }
 `;

@@ -56,6 +56,7 @@ const Storyitem = styled.div`
         top: 135px;
         left: 55px;
         z-index: 1;
+        cursor: pointer;
       }
     }
     .textitem {

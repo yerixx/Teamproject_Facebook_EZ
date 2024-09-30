@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FaStar } from "react-icons/fa";
+import { MainTitle_18_b } from "../../styles/GlobalStyles.styles";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -19,8 +20,7 @@ const Inner = styled.div`
   flex-direction: column;
 
   .livetext {
-    font-size: 18px;
-    font-weight: bold;
+    ${MainTitle_18_b};
     margin-bottom: 15px;
   }
 `;
@@ -51,7 +51,7 @@ const Livecard = styled.div`
     border-radius: 8px 8px 0 0;
     .liveBage {
       position: absolute;
-      top: 10px;
+      top: 7px;
       left: 10px;
       background: #ed413f;
       color: var(--color-white);
@@ -61,14 +61,14 @@ const Livecard = styled.div`
     }
     .viewers {
       position: absolute;
-      top: 15px;
-      left: 55px;
+      top: 10px;
+      left: 60px;
       color: var(--color-white);
       font-size: 16px;
     }
     .point {
       position: absolute;
-      top: 15px;
+      top: 10px;
       right: 10px;
       color: var(--color-white);
     }
@@ -97,7 +97,7 @@ const Livecard = styled.div`
       color: var(--color-white);
 
       .subtitle {
-        font-size: 16px;
+        font-size: 16ㅔㅌ;
       }
 
       .title {

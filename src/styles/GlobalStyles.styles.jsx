@@ -1,7 +1,7 @@
 import { createGlobalStyle, css } from "styled-components";
 import font from "../font/NotoSansKR-VariableFont_wght.ttf";
 
-const GlobalStyles = createGlobalStyle`;
+const GlobalStyles = createGlobalStyle`
 
 @font-face {
   font-family: 'Noto Sans KR';

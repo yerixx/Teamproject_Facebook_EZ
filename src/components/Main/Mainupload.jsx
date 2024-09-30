@@ -26,6 +26,7 @@ const Container = styled.div`
     width: 60px;
     height: 60px;
     background: var(--color-light-gray-01);
+    cursor: pointer;
   }
 `;
 
@@ -49,9 +50,10 @@ const UploadBtn = styled.button`
   justify-content: center;
   align-items: center;
   background: var(--color-light-gray-01);
+  cursor: pointer;
 `;
 
-const UploadFile = styled.div`
+const UploadFile = styled.input`
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -60,6 +62,11 @@ const UploadFile = styled.div`
   justify-content: center;
   align-items: center;
   background: var(--color-light-gray-01);
+  display: none;
+`;
+
+const UploadLabel = styled.label`
+  cursor: pointer;
 `;
 
 const Mainupload = () => {
@@ -89,10 +96,12 @@ const Mainupload = () => {
         <UploadBtn type="submit" onClick={handleSubmit}>
           {isLoading ? <BsArrowReturnLeft /> : <BsArrowReturnLeft />}
         </UploadBtn>
-        <UploadFile htmlFor="file" type="file">
-          {file ? file.name : <CiCamera />}
-          {/* 파일 이름 또는 아이콘 표시 */}
-        </UploadFile>
+        <UploadLabel htmlFor="file">
+          <CiCamera />
+        </UploadLabel>
+        <UploadFile id="file" type="file" accept="video/*, image/*" />
+        {/* {file ? file.name : <CiCamera />} */}
+        {/* 파일 이름 또는 아이콘 표시 */}
       </Container>
     </Form>
   );
