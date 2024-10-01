@@ -17,8 +17,8 @@ const Wrapper = styled.div`
 
 const WrapperRight = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
-  width: 34%;
   border: 2px solid #f00;
   align-items: center;
   position: relative;

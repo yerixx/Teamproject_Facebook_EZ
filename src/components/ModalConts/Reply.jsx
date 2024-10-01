@@ -11,11 +11,18 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 40px;
+  background: #fff;
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 999;
   .profileImg {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     border: 1px solid #f00;
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
   .reply_text {
     display: flex;

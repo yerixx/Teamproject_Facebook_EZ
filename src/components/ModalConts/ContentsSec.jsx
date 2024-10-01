@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
 const ContSlide = styled.div`
-  width: 66%;
+  flex: 2;
   display: flex;
   justify-content: center;
   align-items: center;
