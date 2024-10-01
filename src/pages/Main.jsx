@@ -12,6 +12,7 @@ import Mainupload from "../components/Main/Mainupload";
 import Mainstory from "../components/Main/Mainstory";
 import Mainlive from "../components/Main/Mainlive";
 import MainGroup from "../components/Main/MainGroup";
+import Mainmodal from "../components/Main/Mainmodal";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -50,8 +51,9 @@ const Main = () => {
       {/* <SideBarMenu /> */}
       <MainSection>
         <Mainstory />
-        <MainGroup />
         <Mainupload />
+        <Mainmodal />
+        <MainGroup />
         <MainPage />
         {/* <Maintest>
           <button onClick={create}>생성</button>
@@ -59,6 +61,7 @@ const Main = () => {
             <div key={i}>{item.content}</div>
           ))}
         </Maintest> */}
+        <Mainlive />
       </MainSection>
 
       <ModalCont />

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { BsArrowReturnLeft } from "react-icons/bs"; // 주석 해제
 import { CiCamera } from "react-icons/ci";
+import { FiEdit3 } from "react-icons/fi";
 
 const Form = styled.form`
   width: 100%;
@@ -53,7 +54,7 @@ const UploadBtn = styled.button`
   cursor: pointer;
 `;
 
-const UploadFile = styled.input`
+const UploadFile = styled.button`
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -67,6 +68,15 @@ const UploadFile = styled.input`
 
 const UploadLabel = styled.label`
   cursor: pointer;
+  border: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--color-light-gray-01);
 `;
 
 const Mainupload = () => {
@@ -96,10 +106,10 @@ const Mainupload = () => {
         <UploadBtn type="submit" onClick={handleSubmit}>
           {isLoading ? <BsArrowReturnLeft /> : <BsArrowReturnLeft />}
         </UploadBtn>
-        <UploadLabel htmlFor="file">
-          <CiCamera />
+        <UploadLabel htmlFor="button">
+          <FiEdit3 />
         </UploadLabel>
-        <UploadFile id="file" type="file" accept="video/*, image/*" />
+        <UploadFile id="button" type="button" />
         {/* {file ? file.name : <CiCamera />} */}
         {/* 파일 이름 또는 아이콘 표시 */}
       </Container>

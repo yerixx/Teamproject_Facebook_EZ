@@ -15,7 +15,7 @@ const Inner = styled.div`
   height: 500px;
   padding: 27px 30px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  border-radius: 30px;
   display: flex;
   flex-direction: column;
 
