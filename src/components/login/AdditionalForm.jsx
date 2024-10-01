@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { SubDescription_16_n } from "../../styles/GlobalStyles.styles";
+import arrowIcon from "../../img/arrow-icon.svg";
 import {
   Form,
   Ul,
@@ -31,19 +32,81 @@ const Label = styled.label`
   border-radius: var(--border-radius-08);
   background: var(--color-white);
   ${SubDescription_16_n}
+  cursor: pointer;
 `;
-const Select = styled.select`
-  width: 430px;
-  padding: 10px 15px;
-  border: 1px solid var(--color-gray-02);
-  border-radius: var(--border-radius-08);
-  ${SubDescription_16_n}
-  &:focus {
-    outline: none;
+const SelectItem = styled.div`
+  cursor: pointer;
+  position: relative;
+  .select-selected {
+    padding: 10px 15px;
+    border: 1px solid var(--color-gray-02);
+    border-radius: var(--border-radius-08);
+    background: var(--color-white);
+    ${SubDescription_16_n};
+  }
+  .select-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-180deg);
+    width: 24px;
+    height: 24px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+  .select-items {
+    position: absolute;
+    bottom: -5px;
+    transform: translateY(100%);
+    width: 100%;
+    border: 1px solid var(--color-gray-02);
+    border-radius: var(--border-radius-08);
+    overflow: hidden;
+    li {
+      padding: 10px 15px;
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-light-gray-01);
+      ${SubDescription_16_n};
+      transition: background 0.3s;
+      &:last-child {
+        border-bottom: none;
+      }
+      &:hover {
+        background: var(--color-light-gray-01);
+      }
+    }
   }
 `;
 
+const LocationWrapper = styled.ul`
+  display: none;
+  ${({ isSelected }) => (isSelected ? `display: none;` : `display: block;`)}
+`;
+
 const AdditionalForm = () => {
+  // select
+  const options = [
+    { value: 1, location: "서울" },
+    { value: 2, location: "경기" },
+    { value: 3, location: "대구" },
+    { value: 4, location: "부산" },
+  ];
+
+  const [location, setLocation] = useState("지역");
+  const [isSelected, setIsSelected] = useState(true);
+
+  const toggleSelect = () => {
+    setIsSelected((current) => !current);
+  };
+
+  const onSelectOption = (e) => {
+    setLocation(e.target.innerText);
+    setIsSelected(true);
+  };
+
   return (
     <Wrapper>
       <Form height={700}>
@@ -79,14 +142,24 @@ const AdditionalForm = () => {
               지역을 선택하세요. <br />
               언제든지 비공개로 변경할 수 있습니다.
             </FormItemDesc>
-            <Select name="location" id="location">
-              <option value="select">지역</option>
-              <option value="seoul">서울</option>
-              <option value="gyeonggi">경기</option>
-              <option value="daegu">대구</option>
-              <option value="busan">부산</option>
-              <option value="etc">기타</option>
-            </Select>
+            <SelectItem>
+              <div className="select-selected" onClick={toggleSelect}>
+                {location}
+              </div>
+              <div className="select-icon">
+                <img src={arrowIcon} alt="arrow" />
+              </div>
+              <LocationWrapper
+                isSelected={isSelected}
+                className="select-items select-hide"
+              >
+                {options.map((option) => (
+                  <li key={option.value} onClick={onSelectOption}>
+                    {option.location}
+                  </li>
+                ))}
+              </LocationWrapper>
+            </SelectItem>
           </li>
         </Ul>
         <div>

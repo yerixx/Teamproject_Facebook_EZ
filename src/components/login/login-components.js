@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import checkImg from "../../img/check.svg";
+import calendarImg from "../../img/calendar-icon.svg";
 import {
   MainTitle_24_m,
   Paragraph_20_n,
@@ -125,12 +126,26 @@ transition: box-shadow 0.3s;
     padding: 0;
     border-radius: 50%;
     border: 2px solid var(--color-gray-02);
+    cursor: pointer;
     &:checked {
       background: url(${checkImg}) center/contain no-repeat;
+      box-shadow: 0 0 0 transparent;
     }
   }
   &[type="date"] {
-    /* color: var(--color-gray-02); */
+    position: relative;
+    background: var(--color-white) url(${calendarImg}) no-repeat right 15px
+      center / 22px auto;
+    &::-webkit-calendar-picker-indicator {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      color: transparent;
+      cursor: pointer;
+    }
   }
 `;
 

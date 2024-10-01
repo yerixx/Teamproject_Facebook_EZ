@@ -11,18 +11,6 @@ import categoryImg07 from "../../img/signup-category07.jpg";
 import categoryImg08 from "../../img/signup-category08.jpg";
 import categoryImg09 from "../../img/signup-category09.jpg";
 
-const categoryItems = [
-  { id: 1, src: categoryImg01, title: "반려동물" },
-  { id: 2, src: categoryImg02, title: "해외축구" },
-  { id: 3, src: categoryImg03, title: "여행" },
-  { id: 4, src: categoryImg04, title: "사진" },
-  { id: 5, src: categoryImg05, title: "자연" },
-  { id: 6, src: categoryImg06, title: "맛집" },
-  { id: 7, src: categoryImg07, title: "요리" },
-  { id: 8, src: categoryImg08, title: "예능" },
-  { id: 9, src: categoryImg09, title: "영화" },
-];
-
 const Wrapper = styled.div`
   height: 750px;
   padding: 25px;
@@ -54,6 +42,18 @@ const CategoryUl = styled.ul`
 `;
 
 const SignupCategory = () => {
+  const categoryItems = [
+    { id: 1, src: categoryImg01, title: "반려동물" },
+    { id: 2, src: categoryImg02, title: "해외축구" },
+    { id: 3, src: categoryImg03, title: "여행" },
+    { id: 4, src: categoryImg04, title: "사진" },
+    { id: 5, src: categoryImg05, title: "자연" },
+    { id: 6, src: categoryImg06, title: "맛집" },
+    { id: 7, src: categoryImg07, title: "요리" },
+    { id: 8, src: categoryImg08, title: "예능" },
+    { id: 9, src: categoryImg09, title: "영화" },
+  ];
+
   return (
     <Wrapper>
       <FormTitle>회원님을 위한 맞춤 홈피드를 준비할게요</FormTitle>

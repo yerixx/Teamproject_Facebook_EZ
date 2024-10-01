@@ -28,8 +28,8 @@ const Signup = () => {
         </Logo>
         <FormContainer>
           <SignupForm />
-          {/* <AdditionalForm /> */}
-          <SignupCategory />
+          <AdditionalForm />
+          {/* <SignupCategory /> */}
         </FormContainer>
       </Inner>
     </Wrapper>
