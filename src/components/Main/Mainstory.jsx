@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; // React import 추가
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { IoPersonSharp } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa";
@@ -12,6 +12,10 @@ const Wrapper = styled.div`
 
   @media (max-width: 768px) {
     margin-top: 30px;
+  }
+  @media (max-width: 390px) {
+    margin-top: 20px;
+    gap: 5px;
   }
 `;
 
@@ -42,6 +46,11 @@ const StoryItem = styled.div`
   @media (max-width: 768px) {
     width: 38%;
     height: 250px;
+  }
+  @media (max-width: 390px) {
+    width: 44%;
+    height: 255px;
+    border: 1px solid red;
   }
 
   .myStory {
@@ -108,7 +117,10 @@ const StoryFriend = styled.div`
     width: 35%;
     height: 250px;
   }
-
+  @media (max-width: 390px) {
+    width: 44%;
+    height: 255px;
+  }
   .storyInfo {
     position: relative;
 
@@ -163,7 +175,7 @@ const MainStory = () => {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 390) {
-        setStoryCount(2); // Show 2 stories on very small screens
+        setStoryCount(1); // Show 2 stories on very small screens
       } else if (window.innerWidth <= 768) {
         setStoryCount(4); // Show 4 stories on medium screens
       } else {

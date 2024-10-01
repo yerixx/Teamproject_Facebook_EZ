@@ -16,7 +16,6 @@ const Wrapper = styled.div`
 
 const Inner = styled.div`
   width: 1000px;
-  max-width: 100%;
   height: auto;
   padding: 27px 30px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
@@ -24,6 +23,9 @@ const Inner = styled.div`
   display: flex;
   flex-direction: column;
 
+  @media (max-width: 768px) {
+    padding: 20px;
+  }
   .livetext {
     ${MainTitle_18_b};
     margin-bottom: 15px;
@@ -33,6 +35,10 @@ const Inner = styled.div`
 const Live = styled.div`
   display: flex;
   gap: 16px;
+
+  @media (max-width: 768px) {
+    gap: 10px;
+  }
 `;
 
 const Livecard = styled.div`
@@ -51,6 +57,11 @@ const Livecard = styled.div`
     height: 250px;
     object-fit: cover;
     border-radius: 8px;
+
+    @media (max-width: 768px) {
+      width: 175px;
+      height: 250px;
+    }
   }
 
   .liveheader {
@@ -62,7 +73,7 @@ const Livecard = styled.div`
     position: absolute;
     top: 0;
     width: 100%;
-    height: 45px;
+    height: 43px;
     border-radius: 8px 8px 0 0;
 
     .liveBage {
@@ -70,31 +81,55 @@ const Livecard = styled.div`
       ${SubDescription_16_n}
       padding: 4px 7px;
       border-radius: 3px;
-      margin-right: 10px;
-    }
+      margin-right: 5%;
 
-    .viewers {
-      ${SubDescription_16_n}
-      margin-right: 50px;
+      @media (max-width: 768px) {
+        ${SubDescription_12_m}
+      }
     }
+    .item {
+      display: flex;
 
-    .point {
-      ${SubDescription_12_m}
+      gap: 40px;
+      @media (max-width: 768px) {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        gap: 15px;
+      }
+      .viewers {
+        ${SubDescription_16_n}
+        @media (max-width: 768px) {
+          width: 100%;
+          ${SubDescription_12_m}
+        }
+      }
+      .point {
+        ${SubDescription_16_n}
+        @media (max-width: 768px) {
+          ${SubDescription_12_m}
+        }
+      }
     }
   }
 
   .liveinfo {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 5px 5px;
     background: rgba(0, 0, 0, 0.6);
     color: var(--color-white);
-
+    height: 85px;
     > img {
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
       opacity: 0.8;
       border-radius: 8px;
+
+      @media (max-width: 768px) {
+        width: 50px;
+        height: 50px;
+      }
     }
 
     .info {
@@ -108,17 +143,22 @@ const Livecard = styled.div`
         display: flex;
         align-items: center;
         gap: 5px;
+
+        @media (max-width: 768px) {
+          font-size: 12px;
+        }
       }
 
       .title {
         ${SubDescription_16_n}
-        margin-top: 5px;
+        @media (max-width: 768px) {
+          font-size: 14px;
+        }
       }
 
       .item {
         display: flex;
         justify-content: space-between;
-        margin-top: 10px;
 
         .price {
           ${SubDescription_12_m}
@@ -127,6 +167,10 @@ const Livecard = styled.div`
 
           span {
             color: red;
+          }
+
+          @media (max-width: 768px) {
+            font-size: 10px;
           }
         }
 
@@ -138,6 +182,11 @@ const Livecard = styled.div`
           background: var(--color-gray-01);
           color: var(--color-white);
           cursor: pointer;
+
+          @media (max-width: 768px) {
+            font-size: 9px;
+            padding: 2px 5px;
+          }
         }
       }
     }
@@ -155,8 +204,10 @@ const Mainlive = () => {
               <img src="../public/img/live.jpg" alt="testimg" />
               <div className="liveheader">
                 <div className="liveBage">LIVE</div>
-                <div className="viewers">9,452 시청</div>
-                <div className="point">+500P</div>
+                <div className="item">
+                  <div className="viewers">9,452 시청</div>
+                  <div className="point">+500P</div>
+                </div>
               </div>
               <div className="liveinfo">
                 <img src="../public/img/live.jpg" alt="profile" />

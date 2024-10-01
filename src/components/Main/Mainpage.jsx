@@ -7,8 +7,10 @@ import { FiShare } from "react-icons/fi";
 import {
   MainTitle_18_b,
   MainTitle_18_n,
+  MainTitle_24_m,
   SubDescription_12_m,
   SubDescription_16_n,
+  SubDescription_22_n,
   SubTitle_16_b,
 } from "../../styles/GlobalStyles.styles";
 
@@ -29,17 +31,32 @@ const Inner = styled.div`
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius-30);
   position: relative;
+
+  @media screen and (max-width: 390px) {
+    width: 100%;
+    height: auto;
+    gap: 5px;
+  }
   .icon {
     position: absolute;
     top: 20px;
     right: 20px;
     display: flex;
     gap: 10px;
-    font-size: var(--font-size-paragraph);
+    ${MainTitle_24_m}
   }
-  /* @media screen and (max-width: 1050px) {
-    width: 768px;
-  } */
+  @media screen and (max-width: 390px) {
+    width: 100%;
+    height: auto;
+    padding: 15px;
+    gap: 5px;
+
+    .icon {
+      top: 10px;
+      right: 10px;
+      ${MainTitle_24_m}
+    }
+  }
 `;
 
 const PostInfo = styled.div`
@@ -71,9 +88,18 @@ const PostInfo = styled.div`
       }
     }
   }
+  @media screen and (max-width: 390px) {
+    width: 100%;
+    height: auto;
+  }
 `;
 const PostText = styled.div`
   margin-left: 63px;
+  ${SubDescription_16_n}
+  @media screen and (max-width: 390px) {
+    margin-left: 40px;
+    ${SubDescription_16_n}
+  }
 `;
 
 const ImgItem = styled.div`
@@ -111,6 +137,15 @@ const SocialBtnIcon = styled.div`
       color: var(--color-facebookblue);
     }
   }
+  @media screen and (max-width: 390px) {
+    height: auto;
+    padding: 10px;
+
+    .socialIcon {
+      gap: 6px;
+      ${SubDescription_16_n}
+    }
+  }
 `;
 
 const MainPost = () => {
@@ -136,7 +171,7 @@ const MainPost = () => {
         <PostText>내 최애</PostText>
         <ImgItem>
           <div className="postImg">
-            <img />
+            <img src="../public/img/imgtest.jpg" alt="img" />
           </div>
         </ImgItem>
         <SocialBtnIcon>
