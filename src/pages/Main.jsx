@@ -13,6 +13,7 @@ import Mainstory from "../components/Main/Mainstory";
 import Mainlive from "../components/Main/Mainlive";
 import MainGroup from "../components/Main/MainGroup";
 import Mainmodal from "../components/Main/Mainmodal";
+import Mainbutton from "../components/Main/Mainbutton";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -30,6 +31,16 @@ const MainSection = styled.section`
   /* padding: 28px 20px; */
   position: absolute;
   top: 140px;
+`;
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
 `;
 // const Maintest = styled.div`
 //   width: 1000px;
@@ -51,8 +62,10 @@ const Main = () => {
       {/* <SideBarMenu /> */}
       <MainSection>
         <Mainstory />
-        <Mainupload />
-        <Mainmodal />
+        <Container>
+          <Mainupload />
+          <Mainbutton />
+        </Container>
         <MainGroup />
         <MainPage />
         {/* <Maintest>

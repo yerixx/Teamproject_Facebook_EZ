@@ -12,7 +12,8 @@ const Wrapper = styled.div`
 
 const Inner = styled.div`
   width: 1000px;
-  height: 500px;
+  max-width: 100%;
+  height: auto;
   padding: 27px 30px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: 30px;
@@ -27,87 +28,89 @@ const Inner = styled.div`
 
 const Live = styled.div`
   display: flex;
-  gap: 8px;
+  gap: 16px;
 `;
 
 const Livecard = styled.div`
-  width: 244px;
-  height: 400px;
+  flex: 1 1 244px;
+  max-width: 244px;
+  height: auto;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   position: relative;
-  img {
+  > img {
     width: 100%;
-    height: 100%;
+    height: 250px;
+    object-fit: cover;
     border-radius: 8px;
-    opacity: 0.8;
   }
+
   .liveheader {
-    width: 100%;
-    height: 45px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    color: var(--color-white);
     position: absolute;
     top: 0;
-    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 45px;
     border-radius: 8px 8px 0 0;
+
     .liveBage {
-      position: absolute;
-      top: 7px;
-      left: 10px;
       background: #ed413f;
-      color: var(--color-white);
       font-size: 16px;
       padding: 4px 7px;
       border-radius: 3px;
+      margin-right: 10px;
     }
+
     .viewers {
-      position: absolute;
-      top: 10px;
-      left: 60px;
-      color: var(--color-white);
       font-size: 16px;
+      margin-right: 50px;
     }
+
     .point {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      color: var(--color-white);
+      font-size: 14px;
     }
   }
 
   .liveinfo {
     display: flex;
     align-items: center;
-    position: absolute;
-    bottom: 0;
-    left: 0px;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    padding-left: 6px;
-    border-radius: 0 0 8px 8px;
-    img {
-      width: 52px;
-      height: 52px;
-      opacity: 0.6;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    color: var(--color-white);
+    > img {
+      width: 60px;
+      height: 60px;
+      opacity: 0.8;
+      border-radius: 8px;
     }
-
     .info {
-      padding: 10px;
+      flex-grow: 1;
+      padding-left: 10px;
       display: flex;
       flex-direction: column;
-      color: var(--color-white);
-
       .subtitle {
-        font-size: 16ㅔㅌ;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
       }
 
       .title {
         font-size: 16px;
+        margin-top: 5px;
       }
 
       .item {
         display: flex;
-        align-items: center;
-        gap: 10px;
+        justify-content: space-between;
+        margin-top: 10px;
 
         .price {
           font-size: 12px;
@@ -125,6 +128,7 @@ const Livecard = styled.div`
           padding: 3px 7px;
           background: var(--color-gray-01);
           color: var(--color-white);
+          cursor: pointer;
         }
       }
     }
@@ -137,110 +141,34 @@ const Mainlive = () => {
       <Inner>
         <div className="livetext">라이브 커머스</div>
         <Live>
-          <Livecard>
-            <img src="../public/img/live.jpg" alt="testimg" />
-            <div className="liveheader">
-              <div className="liveBage">LIVE</div>
-              <div className="viewers">9,452 시청</div>
-              <div className="point">+500P</div>
-            </div>
-            <div className="liveinfo">
-              <img src="../public/img/live.jpg" alt="profile" />
-              <div className="info">
-                <span className="subtitle">
-                  <FaStar />
-                  5% 추가할인
-                  <FaStar />
-                </span>
-                <span className="title">NEW ARRIVAL SHOES</span>
-                <div className="item">
-                  <span className="price">
-                    <span>30%</span>
-                    19,000원
+          {[...Array(4)].map((_, index) => (
+            <Livecard key={index}>
+              <img src="../public/img/live.jpg" alt="testimg" />
+              <div className="liveheader">
+                <div className="liveBage">LIVE</div>
+                <div className="viewers">9,452 시청</div>
+                <div className="point">+500P</div>
+              </div>
+              <div className="liveinfo">
+                <img src="../public/img/live.jpg" alt="profile" />
+                <div className="info">
+                  <span className="subtitle">
+                    <FaStar />
+                    5% 추가할인
+                    <FaStar />
                   </span>
-                  <button>라이브 보기</button>
+                  <span className="title">NEW ARRIVAL SHOES</span>
+                  <div className="item">
+                    <span className="price">
+                      <span>30%</span>
+                      19,000원
+                    </span>
+                    <button>라이브 보기</button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Livecard>
-          <Livecard>
-            <img src="../public/img/live.jpg" alt="testimg" />
-            <div className="liveheader">
-              <div className="liveBage">LIVE</div>
-              <div className="viewers">9,452 시청</div>
-              <div className="point">+500P</div>
-            </div>
-            <div className="liveinfo">
-              <img src="../public/img/live.jpg" alt="profile" />
-              <div className="info">
-                <span className="subtitle">
-                  <FaStar />
-                  5% 추가할인
-                  <FaStar />
-                </span>
-                <span className="title">NEW ARRIVAL SHOES</span>
-                <div className="item">
-                  <span className="price">
-                    <span>30%</span>
-                    19,000원
-                  </span>
-                  <button>라이브 보기</button>
-                </div>
-              </div>
-            </div>
-          </Livecard>
-          <Livecard>
-            <img src="../public/img/live.jpg" alt="testimg" />
-            <div className="liveheader">
-              <div className="liveBage">LIVE</div>
-              <div className="viewers">9,452 시청</div>
-              <div className="point">+500P</div>
-            </div>
-            <div className="liveinfo">
-              <img src="../public/img/live.jpg" alt="profile" />
-              <div className="info">
-                <span className="subtitle">
-                  <FaStar />
-                  5% 추가할인
-                  <FaStar />
-                </span>
-                <span className="title">NEW ARRIVAL SHOES</span>
-                <div className="item">
-                  <span className="price">
-                    <span>30%</span>
-                    19,000원
-                  </span>
-                  <button>라이브 보기</button>
-                </div>
-              </div>
-            </div>
-          </Livecard>
-          <Livecard>
-            <img src="../public/img/live.jpg" alt="testimg" />
-            <div className="liveheader">
-              <div className="liveBage">LIVE</div>
-              <div className="viewers">9,452 시청</div>
-              <div className="point">+500P</div>
-            </div>
-            <div className="liveinfo">
-              <img src="../public/img/live.jpg" alt="profile" />
-              <div className="info">
-                <span className="subtitle">
-                  <FaStar />
-                  5% 추가할인
-                  <FaStar />
-                </span>
-                <span className="title">NEW ARRIVAL SHOES</span>
-                <div className="item">
-                  <span className="price">
-                    <span>30%</span>
-                    19,000원
-                  </span>
-                  <button>라이브 보기</button>
-                </div>
-              </div>
-            </div>
-          </Livecard>
+            </Livecard>
+          ))}
         </Live>
       </Inner>
     </Wrapper>
