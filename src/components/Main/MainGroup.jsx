@@ -23,6 +23,7 @@ const Inner = styled.div`
   border-radius: var(--border-radius-30);
   position: relative;
 `;
+
 const Title = styled.div`
   h2 {
     ${MainTitle_22_b}
@@ -33,6 +34,7 @@ const Title = styled.div`
     color: var(--color-gray-01);
   }
 `;
+
 const Items = styled.div`
   display: flex;
   width: 100%;
@@ -50,6 +52,7 @@ const Item = styled.div`
   justify-content: flex-end;
   overflow: hidden;
   position: relative;
+
   svg {
     position: absolute;
     top: 12px;
@@ -60,6 +63,7 @@ const Item = styled.div`
     background-color: var(--color-light-gray-01);
     border-radius: 50%;
   }
+
   div {
     background: var(--color-light-gray-02);
     padding: 10px 20px;
@@ -67,14 +71,17 @@ const Item = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+
     h3 {
       ${MainTitle_18_n}
     }
+
     h4 {
       font-size: 14px;
       font-weight: normal;
       margin-bottom: 10px;
     }
+
     span {
       font-size: 14px;
       font-weight: normal;

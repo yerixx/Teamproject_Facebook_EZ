@@ -65,6 +65,7 @@ const Main = () => {
         <Container>
           <Mainupload />
           <Mainbutton />
+          {/* <Mainmodal /> */}
         </Container>
         <MainGroup />
         <MainPage />

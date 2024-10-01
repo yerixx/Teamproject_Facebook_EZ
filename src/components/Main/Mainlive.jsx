@@ -1,7 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { FaStar } from "react-icons/fa";
-import { MainTitle_18_b } from "../../styles/GlobalStyles.styles";
+import {
+  MainTitle_18_b,
+  SubDescription_12_m,
+  SubDescription_16_n,
+} from "../../styles/GlobalStyles.styles";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -41,6 +45,7 @@ const Livecard = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+
   > img {
     width: 100%;
     height: 250px;
@@ -62,19 +67,19 @@ const Livecard = styled.div`
 
     .liveBage {
       background: #ed413f;
-      font-size: 16px;
+      ${SubDescription_16_n}
       padding: 4px 7px;
       border-radius: 3px;
       margin-right: 10px;
     }
 
     .viewers {
-      font-size: 16px;
+      ${SubDescription_16_n}
       margin-right: 50px;
     }
 
     .point {
-      font-size: 14px;
+      ${SubDescription_12_m}
     }
   }
 
@@ -84,26 +89,29 @@ const Livecard = styled.div`
     padding: 10px;
     background: rgba(0, 0, 0, 0.6);
     color: var(--color-white);
+
     > img {
       width: 60px;
       height: 60px;
       opacity: 0.8;
       border-radius: 8px;
     }
+
     .info {
       flex-grow: 1;
       padding-left: 10px;
       display: flex;
       flex-direction: column;
+
       .subtitle {
-        font-size: 16px;
+        ${SubDescription_16_n}
         display: flex;
         align-items: center;
         gap: 5px;
       }
 
       .title {
-        font-size: 16px;
+        ${SubDescription_16_n}
         margin-top: 5px;
       }
 
@@ -113,9 +121,10 @@ const Livecard = styled.div`
         margin-top: 10px;
 
         .price {
-          font-size: 12px;
+          ${SubDescription_12_m}
           display: flex;
           gap: 3px;
+
           span {
             color: red;
           }

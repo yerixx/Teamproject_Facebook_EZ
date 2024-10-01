@@ -1,4 +1,3 @@
-// Mainmodal.js
 import React, { useState } from "react";
 import styled from "styled-components";
 import { FiX } from "react-icons/fi";
@@ -105,32 +104,32 @@ const Inner = styled.div`
       display: flex;
       flex-direction: column;
       align-items: center;
-    }
 
-    textarea {
-      width: 100%;
-      height: 100px;
-      border-radius: 8px;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      resize: vertical;
-      margin-bottom: 20px;
-    }
+      textarea {
+        width: 100%;
+        height: 100px;
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        resize: vertical;
+        margin-bottom: 20px;
+      }
 
-    button {
-      background: var(--color-facebookblue);
-      width: 90%;
-      height: 55px;
-      border-radius: 8px;
-      border: none;
-      font-size: 26px;
-      font-weight: bold;
-      color: var(--color-white);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
+      button {
+        background: var(--color-facebookblue);
+        width: 90%;
+        height: 55px;
+        border-radius: 8px;
+        border: none;
+        font-size: 26px;
+        font-weight: bold;
+        color: var(--color-white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
     }
   }
 `;

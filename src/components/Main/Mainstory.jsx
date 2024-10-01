@@ -21,16 +21,19 @@ const Inner = styled.div`
   gap: 8px;
 `;
 
-const Storyitem = styled.div`
+const StoryItem = styled.div`
   width: 150px;
   height: 252px;
   border-radius: 8px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   background: var(--color-light-gray-01);
   position: relative;
-  .mystory {
+
+  .myStory {
     border-radius: 8px 8px 0 0;
-    .humanicon {
+    position: relative;
+
+    .humanIcon {
       width: 100%;
       height: 158px;
       font-size: 167px;
@@ -39,8 +42,9 @@ const Storyitem = styled.div`
       top: 0;
       right: 7px;
     }
-    .storymake {
-      .plusicon {
+
+    .storyMake {
+      .plusIcon {
         border-radius: 50%;
         background: var(--color-facebookblue);
         width: 44px;
@@ -58,7 +62,8 @@ const Storyitem = styled.div`
         cursor: pointer;
       }
     }
-    .textitem {
+
+    .textItem {
       width: 100%;
       height: 94px;
       display: flex;
@@ -67,6 +72,7 @@ const Storyitem = styled.div`
       border-radius: 0 0 8px 8px;
       background: #fff;
     }
+
     .text {
       position: absolute;
       top: 225px;
@@ -75,7 +81,7 @@ const Storyitem = styled.div`
   }
 `;
 
-const Storyfriend = styled.div`
+const StoryFriend = styled.div`
   width: 150px;
   height: 252px;
   border-radius: 8px;
@@ -83,8 +89,9 @@ const Storyfriend = styled.div`
   position: relative;
   overflow: hidden;
 
-  .storyinfo {
+  .storyInfo {
     position: relative;
+
     img {
       width: 100%;
       height: 252px;
@@ -106,7 +113,7 @@ const Storyfriend = styled.div`
       align-items: center;
       background: #fff;
 
-      .storyprofile {
+      .storyProfile {
         width: 100%;
         height: 100%;
         background: var(--color-gray-01);
@@ -114,7 +121,7 @@ const Storyfriend = styled.div`
       }
     }
 
-    .storyname {
+    .storyName {
       position: absolute;
       bottom: 0;
       left: 0;
@@ -130,72 +137,38 @@ const Storyfriend = styled.div`
   }
 `;
 
-const Mainstory = () => {
+const MainStory = () => {
   return (
     <Wrapper>
       <Inner>
-        <Storyitem>
-          <div className="mystory">
-            <div className="humanicon">
+        <StoryItem>
+          <div className="myStory">
+            <div className="humanIcon">
               <IoPersonSharp />
             </div>
-            <div className="storymake">
-              <div className="plusicon">
+            <div className="storyMake">
+              <div className="plusIcon">
                 <FaPlus />
               </div>
             </div>
-            <div className="textitem"></div>
+            <div className="textItem"></div>
             <div className="text">스토리 만들기</div>
           </div>
-        </Storyitem>
-        <Storyfriend>
-          <div className="storyinfo">
-            <img src="../public/img/test.jpg" alt="testimg" />
-            <div className="story">
-              <div className="storyprofile"></div>
+        </StoryItem>
+        {[...Array(5)].map((_, index) => (
+          <StoryFriend key={index}>
+            <div className="storyInfo">
+              <img src="../public/img/test.jpg" alt="testimg" />
+              <div className="story">
+                <div className="storyProfile"></div>
+              </div>
+              <div className="storyName">김정하</div>
             </div>
-            <div className="storyname">김정하</div>
-          </div>
-        </Storyfriend>
-        <Storyfriend>
-          <div className="storyinfo">
-            <img src="../public/img/test.jpg" alt="testimg" />
-            <div className="story">
-              <div className="storyprofile"></div>
-            </div>
-            <div className="storyname">김정하</div>
-          </div>
-        </Storyfriend>
-        <Storyfriend>
-          <div className="storyinfo">
-            <img src="../public/img/test.jpg" alt="testimg" />
-            <div className="story">
-              <div className="storyprofile"></div>
-            </div>
-            <div className="storyname">김정하</div>
-          </div>
-        </Storyfriend>
-        <Storyfriend>
-          <div className="storyinfo">
-            <img src="../public/img/test.jpg" alt="testimg" />
-            <div className="story">
-              <div className="storyprofile"></div>
-            </div>
-            <div className="storyname">김정하</div>
-          </div>
-        </Storyfriend>
-        <Storyfriend>
-          <div className="storyinfo">
-            <img src="../public/img/test.jpg" alt="testimg" />
-            <div className="story">
-              <div className="storyprofile"></div>
-            </div>
-            <div className="storyname">김정하</div>
-          </div>
-        </Storyfriend>
+          </StoryFriend>
+        ))}
       </Inner>
     </Wrapper>
   );
 };
 
-export default Mainstory;
+export default MainStory;

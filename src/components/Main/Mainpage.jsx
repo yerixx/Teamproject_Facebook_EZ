@@ -4,6 +4,13 @@ import { FaEarthAmericas, FaRegBookmark } from "react-icons/fa6";
 import { IoCloseOutline } from "react-icons/io5";
 import { FaRegHeart, FaRegComment } from "react-icons/fa";
 import { FiShare } from "react-icons/fi";
+import {
+  MainTitle_18_b,
+  MainTitle_18_n,
+  SubDescription_12_m,
+  SubDescription_16_n,
+  SubTitle_16_b,
+} from "../../styles/GlobalStyles.styles";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -30,9 +37,9 @@ const Inner = styled.div`
     gap: 10px;
     font-size: var(--font-size-paragraph);
   }
-  @media screen and (max-width: 1050px) {
+  /* @media screen and (max-width: 1050px) {
     width: 768px;
-  }
+  } */
 `;
 
 const PostInfo = styled.div`
@@ -51,17 +58,16 @@ const PostInfo = styled.div`
     display: flex;
     flex-direction: column;
     .name {
-      font-size: var(--font-size-title-04);
-      font-weight: var(--font-weight-bold);
+      ${MainTitle_18_b}
     }
     .item {
       display: flex;
       gap: 5px;
       .clock {
-        font-size: var(--font-size-subtitle);
+        ${SubDescription_16_n}
       }
       .menuIcon {
-        font-size: var(--font-size-subtitle);
+        ${SubDescription_16_n}
       }
     }
   }
@@ -94,11 +100,12 @@ const SocialBtnIcon = styled.div`
   width: 100%;
   height: 80px;
   padding: 10px 20px;
-  font-size: var(--font-size-paragraph);
+  ${MainTitle_18_n}
   border-top: 1px solid var(--color-light-gray-01);
   .socialIcon {
     cursor: pointer;
     display: flex;
+    align-items: center;
     gap: 10px;
     &:hover {
       color: var(--color-facebookblue);
@@ -129,8 +136,6 @@ const MainPost = () => {
         <PostText>내 최애</PostText>
         <ImgItem>
           <div className="postImg">
-            <img />
-            <img />
             <img />
           </div>
         </ImgItem>
