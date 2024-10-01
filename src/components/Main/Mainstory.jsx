@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react"; // React import 추가
 import styled from "styled-components";
 import { IoPersonSharp } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa";
@@ -8,6 +9,10 @@ const Wrapper = styled.div`
   justify-content: center;
   margin-top: 50px;
   gap: 10px;
+
+  @media (max-width: 768px) {
+    margin-top: 30px;
+  }
 `;
 
 const Inner = styled.div`
@@ -19,6 +24,11 @@ const Inner = styled.div`
   align-items: center;
   padding: 27px 30px;
   gap: 8px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 20px;
+  }
 `;
 
 const StoryItem = styled.div`
@@ -28,6 +38,11 @@ const StoryItem = styled.div`
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   background: var(--color-light-gray-01);
   position: relative;
+
+  @media (max-width: 768px) {
+    width: 38%;
+    height: 250px;
+  }
 
   .myStory {
     border-radius: 8px 8px 0 0;
@@ -89,6 +104,11 @@ const StoryFriend = styled.div`
   position: relative;
   overflow: hidden;
 
+  @media (max-width: 768px) {
+    width: 35%;
+    height: 250px;
+  }
+
   .storyInfo {
     position: relative;
 
@@ -138,6 +158,30 @@ const StoryFriend = styled.div`
 `;
 
 const MainStory = () => {
+  const [storyCount, setStoryCount] = useState(5); // Initial story count
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 390) {
+        setStoryCount(2); // Show 2 stories on very small screens
+      } else if (window.innerWidth <= 768) {
+        setStoryCount(4); // Show 4 stories on medium screens
+      } else {
+        setStoryCount(5); // Show 5 stories on larger screens
+      }
+    };
+
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup event listener on unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <Wrapper>
       <Inner>
@@ -155,10 +199,11 @@ const MainStory = () => {
             <div className="text">스토리 만들기</div>
           </div>
         </StoryItem>
-        {[...Array(5)].map((_, index) => (
+        {[...Array(storyCount)].map((_, index) => (
           <StoryFriend key={index}>
             <div className="storyInfo">
-              <img src="../public/img/test.jpg" alt="testimg" />
+              <img src="/img/test.jpg" alt="testimg" />{" "}
+              {/* Corrected image path */}
               <div className="story">
                 <div className="storyProfile"></div>
               </div>
