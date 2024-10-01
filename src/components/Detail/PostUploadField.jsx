@@ -1,17 +1,19 @@
 import React from 'react'
 import "../../styles/loadingSpearTest.css"; // 스타일을 위한 CSS 파일
 
+import styled from 'styled-components'
 //react-icon
 import { BsArrowReturnLeft } from "react-icons/bs"; 
 import { FaSpinner } from "react-icons/fa";
-import { CiCamera } from "react-icons/ci";
-import styled from 'styled-components'
+import { CiEdit } from "react-icons/ci";
+// import { CiCamera } from "react-icons/ci";
+import { FaRegEdit } from "react-icons/fa";
 
 //img
 import testCat from '../../img/testcat.jpg';
 
 //font
-import {MainTitle_18_n} from '../../styles/GlobalStyles.styles.js';
+import {MainTitle_18_n,SubDescription_16_n} from '../../styles/GlobalStyles.styles.js';
 import { useState } from 'react';
 
 const WrapperForm = styled.form`
@@ -20,6 +22,10 @@ height:fit-content;
 display:flex;
 justify-content: center;
 align-items: center;
+    /* 미디어 쿼리 */
+    @media (max-width : 768px) {
+      width:100%;
+    }
 `
 
 const CommentCont = styled.div`
@@ -43,18 +49,25 @@ const CommentCont = styled.div`
       }
     .profileInputText{
       ${MainTitle_18_n}
-      width:640px;
+      /* width:640px; */
+      width:100%;
       height:60px;
+      margin:0 30px;
+      padding:0 30px;
       background:var(--color-light-gray-01);
       color:var(--color-gray-01);
       border:none;
       border-radius:50px;
-      padding:0 30px;
       &:focus{
         outline:none
       }
+     /* 미디어 쿼리 */
+      @media (max-width : 768px) {
+        ${SubDescription_16_n}
+        margin: 0 10px;
+     }
     }
-    .ciCamera,.uploadBtn{
+    .ciEdit,.uploadBtn{
       color:var(--color-black);
       display: flex;
       justify-content: center;
@@ -66,14 +79,23 @@ const CommentCont = styled.div`
       border-radius:50px;
       cursor: pointer;
     }
-    .ciCamera{
-      padding: 10px;
-    }
     .uploadBtn{
       ${MainTitle_18_n}
+      margin-right:30px;
+    /* 미디어 쿼리 */
+    @media (max-width : 768px) {
+    margin-right:10px;
+     }
     }
+    .ciEdit{
+      padding: 13px;
+      }
     }
-    
+      /* 미디어 쿼리 */
+      @media (max-width : 768px) {
+      width:100%;
+      margin:60px 0;
+    }
 `
 
 const PostUploadField = ({placeholder}) => {
@@ -132,8 +154,8 @@ const PostUploadField = ({placeholder}) => {
                   {isLoading ? ( <FaSpinner className="spinner" />) : (<BsArrowReturnLeft />)}
                 </button>
                 <div>
-                  <CiCamera 
-                  className='ciCamera' 
+                  <CiEdit 
+                  className='ciEdit' 
                   htmlFor='file'
                   onClick={modal}
                   />

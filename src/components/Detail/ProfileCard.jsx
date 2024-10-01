@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 //font
-import {MainTitle_26_b,MainTitle_18_n,SubDescription_16_n} from '../../styles/GlobalStyles.styles.js';
+import {MainTitle_26_b,MainTitle_18_n,SubDescription_16_n,SubDescription_12_m} from '../../styles/GlobalStyles.styles.js';
 import { useState } from 'react';
 
 const Wrapper = styled.section`
@@ -20,28 +20,45 @@ const Wrapper = styled.section`
   padding:0 90px;
   background:var(--color-white);
   border-radius:30px 30px 0 0;
+  /* 미디어 쿼리 */
+  @media (max-width : 768px) {
+  max-width: 100%;
+  padding:0;
+  } 
   `
 const Profile = styled.div`
+  width:100%;
   display: flex;
-  justify-content: center;
-  width:740px;
-.profileContent{
-  display: flex;
-  gap:30px;
-.profileImg{
-  width:90px;
-  height:90px;
-  background:var(--color-gray-01);
-  border-radius:100px;
+  /* justify-content: space-between; */
+  .profileContent{
+    width:100%;
+    display: flex;
+    /* justify-content: space-between; */
+    gap:30px;
+  @media (max-width : 768px) {
+    width:100%;
+    padding:0 60px ;
+    align-items: center;
+    } 
+  .profileImg{
+    width:100px;
+    height:90px;
+    background:var(--color-gray-01);
+    border-radius:100%;
+    /* 미디어 쿼리 */
+    @media (max-width : 768px) {
+      width:190px;
+      height:130px;
   }
+}
   .profileText{
+    width:100%;
     display: flex;
     flex-direction:column;
     gap:5px;
     padding-top:6px;
     .profileTop{
-      /* border:1px solid #f00; */
-      width:650px;
+      max-width:100%;
       display: flex;
       justify-content:space-between;
       .profileName{
@@ -51,6 +68,10 @@ const Profile = styled.div`
     }
   }
 }
+  /* 미디어 쿼리 */
+  @media (max-width : 768px) {
+  width: 100%;
+  }
 `
 const EditProfileDesc = styled.div`
       position: relative;
@@ -59,6 +80,7 @@ const EditProfileDesc = styled.div`
       display: flex;
       flex-direction:column;
       gap:10px;
+
       .editBox{
         position: absolute;
         display: flex;
@@ -103,7 +125,6 @@ const ProfileDesc = styled.div`
 const Button = styled.div`
   display:flex;
   gap:20px;
-  
 *{
   ${SubDescription_16_n}
   width:165px;
@@ -124,13 +145,20 @@ const Button = styled.div`
     color:var(--color-facebookblue);
     font-weight:600;
   }
+  /* 미디어 쿼리 */
+  @media (max-width : 768px) {
+    ${SubDescription_12_m}
+    max-width:90px;
+  } 
 }
+
 `
 const ContChangeBtn = styled.div`
   display: flex;
   justify-content: center;
-  width:780px;
+  width:100%;
   padding:20px 0 ;
+  /* border-bottom:1px solid var(--color-light-gray-01); */
   *{
     ${MainTitle_18_n};
     flex:1;

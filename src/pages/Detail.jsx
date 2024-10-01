@@ -13,12 +13,21 @@ const Wrapper = styled.div`
   height:fit-content;
   margin:0 auto;
   box-shadow:var(--box-shadow-01);
+
+    /* 미디어 쿼리 */
+    @media (max-width : 768px) {
+      max-width: 100%;
+    }
 `
 const Inner = styled.div`
   width: 1050px;
   height:fit-content;
   margin:0 auto;
   box-shadow:var(--box-shadow-01);
+    /* 미디어 쿼리 */
+    @media (max-width : 768px) {
+      max-width: 100%;
+    }
 `
 const Detail = () => {
   return <Wrapper>
@@ -28,8 +37,8 @@ const Detail = () => {
             <TopCover/>
             <PostUploadField placeholder="무슨생각을 하고 계신가요?" />
             <PostList />
-            <PhotoVideoList/>
           </Inner>
+            <PhotoVideoList/>
         </Wrapper>;
 };
 
