@@ -9,7 +9,6 @@ import RightSideBar from "../components/common/RightSideBar";
 import ModalLive from "../components/Modal/ModalLive";
 
 const Wrapper = styled.div`
-  height: 2000px;
   width: 100%;
 `;
 const MainSection = styled.section`
@@ -30,7 +29,7 @@ const Main = () => {
         {/* <LeftSideBar /> */}
         {/* <Maintest></Maintest> */}
         <ModalLive/>
-        <RightSideBar />
+        {/* <RightSideBar /> */}
       </MainSection>
       <ModalCont />
     </Wrapper>

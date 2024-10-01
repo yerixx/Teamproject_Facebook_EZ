@@ -11,18 +11,22 @@ import SellItem1Img from "../../img/sellItem1.jpg"
 import SellItem2Img from "../../img/sellItem2.jpg"
 
 const Commerce = styled.div`
-  width: 1920px;
-  height: 1080px;
-  margin: 0 auto;
+  /* width: 1920px;
+  height: 1080px; */
+  width: 100%;
+  height: 100vh;
+  /* margin: 0 auto; */
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 3px solid #00f;
+  position: absolute;
+  top: 0;
+  left: 0;
+
 `;
 
 const LeftContent = styled.section`
-  width: 1270px;
-  height: 1080px;
+  /* width: 1270px; */
+  flex: 2;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,7 +36,7 @@ const LeftContent = styled.section`
 
 const Live = styled.div`
   width: 500px;
-  height: 860px;
+  height: 700px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -98,8 +102,9 @@ const LivePoint = styled.div`
 `;
 
 const RightContent = styled.section`
-  width: 650px;
-  height: 1080px;
+  background: #fff;
+  flex: 1;
+  height: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -110,21 +115,20 @@ const RightContent = styled.section`
 `;
 
 const LiveProfile = styled.div`
-  width: 520px;
-  height: 110px;
+  width: 100%;
+  padding: 0 40px;
   /* border: 1px solid #f00; */
   display: flex;
-  /* padding: 0 15px; */
   .profileImg {
-    width: 110px;
-    height: 110px;
     background-color: var(--color-light-gray-02);
     border-radius: 50%;
     img {
-      width: 110px;
-      height: 110px;
+      width: 80px;
       border-radius: 50%;
     }
+  }
+  @media screen and (max-width: 1050px) {
+    padding: 0 50px;
   }
 `;
 
@@ -135,88 +139,95 @@ const LiveProfileSelf = styled.div`
   gap: 5px;
   margin-left: 20px;
   .profileName {
-    font-size: 26px;
+    font-size: var(--font-size-title-04);
     font-weight: bold;
     color: var(--color-gray-01);
   }
   .profiledesc {
-    font-size: 18px;
+    font-size: var(--font-size-description-01);
     font-weight: 400;
     color: var(--color-gray-01);
   }
 `;
 
 const LiveContents = styled.div`
-  width: 520px;
-  height: 123px;
+  width: 100%;
+  padding: 0 40px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: start;
+  gap: 10px;
+  font-size: var(--font-size-description-01);
   color: var(--color-gray-01);
-  /* border: 1px solid #f00; */
   h3 {
-    width: 520px;
     border-bottom: 1px solid var(--color-light-gray-01);
-    padding: 15px 0;
-    font-size: 20px;
+    padding-bottom: 15px;
+    /* padding: 15px 0; */
+    font-size: var(--font-size-description-01);
   }
-  p {
-    padding: 15px 0;
+  @media screen and (max-width: 1050px) {
+    padding: 0 50px;
+    font-size: 14px;
   }
 `;
 
 const SellItems = styled.div`
-  width: 520px;
-  height: 280px;
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-  padding: 0 50px;
-  background-color: var(--color-light-gray-02);
-  border-radius: 8px;
+width: 100%;
+/* border: 1px solid #f00; */
+padding: 0 40px;
+@media screen and (max-width: 1050px) {
+    padding: 0 50px;
+  }
 `;
 
 const SellItem = styled.div`
+padding-bottom: 15px;
+background-color: var(--color-light-gray-02);
+border-radius: 8px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: left;
+  gap: 10px;
   h3 {
-    width: 520px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100%;
     color: var(--color-facebookblue);
     border-bottom: 3px solid var(--color-facebookblue);
     padding: 10px 0;
-    font-size: 22px;
+    font-size: var(--font-size-description-01);
+    text-align: center;
+  }
+  @media screen and (max-width: 1050px) {
+    font-size: 14px;
+    h3 {
+      font-size: 14px;
+    }
   }
 `;
 
 const SellInfos = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: 10px;
   align-items: flex-start;
+  padding: 0 20px;
+  @media screen and (max-width: 1050px) {
+    gap: 8px;
+  }
 `;
 
 const SellItemInfo = styled.div`
   display: flex;
-  justify-content: space-around;
   align-items: center;
   gap: 15px;
-  margin: 20px 0;
 `;
 
 const SellItemImg = styled.div`
   width: 70px;
   height: 70px;
-  background-color: var(--color-light-gray-01);
   cursor: pointer;
-  &:hover {
-    background-color: #000;
+  @media screen and (max-width: 1050px) {
+    background-color: none;
   }
 `;
 
@@ -224,54 +235,82 @@ const SellItemDesc = styled.div`
   p {
     padding-bottom: 8px;
     color: var(--color-gray-01);
+    display: -webkit-box;
+  height: 37px;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   }
   span {
     color: #f00;
     margin-right: 8px;
   }
+  @media screen and (max-width: 1050px) {
+    p {
+      font-size: 12px;
+      padding-bottom: 0;
+    }
+  }
 `;
 
 const Comment = styled.div`
-  width: 520px;
-  height: 400px;
-  border: 1px solid #f00;
+  width: 100%;
+  /* border: 1px solid #f00; */
+  padding: 0 40px;
   h3 {
-    width: 520px;
     display: flex;
     justify-content: center;
     align-items: center;
     color: var(--color-facebookblue);
     border-bottom: 3px solid var(--color-facebookblue);
     padding: 10px 0;
-    font-size: 22px;
+    font-size: var(--font-size-description-01);
   }
   span {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px 0;
+    padding: 10px 0;
     color: var(--color-gray-01);
+  }
+  .test{
+    height: 60px;
+    background-color: #ccc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  @media screen and (max-width: 1050px) {
+    border: 1px solid #f00;
+    padding: 0 50px;
+    h3, span {
+      font-size: 14px;
+    }
+    .test {
+      height: 50px;
+    }
   }
 `;
 
 const NoComment = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   padding: 20px 0;
+  font-size: 14px;
   color: var(--color-gray-01);
-  border: 1px solid #f00;
+  /* border: 1px solid #f00; */
   .commentIcon {
-    width: 75px;
-    height: 68px;
     margin-bottom: 10px;
-    /* background-color: var(--color-light-gray-01); */
     .faComments {
-      font-size: 50px;
+      font-size: 40px;
       color: var( --color-facebookblue);
     }
+  }
+  @media screen and (max-width: 1050px) {
+    font-size: 12px;
   }
 `;
 
@@ -297,7 +336,7 @@ const ModalLive = () => {
         <RightContent>
           <LiveProfile>
             <div className='profileImg'>
-            <img src={LiveProfileImg} alt="LiveProfileImg" height="110px" width="110px" />
+            <img src={LiveProfileImg} alt="LiveProfileImg" />
             </div>
             <LiveProfileSelf>
               <div className='profileName'>미니멀데이</div>
@@ -344,6 +383,7 @@ const ModalLive = () => {
               </div>
               <p>댓글이 없습니다. <br/> 첫 번째 댓글을 남겨주세요.</p>
             </NoComment>
+            <div className='test'></div>
           </Comment>
         </RightContent>
       </Commerce>
