@@ -11,7 +11,7 @@ import styled from 'styled-components'
 
 //font
 import { MainTitle_26_b,Paragraph_20_n,MainTitle_18_b,MainTitle_18_n ,SubDescription_16_n} from '../../styles/GlobalStyles.styles.js';
-import PostInputField from "../detail/PostInputField"
+import PostUploadField from "../detail/PostUploadField"
 import { useState } from 'react';
 
 const Wrapper = styled.section`
@@ -328,7 +328,7 @@ const PostItem = ({imageSrc,contentDesc}) => {
             </div>
             </div>
           </CommentLists>
-          <PostInputField />
+          <PostUploadField />
         </Inner>
       </Wrapper>
   )

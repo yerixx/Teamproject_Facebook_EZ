@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-import { HeaderBottom1, HeaderTop1 } from "../components/common/Header";
+
+import { HeaderBottom, HeaderTop } from "../components/common/Header";
 import PhotoVideoList from "../components/detail/PhotoVideoList"
-import PostInputField from "../components/detail/PostInputField"
+import PostUploadField from "../components/detail/PostUploadField"
 import PostList from "../components/detail/PostList";
 import TopCover from "../components/detail/TopCover";
 
@@ -21,11 +22,11 @@ const Inner = styled.div`
 `
 const Detail = () => {
   return <Wrapper>
-          <HeaderTop1 />
-          <HeaderBottom1 />
+          <HeaderTop />
+          <HeaderBottom />
           <Inner>
             <TopCover/>
-            <PostInputField placeholder="무슨생각을 하고 계신가요?" />
+            <PostUploadField placeholder="무슨생각을 하고 계신가요?" />
             <PostList />
             <PhotoVideoList/>
           </Inner>
