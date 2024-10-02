@@ -1,5 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import {
+  MainTitle_26_b,
+  MainTitle_18_n,
+} from "../../styles/GlobalStyles.styles";
 
 /*STYLED*/
 const Wrapper = styled.div`
@@ -21,10 +25,12 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     .name {
-      /* font-size: ; */
+      ${MainTitle_26_b}
+      color:var(--color-gray-01);
     }
     .last_time {
-      /* font-size: ; */
+      ${MainTitle_18_n}
+      color:var(--color-gray-02);
     }
   }
 `;

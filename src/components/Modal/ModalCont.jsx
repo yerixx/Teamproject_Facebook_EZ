@@ -7,6 +7,7 @@ import PostCont from "../ModalConts/PostCont";
 import Buttons from "../ModalConts/Buttons";
 import PostReply from "../ModalConts/PostReply";
 import Reply from "../ModalConts/Reply";
+import SelectBox from "../ModalConts/SelectBox";
 
 const Wrapper = styled.div`
   display: flex;
@@ -50,6 +51,15 @@ const Inner02 = styled.div`
   margin-bottom: 44px;
 `;
 
+const ReplyWrapper = styled.div`
+  border: 1px solid #f0f;
+  height: 290px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
 const ReplyNum = styled.div``;
 
 const Latest = styled.div``;
@@ -71,10 +81,15 @@ const ModalCont = () => {
               <div>총 개의 갯글</div>
             </ReplyNum>
             <Latest>
-              <div>최신순🔽</div>
+              <SelectBox />
             </Latest>
           </Inner02>
-          <PostReply />
+          <ReplyWrapper>
+            <PostReply />
+            <PostReply />
+            <PostReply />
+            <PostReply />
+          </ReplyWrapper>
         </Inner>
         <Reply />
       </WrapperRight>
