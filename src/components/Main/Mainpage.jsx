@@ -53,7 +53,7 @@ const Inner = styled.div`
 
     .icon {
       top: 10px;
-      right: 10px;
+      right: 15px;
       ${MainTitle_24_m}
     }
   }

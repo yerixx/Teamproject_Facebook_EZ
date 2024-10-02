@@ -12,6 +12,9 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  @media (max-width: 390px) {
+    width: 1000px;
+  }
 `;
 
 const Inner = styled.div`
@@ -26,6 +29,12 @@ const Inner = styled.div`
   @media (max-width: 768px) {
     padding: 20px;
   }
+
+  @media (max-width: 390px) {
+    padding: 20px;
+    border-radius: 0;
+  }
+
   .livetext {
     ${MainTitle_18_b};
     margin-bottom: 15px;
@@ -45,7 +54,7 @@ const Livecard = styled.div`
   flex: 1 1 244px;
   max-width: 244px;
   height: auto;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); */
   border-radius: 8px;
   overflow: hidden;
   display: flex;
@@ -56,10 +65,14 @@ const Livecard = styled.div`
     width: 100%;
     height: 250px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 8px 8px 0 0;
 
     @media (max-width: 768px) {
       width: 175px;
+      height: 250px;
+    }
+    @media (max-width: 390px) {
+      width: 200px;
       height: 250px;
     }
   }
@@ -75,6 +88,9 @@ const Livecard = styled.div`
     width: 100%;
     height: 43px;
     border-radius: 8px 8px 0 0;
+    @media (max-width: 390px) {
+      width: 200px;
+    }
 
     .liveBage {
       background: #ed413f;
@@ -89,7 +105,6 @@ const Livecard = styled.div`
     }
     .item {
       display: flex;
-
       gap: 40px;
       @media (max-width: 768px) {
         display: flex;
@@ -120,12 +135,15 @@ const Livecard = styled.div`
     background: rgba(0, 0, 0, 0.6);
     color: var(--color-white);
     height: 85px;
+    @media (max-width: 390px) {
+      width: 200px;
+      border-radius: 0 0 8px 8px;
+    }
     > img {
       width: 50px;
       height: 50px;
       opacity: 0.8;
       border-radius: 8px;
-
       @media (max-width: 768px) {
         width: 50px;
         height: 50px;

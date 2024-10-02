@@ -183,7 +183,7 @@ const Mainmodal = ({ onClose, onSubmit }) => {
             <textarea
               value={postText}
               onChange={(e) => setPostText(e.target.value)}
-              placeholder="오늘은 리액트를 배웠다."
+              placeholder="게시물을 입력하세요."
               required
             />
             {postImage && (

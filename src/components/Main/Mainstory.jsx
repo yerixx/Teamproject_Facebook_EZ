@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { IoPersonSharp } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa";
+
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -13,7 +17,9 @@ const Wrapper = styled.div`
   @media (max-width: 768px) {
     margin-top: 30px;
   }
+
   @media (max-width: 390px) {
+    /* max-width: 100%; */
     margin-top: 20px;
     gap: 5px;
   }
@@ -21,114 +27,67 @@ const Wrapper = styled.div`
 
 const Inner = styled.div`
   width: 1000px;
-  height: 302px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-  border-radius: var(--border-radius-30);
-  display: flex;
-  align-items: center;
-  padding: 27px 30px;
-  gap: 8px;
+  border-radius: 30px;
+
+  .inner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 
   @media (max-width: 768px) {
     width: 100%;
     padding: 20px;
   }
+
+  @media (max-width: 390px) {
+    border-radius: 0px;
+  }
 `;
 
 const StoryItem = styled.div`
+  padding: 10px;
   width: 150px;
-  height: 252px;
-  border-radius: 8px;
+  height: 300px;
+  border-radius: 30px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-  background: var(--color-light-gray-01);
-  position: relative;
+  .myStory {
+    border-radius: 30px;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    background-color: #ddd;
+
+    /* 아이콘이나 텍스트 추가 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #555;
+    font-size: 24px;
+  }
 
   @media (max-width: 768px) {
     width: 38%;
     height: 250px;
   }
+
   @media (max-width: 390px) {
-    width: 44%;
+    width: 150px;
     height: 255px;
-    border: 1px solid red;
-  }
-
-  .myStory {
-    border-radius: 8px 8px 0 0;
-    position: relative;
-
-    .humanIcon {
-      width: 100%;
-      height: 158px;
-      font-size: 167px;
-      color: var(--color-gray-01);
-      position: absolute;
-      top: 0;
-      right: 7px;
-    }
-
-    .storyMake {
-      .plusIcon {
-        border-radius: 50%;
-        background: var(--color-facebookblue);
-        width: 44px;
-        height: 44px;
-        border: 4px solid #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 25px;
-        color: #fff;
-        position: absolute;
-        top: 135px;
-        left: 55px;
-        z-index: 1;
-        cursor: pointer;
-      }
-    }
-
-    .textItem {
-      width: 100%;
-      height: 94px;
-      display: flex;
-      position: absolute;
-      top: 157px;
-      border-radius: 0 0 8px 8px;
-      background: #fff;
-    }
-
-    .text {
-      position: absolute;
-      top: 225px;
-      left: 35px;
-    }
   }
 `;
 
 const StoryFriend = styled.div`
+  padding: 10px;
   width: 150px;
-  height: 252px;
-  border-radius: 8px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-  position: relative;
-  overflow: hidden;
 
-  @media (max-width: 768px) {
-    width: 35%;
-    height: 250px;
-  }
-  @media (max-width: 390px) {
-    width: 44%;
-    height: 255px;
-  }
   .storyInfo {
+    width: 100%;
     position: relative;
-
     img {
       width: 100%;
-      height: 252px;
-      border-radius: 8px;
-      object-fit: cover;
+      border-radius: 30px;
       opacity: 0.8;
     }
 
@@ -139,7 +98,7 @@ const StoryFriend = styled.div`
       top: 8px;
       left: 8px;
       border-radius: 50%;
-      border: 3px solid var(--color-facebookblue);
+      border: 3px solid #1877f2; /* var(--color-facebookblue) 대체 */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -148,7 +107,7 @@ const StoryFriend = styled.div`
       .storyProfile {
         width: 100%;
         height: 100%;
-        background: var(--color-gray-01);
+        background: #aaa; /* var(--color-gray-01) 대체 */
         border-radius: 50%;
       }
     }
@@ -161,68 +120,106 @@ const StoryFriend = styled.div`
       height: 36px;
       background: rgba(0, 0, 0, 0.6);
       color: white;
-      padding-left: 10px;
+      padding-left: 20px;
       line-height: 36px;
       font-size: 14px;
-      border-radius: 0 0 8px 8px;
+      border-radius: 0 0 30px 30px;
     }
+  }
+
+  @media (max-width: 768px) {
+    width: 35%;
+    height: 250px;
+  }
+
+  @media (max-width: 390px) {
+    width: 150px;
+    height: 255px;
   }
 `;
 
 const MainStory = () => {
-  const [storyCount, setStoryCount] = useState(5); // Initial story count
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 390) {
-        setStoryCount(1); // Show 2 stories on very small screens
-      } else if (window.innerWidth <= 768) {
-        setStoryCount(4); // Show 4 stories on medium screens
-      } else {
-        setStoryCount(5); // Show 5 stories on larger screens
-      }
-    };
-
-    handleResize();
-
-    // Add event listener for window resize
-    window.addEventListener("resize", handleResize);
-
-    // Cleanup event listener on unmount
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const settings = {
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    autoplay: true,
+    draggable: true,
+    fade: false,
+    arrows: true,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1050,
+        settings: {
+          slidesToShow: 5,
+          arrows: true,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 5,
+        },
+      },
+    ],
+  };
 
   return (
     <Wrapper>
       <Inner>
-        <StoryItem>
-          <div className="myStory">
-            <div className="humanIcon">
-              <IoPersonSharp />
+        <Slider className="inner" {...settings}>
+          <StoryItem>
+            <div className="myStory">
+              <IoPersonSharp /> {/* 아이콘 추가 */}
+              {/* 또는 원하는 콘텐츠 추가 */}
             </div>
-            <div className="storyMake">
-              <div className="plusIcon">
-                <FaPlus />
-              </div>
-            </div>
-            <div className="textItem"></div>
-            <div className="text">스토리 만들기</div>
-          </div>
-        </StoryItem>
-        {[...Array(storyCount)].map((_, index) => (
-          <StoryFriend key={index}>
+          </StoryItem>
+          <StoryFriend>
             <div className="storyInfo">
-              <img src="/img/test.jpg" alt="testimg" />{" "}
-              {/* Corrected image path */}
+              <img src="/img/test.jpg" alt="testimg" />
               <div className="story">
                 <div className="storyProfile"></div>
               </div>
               <div className="storyName">김정하</div>
             </div>
           </StoryFriend>
-        ))}
+          <StoryFriend>
+            <div className="storyInfo">
+              <img src="/img/test.jpg" alt="testimg" />
+              <div className="story">
+                <div className="storyProfile"></div>
+              </div>
+              <div className="storyName">김정하</div>
+            </div>
+          </StoryFriend>
+          <StoryFriend>
+            <div className="storyInfo">
+              <img src="/img/test.jpg" alt="testimg" />
+              <div className="story">
+                <div className="storyProfile"></div>
+              </div>
+              <div className="storyName">김정하</div>
+            </div>
+          </StoryFriend>
+          <StoryFriend>
+            <div className="storyInfo">
+              <img src="/img/test.jpg" alt="testimg" />
+              <div className="story">
+                <div className="storyProfile"></div>
+              </div>
+              <div className="storyName">김정하</div>
+            </div>
+          </StoryFriend>
+          <StoryFriend>
+            <div className="storyInfo">
+              <img src="/img/test.jpg" alt="testimg" />
+              <div className="story">
+                <div className="storyProfile"></div>
+              </div>
+              <div className="storyName">김정하</div>
+            </div>
+          </StoryFriend>
+        </Slider>
       </Inner>
     </Wrapper>
   );
