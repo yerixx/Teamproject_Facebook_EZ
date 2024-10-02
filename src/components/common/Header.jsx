@@ -1,15 +1,15 @@
+import styled from "styled-components";
 // import logoImg from "../../img/Logo.png";
-import { AiFillHome } from "react-icons/ai";
-import { AiOutlineShop } from "react-icons/ai";
-import { BsCollectionPlay } from "react-icons/bs";
-import { FaBell , FaMoon } from "react-icons/fa";
+import HeaderlogoImg from "../../img/HeaderLogo.svg";
 import { FaMagnifyingGlass } from "react-icons/fa6";
+import { AiFillHome } from "react-icons/ai";
+import { BsCollectionPlay } from "react-icons/bs";
+import { AiOutlineShop } from "react-icons/ai";
 import { IoPeopleOutline } from "react-icons/io5";
 import { MdOutlineLogout } from "react-icons/md";
+import { FaBell } from "react-icons/fa";
+import { FaMoon } from "react-icons/fa";
 import { TbGridDots } from "react-icons/tb";
-import styled from "styled-components";
-
-import HeaderlogoImg from "../../img/HeaderLogo.svg";
 
 const Header = styled.div`
   background-color: var(--color-white);
