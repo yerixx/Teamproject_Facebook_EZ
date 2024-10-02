@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import SocialBtnIcon from './SocialBtnIcon.jsx';
+
 
 import testCat from '../../img/testcat.jpg';
 
@@ -39,6 +41,10 @@ const ContText = styled.div`
     ${MainTitle_18_n}
     color:var(--color-gray-02);
   }
+      /* 미디어 쿼리 */
+      @media (max-width : 768px) {
+      width:100%;
+    }
 `
 
 const PhotoVideoItem = ({title,desc, imageSrc}) => {
@@ -50,6 +56,7 @@ const PhotoVideoItem = ({title,desc, imageSrc}) => {
             <div className='contTitle'>{title || "Summer~ ✨"}</div>
             <div className='contDesc'>{desc || "18 Image"} </div>
           </ContText>
+          <SocialBtnIcon/>
       </Contents>
     </Inner>
   )

@@ -38,7 +38,7 @@ const Detail = () => {
             <PostUploadField placeholder="무슨생각을 하고 계신가요?" />
             <PostList />
           </Inner>
-            <PhotoVideoList/>
+            {/* <PhotoVideoList/> */}
         </Wrapper>;
 };
 

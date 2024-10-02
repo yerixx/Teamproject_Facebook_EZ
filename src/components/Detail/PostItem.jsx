@@ -1,10 +1,8 @@
 import React from 'react'
+import SocialBtnIcon from './SocialBtnIcon.jsx';
 
 // react-icon
 import { BsThreeDots } from "react-icons/bs";
-import { FaRegHeart , FaRegComment } from "react-icons/fa";
-import { FaRegBookmark } from "react-icons/fa6";
-import { FiShare } from "react-icons/fi";
 import { IoCloseOutline } from "react-icons/io5";
 import { SlArrowDown } from "react-icons/sl";
 import styled from 'styled-components'
@@ -12,7 +10,6 @@ import styled from 'styled-components'
 //font
 import { MainTitle_26_b,MainTitle_24_m,Paragraph_20_n,MainTitle_18_b,MainTitle_18_n,SubDescription_16_n} from '../../styles/GlobalStyles.styles.js';
 import PostUploadField from "../detail/PostUploadField"
-import { useState } from 'react';
 
 const Wrapper = styled.section`
 width:100%;
@@ -20,10 +17,10 @@ height:fit-content;
 display:flex;
 justify-content: center;
 align-items: center;
-    /* 미디어 쿼리 */
-    @media (max-width : 768px) {
-      max-width: 100%;
-    }
+  /* 미디어 쿼리 */
+  @media (max-width : 768px) {
+  max-width: 100%;
+}
 `
 const Inner = styled.article`
     width:1050px;
@@ -140,44 +137,6 @@ const ContImg = styled.img`
         @media (max-width : 768px) {
           max-width: 100%;
     }
-`
-const SocialBtnIcon = styled.div`
-  ${Paragraph_20_n}
-  display:flex;
-  justify-content: space-between;
-  align-items: center;
-  width:100%;
-  height:80px;
-  padding:0 10px 20px;
-  border-bottom:1px solid var(--color-light-gray-01);
-  .socialIcon{
-    ${Paragraph_20_n}
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap:10px;
-      /* 미디어 쿼리 */
-      @media (max-width : 768px) {
-        width:50%;
-        justify-content: center;
-        margin-right:20px;
-        font-size:30px;
-        color:var(--color-gray-01);
-        /* border:1px solid #f00; */
-        &:last-child{
-          margin-right:0px;
-        }
-    }
-    &:hover{
-      color:var(--color-facebookblue);
-    }
-    .socialIconText{
-     /* 미디어 쿼리 */
-     @media (max-width : 768px) {
-      display: none;
-     }
-    }
-  }
 `
 const CommentTop = styled.div`
   ${Paragraph_20_n}
@@ -313,9 +272,6 @@ const DescBottom = styled.div`
     }
 `
 
-
-
-
 const PostItem = ({imageSrc,contentDesc}) => {
   return (
       <Wrapper>
@@ -339,27 +295,10 @@ const PostItem = ({imageSrc,contentDesc}) => {
             </div>
             {imageSrc && <ContImg src={imageSrc} alt={"Content Image"}/>}
           </Contents>
-          <SocialBtnIcon>
-            <div className='socialIcon'>
-              <FaRegHeart/>
-              <div className='socialIconText'>좋아요</div>
-            </div>
-            <div className='socialIcon'>
-              <FaRegComment/>
-              <div className='socialIconText'>댓글</div>
-            </div>
-            <div className='socialIcon'>
-              <FiShare/>
-              <div className='socialIconText'>공유하기</div>
-            </div>
-            <div className='socialIcon'>
-              <FaRegBookmark/>
-              <div className='socialIconText'>저장하기</div>
-            </div>
-          </SocialBtnIcon>
+          <SocialBtnIcon/>
           <CommentTop>
                 <div>총 29개의 댓글</div>
-                 <div className='commentTopRight'>
+                  <div className='commentTopRight'>
                   <div>최신순</div>
                   <div><SlArrowDown className='SlArrowDown' /></div>
                 </div>
