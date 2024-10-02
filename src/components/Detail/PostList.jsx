@@ -1,8 +1,8 @@
 import React from 'react'
 import PostItem from "../detail/PostItem"
 
-import testCat from '../../img/testcat.jpg';
-import summerImg from "../../img/summer.png"
+import testCat from '/img/testcat.jpg';
+import summerImg from "/img/summer.png"
 
 
 

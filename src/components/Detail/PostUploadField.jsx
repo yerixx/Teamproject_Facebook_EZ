@@ -10,7 +10,7 @@ import { CiEdit } from "react-icons/ci";
 import { FaRegEdit } from "react-icons/fa";
 
 //img
-import testCat from '../../img/testcat.jpg';
+import testCat from '/img/testcat.jpg';
 
 //font
 import {MainTitle_18_n,SubDescription_16_n} from '../../styles/GlobalStyles.styles.js';

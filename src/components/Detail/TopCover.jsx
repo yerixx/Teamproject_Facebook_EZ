@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import ProfileCard from './ProfileCard';
 
-import testCat from '../../img/testcat.jpg';
+import testCat from '/img/testcat.jpg';
 
 
 const Wrapper = styled.section`
