@@ -3,7 +3,7 @@
     {
       "userId": "1",
       "id": "1",
-      "name": {
+      "userName": {
         "firstName": "김",
         "lastName": "정하"
       },
@@ -16,14 +16,14 @@
       },
       "gender": "female",
       "birthdate": "1990-10-05",
-      "region": "서울특별시",
-      "posts": ["1", "2", "3"],
+      "city": "서울특별시",
+      "posts": ["1", "2", "3", "4", "5"],
       "likeCategory": ["반려동물", "해외축구", "여행"]
     },
     {
       "userId": "2",
       "id": "2",
-      "name": {
+      "userName": {
         "firstName": "박",
         "lastName": "미림"
       },
@@ -36,7 +36,7 @@
       },
       "gender": "female",
       "birthdate": "1992-03-20",
-      "region": "부산광역시",
+      "city": "부산광역시",
       "posts": [],
       "likeCategory": ["반려동물", "해외축구", "여행"]
     }

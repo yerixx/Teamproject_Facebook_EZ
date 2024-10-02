@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import summerImg from "../../img/summer.png"
+import summerImg from "/img/summer.png"
 import PhotoVideoItem from "../detail/PhotoVideoItem.jsx"
 
 

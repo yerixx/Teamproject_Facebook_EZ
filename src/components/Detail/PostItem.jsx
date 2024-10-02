@@ -1,18 +1,15 @@
 import React from 'react'
+import SocialBtnIcon from './SocialBtnIcon.jsx';
 
 // react-icon
 import { BsThreeDots } from "react-icons/bs";
-import { FaRegHeart , FaRegComment } from "react-icons/fa";
-import { FaRegBookmark } from "react-icons/fa6";
-import { FiShare } from "react-icons/fi";
 import { IoCloseOutline } from "react-icons/io5";
 import { SlArrowDown } from "react-icons/sl";
 import styled from 'styled-components'
 
 //font
-import { MainTitle_26_b,Paragraph_20_n,MainTitle_18_b,MainTitle_18_n ,SubDescription_16_n} from '../../styles/GlobalStyles.styles.js';
-import PostInputField from "../detail/PostInputField"
-import { useState } from 'react';
+import { MainTitle_26_b,MainTitle_24_m,Paragraph_20_n,MainTitle_18_b,MainTitle_18_n,SubDescription_16_n} from '../../styles/GlobalStyles.styles.js';
+import PostUploadField from "../detail/PostUploadField"
 
 const Wrapper = styled.section`
 width:100%;
@@ -20,21 +17,36 @@ height:fit-content;
 display:flex;
 justify-content: center;
 align-items: center;
+  /* 미디어 쿼리 */
+  @media (max-width : 768px) {
+  max-width: 100%;
+}
 `
 const Inner = styled.article`
     width:1050px;
     height:100%;
     padding:0 90px;
-
+    /* 미디어 쿼리 */
+    @media (max-width : 768px) {
+      max-width: 100%;
+    }
 `
 const Profile = styled.div`
     display: flex;
     align-items: center;
     justify-content:space-between;
+     /* 미디어 쿼리 */
+    @media (max-width : 768px) {
+      width: 100%;
+    }
     .profileContent{
       display: flex;
       align-items: center;
       gap:30px;
+     /* 미디어 쿼리 */
+    @media (max-width : 768px) {
+      width: 100%;
+    }
     .profileImg{
       width:80px;
       height:80px;
@@ -44,11 +56,18 @@ const Profile = styled.div`
     .profileName{
       ${MainTitle_26_b}
       color:var(--color-gray-01);
+      @media (max-width : 768px) {
+        ${MainTitle_24_m}
+        font-weight:700;
+      }
     }
     .profileDesc{
       ${Paragraph_20_n}
       padding:4px 0;
       color:var(--color-gray-02);
+      @media (max-width : 768px) {
+        ${MainTitle_18_n}
+       }
       }
     }
     .ControlsIcon{
@@ -70,6 +89,8 @@ padding:30px 0 0;
   ${MainTitle_18_b};
   font-weight: normal;
   word-break: break-all;
+  margin-bottom:30px;
+
 }
 .contentImgs{
   display: flex;
@@ -101,33 +122,21 @@ padding:30px 0 0;
   }
 
 }
+    /* 미디어 쿼리 */
+    @media (max-width : 768px) {
+      max-width: 100%;
+    }
 `
 const ContImg = styled.img`
-    margin:30px 0;
+    margin-bottom:30px;
     width:850px;
     height:400px;
     background:var(--color-light-gray-01);
     object-fit:cover;
-`
-const SocialBtnIcon = styled.div`
-  ${Paragraph_20_n}
-  display:flex;
-  justify-content: space-between;
-  align-items: center;
-  width:100%;
-  height:80px;
-  padding:0 10px 20px;
-  border-bottom:1px solid var(--color-light-gray-01);
-  .socialIcon{
-    ${Paragraph_20_n}
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap:10px;
-    &:hover{
-      color:var(--color-facebookblue);
+        /* 미디어 쿼리 */
+        @media (max-width : 768px) {
+          max-width: 100%;
     }
-  }
 `
 const CommentTop = styled.div`
   ${Paragraph_20_n}
@@ -143,7 +152,10 @@ const CommentTop = styled.div`
       cursor: pointer;
     }
   }
-
+    /* 미디어 쿼리 */
+    @media (max-width : 768px) {
+      width:100%;
+    }
 `
 const CommentLists = styled.div`
   ${MainTitle_18_n}
@@ -187,7 +199,7 @@ const CommentLists = styled.div`
         transform: rotate(-30deg); 
       }
       }
-      .firstDescBottom{
+      .DescBottom{
         display: flex;
         gap:10px;
         padding:0 20px;
@@ -236,22 +248,29 @@ const CommentLists = styled.div`
         transform: rotate(10deg); 
         }
       }
-      .secDescBottom{
-        display: flex;
-        gap:10px;
-        padding:0 20px;
-        color:var(--color-gray-02);
-        cursor: pointer;
-        transition: color 0.5s;
-        *:hover{
-        color:var(--color-black);
-        }
-      }
+
     }
   }
-  
+      /* 미디어 쿼리 */
+      @media (max-width : 768px) {
+        max-width: 100%;
+    }
 `
-
+const DescBottom = styled.div`
+    display: flex;
+    gap:10px;
+    padding:0 20px;
+    color:var(--color-gray-02);
+    cursor: pointer;
+    transition: color 0.5s;
+      *:hover{
+      color:var(--color-black);
+      }
+    /* 미디어 쿼리 */
+    @media (max-width : 768px) {
+      ${SubDescription_16_n}
+    }
+`
 
 const PostItem = ({imageSrc,contentDesc}) => {
   return (
@@ -276,23 +295,10 @@ const PostItem = ({imageSrc,contentDesc}) => {
             </div>
             {imageSrc && <ContImg src={imageSrc} alt={"Content Image"}/>}
           </Contents>
-          <SocialBtnIcon>
-            <div className='socialIcon'>
-              <FaRegHeart/>좋아요
-            </div>
-            <div className='socialIcon'>
-              <FaRegComment/>댓글
-            </div>
-            <div className='socialIcon'>
-              <FiShare/>공유하기
-            </div>
-            <div className='socialIcon'>
-              <FaRegBookmark/>저장하기
-            </div>
-          </SocialBtnIcon>
+          <SocialBtnIcon/>
           <CommentTop>
                 <div>총 29개의 댓글</div>
-                 <div className='commentTopRight'>
+                  <div className='commentTopRight'>
                   <div>최신순</div>
                   <div><SlArrowDown className='SlArrowDown' /></div>
                 </div>
@@ -308,10 +314,10 @@ const PostItem = ({imageSrc,contentDesc}) => {
                     <b>김정하</b> <span>여기 가보는 거 어때?</span>
                   </span>
                 </div>
-                <div className='firstDescBottom'>
+                <DescBottom>
                   <div>좋아요</div>
                   <div>답글달기</div>
-                </div>
+                </DescBottom>
               </div>
             </div>
             <div className='commentList'>
@@ -321,14 +327,14 @@ const PostItem = ({imageSrc,contentDesc}) => {
                 <div className='secDescTop'>
                   <b>김정하</b> <span>완전 좋아요!!</span>
                 </div>
-                <div className='secDescBottom'>
+                <DescBottom>
                   <div>좋아요</div>
                   <div>답글달기</div>
-                </div>
+                </DescBottom>
             </div>
             </div>
           </CommentLists>
-          <PostInputField />
+          <PostUploadField />
         </Inner>
       </Wrapper>
   )
