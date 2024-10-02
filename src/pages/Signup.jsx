@@ -35,16 +35,19 @@ const Signup = () => {
   return (
     <Wrapper
       style={{
-        // height: mobileSize ? `100vh` : `auto`,
-        padding: mobileSize ? `15px 0` : `100px 0 150px`,
+        height: `auto`,
+        minHeight: `100vh`,
+        flexDirection: `column`,
+        gap: `20px`,
+        padding: mobileSize ? `20px 0` : `100px 0 150px`,
       }}
     >
+      {mobileSize ? (
+        <MobileHeader title={"Facebook에 가입하기"}></MobileHeader>
+      ) : (
+        <FormTitle>Facebook에 가입하기</FormTitle>
+      )}
       <Inner>
-        {mobileSize ? (
-          <MobileHeader title={"Facebook에 가입하기"}></MobileHeader>
-        ) : (
-          <FormTitle>Facebook에 가입하기</FormTitle>
-        )}
         {mobileSize ? null : (
           <Logo>
             <img src={letterLogoImg} alt="Logo" />

@@ -1,14 +1,22 @@
 import styled from "styled-components";
 
 const Wrapper = styled.div`
+  z-index: 3;
+  position: sticky;
+  top: 110px;
+  right: 20px;
+  width: 382px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  background: #fff;
+  padding: 28px 20px;
+  border-radius: var(--border-radius-30);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 `;
 
 const Group = styled.div`
-  padding: 28px 20px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); */
   border-radius: var(--border-radius-30);
   display: flex;
   flex-direction: column;
@@ -60,6 +68,42 @@ const LeftSideBar = () => {
         <span>회원님을 위한 커뮤니티</span>
         <span>+</span>
       </div>
+      <Group>
+        <h3>추천그룹</h3>
+        <GroupContents>
+          <img />
+          <GroupTitle>
+            <h2>여행</h2>
+            <div>
+              <span>동영상 크리에이터</span> ・ <span>팔로워 10만명</span>
+            </div>
+          </GroupTitle>
+
+          <span>팔로우</span>
+        </GroupContents>
+        <GroupContents>
+          <img />
+          <GroupTitle>
+            <h2>여행에 미치다</h2>
+            <div>
+              <span>동영상 크리에이터</span> ・ <span>팔로워 6111만명</span>
+            </div>
+          </GroupTitle>
+
+          <span>팔로우</span>
+        </GroupContents>
+        <GroupContents>
+          <img />
+          <GroupTitle>
+            <h2>여행 다녀왔습니다.</h2>
+            <div>
+              <span>동영상 크리에이터</span> ・ <span>팔로워 1만명</span>
+            </div>
+          </GroupTitle>
+
+          <span>팔로우</span>
+        </GroupContents>
+      </Group>
       <Group>
         <h3>추천그룹</h3>
         <GroupContents>

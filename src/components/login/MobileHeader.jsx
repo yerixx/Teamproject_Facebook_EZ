@@ -4,17 +4,17 @@ import { FormTitle } from "./login-components";
 
 const Wrapper = styled.div`
   width: 100%;
-  min-width: 390px;
+  max-width: 390px;
   height: 60px;
   display: flex;
   align-items: center;
   gap: 5px;
-  position: fixed;
+  /* position: fixed;
   top: 0;
   left: 0;
-  padding: 0 15px;
-  background: var(--color-white);
-  border-bottom: 1px solid var(--color-gray-02);
+  padding: 0 15px; */
+  /* background: var(--color-white); */
+  border-bottom: 1px solid var(--color-light-gray-01);
 `;
 const GoBackBtn = styled.button`
   width: 30px;

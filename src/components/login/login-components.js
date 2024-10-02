@@ -36,16 +36,6 @@ export const Button = styled.button`
     border: 1px solid var(--color-facebookblue);
     color: var(--color-facebookblue);
   }
-  &.mobileNextButton {
-    width: 360px;
-    max-width: 360px;
-    border: 1px solid transparent;
-    background: var(--color-facebookblue);
-    color: var(--color-white);
-    &:active {
-      background: var(--color-hoverblue);
-    }
-  }
   @media screen and (max-width: 768px) {
     width: 100%;
     border-radius: 50px;
@@ -75,6 +65,7 @@ export const Inner = styled.article`
     width: 390px;
     min-width: 390px;
     padding: 0 15px;
+    /* overflow: scroll; */
   }
 `;
 export const FormContainer = styled.div`
@@ -91,6 +82,7 @@ export const FormContainer = styled.div`
     flex-direction: column;
     padding: 0;
     box-shadow: none;
+    /* margin-top: 60px; */
   }
 `;
 
@@ -118,6 +110,9 @@ export const Ul = styled.ul`
     p {
       margin: 8px 0 10px;
     }
+  }
+  @media screen and (max-width: 768px) {
+    margin-bottom: 0;
   }
 `;
 export const InputWrapperColumn = styled.div`

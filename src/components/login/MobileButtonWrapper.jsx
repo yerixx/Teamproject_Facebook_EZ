@@ -1,28 +1,48 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { SubDescription_14_n } from "../../styles/GlobalStyles.styles";
 import { Button } from "./login-components";
 
 const Wrapper = styled.div`
   width: 100%;
-  position: fixed;
-  bottom: 0;
+  /* position: fixed;
+  bottom: 0; */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 15px;
+  /* padding: 15px;
   background: var(--color-white);
-  box-shadow: 0 -5px 10px var(--color-light-gray-01);
+  border-top: 1px solid var(--color-light-gray-01); */
+  button {
+    width: 360px;
+    max-width: 360px;
+    &.mobileNextButton {
+      border: 1px solid transparent;
+      background: var(--color-facebookblue);
+      color: var(--color-white);
+      &:active {
+        background: var(--color-hoverblue);
+      }
+    }
+  }
   span {
+    ${SubDescription_14_n}
+    color: var(--color-gray-01);
+    cursor: pointer;
   }
 `;
 
-const MobileButtonWrapper = () => {
+const MobileButtonWrapper = ({ skipBtn }) => {
   return (
     <Wrapper>
       <Button className="mobileNextButton">다음</Button>
-      <span>이미 계정이 있습니다</span>
+      {skipBtn ? <Button>건너뛰기</Button> : null}
+      <Link to={"/login"}>
+        <span>이미 계정이 있습니다</span>
+      </Link>
     </Wrapper>
   );
 };

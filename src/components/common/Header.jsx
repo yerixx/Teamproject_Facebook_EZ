@@ -1,17 +1,19 @@
-import styled from "styled-components";
 // import logoImg from "../../img/Logo.png";
-import HeaderlogoImg from "../../img/HeaderLogo.svg";
-import { FaMagnifyingGlass } from "react-icons/fa6";
 import { AiFillHome } from "react-icons/ai";
-import { BsCollectionPlay } from "react-icons/bs";
 import { AiOutlineShop } from "react-icons/ai";
+import { BsCollectionPlay } from "react-icons/bs";
+import { FaBell , FaMoon } from "react-icons/fa";
+import { FaMagnifyingGlass } from "react-icons/fa6";
 import { IoPeopleOutline } from "react-icons/io5";
 import { MdOutlineLogout } from "react-icons/md";
-import { FaBell } from "react-icons/fa";
-import { FaMoon } from "react-icons/fa";
 import { TbGridDots } from "react-icons/tb";
+import styled from "styled-components";
+
+import HeaderlogoImg from "../../img/HeaderLogo.svg";
 
 const Header = styled.div`
+  background-color: var(--color-white);
+  z-index: 100;
   width: 100%;
   height: 56px;
   display: flex;
@@ -20,8 +22,11 @@ const Header = styled.div`
   img {
     height: 26px;
   }
+  z-index: 5;
 `;
 const HeaderSticky = styled.div`
+  background-color: var(--color-white);
+  z-index: 100;
   padding: 0 15px;
   width: 100%;
   height: 88px;
@@ -34,11 +39,13 @@ const HeaderSticky = styled.div`
   -webkit-box-shadow: 0 4px 6px -6px #222;
   -moz-box-shadow: 0 4px 6px -6px #222;
   box-shadow: 0 4px 6px -6px #222;
+  margin-bottom: 20px;
 `;
 
 const Left = styled.div`
-  flex: 1;
+  width: 100%;
   display: flex;
+  justify-content: flex-start;
   gap: 20px;
   img {
     height: 40px;
@@ -63,10 +70,12 @@ const Left = styled.div`
   }
 `;
 const Center = styled.div`
-  flex: 1.4;
   display: flex;
-  justify-content: space-evenly;
   align-items: center;
+  position: absolute;
+  gap: 10px;
+  left: 50%;
+  transform: translateX(-50%);
   /* border: 1px solid #ddd; */
   height: 100%;
   div {
@@ -83,18 +92,17 @@ const Center = styled.div`
   }
 `;
 const Right = styled.div`
+  width: 500px;
   height: 100%;
-  flex: 1;
   display: flex;
-  justify-content: flex-end;
-  gap: 20px;
+  justify-content: space-between;
+  gap: 15px;
 `;
 const RightFirst = styled.div`
-  width: 156px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
   span {
     cursor: pointer;
     font-size: 14px;
@@ -106,7 +114,7 @@ const ProfileWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 3px;
   div {
     background: #999;
     width: 40px;
@@ -120,16 +128,16 @@ const ProfileWrap = styled.div`
 `;
 
 const RightSecond = styled.div`
-  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 12px;
+  gap: 5px;
   svg {
     font-size: 18px;
   }
 `;
 const IconWrap = styled.div`
+  cursor: pointer;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -139,7 +147,7 @@ const IconWrap = styled.div`
   align-items: center;
 `;
 
-export const HeaderTop1 = () => {
+export const HeaderTop = () => {
   return (
     <Header>
       <img src={HeaderlogoImg} alt="" />
@@ -147,7 +155,7 @@ export const HeaderTop1 = () => {
   );
 };
 
-export const HeaderBottom1 = () => {
+export const HeaderBottom = () => {
   return (
     <HeaderSticky>
       <Left>

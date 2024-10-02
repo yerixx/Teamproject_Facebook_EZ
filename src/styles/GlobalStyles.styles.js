@@ -1,4 +1,5 @@
 import { createGlobalStyle, css } from "styled-components";
+
 import font from "../font/NotoSansKR-VariableFont_wght.ttf";
 
 const GlobalStyles = createGlobalStyle`
@@ -46,9 +47,10 @@ body{
     --line-weight-03: 3px;
     --line-weight-05: 5px;
     /* box-shadow */
-    --box-shadow-01: 3px 5px 10px 0px rgba(15, 22, 30, 0.07);
-    --box-shadow-02:  3px 8px 10px 0px rgba(15, 22, 30, 0.11);
-    /* Inner size */
+    --box-shadow-01: 0px 0px 8px rgba(0, 0, 0, 0.1);
+    --box-shadow-02: 3px 8px 10px 0px rgba(15, 22, 30, 0.11);
+    
+     /* Inner size */
     --inner-width: 1050px;
 }
 `;
@@ -89,6 +91,12 @@ export const MainTitle_18_b = css`
   font-weight: bold;
   font-size: 18px;
 `;
+// Main-title 05
+export const MainTitle_18_n = css`
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: normal;
+  font-size: 18px;
+`;
 // Main-description
 export const MainDescription_36_n = css`
   font-family: "Noto Sans KR", sans-serif;
@@ -102,18 +110,26 @@ export const SubTitle_16_b = css`
   font-size: 16px;
 `;
 // Sub-description 01
-export const SubDescription_16_n = css`
-  font-family: "Noto Sans KR", sans-serif;
-  font-weight: normal;
-  font-size: 16px;
-`;
-// Sub-description 02
 export const SubDescription_22_n = css`
   font-family: "Noto Sans KR", sans-serif;
   font-weight: normal;
   font-size: 22px;
 `;
 // Sub-description 02
+export const SubDescription_16_n = css`
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: normal;
+  font-size: 16px;
+`;
+
+// Sub-description 03
+export const SubDescription_14_n = css`
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+`;
+
+// Sub-description 04
 export const SubDescription_12_m = css`
   font-family: "Noto Sans KR", sans-serif;
   font-weight: 500; /* Medium */

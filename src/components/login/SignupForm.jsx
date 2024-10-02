@@ -51,16 +51,17 @@ const SignupForm = ({ mobileSize }) => {
                 type="text"
                 required
                 placeholder="이메일 또는 휴대폰 번호"
-                width={320}
+                style={{
+                  width: mobileSize ? 270 : 320,
+                }}
               />
               <Input
                 name="certification"
                 type="submit"
                 value="인증"
                 required
-                width={100}
                 style={{
-                  width: `80px`,
+                  width: mobileSize ? `80px` : 100,
                   borderRadius: `var(--border-radius-08)`,
                 }}
               />
@@ -71,16 +72,17 @@ const SignupForm = ({ mobileSize }) => {
                 type="text"
                 required
                 placeholder="인증코드"
-                width={320}
+                style={{
+                  width: mobileSize ? 270 : 320,
+                }}
               />
               <Input
                 name="confirm"
                 type="submit"
                 value="확인"
                 required
-                width={100}
                 style={{
-                  width: `80px`,
+                  width: mobileSize ? `80px` : 100,
                   borderRadius: `var(--border-radius-08)`,
                 }}
               />
@@ -110,9 +112,7 @@ const SignupForm = ({ mobileSize }) => {
           </InputWrapperColumn>
         </li>
       </Ul>
-      {mobileSize ? (
-        <Button className="mobileNextButton">다음</Button>
-      ) : (
+      {mobileSize ? null : (
         <Input name="submit" type="submit" value="가입하기" width={430} />
       )}
     </Form>

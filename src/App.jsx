@@ -1,11 +1,13 @@
-import styled from "styled-components";
-import { Routes, Route } from "react-router-dom";
-import Main from "./pages/Main";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Detail from "./pages/Detail";
-import GlobalStyles from "./styles/GlobalStyles.styles.js";
 import React, { useEffect, useReducer } from "react";
+import { Routes, Route } from "react-router-dom";
+import styled from "styled-components";
+
+import Detail from "./pages/Detail";
+import Login from "./pages/Login";
+import Main from "./pages/Main";
+import Signup from "./pages/Signup";
+import GlobalStyles from "./styles/GlobalStyles.styles.js";
+
 
 const Wrapper = styled.div``;
 
@@ -31,6 +33,21 @@ const reducer = (state, action) => {
       );
       return { ...state, users: updatedUsers };
     }
+    case "LIKE_POST": {
+      const updatedPosts = state.posts.map((post) => {
+        if (post.id === action.postId) {
+          const updatedLikes = action.isLiked ? post.likes - 1 : post.likes + 1; // 좋아요 수 증가/감소
+
+          return {
+            ...post,
+            likes: updatedLikes, // 업데이트된 좋아요 수
+          };
+        }
+        return post;
+      });
+
+      return { ...state, posts: updatedPosts };
+    }
 
     case "ADD_COMMENT": {
       // 포스트 ID에 맞는 포스트를 찾아서 댓글 추가
@@ -47,7 +64,7 @@ const reducer = (state, action) => {
 
       return { ...state, posts: updatedPosts };
     }
-
+    // 업데이트는 추후 수정 예정
     case "UPDATE_USER": {
       const updatedUsers = state.users.map((user) =>
         user.id === action.updatedUser.id ? action.updatedUser : user
@@ -99,7 +116,7 @@ function App() {
       type: "ADD_POST",
       newPost: {
         id: newPostId,
-        userId: userId,
+        userId,
         content: content,
         image: image ? [image] : [null],
         createdAt: new Date().toISOString(),
@@ -111,6 +128,43 @@ function App() {
       type: "UPDATE_USER_POSTS",
       userId: userId,
       newPostId: newPostId,
+    });
+  };
+
+  const onAddUser = (
+    userId,
+    firstName,
+    lastName,
+    emailOrPhone,
+    password,
+    gender = null,
+    birthdate = null,
+    city = null,
+    likeCategory = null
+  ) => {
+    dispatch({
+      type: "ADD_USER",
+      newUser: {
+        userId,
+        userName: {
+          firstName,
+          lastName,
+        },
+        emailOrPhone,
+        password,
+        gender,
+        birthdate,
+        city,
+        likeCategory,
+      },
+    });
+  };
+
+  const onToggleLike = (postId, isLiked) => {
+    dispatch({
+      type: "LIKE_POST",
+      postId: postId, // 좋아요가 눌린 포스트 ID
+      isLiked: isLiked, // 현재 사용자가 이 포스트에 좋아요를 눌렀는지 여부
     });
   };
 
@@ -127,12 +181,26 @@ function App() {
       },
     });
   };
+  const onDeletePost = (postId) => {
+    dispatch({
+      type: "DELETE_POST",
+      targetId: postId, // 삭제할 포스트의 ID
+    });
+  };
 
   return (
     <>
       <GlobalStyles />
       <DataStateContext.Provider value={state}>
-        <DataDispatchContext.Provider value={{ onCreatePost, onCreateComment }}>
+        <DataDispatchContext.Provider
+          value={{
+            onCreatePost,
+            onAddUser,
+            onCreateComment,
+            onToggleLike,
+            onDeletePost,
+          }}
+        >
           <Wrapper>
             <Routes>
               <Route path="/" element={<Main />} />
