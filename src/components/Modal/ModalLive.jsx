@@ -4,7 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {createGlobalStyle, styled} from 'styled-components';
 import GlobalStyles from '../../styles/GlobalStyles.styles';
 
+import CountdownCircle from '../common/CountdownCircle';
 import { faComments } from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import fbIcon from "../../img/fbIcon.svg";
+import liveIcon from "../../img/liveIcon.svg";
 import LiveProfileImg from "../../img/LiveProfile.jpg";
 import LiveView from "../../img/Live.jpg";
 import SellItem1Img from "../../img/sellItem1.jpg"
@@ -20,7 +24,6 @@ const Commerce = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-
 `;
 
 const LeftContent = styled.section`
@@ -30,8 +33,17 @@ const LeftContent = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   background-color:rgba(0,0,0,0.9);
   /* border: 1px solid #f00; */
+  .faXmark {
+    position: absolute;
+    top: 33px;
+    right: 30px;
+    color: #fff;
+    font-size: 25px;
+    cursor: pointer;
+  }
 `;
 
 const Live = styled.div`
@@ -40,12 +52,18 @@ const Live = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  border: 1px solid #000;
   border-radius: 8px;
   background-image: url(${LiveView});
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
+  @media screen and (max-width: 1050px) {
+    width: 400px;
+    height: 600px;
+  }
+  @media screen and (max-width: 768px) {
+    width: 390px;
+  }
 `;
 
 const LiveStatus = styled.div`
@@ -55,12 +73,21 @@ const LiveStatus = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  top: 0;
-  gap: 5px;
+  top: 5px;
+  left: 10px;
+  gap: 10px;
   color: #fff;
-  /* border: 1px solid #f00; */
   .liveViewer {
     margin-left: 13px;
+  }
+  @media screen and (max-width: 1050px) {
+    font-size: 12px;
+    top: 0;
+    left: 0;
+    .liveViewer {
+      margin-left: 5px;
+      font-size: 12px;
+    }
   }
 `;
 
@@ -72,7 +99,8 @@ const LivePoint = styled.div`
   align-items: center;
   position: absolute;
   bottom: 0;
-  background-color: rgba(0,0,0,0.5);
+  border-radius: 0 0 8px 8px;
+  background-color: rgba(0,0,0,0.8);
   .point {
     width: 140px;
     height: 36px;
@@ -89,7 +117,7 @@ const LivePoint = styled.div`
   .pointDS {
     color: var(--color-white);
   }
-  .pointTime {
+  /* .pointTime {
     width: 30px;
     height: 30px;
     color: var(--color-white);
@@ -98,6 +126,24 @@ const LivePoint = styled.div`
     align-items: center;
     border: 1px solid #fff;
     border-radius: 50%;
+  } */
+  @media screen and (max-width: 1050px) {
+    width: 400px;
+    height: 70px;
+    padding: 0 20px;
+    .point {
+      width: 100px;
+      height: 26px;
+      font-size: 12px;
+    }
+    .pointDS {
+      font-size: 12px;
+    }
+    .pointTime {
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+    }
   }
 `;
 
@@ -111,7 +157,7 @@ const RightContent = styled.section`
   justify-content: center;
   align-items: center;
   gap: 20px;
-  border: 1px solid #f00;
+  /* border: 1px solid #f00; */
 `;
 
 const LiveProfile = styled.div`
@@ -236,7 +282,7 @@ const SellItemDesc = styled.div`
     padding-bottom: 8px;
     color: var(--color-gray-01);
     display: -webkit-box;
-  height: 37px;
+  height: 30px;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
@@ -280,7 +326,7 @@ const Comment = styled.div`
     margin-bottom: 10px;
   }
   @media screen and (max-width: 1050px) {
-    border: 1px solid #f00;
+    /* border: 1px solid #f00; */
     padding: 0 50px;
     h3, span {
       font-size: 14px;
@@ -311,6 +357,9 @@ const NoComment = styled.div`
   }
   @media screen and (max-width: 1050px) {
     font-size: 12px;
+    .faComments {
+      font-size: 30px;
+    }
   }
 `;
 
@@ -319,17 +368,23 @@ const ModalLive = () => {
     <>
       <Commerce>
         <LeftContent>
+          <FontAwesomeIcon className='faXmark' icon={faXmark} />
           <Live>
             <LiveStatus>
-              <div className='fbLogo'>페북</div>
-              <div className='liveLogo'>라이브</div>
+              <div className='fbLogo'>
+                <img src={fbIcon}/>
+              </div>
+              <div className='liveLogo'>
+                <img src={liveIcon} />
+              </div>
               <div className='liveViewer'>2,023명 시청 중</div>
               {/* <img src={LiveView} alt="Live" width="560px" height="860px" /> */}
             </LiveStatus>
             <LivePoint>
               <button className='point'>포인트 더 모으기</button>
               <div className='pointDS'>7초 후에 500 포인트가 적립됩니다.</div>
-              <div className='pointTime'>7</div>
+              {/* <div className='pointTime'>7</div> */}
+              <div className='countdown'><CountdownCircle /></div>
             </LivePoint>
           </Live>
         </LeftContent>
