@@ -6,19 +6,19 @@ import SocialBtnIcon from "../common/SocialBtnIcon.jsx"
 import testCat from '/img/testcat.jpg';
 
 //font
-import { MainTitle_22_b,MainTitle_18_n,SubDescription_12_m} from '../../styles/GlobalStyles.styles.js';
+import { MainTitle_18_b,MainTitle_18_n,SubDescription_12_m} from '../../styles/GlobalStyles.styles.js';
 
 
 const Inner = styled.article`
     display:flex;
-    width:410px;
-    height:485px;
+    width:260px;
+    height:350px;
     cursor: pointer;
     /* 미디어 쿼리 */
     @media (max-width : 768px) {
       display: flex;
       justify-content: center;
-      width:165px;
+      width:160px;
       height:200px;
       
   }
@@ -34,10 +34,10 @@ const Contents = styled.div`
   }
 `
 const ContImg = styled.img`
-  width:415px;
-  height:340px;
+  width:260px;
+  height:200px;
   object-fit:cover;
-  /* border-radius: 8px 8px 0 0 ; */
+  border-radius: 8px 8px 0 0 ;
   @media (max-width : 768px) {
       width:160px;
       height:140px;
@@ -49,7 +49,7 @@ const ContText = styled.div`
   gap:10px;
   padding:26px 30px 30px;
   .contTitle{
-    ${MainTitle_22_b}
+    ${MainTitle_18_b}
     @media (max-width : 768px) {
       ${SubDescription_12_m}
       width:160px;

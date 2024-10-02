@@ -28,8 +28,11 @@ const Wrapper = styled.section`
   border-radius:30px 30px 0 0;
   /* 미디어 쿼리 */
   @media (max-width : 768px) {
+  top:-30px;
   max-width: 100%;
+  height:200px;
   padding:0;
+  /* border:1px solid #f00; */
   } 
   `
 const Profile = styled.div`
@@ -70,6 +73,7 @@ const Profile = styled.div`
       /* 미디어 쿼리 */
       @media (max-width : 768px) {
       align-items: center;
+      
       }
       .profileName{
         ${MainTitle_26_b}

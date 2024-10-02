@@ -14,7 +14,10 @@ const Wrapper = styled.section`
   margin-bottom:140px;
    /* 미디어 쿼리 */
   @media (max-width: 768px) {
+    /* border:1px solid #f00; */
     max-width: 100%;
+    height:400px;
+    margin-bottom:0;
   }
 `
 const Inner = styled.article`
@@ -34,6 +37,7 @@ const CoverImg =styled.img`
     /* 미디어 쿼리 */
     @media (max-width : 768px) {
       width: 100%;
+       height:300px;
   }
 `
 

@@ -9,7 +9,7 @@ import PhotoVideoList from "../components/detail/PhotoVideoList"
 import PostList from "../components/detail/PostList";
 import TopCover from "../components/detail/TopCover";
 
-import {Paragraph_20_n} from "../styles/GlobalStyles.styles.js"
+import {Paragraph_20_n,SubDescription_14_n} from "../styles/GlobalStyles.styles.js"
 
 
 const Wrapper = styled.div`
@@ -39,7 +39,11 @@ const ContChangeBtn = styled(motion.div)`
   width: 100%;
   padding: 20px 0;
   position: relative; 
-  /* border-bottom:1.2px solid var(--color-gray-01); */
+      /* 미디어 쿼리 */
+      @media (max-width : 768px) {
+    /* border:1px solid #f00; */
+      bottom: -60px;
+  }
   button {
     ${Paragraph_20_n}
     flex: 1;
@@ -49,6 +53,11 @@ const ContChangeBtn = styled(motion.div)`
     padding-bottom: 10px;
     position: relative;
     cursor: pointer;
+    margin:0 20px;
+    /* 미디어 쿼리 */
+    @media (max-width : 768px) {
+      ${SubDescription_14_n}
+  }
   }
   .underline {
     position: absolute;
@@ -59,7 +68,6 @@ const ContChangeBtn = styled(motion.div)`
 
   }
 `;
-
 const UploadInner = styled.div`
   padding:0 30px;
 `
@@ -67,11 +75,10 @@ const UploadInner = styled.div`
 
 const Detail = () => {
   const [id, setId] = useState(0)
-
   const handleClick = (tabId) => {
     setId(tabId)
-    // console.log(tabId)
   }
+
   return <Wrapper>
           <HeaderTop />
           <HeaderBottom />

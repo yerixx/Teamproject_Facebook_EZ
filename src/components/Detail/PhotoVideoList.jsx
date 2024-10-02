@@ -8,7 +8,7 @@ import PhotoVideoItem from "../detail/PhotoVideoItem.jsx"
 const Wrapper = styled.section`
 display: flex;
 flex-wrap:wrap;
-justify-content:space-between;
+justify-content:flex-start;
 width:1050px;
 height:100%;
 padding:0 90px;
