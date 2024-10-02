@@ -94,7 +94,7 @@ export const MainTitle_18_b = css`
   font-weight: bold;
   font-size: 18px;
 `;
-// Main-title 04
+// Main-title 05
 export const MainTitle_18_n = css`
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: normal;

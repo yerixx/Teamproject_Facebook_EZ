@@ -1,38 +1,45 @@
 import React from 'react'
 import styled from 'styled-components'
-import SocialBtnIcon from './SocialBtnIcon.jsx';
+import SocialBtnIcon from "../common/SocialBtnIcon.jsx"
 
 
 import testCat from '/img/testcat.jpg';
 
 //font
-import { MainTitle_22_b,MainTitle_18_n} from '../../styles/GlobalStyles.styles.js';
+import { MainTitle_22_b,MainTitle_18_n,SubDescription_12_m} from '../../styles/GlobalStyles.styles.js';
 
 
 const Inner = styled.article`
     display:flex;
-    justify-content: center;
-    align-items: center;
-    width:415px;
+    width:410px;
     height:485px;
- /* 미디어 쿼리 */
-  @media (max-width : 768px) {
-    width:100%;
+    cursor: pointer;
+    /* 미디어 쿼리 */
+    @media (max-width : 768px) {
+      display: flex;
+      width:190px;
+      height:200px;
   }
-  
 `
 const Contents = styled.div`
     border:1px solid var(--color-light-gray-02);
     border-radius: var(--border-radius-08);
     box-shadow:var(--box-shadow-01);
-  
+    /* 미디어 쿼리 */
+    @media (max-width : 768px) {
+      width:190px;
+      height:200px;
+  }
 `
 const ContImg = styled.img`
   width:415px;
   height:340px;
   object-fit:cover;
   /* border-radius: 8px 8px 0 0 ; */
-
+  @media (max-width : 768px) {
+      width:190px;
+      height:140px;
+  }
 `
 const ContText = styled.div`
   display: flex;
@@ -41,10 +48,32 @@ const ContText = styled.div`
   padding:26px 30px 30px;
   .contTitle{
     ${MainTitle_22_b}
+    @media (max-width : 768px) {
+      ${SubDescription_12_m}
+      width:180px;
+      margin-left:4px;
+      white-space: nowrap;         
+      overflow: hidden;            
+      text-overflow: ellipsis;
+  }
   }
   .contDesc{
     ${MainTitle_18_n}
     color:var(--color-gray-02);
+
+    @media (max-width : 768px) {
+      ${SubDescription_12_m}
+      width:180px;
+      margin-left:4px;
+      white-space: nowrap;         
+      overflow: hidden;            
+      text-overflow: ellipsis;
+  }
+  }
+  @media (max-width : 768px) {
+      width:80%;
+      padding: 0;
+
   }
 
 `
@@ -58,7 +87,7 @@ const PhotoVideoItem = ({title,desc, imageSrc}) => {
             <div className='contTitle'>{title || "Summer~ ✨"}</div>
             <div className='contDesc'>{desc || "18 Image"} </div>
           </ContText>
-          <SocialBtnIcon/>
+          {/* <SocialBtnIcon/> */}
       </Contents>
     </Inner>
   )

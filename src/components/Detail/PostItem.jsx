@@ -1,5 +1,6 @@
 import React from 'react'
-import SocialBtnIcon from './SocialBtnIcon.jsx';
+import SocialBtnIcon from "../common/SocialBtnIcon.jsx"
+import PostUploadField from "../common/PostUploadField"
 
 // react-icon
 import { BsThreeDots } from "react-icons/bs";
@@ -8,8 +9,8 @@ import { SlArrowDown } from "react-icons/sl";
 import styled from 'styled-components'
 
 //font
-import { MainTitle_26_b,MainTitle_24_m,Paragraph_20_n,MainTitle_18_b,MainTitle_18_n,SubDescription_16_n} from '../../styles/GlobalStyles.styles.js';
-import PostUploadField from "../detail/PostUploadField"
+import { MainTitle_26_b,MainTitle_24_m,Paragraph_20_n,MainTitle_18_b,MainTitle_18_n,SubDescription_16_n, MainTitle_22_b, SubDescription_14_n} from '../../styles/GlobalStyles.styles.js';
+
 
 const Wrapper = styled.section`
 width:100%;
@@ -29,6 +30,7 @@ const Inner = styled.article`
     /* 미디어 쿼리 */
     @media (max-width : 768px) {
       max-width: 100%;
+      padding:0 20px;
     }
 `
 const Profile = styled.div`
@@ -57,8 +59,7 @@ const Profile = styled.div`
       ${MainTitle_26_b}
       color:var(--color-gray-01);
       @media (max-width : 768px) {
-        ${MainTitle_24_m}
-        font-weight:700;
+        ${MainTitle_22_b}
       }
     }
     .profileDesc{
@@ -78,8 +79,12 @@ const Profile = styled.div`
       cursor: pointer;
       transition: opacity 0.5s;
       *:hover{
-        opacity:0.8;
+       color:var(--color-facebookblue)
       }
+
+    @media (max-width : 768px) {
+      font-size:30px;
+    }
     }
 `
 const Contents = styled.div`
@@ -90,7 +95,9 @@ padding:30px 0 0;
   font-weight: normal;
   word-break: break-all;
   margin-bottom:30px;
-
+  @media (max-width : 768px) {
+      ${SubDescription_14_n}
+    }
 }
 .contentImgs{
   display: flex;
@@ -136,6 +143,7 @@ const ContImg = styled.img`
         /* 미디어 쿼리 */
         @media (max-width : 768px) {
           max-width: 100%;
+          height:250px;
     }
 `
 const CommentTop = styled.div`

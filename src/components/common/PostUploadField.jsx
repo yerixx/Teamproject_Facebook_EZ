@@ -6,8 +6,6 @@ import styled from 'styled-components'
 import { BsArrowReturnLeft } from "react-icons/bs"; 
 import { FaSpinner } from "react-icons/fa";
 import { CiEdit } from "react-icons/ci";
-// import { CiCamera } from "react-icons/ci";
-import { FaRegEdit } from "react-icons/fa";
 
 //img
 import testCat from '/img/testcat.jpg';
@@ -22,10 +20,7 @@ height:fit-content;
 display:flex;
 justify-content: center;
 align-items: center;
-    /* 미디어 쿼리 */
-    @media (max-width : 768px) {
-      width:100%;
-    }
+
 `
 
 const CommentCont = styled.div`
@@ -36,17 +31,30 @@ const CommentCont = styled.div`
     padding:40px 0;
     border-top:1px solid var(--color-light-gray-01);
     border-bottom:1px solid var(--color-light-gray-01);
+      /* 미디어 쿼리 */
+      @media (max-width : 768px) {
+        ${SubDescription_16_n}
+        margin: 0 10px;
+        height:110px;
+     }
     .commentUpLoadprofile{
       width:100%;
       display: flex;
       align-items: center;
       justify-content:space-between;
+      
     .profileImg{
       width:60px;
       height:60px;
       background:var(--color-light-gray-01);
       border-radius:100px;
-      }
+       /* 미디어 쿼리 */
+        @media (max-width : 768px) {
+        width:40px;
+        height:40px;
+        object-fit:cover;
+     }
+    }
     .profileInputText{
       ${MainTitle_18_n}
       /* width:640px; */
@@ -65,6 +73,8 @@ const CommentCont = styled.div`
       @media (max-width : 768px) {
         ${SubDescription_16_n}
         margin: 0 10px;
+        padding: 0 20px;
+        height:44px;
      }
     }
     .ciEdit,.uploadBtn{
@@ -78,24 +88,30 @@ const CommentCont = styled.div`
       border:none;
       border-radius:50px;
       cursor: pointer;
+       /* 미디어 쿼리 */
+        @media (max-width : 768px) {
+        width:44px;
+        height:44px;
+        padding:12px;
+     }
     }
     .uploadBtn{
       ${MainTitle_18_n}
       margin-right:30px;
-    /* 미디어 쿼리 */
-    @media (max-width : 768px) {
-    margin-right:10px;
+      /* 미디어 쿼리 */
+      @media (max-width : 768px) {
+      margin-right:10px;
      }
     }
     .ciEdit{
       padding: 13px;
       }
     }
-      /* 미디어 쿼리 */
-      @media (max-width : 768px) {
-      width:100%;
-      margin:60px 0;
-    }
+    /* 미디어 쿼리 */
+    @media (max-width : 768px) {
+    width:100%;
+    margin:60px 0;
+  }
 `
 
 const PostUploadField = ({placeholder}) => {

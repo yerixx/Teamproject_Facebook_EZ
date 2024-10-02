@@ -1,8 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 
+
+//img
+import testCat from '/img/testcat.jpg';
+
 //font
-import {MainTitle_26_b,MainTitle_18_n,SubDescription_16_n,SubDescription_12_m} from '../../styles/GlobalStyles.styles.js';
+import {MainTitle_26_b,MainTitle_18_n,SubDescription_16_n,SubDescription_12_m, MainTitle_18_b, SubDescription_14_n, Paragraph_20_n} from '../../styles/GlobalStyles.styles.js';
 import { useState } from 'react';
 
 const Wrapper = styled.section`
@@ -26,29 +30,30 @@ const Wrapper = styled.section`
   padding:0;
   } 
   `
+
 const Profile = styled.div`
   width:100%;
   display: flex;
-  /* justify-content: space-between; */
   .profileContent{
     width:100%;
     display: flex;
-    /* justify-content: space-between; */
     gap:30px;
   @media (max-width : 768px) {
     width:100%;
-    padding:0 60px ;
+    padding:0 20px ;
     align-items: center;
+    gap:15px;
     } 
   .profileImg{
     width:100px;
-    height:90px;
+    height:100px;
     background:var(--color-gray-01);
     border-radius:100%;
-    /* 미디어 쿼리 */
-    @media (max-width : 768px) {
-      width:190px;
-      height:130px;
+    object-fit:cover;
+      /* 미디어 쿼리 */
+      @media (max-width : 768px) {
+      width:110px;
+      height:110px;
   }
 }
   .profileText{
@@ -61,9 +66,20 @@ const Profile = styled.div`
       max-width:100%;
       display: flex;
       justify-content:space-between;
+      /* 미디어 쿼리 */
+      @media (max-width : 768px) {
+      align-items: center;
+      }
       .profileName{
         ${MainTitle_26_b}
         color:var(--color-gray-01);
+      /* 미디어 쿼리 */
+      @media (max-width : 768px) {
+        ${Paragraph_20_n}
+        font-weight:700;
+        width:fit-content;
+        flex-wrap:wrap;
+        }
       }
     }
   }
@@ -80,7 +96,6 @@ const EditProfileDesc = styled.div`
       display: flex;
       flex-direction:column;
       gap:10px;
-
       .editBox{
         position: absolute;
         display: flex;
@@ -94,6 +109,9 @@ const EditProfileDesc = styled.div`
           &:focus{
             outline:none;
           }
+          @media (max-width : 768px) {
+          ${SubDescription_14_n}
+      }
         }
         .editBtns{
           display: flex;
@@ -112,14 +130,22 @@ const EditProfileDesc = styled.div`
               color:var(--color-facebookblue);
               font-weight:600;
             }
+            @media (max-width : 768px) {
+              ${SubDescription_12_m};
+               height:26px;
+            }
           }
         }
       }
+  
 `
 const ProfileDesc = styled.div`
       ${SubDescription_16_n}
       padding:4px 0;
       color:var(--color-gray-01);
+      @media (max-width : 768px) {
+      ${SubDescription_14_n}
+      }
   
 `
 const Button = styled.div`
@@ -132,7 +158,7 @@ const Button = styled.div`
   border:none;
   border-radius:var(--border-radius-08);
   cursor: pointer;
-  transition: opacity 0.3s;
+  transition: opacity 0.8s;
   /* &:nth-child(1){
     background:var(--color-facebookblue);
     color:var(--color-white);
@@ -140,18 +166,24 @@ const Button = styled.div`
     &:nth-child(1),&:nth-child(2){
     background:var(--color-light-gray-01);
     color:var(--color-gray-01);
+    
   }
   &:hover{
-    color:var(--color-facebookblue);
+    background:var(--color-facebookblue);
+    color:var(--color-white);
     font-weight:600;
   }
   /* 미디어 쿼리 */
   @media (max-width : 768px) {
     ${SubDescription_12_m}
-    max-width:90px;
+    max-width:76px;
+    height:34px;
   } 
 }
-
+  /* 미디어 쿼리 */
+  @media (max-width : 768px) {
+  gap:6px;
+  } 
 `
 const ContChangeBtn = styled.div`
   display: flex;
@@ -208,13 +240,13 @@ const ProfileCard = () => {
     <Wrapper>
           <Profile>
               <div className='profileContent' >
-                <div className='profileImg'></div>
+                <img src={testCat} className='profileImg'/>
                 <div className='profileText'>
                   <div className='profileTop'>
                     <h1 className='profileName'>박예림</h1>
                     <Button>
-                      <button>스토리에 추가</button>
-                      <button onClick={profileEdite}>프로필 수정</button>
+                      <button>스토리추가</button>
+                      <button onClick={profileEdite}>프로필수정</button>
                     </Button>
                   </div>
                   {isEditing ? (

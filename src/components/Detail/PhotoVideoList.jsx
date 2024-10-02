@@ -9,11 +9,17 @@ const Wrapper = styled.section`
 display: flex;
 flex-wrap:wrap;
 justify-content:space-between;
-gap:40px;
 width:1050px;
 height:100%;
 padding:0 90px;
 margin:0 auto;
+gap:40px;
+   /* 미디어 쿼리 */
+   @media (max-width : 768px) {
+    width:100%;
+    padding:0px 35px;
+    justify-content:start;    
+  }
 `
 
 const PhotoVideoList = () => {
@@ -26,7 +32,7 @@ const PhotoVideoList = () => {
         <PhotoVideoItem title={"🐠🧡"}/>
         <PhotoVideoItem imageSrc={summerImg}  desc={'3 Image 1Video'} />
         <PhotoVideoItem />
-        <PhotoVideoItem imageSrc={summerImg} title={"1년만에 다시 찾은 발리🌴"} desc={'3 Image 1Video'} />
+        {/* <PhotoVideoItem imageSrc={summerImg} title={"1년만에 다시 찾은 발리🌴"} desc={'3 Image 1Video'} /> */}
       </Wrapper>
   )
 }

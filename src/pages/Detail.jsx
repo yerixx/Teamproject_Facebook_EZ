@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { HeaderBottom, HeaderTop } from "../components/common/Header";
 import PhotoVideoList from "../components/detail/PhotoVideoList"
-import PostUploadField from "../components/detail/PostUploadField"
+import PostUploadField from "../components/common/PostUploadField"
 import PostList from "../components/detail/PostList";
 import TopCover from "../components/detail/TopCover";
 
@@ -37,8 +37,8 @@ const Detail = () => {
             <TopCover/>
             <PostUploadField placeholder="무슨생각을 하고 계신가요?" />
             <PostList />
+            <PhotoVideoList/>
           </Inner>
-            {/* <PhotoVideoList/> */}
         </Wrapper>;
 };
 
