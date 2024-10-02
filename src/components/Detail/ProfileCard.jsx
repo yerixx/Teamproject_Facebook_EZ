@@ -1,23 +1,25 @@
 import React from 'react'
-import styled from 'styled-components'
+import { useState } from 'react';
 
+import styled from 'styled-components'
+// import { motion, AnimatePresence } from "framer-motion";
 
 //img
 import testCat from '/img/testcat.jpg';
 
 //font
-import {MainTitle_26_b,MainTitle_18_n,SubDescription_16_n,SubDescription_12_m, MainTitle_18_b, SubDescription_14_n, Paragraph_20_n} from '../../styles/GlobalStyles.styles.js';
-import { useState } from 'react';
+import {MainTitle_26_b,SubDescription_16_n,SubDescription_12_m, SubDescription_14_n, Paragraph_20_n} from '../../styles/GlobalStyles.styles.js';
 
 const Wrapper = styled.section`
   z-index:1;
   position: absolute;
   top:-100px;
   width:100%;
-  height:320px;
+  /* height:320px; */
+  height:261px;
   display:flex;
   flex-direction:column;
-  justify-content: end;
+  justify-content: center;
   gap:60px;
   align-items: center;
   position:relative;
@@ -30,7 +32,6 @@ const Wrapper = styled.section`
   padding:0;
   } 
   `
-
 const Profile = styled.div`
   width:100%;
   display: flex;
@@ -185,42 +186,15 @@ const Button = styled.div`
   gap:6px;
   } 
 `
-const ContChangeBtn = styled.div`
-  display: flex;
-  justify-content: center;
-  width:100%;
-  padding:20px 0 ;
-  /* border-bottom:1px solid var(--color-light-gray-01); */
-  *{
-    ${MainTitle_18_n};
-    flex:1;
-    border:none;
-    background:var(--color-white);
-    cursor: pointer;
-    &:nth-child(1){
-      color:var(--color-facebookblue);
-      font-weight:600;
-      position: relative;
-      &::after{
-        content:"";
-        position: absolute;
-        width:100%;
-        bottom:-22px;
-        right:0;
-        border-bottom:4px solid var(--color-facebookblue);
-    }
-  }
-}
-  
-`
+
 
 const ProfileCard = () => {
-  const [isEditing,setEditing] = useState(false)
+  const [isEditing,setEditing] = useState(false);
   const [desc,setDesc] = useState("A Photographer @pylpic")
+
   const profileEdite = () => {
     setEditing(true)
   }
-
   const editCencel = () => {
     const confirmCencel = window.confirm("프로필 수정 작업을 취소 하시겠습니까?")
     if(confirmCencel) {
@@ -235,6 +209,7 @@ const ProfileCard = () => {
       setEditing(false)
     }
   }
+
 
   return (
     <Wrapper>
@@ -270,10 +245,7 @@ const ProfileCard = () => {
                 </div>
               </div>
           </Profile>
-          <ContChangeBtn>
-            <button>게시글</button>
-            <button>사진 및 동영상</button>
-          </ContChangeBtn>
+  
     </Wrapper>
   )
 }

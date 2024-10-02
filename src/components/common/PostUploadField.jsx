@@ -20,14 +20,13 @@ height:fit-content;
 display:flex;
 justify-content: center;
 align-items: center;
-
 `
-
 const CommentCont = styled.div`
     width:870px;
     display: flex;
     align-items: center;
-    margin:60px 0;
+    /* margin:60px 0; */
+    margin-bottom:60px;
     padding:40px 0;
     border-top:1px solid var(--color-light-gray-01);
     border-bottom:1px solid var(--color-light-gray-01);
@@ -36,6 +35,7 @@ const CommentCont = styled.div`
         ${SubDescription_16_n}
         margin: 0 10px;
         height:110px;
+        
      }
     .commentUpLoadprofile{
       width:100%;
@@ -191,4 +191,4 @@ const PostUploadField = ({placeholder}) => {
   )
 }
 
-export default PostUploadField
+export default PostUploadField;

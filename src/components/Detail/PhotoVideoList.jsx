@@ -17,8 +17,10 @@ gap:40px;
    /* 미디어 쿼리 */
    @media (max-width : 768px) {
     width:100%;
-    padding:0px 35px;
-    justify-content:start;    
+    padding:0px 20px;
+    gap:20px;
+    /* margin: 0 auto; */
+    justify-content:center;
   }
 `
 
@@ -32,7 +34,7 @@ const PhotoVideoList = () => {
         <PhotoVideoItem title={"🐠🧡"}/>
         <PhotoVideoItem imageSrc={summerImg}  desc={'3 Image 1Video'} />
         <PhotoVideoItem />
-        {/* <PhotoVideoItem imageSrc={summerImg} title={"1년만에 다시 찾은 발리🌴"} desc={'3 Image 1Video'} /> */}
+        <PhotoVideoItem imageSrc={summerImg} title={"1년만에 다시 찾은 발리🌴"} desc={'3 Image 1Video'} />
       </Wrapper>
   )
 }

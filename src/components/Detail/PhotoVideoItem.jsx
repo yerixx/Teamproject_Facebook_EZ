@@ -17,8 +17,10 @@ const Inner = styled.article`
     /* 미디어 쿼리 */
     @media (max-width : 768px) {
       display: flex;
-      width:190px;
+      justify-content: center;
+      width:165px;
       height:200px;
+      
   }
 `
 const Contents = styled.div`
@@ -27,7 +29,7 @@ const Contents = styled.div`
     box-shadow:var(--box-shadow-01);
     /* 미디어 쿼리 */
     @media (max-width : 768px) {
-      width:190px;
+      width:160px;
       height:200px;
   }
 `
@@ -37,7 +39,7 @@ const ContImg = styled.img`
   object-fit:cover;
   /* border-radius: 8px 8px 0 0 ; */
   @media (max-width : 768px) {
-      width:190px;
+      width:160px;
       height:140px;
   }
 `
@@ -50,7 +52,7 @@ const ContText = styled.div`
     ${MainTitle_22_b}
     @media (max-width : 768px) {
       ${SubDescription_12_m}
-      width:180px;
+      width:160px;
       margin-left:4px;
       white-space: nowrap;         
       overflow: hidden;            
@@ -63,7 +65,7 @@ const ContText = styled.div`
 
     @media (max-width : 768px) {
       ${SubDescription_12_m}
-      width:180px;
+      width:160px;
       margin-left:4px;
       white-space: nowrap;         
       overflow: hidden;            

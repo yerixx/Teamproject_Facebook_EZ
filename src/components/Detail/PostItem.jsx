@@ -170,6 +170,7 @@ const CommentLists = styled.div`
   display: flex;
   flex-direction:column;
   gap:30px;
+  margin-bottom:60px;
   .commentList{
     display: flex;
     align-items: center;
