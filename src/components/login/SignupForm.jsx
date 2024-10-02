@@ -1,4 +1,5 @@
 import React from "react";
+import MobileFormHeader from "./MobileHeader";
 import {
   Form,
   Ul,
@@ -8,8 +9,7 @@ import {
   FormTitle,
   FormItemTitle,
   FormItemDesc,
-  MobileFormHeader,
-  MobileGoBackBtn,
+  Button,
 } from "./login-components";
 
 // <FormTitle className={mobileSize ? "isMobile" : ""}>
@@ -17,28 +17,6 @@ import {
 const SignupForm = ({ mobileSize }) => {
   return (
     <Form height={700}>
-      {mobileSize ? (
-        <MobileFormHeader>
-          <MobileGoBackBtn>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.75 19.5 8.25 12l7.5-7.5"
-              />
-            </svg>
-          </MobileGoBackBtn>
-          <FormTitle>Facebook에 가입하기</FormTitle>
-        </MobileFormHeader>
-      ) : (
-        <FormTitle>Facebook에 가입하기</FormTitle>
-      )}
-
       <Ul>
         <li>
           <FormItemTitle>이름 입력</FormItemTitle>
@@ -132,7 +110,11 @@ const SignupForm = ({ mobileSize }) => {
           </InputWrapperColumn>
         </li>
       </Ul>
-      <Input name="submit" type="submit" value="가입하기" width={430} />
+      {mobileSize ? (
+        <Button className="mobileNextButton">다음</Button>
+      ) : (
+        <Input name="submit" type="submit" value="가입하기" width={430} />
+      )}
     </Form>
   );
 };

@@ -4,22 +4,16 @@ import letterLogoImg from "../img/HeaderLogo.svg";
 import circleLogoImg from "../img/Logo.svg";
 import SignupForm from "../components/login/SignupForm";
 import AdditionalForm from "../components/login/AdditionalForm";
+import MobileHeader from "../components/login/MobileHeader";
+import MobileButtonWrapper from "../components/login/MobileButtonWrapper";
 import SignupCategory from "../components/login/SignupCategory";
 import {
   Wrapper,
   Inner,
   Logo,
   FormContainer,
+  FormTitle,
 } from "../components/login/login-components";
-
-// const Wrapper = styled.section`
-//   width: 100%;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   padding: 100px 0;
-//   background: var(--color-light-gray-02);
-// `;
 
 const Signup = () => {
   // responsive
@@ -41,11 +35,16 @@ const Signup = () => {
   return (
     <Wrapper
       style={{
-        height: mobileSize ? `100vh` : `auto`,
+        // height: mobileSize ? `100vh` : `auto`,
         padding: mobileSize ? `15px 0` : `100px 0 150px`,
       }}
     >
       <Inner>
+        {mobileSize ? (
+          <MobileHeader title={"Facebook에 가입하기"}></MobileHeader>
+        ) : (
+          <FormTitle>Facebook에 가입하기</FormTitle>
+        )}
         {mobileSize ? null : (
           <Logo>
             <img src={letterLogoImg} alt="Logo" />
@@ -62,6 +61,7 @@ const Signup = () => {
             </>
           )}
         </FormContainer>
+        {mobileSize ? <MobileButtonWrapper></MobileButtonWrapper> : null}
       </Inner>
     </Wrapper>
   );

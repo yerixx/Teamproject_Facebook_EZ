@@ -14,18 +14,6 @@ import {
   FormContainer,
 } from "../components/login/login-components";
 
-// const Wrapper = styled.section`
-//   width: 100%;
-//   height: 100vh;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   background: var(--color-light-gray-02);
-//   @media screen and (max-width: 768px) {
-//     background: var(--color-white);
-//   }
-// `;
-
 const Login = () => {
   // responsive
   const [mobileSize, setMobileSize] = useState(false);

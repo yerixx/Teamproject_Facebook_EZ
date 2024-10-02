@@ -36,45 +36,19 @@ export const Button = styled.button`
     border: 1px solid var(--color-facebookblue);
     color: var(--color-facebookblue);
   }
+  &.mobileNextButton {
+    width: 360px;
+    max-width: 360px;
+    border: 1px solid transparent;
+    background: var(--color-facebookblue);
+    color: var(--color-white);
+    &:active {
+      background: var(--color-hoverblue);
+    }
+  }
   @media screen and (max-width: 768px) {
     width: 100%;
     border-radius: 50px;
-  }
-`;
-export const mobileButton = styled.button`
-  width: 100%;
-  padding: 10px 15px;
-  ${MainTitle_18_b};
-  letter-spacing: -1px;
-  border: 1px solid var(--color-gray-01);
-  border-radius: 50px;
-  background: var(--color-white);
-  color: var(--color-gray-01);
-  cursor: pointer;
-  transition: all 0.3s;
-  &:hover,
-  &:active {
-    border: 1px solid var(--color-facebookblue);
-    color: var(--color-facebookblue);
-  }
-`;
-export const MobileGoBackBtn = styled.button`
-  width: 35px;
-  height: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  svg {
-    stroke: var(--color-black);
-    transition: stroke 0.3s;
-  }
-  &:hover {
-    svg {
-      stroke: var(--color-gray-02);
-    }
   }
 `;
 
@@ -99,6 +73,7 @@ export const Inner = styled.article`
   gap: 30px;
   @media screen and (max-width: 768px) {
     width: 390px;
+    min-width: 390px;
     padding: 0 15px;
   }
 `;
@@ -117,19 +92,6 @@ export const FormContainer = styled.div`
     padding: 0;
     box-shadow: none;
   }
-`;
-export const MobileFormHeader = styled.div`
-  width: 100%;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding: 0 15px;
-  background: var(--color-white);
-  border-bottom: 1px solid var(--color-gray-02);
 `;
 
 // Form Items
@@ -247,7 +209,9 @@ export const FormTitle = styled.h3`
   text-align: center;
   margin-bottom: 10px;
   @media screen and (max-width: 768px) {
-    margin-bottom: 4px;
+    margin-bottom: 0;
+    ${Paragraph_20_n};
+    font-weight: 500;
   }
 `;
 export const FormDesc = styled.p`
