@@ -28,6 +28,9 @@ const Wrapper = styled.div`
       }
     }
   }
+  @media screen and (max-width: 768px) {
+    padding: 20px 0;
+  }
 `;
 
 const SNSLogin = () => {

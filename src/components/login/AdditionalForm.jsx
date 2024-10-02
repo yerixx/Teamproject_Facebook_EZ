@@ -82,8 +82,12 @@ const SelectItem = styled.div`
 `;
 
 const LocationWrapper = styled.ul`
-  display: none;
-  ${({ isSelected }) => (isSelected ? `display: none;` : `display: block;`)}
+  &.open {
+    display: block;
+  }
+  &.closed {
+    display: none;
+  }
 `;
 
 const AdditionalForm = () => {
@@ -96,15 +100,14 @@ const AdditionalForm = () => {
   ];
 
   const [location, setLocation] = useState("지역");
-  const [isSelected, setIsSelected] = useState(true);
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
 
-  const toggleSelect = () => {
-    setIsSelected((current) => !current);
+  const toggleOption = () => {
+    setIsSelectOpen((current) => !current);
   };
-
-  const onSelectOption = (e) => {
+  const closeOption = (e) => {
+    setIsSelectOpen(false);
     setLocation(e.target.innerText);
-    setIsSelected(true);
   };
 
   return (
@@ -143,18 +146,19 @@ const AdditionalForm = () => {
               언제든지 비공개로 변경할 수 있습니다.
             </FormItemDesc>
             <SelectItem>
-              <div className="select-selected" onClick={toggleSelect}>
-                {location}
-              </div>
               <div className="select-icon">
                 <img src={arrowIcon} alt="arrow" />
               </div>
+              <div className="select-selected" onClick={toggleOption}>
+                {location}
+              </div>
               <LocationWrapper
-                isSelected={isSelected}
-                className="select-items select-hide"
+                className={`select-items select-hide ${
+                  isSelectOpen ? "open" : "closed"
+                }`}
               >
                 {options.map((option) => (
-                  <li key={option.value} onClick={onSelectOption}>
+                  <li key={option.value} onClick={closeOption}>
                     {option.location}
                   </li>
                 ))}

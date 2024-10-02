@@ -8,12 +8,37 @@ import {
   FormTitle,
   FormItemTitle,
   FormItemDesc,
+  MobileFormHeader,
+  MobileGoBackBtn,
 } from "./login-components";
 
-const SignupForm = () => {
+// <FormTitle className={mobileSize ? "isMobile" : ""}>
+
+const SignupForm = ({ mobileSize }) => {
   return (
     <Form height={700}>
-      <FormTitle>Facebook에 가입하기</FormTitle>
+      {mobileSize ? (
+        <MobileFormHeader>
+          <MobileGoBackBtn>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 19.5 8.25 12l7.5-7.5"
+              />
+            </svg>
+          </MobileGoBackBtn>
+          <FormTitle>Facebook에 가입하기</FormTitle>
+        </MobileFormHeader>
+      ) : (
+        <FormTitle>Facebook에 가입하기</FormTitle>
+      )}
+
       <Ul>
         <li>
           <FormItemTitle>이름 입력</FormItemTitle>
@@ -56,6 +81,10 @@ const SignupForm = () => {
                 value="인증"
                 required
                 width={100}
+                style={{
+                  width: `80px`,
+                  borderRadius: `var(--border-radius-08)`,
+                }}
               />
             </InputWrapperRow>
             <InputWrapperRow>
@@ -72,6 +101,10 @@ const SignupForm = () => {
                 value="확인"
                 required
                 width={100}
+                style={{
+                  width: `80px`,
+                  borderRadius: `var(--border-radius-08)`,
+                }}
               />
             </InputWrapperRow>
           </InputWrapperColumn>
