@@ -10,7 +10,10 @@ import SideBarWallet from "../components/common/SideBarWallet";
 import SideBarMenu from "../components/common/SideBarMenu";
 import Mainupload from "../components/Main/Mainupload";
 import Mainstory from "../components/Main/Mainstory";
+import Mainlive from "../components/Main/Mainlive";
 import MainGroup from "../components/Main/MainGroup";
+import Mainmodal from "../components/Main/Mainmodal";
+import Mainbutton from "../components/Main/Mainbutton";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -29,6 +32,16 @@ const MainSection = styled.section`
   /* padding: 28px 20px; */
   position: absolute;
   top: 140px;
+`;
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
 `;
 // const Maintest = styled.div`
 //   width: 1000px;
@@ -50,8 +63,12 @@ const Main = () => {
       {/* <SideBarMenu /> */}
       <MainSection>
         <Mainstory />
+        <Container>
+          <Mainupload />
+          <Mainbutton />
+          {/* <Mainmodal /> */}
+        </Container>
         <MainGroup />
-        <Mainupload />
         <MainPage />
         {/* <Maintest>
           <button onClick={create}>생성</button>
@@ -59,6 +76,7 @@ const Main = () => {
             <div key={i}>{item.content}</div>
           ))}
         </Maintest> */}
+        <Mainlive />
       </MainSection>
 
       <ModalCont />
