@@ -1,19 +1,30 @@
+/* eslint-disable react/prop-types */
 import styled from "styled-components";
 import {
   MainTitle_18_n,
   MainTitle_22_b,
 } from "../../styles/GlobalStyles.styles";
 import { IoClose } from "react-icons/io5";
+import Slider from "react-slick";
+import { MdOutlineNavigateNext } from "react-icons/md";
+import { MdOutlineNavigateBefore } from "react-icons/md";
 
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  @media screen and (max-width: 1050px) {
+    margin-top: 50px;
+  }
+  @media screen and (max-width: 768px) {
+    margin-top: 0;
+    height: 250px;
+  }
 `;
 
 const Inner = styled.div`
-  width: 100%;
+  width: 1000px;
   height: 440px;
   padding: 27px 30px;
   display: flex;
@@ -36,10 +47,21 @@ const Title = styled.div`
 `;
 
 const Items = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  gap: 10px;
+  .slider {
+    width: 100%;
+    height: 100%;
+  }
+  .slick-slide {
+    margin: 0 10px;
+  }
+  .slick-list {
+    margin: 0 -10px;
+  }
+  .slick-track {
+    display: flex;
+    justify-content: flex-start;
+    transition: transform 0.5s ease-in-out;
+  }
 `;
 
 const Item = styled.div`
@@ -71,6 +93,9 @@ const Item = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
 
     h3 {
       ${MainTitle_18_n}
@@ -93,8 +118,94 @@ const Item = styled.div`
     }
   }
 `;
+// 슬릭슬라이더 커스텀 화살표
+const NextBtn = styled.span`
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-light-gray-01);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  font-size: 40px;
+  color: #fff;
+  cursor: pointer;
+  svg {
+    margin-left: 5px;
+  }
+`;
+const NextArrow = ({ onClick }) => {
+  return (
+    <NextBtn onClick={onClick}>
+      <MdOutlineNavigateNext />
+    </NextBtn>
+  );
+};
+// 슬릭슬라이더 커스텀 화살표
+const PrevBtn = styled.span`
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-light-gray-01);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  font-size: 40px;
+  color: #fff;
+  cursor: pointer;
+  svg {
+    margin-left: 3px;
+  }
+`;
+const PrevArrow = ({ onClick }) => {
+  return (
+    <PrevBtn onClick={onClick}>
+      <MdOutlineNavigateBefore />
+    </PrevBtn>
+  );
+};
 
 const MainGroup = () => {
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    swipe: true,
+    autoplaySpeed: 5000,
+    nextArrow: <NextArrow />, // 화살표 버튼을 커스텀해서 사용
+    prevArrow: <PrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1050, // 1024px 이하일 때
+        settings: {
+          slidesToShow: 2, // 슬라이드를 2개만 보여줌
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 768, // 600px 이하일 때
+        settings: {
+          slidesToShow: 2, // 슬라이드를 1개만 보여줌
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
   return (
     <Wrapper>
       <Inner>
@@ -103,30 +214,56 @@ const MainGroup = () => {
           <span>회원님이 관심을 가질만한 그룹입니다.</span>
         </Title>
         <Items>
-          <Item>
-            <IoClose />
-            <div>
-              <h3>함께하는 세계여행</h3>
-              <h4>멤버 4.4천명</h4>
-              <span>그룹 가입</span>
-            </div>
-          </Item>
-          <Item>
-            <IoClose />
-            <div>
-              <h3>반려동물</h3>
-              <h4>멤버 2.4천명</h4>
-              <span>그룹 가입</span>
-            </div>
-          </Item>
-          <Item>
-            <IoClose />
-            <div>
-              <h3>운동</h3>
-              <h4>멤버 3.2천명</h4>
-              <span>그룹 가입</span>
-            </div>
-          </Item>
+          <Slider className="slider" {...settings}>
+            <Item>
+              <IoClose />
+              <div>
+                <h3>함께하는 세계여행</h3>
+                <h4>멤버 4.4천명</h4>
+                <span>그룹 가입</span>
+              </div>
+            </Item>
+            <Item>
+              <IoClose />
+              <div>
+                <h3>반려동물</h3>
+                <h4>멤버 2.4천명</h4>
+                <span>그룹 가입</span>
+              </div>
+            </Item>
+            <Item>
+              <IoClose />
+              <div>
+                <h3>운동</h3>
+                <h4>멤버 3.2천명</h4>
+                <span>그룹 가입</span>
+              </div>
+            </Item>
+            <Item>
+              <IoClose />
+              <div>
+                <h3>1</h3>
+                <h4>멤버 3.2천명</h4>
+                <span>그룹 가입</span>
+              </div>
+            </Item>
+            <Item>
+              <IoClose />
+              <div>
+                <h3>2</h3>
+                <h4>멤버 3.2천명</h4>
+                <span>그룹 가입</span>
+              </div>
+            </Item>
+            <Item>
+              <IoClose />
+              <div>
+                <h3>운동</h3>
+                <h4>멤버 3.2천명</h4>
+                <span>그룹 가입</span>
+              </div>
+            </Item>
+          </Slider>
         </Items>
       </Inner>
     </Wrapper>

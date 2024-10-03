@@ -32,6 +32,9 @@ const MainSection = styled.section`
   /* padding: 28px 20px; */
   position: absolute;
   top: 140px;
+  @media screen and (max-width: 768px) {
+    top: 80px;
+  }
 `;
 
 const Container = styled.div`
