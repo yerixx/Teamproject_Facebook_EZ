@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { Paragraph_20_n } from "../../styles/GlobalStyles.styles";
+import { IoClose } from "react-icons/io5";
 
 const Wrapper = styled.div`
   z-index: 3;
-  position: sticky;
-  top: 110px;
+  position: absolute;
+  top: 100px;
   right: 20px;
   width: 382px;
   display: flex;
@@ -14,6 +15,10 @@ const Wrapper = styled.div`
   padding: 28px 20px;
   border-radius: var(--border-radius-30);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  max-height: 80vh;
+  overflow-y: auto;
+  -ms-overflow-style: none; /* IE, Edge */
+  scrollbar-width: none;
 `;
 
 const TopTitle = styled.div`
@@ -23,11 +28,10 @@ const TopTitle = styled.div`
   h2 {
     ${Paragraph_20_n}
   }
-  span {
-    font-size: 30px;
-    font-weight: 300;
-  }
   margin-bottom: 10px;
+  span {
+    cursor: pointer;
+  }
 `;
 const Title = styled.div`
   display: flex;
@@ -79,12 +83,15 @@ const GroupTitle = styled.div`
     color: var(--color-gray-01);
   }
 `;
-const SideBarGroup = () => {
+/* eslint-disable react/prop-types */
+const SideBarGroup = ({ openGroup }) => {
   return (
     <Wrapper>
       <TopTitle>
         <h2>회원님을 위한 커뮤니티</h2>
-        <span>+</span>
+        <span>
+          <IoClose onClick={openGroup} />
+        </span>
       </TopTitle>
       <Title>
         <h3>추천그룹</h3>

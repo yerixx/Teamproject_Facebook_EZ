@@ -10,6 +10,12 @@ import { MdOutlineLogout } from "react-icons/md";
 import { FaBell } from "react-icons/fa";
 import { FaMoon } from "react-icons/fa";
 import { TbGridDots } from "react-icons/tb";
+import { FaSearch } from "react-icons/fa";
+import mobileLogo from "../../img/Logo.png";
+import SideBarMenu from "./SideBarMenu";
+import { useState } from "react";
+import SideBarGroup from "./SideBarGroup";
+import SideBarWallet from "./SideBarWallet";
 
 const Header = styled.div`
   background-color: var(--color-white);
@@ -23,6 +29,9 @@ const Header = styled.div`
     height: 26px;
   }
   z-index: 5;
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 const HeaderSticky = styled.div`
   background-color: var(--color-white);
@@ -40,6 +49,13 @@ const HeaderSticky = styled.div`
   -moz-box-shadow: 0 4px 6px -6px #222;
   box-shadow: 0 4px 6px -6px #222;
   margin-bottom: 20px;
+  @media screen and (max-width: 1050px) {
+    height: 120px;
+    justify-content: center;
+  }
+  @media screen and (max-width: 768px) {
+    height: 60px;
+  }
 `;
 
 const Left = styled.div`
@@ -68,6 +84,24 @@ const Left = styled.div`
       font-size: 16px;
     }
   }
+  .mobileLogo {
+    display: none;
+  }
+  @media screen and (max-width: 1050px) {
+    div {
+      input {
+        width: 220px;
+      }
+    }
+  }
+  @media screen and (max-width: 768px) {
+    div {
+      display: none;
+    }
+    .mobileLogo {
+      display: block;
+    }
+  }
 `;
 const Center = styled.div`
   display: flex;
@@ -90,6 +124,15 @@ const Center = styled.div`
       font-size: 24px;
     }
   }
+  @media screen and (max-width: 1050px) {
+    /* gap: 0; */
+    div {
+      width: 50px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 const Right = styled.div`
   width: 500px;
@@ -97,6 +140,12 @@ const Right = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 15px;
+  @media screen and (max-width: 1050px) {
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: flex-end;
+  }
 `;
 const RightFirst = styled.div`
   display: flex;
@@ -107,6 +156,11 @@ const RightFirst = styled.div`
     cursor: pointer;
     font-size: 14px;
     color: var(--color-facebookblue);
+  }
+  @media screen and (max-width: 1050px) {
+  }
+  @media screen and (max-width: 768px) {
+    display: none;
   }
 `;
 const ProfileWrap = styled.div`
@@ -125,6 +179,11 @@ const ProfileWrap = styled.div`
     font-size: var(--font-size-subtitle);
     font-weight: normal;
   }
+  @media screen and (max-width: 1050px) {
+    width: 100px;
+    div {
+    }
+  }
 `;
 
 const RightSecond = styled.div`
@@ -134,6 +193,24 @@ const RightSecond = styled.div`
   gap: 5px;
   svg {
     font-size: 18px;
+  }
+  & > div:nth-child(1) {
+    display: none;
+  }
+  @media screen and (max-width: 768px) {
+    & > div:nth-child(1) {
+      display: flex;
+    }
+    & > div:nth-child(2) {
+    }
+    & > div:nth-child(3) {
+      display: none;
+    }
+    & > div:nth-child(4) {
+    }
+    & > div:nth-child(5) {
+      display: none;
+    }
   }
 `;
 const IconWrap = styled.div`
@@ -156,10 +233,34 @@ export const HeaderTop = () => {
 };
 
 export const HeaderBottom = () => {
+  const [sideMenuOpen, setSideMenuOpen] = useState(false);
+  const [sideBarGroupOpen, setSideBarGroupOpen] = useState(false);
+  const [sideWalletOpen, setSideWalletOpen] = useState(false);
+  const sideMenu = () => {
+    setSideMenuOpen((prev) => !prev);
+    setSideBarGroupOpen(false);
+    setSideWalletOpen(false);
+  };
+  const sideGroup = () => {
+    setSideBarGroupOpen((prev) => !prev);
+    setSideMenuOpen(false);
+    setSideWalletOpen(false);
+  };
+  const sideWallet = () => {
+    setSideWalletOpen((prev) => !prev);
+    setSideMenuOpen(false);
+    setSideBarGroupOpen(false);
+  };
+  const closeModal = () => {
+    setSideMenuOpen(false);
+    setSideBarGroupOpen(false);
+    setSideWalletOpen(false);
+  };
+
   return (
     <HeaderSticky>
       <Left>
-        {/* <img src={logoImg} alt="" /> */}
+        <img className="mobileLogo" src={mobileLogo} alt="mobileLogo" />
         <div>
           <FaMagnifyingGlass />
           <input type="text" placeholder="Search Facebook" />
@@ -180,7 +281,7 @@ export const HeaderBottom = () => {
         </div>
       </Center>
       <Right>
-        <RightFirst>
+        <RightFirst onClick={sideWallet}>
           <ProfileWrap>
             <div></div>
             <h3>박태환</h3>
@@ -189,6 +290,9 @@ export const HeaderBottom = () => {
         </RightFirst>
         <RightSecond>
           <IconWrap>
+            <FaSearch />
+          </IconWrap>
+          <IconWrap onClick={sideMenu}>
             <TbGridDots />
           </IconWrap>
           <IconWrap>
@@ -202,6 +306,11 @@ export const HeaderBottom = () => {
           </IconWrap>
         </RightSecond>
       </Right>
+      {sideMenuOpen && (
+        <SideBarMenu openGroup={sideGroup} closeModal={closeModal} />
+      )}
+      {sideBarGroupOpen && <SideBarGroup openGroup={sideGroup} />}
+      {sideWalletOpen && <SideBarWallet onClick={sideWallet} />}
     </HeaderSticky>
   );
 };
