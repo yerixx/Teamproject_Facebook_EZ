@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { SubDescription_16_n } from "../../styles/GlobalStyles.styles";
-import arrowIcon from "../../img/arrow-icon.svg";
 import {
   Form,
   Ul,
@@ -48,13 +47,11 @@ const SelectItem = styled.div`
     position: absolute;
     right: 15px;
     top: 50%;
-    transform: translateY(-50%) rotate(-180deg);
+    transform: translateY(-50%);
     width: 24px;
     height: 24px;
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
+    svg {
+      stroke: var(--color-gray-02);
     }
   }
   .select-items {
@@ -147,7 +144,20 @@ const AdditionalForm = () => {
             </FormItemDesc>
             <SelectItem>
               <div className="select-icon">
-                <img src={arrowIcon} alt="arrow" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={3}
+                  stroke="currentColor"
+                  className="size-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                  />
+                </svg>
               </div>
               <div className="select-selected" onClick={toggleOption}>
                 {location}
