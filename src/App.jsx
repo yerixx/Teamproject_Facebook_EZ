@@ -8,6 +8,8 @@ import Main from "./pages/Main";
 import Signup from "./pages/Signup";
 import GlobalStyles from "./styles/GlobalStyles.styles.js";
 
+import { auth } from "./firebase.js";
+
 
 const Wrapper = styled.div``;
 

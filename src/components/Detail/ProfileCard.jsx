@@ -10,7 +10,7 @@ import testCat from '/img/testcat.jpg';
 //font
 import {MainTitle_26_b,SubDescription_16_n,SubDescription_12_m, SubDescription_14_n, Paragraph_20_n} from '../../styles/GlobalStyles.styles.js';
 
-const Wrapper = styled.section`
+const WrapperFrom = styled.form`
   z-index:1;
   position: absolute;
   top:-100px;
@@ -194,7 +194,18 @@ const Button = styled.div`
 
 const ProfileCard = () => {
   const [isEditing,setEditing] = useState(false);
+  const [profileImg,setProfileImg] = useState(false);
   const [desc,setDesc] = useState("A Photographer @pylpic")
+
+  const onSubmit = async (e) => {
+    e.preventDefault(); // 폼 제출 시 페이지 리로드 방지
+    setIsLoading(true);
+    // 실제 비동기 작업을 수행하는 부분 (예: API 호출)
+    setTimeout(() => {
+      setIsLoading(false);
+      setInputText(""); // 입력 필드 초기화
+    }, 1000);
+  }
 
   const profileEdite = () => {
     setEditing(true)
@@ -216,10 +227,10 @@ const ProfileCard = () => {
 
 
   return (
-    <Wrapper>
+    <WrapperFrom onSubmit={onSubmit}>
           <Profile>
               <div className='profileContent' >
-                <img src={testCat} className='profileImg'/>
+                <img src={profileImg ? null : testCat} className='profileImg'/>
                 <div className='profileText'>
                   <div className='profileTop'>
                     <h1 className='profileName'>박예림</h1>
@@ -250,7 +261,7 @@ const ProfileCard = () => {
               </div>
           </Profile>
   
-    </Wrapper>
+    </WrapperFrom>
   )
 }
 
