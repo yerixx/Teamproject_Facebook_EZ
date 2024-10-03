@@ -164,6 +164,7 @@ const RightFirst = styled.div`
   }
 `;
 const ProfileWrap = styled.div`
+  cursor: pointer;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -309,8 +310,12 @@ export const HeaderBottom = () => {
       {sideMenuOpen && (
         <SideBarMenu openGroup={sideGroup} closeModal={closeModal} />
       )}
-      {sideBarGroupOpen && <SideBarGroup openGroup={sideGroup} />}
-      {sideWalletOpen && <SideBarWallet onClick={sideWallet} />}
+      {sideBarGroupOpen && (
+        <SideBarGroup openGroup={sideGroup} closeModal={closeModal} />
+      )}
+      {sideWalletOpen && (
+        <SideBarWallet onClick={sideWallet} closeModal={closeModal} />
+      )}
     </HeaderSticky>
   );
 };

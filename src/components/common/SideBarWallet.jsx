@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { SubTitle_16_b } from "../../styles/GlobalStyles.styles";
 import { IoClose } from "react-icons/io5";
+import { useEffect, useRef } from "react";
 
 const Wrapper = styled.div`
   z-index: 3;
@@ -118,9 +119,24 @@ const ProductItemInfo = styled.div`
   }
 `;
 /* eslint-disable react/prop-types */
-const SideBarWallet = ({ onClick }) => {
+const SideBarWallet = ({ onClick, closeModal }) => {
+  const closeRef = useRef(null);
+  const handleClickOutside = (event) => {
+    if (closeRef.current && !closeRef.current.contains(event.target)) {
+      closeModal(); // 모달을 닫는 함수 호출
+    }
+  };
+  useEffect(() => {
+    // 모달이 마운트되면 클릭 이벤트 추가
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      // 모달이 언마운트되면 클릭 이벤트 제거
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
-    <Wrapper>
+    <Wrapper ref={closeRef}>
       <Title>
         <h3>Wallett +</h3>
         <span>
