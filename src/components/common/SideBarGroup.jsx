@@ -3,7 +3,9 @@ import { Paragraph_20_n } from "../../styles/GlobalStyles.styles";
 import { IoClose } from "react-icons/io5";
 import { useEffect, useRef } from "react";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "isOpen",
+})`
   z-index: 3;
   position: absolute;
   top: 100px;

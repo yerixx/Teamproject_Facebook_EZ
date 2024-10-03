@@ -13,9 +13,11 @@ import { TbGridDots } from "react-icons/tb";
 import { FaSearch } from "react-icons/fa";
 import mobileLogo from "../../img/Logo.png";
 import SideBarMenu from "./SideBarMenu";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import SideBarGroup from "./SideBarGroup";
 import SideBarWallet from "./SideBarWallet";
+
+import { DataStateContext } from "../../App";
 
 const Header = styled.div`
   background-color: var(--color-white);
@@ -234,6 +236,10 @@ export const HeaderTop = () => {
 };
 
 export const HeaderBottom = () => {
+  const data = useContext(DataStateContext);
+  const currentUser = data.currentUserData;
+  // console.log(currentUser);
+  // console.log(data);
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
   const [sideBarGroupOpen, setSideBarGroupOpen] = useState(false);
   const [sideWalletOpen, setSideWalletOpen] = useState(false);
@@ -285,9 +291,12 @@ export const HeaderBottom = () => {
         <RightFirst onClick={sideWallet}>
           <ProfileWrap>
             <div></div>
-            <h3>박태환</h3>
+            <h3>
+              {currentUser?.userName.fistName}
+              {currentUser?.userName.lastName}
+            </h3>
           </ProfileWrap>
-          <span>12,300p</span>
+          <span>{currentUser?.wallet.point}p</span>
         </RightFirst>
         <RightSecond>
           <IconWrap>

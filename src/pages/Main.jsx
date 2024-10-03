@@ -5,14 +5,10 @@ import ModalCont from "../components/Modal/ModalCont";
 // import { useContext } from "react";
 // import { DataDispatchContext, DataStateContext } from "../App";
 import MainPage from "../components/Main/Mainpage";
-import SideBarGroup from "../components/common/SideBarGroup";
-import SideBarWallet from "../components/common/SideBarWallet";
-import SideBarMenu from "../components/common/SideBarMenu";
 import Mainupload from "../components/Main/Mainupload";
 import Mainstory from "../components/Main/Mainstory";
 import Mainlive from "../components/Main/Mainlive";
 import MainGroup from "../components/Main/MainGroup";
-import Mainmodal from "../components/Main/Mainmodal";
 import Mainbutton from "../components/Main/Mainbutton";
 
 const Wrapper = styled.div`

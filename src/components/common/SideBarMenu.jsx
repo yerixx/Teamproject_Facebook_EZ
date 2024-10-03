@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
+  transition: all 0.3s;
   z-index: 3;
   position: absolute;
   top: 100px;

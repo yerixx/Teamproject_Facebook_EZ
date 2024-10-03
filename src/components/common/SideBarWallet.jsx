@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { SubTitle_16_b } from "../../styles/GlobalStyles.styles";
 import { IoClose } from "react-icons/io5";
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
+import { DataStateContext } from "../../App";
 
 const Wrapper = styled.div`
   z-index: 3;
@@ -120,6 +121,8 @@ const ProductItemInfo = styled.div`
 `;
 /* eslint-disable react/prop-types */
 const SideBarWallet = ({ onClick, closeModal }) => {
+  const data = useContext(DataStateContext);
+  const currentUser = data.currentUserData;
   const closeRef = useRef(null);
   const handleClickOutside = (event) => {
     if (closeRef.current && !closeRef.current.contains(event.target)) {
@@ -146,11 +149,11 @@ const SideBarWallet = ({ onClick, closeModal }) => {
       <Box>
         <WalletItem>
           <img />
-          <span>10,700 원</span>
+          <span>{currentUser.wallet.point} p</span>
         </WalletItem>
         <WalletItem>
           <img />
-          <span>10,700 원</span>
+          <span>{currentUser.wallet.wan} 원</span>
         </WalletItem>
         <WalletItem>
           <div>+</div>

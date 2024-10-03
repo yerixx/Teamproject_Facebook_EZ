@@ -15,11 +15,9 @@ const Wrapper = styled.div`
   justify-content: center;
   margin-top: 20px;
   @media screen and (max-width: 1050px) {
-    margin-top: 50px;
   }
   @media screen and (max-width: 768px) {
     margin-top: 0;
-    height: 250px;
   }
 `;
 
@@ -29,10 +27,23 @@ const Inner = styled.div`
   padding: 27px 30px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 10px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius-30);
   position: relative;
+  @media screen and (max-width: 1050px) {
+    width: 100%;
+  }
+  @media screen and (max-width: 768px) {
+    border-radius: var(--border-radius-08);
+    padding: 20px 15px;
+    width: 90vw;
+    /* height: 100%; */
+    min-width: 360px;
+    height: 100%;
+    /* margin: 0 auto; */
+  }
 `;
 
 const Title = styled.div`
@@ -117,6 +128,24 @@ const Item = styled.div`
       border-radius: 8px;
     }
   }
+  @media screen and (max-width: 1050px) {
+  }
+  @media screen and (max-width: 768px) {
+    height: 250px;
+
+    div {
+      height: 110px;
+      h3 {
+        font-size: 16px;
+      }
+      h4 {
+        font-size: 12px;
+      }
+      span {
+        padding: 7px 5px;
+      }
+    }
+  }
 `;
 // 슬릭슬라이더 커스텀 화살표
 const NextBtn = styled.span`
@@ -137,6 +166,9 @@ const NextBtn = styled.span`
   cursor: pointer;
   svg {
     margin-left: 5px;
+  }
+  @media screen and (max-width: 768px) {
+    display: none;
   }
 `;
 const NextArrow = ({ onClick }) => {
@@ -167,6 +199,9 @@ const PrevBtn = styled.span`
   svg {
     margin-left: 3px;
   }
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 const PrevArrow = ({ onClick }) => {
   return (
@@ -185,19 +220,19 @@ const MainGroup = () => {
     slidesToScroll: 1,
     autoplay: true,
     swipe: true,
-    autoplaySpeed: 5000,
+    autoplaySpeed: 8000,
     nextArrow: <NextArrow />, // 화살표 버튼을 커스텀해서 사용
     prevArrow: <PrevArrow />,
     responsive: [
       {
-        breakpoint: 1050, // 1024px 이하일 때
+        breakpoint: 768, // 1024px 이하일 때
         settings: {
-          slidesToShow: 2, // 슬라이드를 2개만 보여줌
+          slidesToShow: 3, // 슬라이드를 2개만 보여줌
           slidesToScroll: 1,
         },
       },
       {
-        breakpoint: 768, // 600px 이하일 때
+        breakpoint: 550, // 600px 이하일 때
         settings: {
           slidesToShow: 2, // 슬라이드를 1개만 보여줌
           slidesToScroll: 1,
