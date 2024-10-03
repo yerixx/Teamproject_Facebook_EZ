@@ -254,7 +254,7 @@ const MainStory = () => {
   const settings = {
     dots: false,
     infinite: false,
-    speed: 500,
+    speed: 700,
     slidesToShow: 5,
     slidesToScroll: 1,
     swipe: true,

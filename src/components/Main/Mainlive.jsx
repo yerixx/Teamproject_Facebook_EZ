@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FaStar } from "react-icons/fa";
+import Slider from "react-slick"; // 슬릭 슬라이더 import
 import {
   MainTitle_18_b,
   SubDescription_12_m,
@@ -9,30 +10,40 @@ import {
 
 const Wrapper = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 20px;
-  @media (max-width: 390px) {
-    width: 1000px;
+
+  @media screen and (max-width: 1050px) {
+    margin-top: 10px;
+  }
+  @media screen and (max-width: 768px) {
+    margin-top: 0;
+    height: 250px;
   }
 `;
 
 const Inner = styled.div`
   width: 1000px;
-  height: auto;
+  height: 430px;
   padding: 27px 30px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-  border-radius: 30px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius-30);
+  position: relative;
 
-  @media (max-width: 768px) {
-    padding: 20px;
+  @media screen and (max-width: 1050px) {
+    width: 100%;
   }
-
-  @media (max-width: 390px) {
-    padding: 20px;
-    border-radius: 0;
+  @media screen and (max-width: 768px) {
+    box-shadow: none;
+    padding: 0;
+    width: 90vw;
+    min-width: 360px;
+    margin: 0 auto;
   }
 
   .livetext {
@@ -41,12 +52,21 @@ const Inner = styled.div`
   }
 `;
 
-const Live = styled.div`
-  display: flex;
-  gap: 16px;
-
-  @media (max-width: 768px) {
-    gap: 10px;
+const Items = styled.div`
+  .slider {
+    width: 100%;
+    height: 100%;
+  }
+  .slick-slide {
+    margin: 0 5px;
+  }
+  .slick-list {
+    margin: 0 -10px;
+  }
+  .slick-track {
+    display: flex;
+    justify-content: flex-start;
+    transition: transform 0.5s ease-in-out;
   }
 `;
 
@@ -54,43 +74,38 @@ const Livecard = styled.div`
   flex: 1 1 244px;
   max-width: 244px;
   height: auto;
-  /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); */
   border-radius: 8px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   position: relative;
 
+  @media screen and (max-width: 1050px) {
+    width: 100%;
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 52vh;
+  }
+
   > img {
     width: 100%;
     height: 250px;
     object-fit: cover;
     border-radius: 8px 8px 0 0;
-
-    @media (max-width: 768px) {
-      width: 175px;
-      height: 250px;
-    }
-    @media (max-width: 390px) {
-      width: 200px;
-      height: 250px;
-    }
   }
 
   .liveheader {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding-left: 10px;
     background: rgba(0, 0, 0, 0.5);
     color: var(--color-white);
     position: absolute;
-    top: 0;
     width: 100%;
     height: 43px;
     border-radius: 8px 8px 0 0;
-    @media (max-width: 390px) {
-      width: 200px;
-    }
+    top: 0;
 
     .liveBage {
       background: #ed413f;
@@ -98,32 +113,16 @@ const Livecard = styled.div`
       padding: 4px 7px;
       border-radius: 3px;
       margin-right: 5%;
-
-      @media (max-width: 768px) {
-        ${SubDescription_12_m}
-      }
     }
     .item {
       display: flex;
       gap: 40px;
-      @media (max-width: 768px) {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        gap: 15px;
-      }
+
       .viewers {
         ${SubDescription_16_n}
-        @media (max-width: 768px) {
-          width: 100%;
-          ${SubDescription_12_m}
-        }
       }
       .point {
         ${SubDescription_16_n}
-        @media (max-width: 768px) {
-          ${SubDescription_12_m}
-        }
       }
     }
   }
@@ -135,19 +134,12 @@ const Livecard = styled.div`
     background: rgba(0, 0, 0, 0.6);
     color: var(--color-white);
     height: 85px;
-    @media (max-width: 390px) {
-      width: 200px;
-      border-radius: 0 0 8px 8px;
-    }
+
     > img {
       width: 50px;
       height: 50px;
       opacity: 0.8;
       border-radius: 8px;
-      @media (max-width: 768px) {
-        width: 50px;
-        height: 50px;
-      }
     }
 
     .info {
@@ -161,10 +153,6 @@ const Livecard = styled.div`
         display: flex;
         align-items: center;
         gap: 5px;
-
-        @media (max-width: 768px) {
-          font-size: 12px;
-        }
       }
 
       .title {
@@ -186,10 +174,6 @@ const Livecard = styled.div`
           span {
             color: red;
           }
-
-          @media (max-width: 768px) {
-            font-size: 10px;
-          }
         }
 
         button {
@@ -200,54 +184,118 @@ const Livecard = styled.div`
           background: var(--color-gray-01);
           color: var(--color-white);
           cursor: pointer;
-
-          @media (max-width: 768px) {
-            font-size: 9px;
-            padding: 2px 5px;
-          }
         }
       }
     }
   }
 `;
+const NextArrow = (props) => {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={`${className} custom-arrow next-arrow`}
+      style={{
+        ...style,
+        display: "block",
+        right: "18px",
+        fontSize: "40px",
+        color: "gray",
+      }}
+      onClick={onClick}
+    ></div>
+  );
+};
+const PrevArrow = (props) => {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={`${className} custom-arrow next-arrow`}
+      style={{
+        ...style,
+        display: "block",
+        left: "15px", // Move the previous arrow to the left
+        zIndex: 1,
+        fontSize: "40px",
+        color: "gray",
+      }}
+      onClick={onClick}
+    ></div>
+  );
+};
 
 const Mainlive = () => {
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 700,
+    swipe: true,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1050,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 580,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
   return (
     <Wrapper>
       <Inner>
-        <div className="livetext">라이브 커머스</div>
-        <Live>
-          {[...Array(4)].map((_, index) => (
-            <Livecard key={index}>
-              <img src="../public/img/live.jpg" alt="testimg" />
-              <div className="liveheader">
-                <div className="liveBage">LIVE</div>
-                <div className="item">
-                  <div className="viewers">9,452 시청</div>
-                  <div className="point">+500P</div>
-                </div>
-              </div>
-              <div className="liveinfo">
-                <img src="../public/img/live.jpg" alt="profile" />
-                <div className="info">
-                  <span className="subtitle">
-                    <FaStar />
-                    5% 추가할인
-                    <FaStar />
-                  </span>
-                  <span className="title">NEW ARRIVAL SHOES</span>
+        <Items>
+          <div className="livetext">라이브 커머스</div>
+          <Slider {...settings}>
+            {[...Array(8)].map((index) => (
+              <Livecard key={index}>
+                <img src="../public/img/live.jpg" alt="testimg" />
+                <div className="liveheader">
+                  <div className="liveBage">LIVE</div>
                   <div className="item">
-                    <span className="price">
-                      <span>30%</span>
-                      19,000원
-                    </span>
-                    <button>라이브 보기</button>
+                    <div className="viewers">9,452 시청</div>
+                    <div className="point">+500P</div>
                   </div>
                 </div>
-              </div>
-            </Livecard>
-          ))}
-        </Live>
+                <div className="liveinfo">
+                  <img src="../public/img/live.jpg" alt="profile" />
+                  <div className="info">
+                    <span className="subtitle">
+                      <FaStar />
+                      5% 추가할인
+                      <FaStar />
+                    </span>
+                    <span className="title">NEW ARRIVAL SHOES</span>
+                    <div className="item">
+                      <span className="price">
+                        <span>30%</span>
+                        19,000원
+                      </span>
+                      <button>라이브 보기</button>
+                    </div>
+                  </div>
+                </div>
+              </Livecard>
+            ))}
+          </Slider>
+        </Items>
       </Inner>
     </Wrapper>
   );
