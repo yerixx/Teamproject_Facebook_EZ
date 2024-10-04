@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { BsArrowReturnLeft } from "react-icons/bs"; 
 import { CiCamera } from "react-icons/ci";
+=======
+>>>>>>> Signup
 =======
 >>>>>>> Signup
 import styled from "styled-components";
@@ -21,8 +24,13 @@ const Container = styled.div`
   align-items: center;
   gap: 30px;
 <<<<<<< HEAD
+<<<<<<< HEAD
   padding: 27px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+=======
+  /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); */
+  border-radius: 8px;
+>>>>>>> Signup
 =======
   /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); */
   border-radius: 8px;
@@ -59,7 +67,7 @@ const Mainupload = () => {
     // 폼 제출 또는 딜레이 시뮬레이션
     setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 1000);''
   };
 
   return (
@@ -74,15 +82,21 @@ const Mainupload = () => {
           {isLoading ? <BsArrowReturnLeft /> : <BsArrowReturnLeft />}
         </UploadBtn>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <UploadFile htmlFor="file">
           {file ? file.name : <CiCamera />}
           {/* 파일 이름 또는 아이콘 표시 */}
         </UploadFile>
 =======
+=======
+>>>>>>> Signup
         <UploadLabel htmlFor="button">
           <FiEdit3 />
         </UploadLabel>
         <UploadFile id="button" type="button" /> */}
+<<<<<<< HEAD
+>>>>>>> Signup
+=======
 >>>>>>> Signup
       </Container>
     </Form>

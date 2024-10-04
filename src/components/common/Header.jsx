@@ -1,25 +1,36 @@
-// import logoImg from "../../img/Logo.png";
-import { AiFillHome } from "react-icons/ai";
+// import { AiFillHome } from "react-icons/ai";
 import { AiOutlineShop } from "react-icons/ai";
 import { BsCollectionPlay } from "react-icons/bs";
 import { FaBell , FaMoon } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
+import { AiFillHome } from "react-icons/ai";
+
 import { IoPeopleOutline } from "react-icons/io5";
 import { MdOutlineLogout } from "react-icons/md";
+<<<<<<< HEAD
 import { TbGridDots } from "react-icons/tb";
 <<<<<<< HEAD
 import styled from "styled-components";
 
 import HeaderlogoImg from "../../img/HeaderLogo.svg";
 =======
+=======
+
+
+import { TbGridDots } from "react-icons/tb";
+>>>>>>> Signup
 import { FaSearch } from "react-icons/fa";
 import mobileLogo from "../../img/Logo.png";
 import SideBarMenu from "./SideBarMenu";
 import { useContext, useState } from "react";
 import SideBarGroup from "./SideBarGroup";
 import SideBarWallet from "./SideBarWallet";
-
 import { DataStateContext } from "../../App";
+<<<<<<< HEAD
+>>>>>>> Signup
+=======
+import HeaderlogoImg from "../../img/HeaderLogo.svg"
+import styled from "styled-components";
 >>>>>>> Signup
 
 const Header = styled.div`

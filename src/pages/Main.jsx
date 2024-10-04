@@ -1,3 +1,5 @@
+import React from "react";
+// import { MainHeader01Style } from "../styles/GlobalStyles.styles";
 import styled from "styled-components";
 import { HeaderBottom, HeaderTop } from "../components/common/Header";
 // import LeftSideBar from "../components/common/LeftSideBar";
@@ -6,19 +8,15 @@ import ModalCont from "../components/Modal/ModalCont";
 // import { DataDispatchContext, DataStateContext } from "../App";
 import MainPage from "../components/Main/Mainpage";
 import Mainupload from "../components/Main/Mainupload";
-<<<<<<< HEAD
 // import Mainstory from "../components/Main/Mainstory";
 // import MainGroup from "../components/Main/MainGroup";
-=======
 import Mainstory from "../components/Main/Mainstory";
 import Mainlive from "../components/Main/Mainlive";
 import MainGroup from "../components/Main/MainGroup";
 import Mainbutton from "../components/Main/Mainbutton";
->>>>>>> Signup
+
 
 const Wrapper = styled.div`
-  width: 100%;
-  height: 2000px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -60,17 +58,13 @@ const Main = () => {
   // };
   return (
     <Wrapper>
+  
       <HeaderTop />
       <HeaderBottom />
       {/* <SideBarWallet /> */}
       {/* <SideBarGroup /> */}
       {/* <SideBarMenu /> */}
-      <MainSection>
-<<<<<<< HEAD
-        {/* <Mainstory />
-        <MainGroup /> */}
-        <Mainupload />
-=======
+       <MainSection> 
         <Mainstory />
         <Container>
           <Mainupload />
@@ -78,7 +72,6 @@ const Main = () => {
           {/* <Mainmodal /> */}
         </Container>
         <MainGroup />
->>>>>>> Signup
         <MainPage />
         {/* <Maintest>
           <button onClick={create}>생성</button>
@@ -88,8 +81,6 @@ const Main = () => {
         </Maintest> */}
         <Mainlive />
       </MainSection>
-
-      <ModalCont />
     </Wrapper>
   );
 };

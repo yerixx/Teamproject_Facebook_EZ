@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useEffect, useReducer } from "react";
 import { Routes, Route } from "react-router-dom";
 import styled from "styled-components";
@@ -9,13 +8,13 @@ import Main from "./pages/Main";
 import Signup from "./pages/Signup";
 import GlobalStyles from "./styles/GlobalStyles.styles.js";
 
-=======
 import styled from "styled-components";
 import { Routes, Route } from "react-router-dom";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Detail from "./pages/Detail";
+import ModalLive from "./components/Modal/ModalLive.jsx";
 import GlobalStyles from "./styles/GlobalStyles.styles.js";
 import React, { useEffect, useReducer } from "react";
 import "slick-carousel/slick/slick.css";
@@ -31,7 +30,6 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "./firebase.js";
 import { signInWithEmailAndPassword } from "firebase/auth";
->>>>>>> Signup
 
 const Wrapper = styled.div``;
 
@@ -288,6 +286,7 @@ function App() {
     } catch (error) {
       console.error("댓글 추가 중 오류 발생:", error);
     }
+
   };
   const onDeletePost = (postId) => {
     dispatch({
@@ -315,6 +314,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/detail" element={<Detail />} />
+              <Route path="/ModalLive" element={<ModalLive />} />
             </Routes>
           </Wrapper>
         </DataDispatchContext.Provider>

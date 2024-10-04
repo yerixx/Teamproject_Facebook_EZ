@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { FaRegHeart, FaRegComment } from "react-icons/fa";
@@ -7,15 +8,25 @@ import { FiShare } from "react-icons/fi";
 import { IoCloseOutline } from "react-icons/io5";
 import styled from "styled-components";
 =======
+=======
+import styled from "styled-components";
+import { BsThreeDots } from "react-icons/bs";
+import { FaEarthAmericas, FaRegBookmark } from "react-icons/fa6";
+import { IoCloseOutline } from "react-icons/io5";
+import { FaRegHeart, FaRegComment } from "react-icons/fa";
+import { FiShare } from "react-icons/fi";
+>>>>>>> Signup
 import {
   MainTitle_18_b,
   MainTitle_18_n,
   MainTitle_24_m,
-  SubDescription_12_m,
+
   SubDescription_16_n,
-  SubDescription_22_n,
-  SubTitle_16_b,
+
 } from "../../styles/GlobalStyles.styles";
+<<<<<<< HEAD
+>>>>>>> Signup
+=======
 >>>>>>> Signup
 
 const Wrapper = styled.div`
@@ -57,7 +68,7 @@ const Inner = styled.div`
 
     .icon {
       top: 10px;
-      right: 15px;
+      right: 10px;
       ${MainTitle_24_m}
     }
   }
@@ -118,7 +129,11 @@ const ImgItem = styled.div`
       background: var(--color-gray-02);
       gap: 8px;
 <<<<<<< HEAD
+<<<<<<< HEAD
       border: 1px solid red;
+=======
+      cursor: pointer;
+>>>>>>> Signup
 =======
       cursor: pointer;
 >>>>>>> Signup
