@@ -1,21 +1,11 @@
-<<<<<<< HEAD
 import React from "react";
-import { BsThreeDots } from "react-icons/bs";
-import { FaRegHeart, FaRegComment } from "react-icons/fa";
-import { FaEarthAmericas, FaRegBookmark } from "react-icons/fa6";
-import { FiShare } from "react-icons/fi";
-<<<<<<< HEAD
-import { IoCloseOutline } from "react-icons/io5";
-import styled from "styled-components";
-=======
-=======
 import styled from "styled-components";
 import { BsThreeDots } from "react-icons/bs";
 import { FaEarthAmericas, FaRegBookmark } from "react-icons/fa6";
 import { IoCloseOutline } from "react-icons/io5";
 import { FaRegHeart, FaRegComment } from "react-icons/fa";
 import { FiShare } from "react-icons/fi";
->>>>>>> Signup
+
 import {
   MainTitle_18_b,
   MainTitle_18_n,
@@ -24,10 +14,6 @@ import {
   SubDescription_16_n,
 
 } from "../../styles/GlobalStyles.styles";
-<<<<<<< HEAD
->>>>>>> Signup
-=======
->>>>>>> Signup
 
 const Wrapper = styled.div`
   width: 100%;
@@ -128,15 +114,12 @@ const ImgItem = styled.div`
       height: 205px;
       background: var(--color-gray-02);
       gap: 8px;
-<<<<<<< HEAD
-<<<<<<< HEAD
+
       border: 1px solid red;
-=======
+
       cursor: pointer;
->>>>>>> Signup
-=======
-      cursor: pointer;
->>>>>>> Signup
+
+
     }
   }
 `;
