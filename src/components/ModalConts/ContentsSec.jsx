@@ -20,6 +20,10 @@ const Wrapper = styled.div`
       height: 100%;
     }
   }
+  @media screen and (max-width: 1050px) {
+    width: 390px;
+    height: 390px;
+  }
 `;
 
 const ContentsSec = () => {

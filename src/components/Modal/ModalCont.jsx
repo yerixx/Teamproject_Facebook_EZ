@@ -8,12 +8,16 @@ import Buttons from "../ModalConts/Buttons";
 import PostReply from "../ModalConts/PostReply";
 import Reply from "../ModalConts/Reply";
 import SelectBox from "../ModalConts/SelectBox";
+import TopProfileMob from "../ModalConts/TopProfileMob";
 
 const Wrapper = styled.div`
   display: flex;
   border: 1px solid #f00;
   height: 100vh;
   width: 100%;
+  @media screen and (max-width: 1050px) {
+    flex-direction: column;
+  }
 `;
 
 const WrapperRight = styled.div`
@@ -67,6 +71,7 @@ const Latest = styled.div``;
 const ModalCont = () => {
   return (
     <Wrapper>
+      <TopProfileMob />
       <ContentsSec />
       <WrapperRight>
         <Inner>
