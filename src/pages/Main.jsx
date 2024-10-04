@@ -1,7 +1,10 @@
+import React from "react";
+// import { MainHeader01Style } from "../styles/GlobalStyles.styles";
 import styled from "styled-components";
 import { HeaderBottom, HeaderTop } from "../components/common/Header";
 // import LeftSideBar from "../components/common/LeftSideBar";
 import ModalCont from "../components/Modal/ModalCont";
+<<<<<<< HEAD
 // import { useContext } from "react";
 // import { DataDispatchContext, DataStateContext } from "../App";
 import MainPage from "../components/Main/Mainpage";
@@ -14,6 +17,12 @@ import Mainbutton from "../components/Main/Mainbutton";
 const Wrapper = styled.div`
   width: 100%;
   height: 2000px;
+=======
+import RightSideBar from "../components/common/RightSideBar";
+import ModalLive from "../components/Modal/ModalLive";
+
+const Wrapper = styled.div`
+>>>>>>> ModalLive
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -62,6 +71,7 @@ const Main = () => {
       {/* <SideBarGroup /> */}
       {/* <SideBarMenu /> */}
       <MainSection>
+<<<<<<< HEAD
         <Mainstory />
         <Container>
           <Mainupload />
@@ -77,6 +87,12 @@ const Main = () => {
           ))}
         </Maintest> */}
         <Mainlive />
+=======
+        {/* <LeftSideBar /> */}
+        {/* <Maintest></Maintest> */}
+        <ModalLive/>
+        {/* <RightSideBar /> */}
+>>>>>>> ModalLive
       </MainSection>
 
       <ModalCont />
