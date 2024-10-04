@@ -26,7 +26,7 @@ const Wrapper = styled.div`
 
   .optionList {
     position: absolute;
-    top: 38px;
+    top: -13px;
     width: 100%;
     background: #fff;
     box-shadow: 4px 6px 14px rgba(182, 182, 182, 0.8);
@@ -35,7 +35,7 @@ const Wrapper = styled.div`
     padding: 12px 16px;
     border-radius: 8px;
     max-height: 0;
-    opacity: 0;
+    opacity: 0.2;
     visibility: hidden;
     overflow: hidden;
     transition: max-height 0.3s ease, opacity 0.1s ease, visibility 0.1s;

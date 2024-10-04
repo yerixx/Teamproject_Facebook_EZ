@@ -81,7 +81,7 @@ const ModalCont = () => {
               <div>총 개의 갯글</div>
             </ReplyNum>
             <Latest>
-              <SelectBox />
+              <SelectBox /> {/* <- 정렬 버튼 */}
             </Latest>
           </Inner02>
           <ReplyWrapper>
