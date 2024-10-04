@@ -141,4 +141,93 @@ export const Paragraph_20_n = css`
   font-weight: normal;
   font-size: 20px;
 `;
+<<<<<<< HEAD
+=======
+
+// Font
+// Main-header 01
+export const MainHeader01Style = css`
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: bold;
+  font-size: 48px;
+`;
+
+// Main-header 02
+export const MainHeader02Style = css`
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: normal;
+  font-size: 32px;
+`;
+
+// Main-title 01
+export const MainTitle01Style = css`
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: bold;
+  font-size: 26px;
+`;
+
+// Main-title 02
+export const MainTitle02Style = css`
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: 500; /* Medium */
+  font-size: 24px;
+`;
+
+// Main-title 03
+export const MainTitle03Style = css`
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: bold;
+  font-size: 22px;
+`;
+
+// Main-title 04
+export const MainTitle04Style = css`
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+`;
+
+// Main-description
+export const MainDescriptionStyle = css`
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: normal;
+  font-size: 36px;
+`;
+
+// Sub-title
+export const SubTitleStyle = css`
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+`;
+
+// Sub-description 01
+export const SubDescription01Style = css`
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: normal;
+  font-size: 16px;
+`;
+
+// Sub-description 02 (22px)
+export const SubDescription02Style = css`
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: normal;
+  font-size: 22px;
+`;
+
+// Sub-description 02 (12px, Medium)
+export const SubDescription02SmallStyle = css`
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: 500; /* Medium */
+  font-size: 12px;
+`;
+
+// Paragraph
+export const ParagraphStyle = css`
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: normal;
+  font-size: 20px;
+`;
+
+>>>>>>> ModalCont
 export default GlobalStyles;

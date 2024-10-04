@@ -15,8 +15,6 @@ import Mainbutton from "../components/Main/Mainbutton";
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 2000px;
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,13 +55,13 @@ const Main = () => {
   // };
   return (
     <Wrapper>
-      
+    
       <HeaderTop />
       <HeaderBottom />
       {/* <SideBarWallet /> */}
       {/* <SideBarGroup /> */}
       {/* <SideBarMenu /> */}
-      <MainSection>
+       <MainSection> 
         <Mainstory />
         <Container>
           <Mainupload />
@@ -81,7 +79,7 @@ const Main = () => {
         <Mainlive />
       </MainSection>
 
-      <ModalCont />
+
     </Wrapper>
   );
 };
