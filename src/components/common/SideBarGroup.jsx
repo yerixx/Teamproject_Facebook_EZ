@@ -1,10 +1,14 @@
 import styled from "styled-components";
 import { Paragraph_20_n } from "../../styles/GlobalStyles.styles";
+import { IoClose } from "react-icons/io5";
+import { useEffect, useRef } from "react";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "isOpen",
+})`
   z-index: 3;
-  position: sticky;
-  top: 110px;
+  position: absolute;
+  top: 100px;
   right: 20px;
   width: 382px;
   display: flex;
@@ -14,6 +18,18 @@ const Wrapper = styled.div`
   padding: 28px 20px;
   border-radius: var(--border-radius-30);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  max-height: 80vh;
+  overflow-y: auto;
+  -ms-overflow-style: none; /* IE, Edge */
+  scrollbar-width: none;
+  @media screen and (max-width: 1050px) {
+    top: 130px;
+    right: 10px;
+  }
+  @media screen and (max-width: 768px) {
+    width: 330px;
+    top: 70px;
+  }
 `;
 
 const TopTitle = styled.div`
@@ -23,11 +39,10 @@ const TopTitle = styled.div`
   h2 {
     ${Paragraph_20_n}
   }
-  span {
-    font-size: 30px;
-    font-weight: 300;
-  }
   margin-bottom: 10px;
+  span {
+    cursor: pointer;
+  }
 `;
 const Title = styled.div`
   display: flex;
@@ -79,12 +94,30 @@ const GroupTitle = styled.div`
     color: var(--color-gray-01);
   }
 `;
-const SideBarGroup = () => {
+/* eslint-disable react/prop-types */
+const SideBarGroup = ({ openGroup, closeModal }) => {
+  const closeRef = useRef(null);
+  const handleClickOutside = (event) => {
+    if (closeRef.current && !closeRef.current.contains(event.target)) {
+      closeModal(); // 모달을 닫는 함수 호출
+    }
+  };
+  useEffect(() => {
+    // 모달이 마운트되면 클릭 이벤트 추가
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      // 모달이 언마운트되면 클릭 이벤트 제거
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
-    <Wrapper>
+    <Wrapper ref={closeRef}>
       <TopTitle>
         <h2>회원님을 위한 커뮤니티</h2>
-        <span>+</span>
+        <span>
+          <IoClose onClick={openGroup} />
+        </span>
       </TopTitle>
       <Title>
         <h3>추천그룹</h3>
