@@ -1,17 +1,15 @@
 import styled from "styled-components";
+import SocialBtnIcon from "../common/SocialBtnIcon";
+
 import { BsThreeDots } from "react-icons/bs";
 import { FaEarthAmericas, FaRegBookmark } from "react-icons/fa6";
 import { IoCloseOutline } from "react-icons/io5";
-import { FaRegHeart, FaRegComment } from "react-icons/fa";
-import { FiShare } from "react-icons/fi";
+
 import {
   MainTitle_18_b,
   MainTitle_18_n,
   MainTitle_24_m,
-  SubDescription_12_m,
   SubDescription_16_n,
-  SubDescription_22_n,
-  SubTitle_16_b,
 } from "../../styles/GlobalStyles.styles";
 
 const Wrapper = styled.div`
@@ -119,34 +117,34 @@ const ImgItem = styled.div`
   }
 `;
 
-const SocialBtnIcon = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 80px;
-  padding: 10px 20px;
-  ${MainTitle_18_n}
-  border-top: 1px solid var(--color-light-gray-01);
-  .socialIcon {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    &:hover {
-      color: var(--color-facebookblue);
-    }
-  }
-  @media screen and (max-width: 390px) {
-    height: auto;
-    padding: 10px;
+// const SocialBtnIcon = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   width: 100%;
+//   height: 80px;
+//   padding: 10px 20px;
+//   ${MainTitle_18_n}
+//   border-top: 1px solid var(--color-light-gray-01);
+//   .socialIcon {
+//     cursor: pointer;
+//     display: flex;
+//     align-items: center;
+//     gap: 10px;
+//     &:hover {
+//       color: var(--color-facebookblue);
+//     }
+//   }
+//   @media screen and (max-width: 390px) {
+//     height: auto;
+//     padding: 10px;
 
-    .socialIcon {
-      gap: 6px;
-      ${SubDescription_16_n}
-    }
-  }
-`;
+//     .socialIcon {
+//       gap: 6px;
+//       ${SubDescription_16_n}
+//     }
+//   }
+// `;
 
 const MainPost = () => {
   return (
@@ -174,7 +172,7 @@ const MainPost = () => {
             <img src="../public/img/imgtest.jpg" alt="img" />
           </div>
         </ImgItem>
-        <SocialBtnIcon>
+        {/* <SocialBtnIcon>
           <div className="socialIcon">
             <FaRegHeart />
             좋아요
@@ -191,7 +189,8 @@ const MainPost = () => {
             <FaRegBookmark />
             저장하기
           </div>
-        </SocialBtnIcon>
+        </SocialBtnIcon> */}
+        <SocialBtnIcon />
       </Inner>
     </Wrapper>
   );
