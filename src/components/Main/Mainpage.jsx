@@ -1,21 +1,3 @@
-<<<<<<< HEAD
-import React from "react";
-import { BsThreeDots } from "react-icons/bs";
-import { FaRegHeart, FaRegComment } from "react-icons/fa";
-import { FaEarthAmericas, FaRegBookmark } from "react-icons/fa6";
-import { FiShare } from "react-icons/fi";
-import { IoCloseOutline } from "react-icons/io5";
-import {
-  MainTitle_18_b,
-  MainTitle_18_n,
-  MainTitle_24_m,
-  SubDescription_12_m,
-  SubDescription_16_n,
-  SubDescription_22_n,
-  SubTitle_16_b,
-} from "../../styles/GlobalStyles.styles";
-=======
->>>>>>> Mypage
 import styled from "styled-components";
 import { BsThreeDots } from "react-icons/bs";
 import { FaEarthAmericas, FaRegBookmark } from "react-icons/fa6";
@@ -26,10 +8,9 @@ import {
   MainTitle_18_b,
   MainTitle_18_n,
   MainTitle_24_m,
-  SubDescription_12_m,
+
   SubDescription_16_n,
-  SubDescription_22_n,
-  SubTitle_16_b,
+
 } from "../../styles/GlobalStyles.styles";
 
 const Wrapper = styled.div`
@@ -71,11 +52,7 @@ const Inner = styled.div`
 
     .icon {
       top: 10px;
-<<<<<<< HEAD
-      right: 15px;
-=======
       right: 10px;
->>>>>>> Mypage
       ${MainTitle_24_m}
     }
   }

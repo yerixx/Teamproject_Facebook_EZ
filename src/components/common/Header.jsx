@@ -1,24 +1,15 @@
-<<<<<<< HEAD
-// import HeaderlogoImg from "../../img/Logo.png";
-import { AiFillHome } from "react-icons/ai";
+// import { AiFillHome } from "react-icons/ai";
 import { AiOutlineShop } from "react-icons/ai";
 import { BsCollectionPlay } from "react-icons/bs";
 import { FaBell , FaMoon } from "react-icons/fa";
-=======
-import styled from "styled-components";
-// import logoImg from "../../img/Logo.png";
-import HeaderlogoImg from "../../img/HeaderLogo.svg";
->>>>>>> Mypage
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { AiFillHome } from "react-icons/ai";
-import { BsCollectionPlay } from "react-icons/bs";
-import { AiOutlineShop } from "react-icons/ai";
+
 import { IoPeopleOutline } from "react-icons/io5";
 import { MdOutlineLogout } from "react-icons/md";
-import { FaBell } from "react-icons/fa";
-import { FaMoon } from "react-icons/fa";
+
+
 import { TbGridDots } from "react-icons/tb";
-<<<<<<< HEAD
 import { FaSearch } from "react-icons/fa";
 import mobileLogo from "../../img/Logo.png";
 import SideBarMenu from "./SideBarMenu";
@@ -26,10 +17,8 @@ import { useContext, useState } from "react";
 import SideBarGroup from "./SideBarGroup";
 import SideBarWallet from "./SideBarWallet";
 import { DataStateContext } from "../../App";
-import styled from "styled-components";
 import HeaderlogoImg from "../../img/HeaderLogo.svg"
-=======
->>>>>>> Mypage
+import styled from "styled-components";
 
 const Header = styled.div`
   background-color: var(--color-white);

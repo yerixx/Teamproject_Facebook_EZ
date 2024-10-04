@@ -3,10 +3,6 @@ import React from 'react'
 import styled from 'styled-components'
 import PostItem from "../detail/PostItem"
 
-<<<<<<< HEAD
-import testCat from '/img/testcat.jpg';
-import summerImg from "/img/summer.png"
-=======
 
 import testCat from '/img/testcat.jpg';
 import summerImg from "/img/summer.png"
@@ -15,7 +11,6 @@ import summerImg from "/img/summer.png"
 const Wrapper = styled.div`
   /* border:1px solid #f00; */
 `
->>>>>>> Mypage
 
 
 
