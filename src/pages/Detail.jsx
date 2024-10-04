@@ -1,23 +1,45 @@
 import React from "react";
-import MypageCont from "../components/detail/MypageCont";
-import MypageUpload from "../components/detail/MypageUpload"
-import MypageCover from "../components/detail/MypageCover";
 import styled from "styled-components";
 
+
+import { HeaderBottom, HeaderTop } from "../components/common/Header";
+import PhotoVideoList from "../components/detail/PhotoVideoList"
+import PostUploadField from "../components/detail/PostUploadField"
+import PostList from "../components/detail/PostList";
+import TopCover from "../components/detail/TopCover";
+
 const Wrapper = styled.div`
+  width: 100%;
+  height:fit-content;
   margin:0 auto;
-  width:fit-content;
   box-shadow:var(--box-shadow-01);
 
-  /* border:1px solid #f00; */
+    /* 미디어 쿼리 */
+    @media (max-width : 768px) {
+      max-width: 100%;
+    }
+`
+const Inner = styled.div`
+  width: 1050px;
+  height:fit-content;
+  margin:0 auto;
+  box-shadow:var(--box-shadow-01);
+    /* 미디어 쿼리 */
+    @media (max-width : 768px) {
+      max-width: 100%;
+    }
 `
 const Detail = () => {
   return <Wrapper>
-    <MypageCover/>
-    <MypageUpload placeholder="무슨생각을 하고 계신가요?" />
-    <MypageCont />
-    <MypageUpload />
-  </Wrapper>;
+          <HeaderTop />
+          <HeaderBottom />
+          <Inner>
+            <TopCover/>
+            <PostUploadField placeholder="무슨생각을 하고 계신가요?" />
+            <PostList />
+          </Inner>
+            <PhotoVideoList/>
+        </Wrapper>;
 };
 
 export default Detail;

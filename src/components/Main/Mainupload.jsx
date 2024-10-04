@@ -1,4 +1,9 @@
 import React, { useState } from "react";
+<<<<<<< HEAD
+=======
+import { BsArrowReturnLeft } from "react-icons/bs"; 
+import { CiCamera } from "react-icons/ci";
+>>>>>>> Login
 import styled from "styled-components";
 
 const Form = styled.form`
@@ -15,8 +20,13 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   gap: 30px;
+<<<<<<< HEAD
   /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); */
   border-radius: 8px;
+=======
+  padding: 27px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+>>>>>>> Login
   .uploadProfile {
     border-radius: 50%;
     width: 60px;
@@ -63,10 +73,17 @@ const Mainupload = () => {
         {/* <UploadBtn type="submit" onClick={handleSubmit}>
           {isLoading ? <BsArrowReturnLeft /> : <BsArrowReturnLeft />}
         </UploadBtn>
+<<<<<<< HEAD
         <UploadLabel htmlFor="button">
           <FiEdit3 />
         </UploadLabel>
         <UploadFile id="button" type="button" /> */}
+=======
+        <UploadFile htmlFor="file">
+          {file ? file.name : <CiCamera />}
+          {/* 파일 이름 또는 아이콘 표시 */}
+        </UploadFile>
+>>>>>>> Login
       </Container>
     </Form>
   );

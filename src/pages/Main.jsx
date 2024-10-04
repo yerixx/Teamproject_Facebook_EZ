@@ -6,10 +6,15 @@ import ModalCont from "../components/Modal/ModalCont";
 // import { DataDispatchContext, DataStateContext } from "../App";
 import MainPage from "../components/Main/Mainpage";
 import Mainupload from "../components/Main/Mainupload";
+<<<<<<< HEAD
 import Mainstory from "../components/Main/Mainstory";
 import Mainlive from "../components/Main/Mainlive";
 import MainGroup from "../components/Main/MainGroup";
 import Mainbutton from "../components/Main/Mainbutton";
+=======
+// import Mainstory from "../components/Main/Mainstory";
+// import MainGroup from "../components/Main/MainGroup";
+>>>>>>> Login
 
 const Wrapper = styled.div`
   width: 100%;
@@ -61,6 +66,7 @@ const Main = () => {
       {/* <SideBarGroup /> */}
       {/* <SideBarMenu /> */}
       <MainSection>
+<<<<<<< HEAD
         <Mainstory />
         <Container>
           <Mainupload />
@@ -68,6 +74,11 @@ const Main = () => {
           {/* <Mainmodal /> */}
         </Container>
         <MainGroup />
+=======
+        {/* <Mainstory />
+        <MainGroup /> */}
+        <Mainupload />
+>>>>>>> Login
         <MainPage />
         {/* <Maintest>
           <button onClick={create}>생성</button>

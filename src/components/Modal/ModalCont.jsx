@@ -1,7 +1,11 @@
-import React from "react";
+import React from 'react'
 
-const ModalCont = () => {
-  return <div></div>;
-};
+function ModalCont() {
+  return (
+    <div>
+      
+    </div>
+  )
+}
 
-export default ModalCont;
+export default ModalCont

@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import React from "react";
 import { BsThreeDots } from "react-icons/bs";
-import { FaEarthAmericas, FaRegBookmark } from "react-icons/fa6";
-import { IoCloseOutline } from "react-icons/io5";
 import { FaRegHeart, FaRegComment } from "react-icons/fa";
+import { FaEarthAmericas, FaRegBookmark } from "react-icons/fa6";
 import { FiShare } from "react-icons/fi";
+<<<<<<< HEAD
 import {
   MainTitle_18_b,
   MainTitle_18_n,
@@ -13,6 +13,10 @@ import {
   SubDescription_22_n,
   SubTitle_16_b,
 } from "../../styles/GlobalStyles.styles";
+=======
+import { IoCloseOutline } from "react-icons/io5";
+import styled from "styled-components";
+>>>>>>> Login
 
 const Wrapper = styled.div`
   width: 100%;
@@ -23,13 +27,13 @@ const Wrapper = styled.div`
 
 const Inner = styled.div`
   width: 1000px;
-  height: 600px;
+  height: 419px;
   padding: 27px 30px 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-  border-radius: var(--border-radius-30);
+  border-radius: var(--border-radius-08);
   position: relative;
 
   @media screen and (max-width: 390px) {
@@ -104,17 +108,20 @@ const PostText = styled.div`
 
 const ImgItem = styled.div`
   .postImg {
-    width: 100%;
     display: flex;
     justify-content: center;
     gap: 10px;
     margin-bottom: 10px;
     img {
       width: 100%;
-      height: 370px;
+      height: 205px;
       background: var(--color-gray-02);
       gap: 8px;
+<<<<<<< HEAD
       cursor: pointer;
+=======
+      border: 1px solid red;
+>>>>>>> Login
     }
   }
 `;
