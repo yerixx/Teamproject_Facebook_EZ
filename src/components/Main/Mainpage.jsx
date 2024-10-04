@@ -3,7 +3,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { FaRegHeart, FaRegComment } from "react-icons/fa";
 import { FaEarthAmericas, FaRegBookmark } from "react-icons/fa6";
 import { FiShare } from "react-icons/fi";
-<<<<<<< HEAD
+import { IoCloseOutline } from "react-icons/io5";
 import {
   MainTitle_18_b,
   MainTitle_18_n,
@@ -13,10 +13,7 @@ import {
   SubDescription_22_n,
   SubTitle_16_b,
 } from "../../styles/GlobalStyles.styles";
-=======
-import { IoCloseOutline } from "react-icons/io5";
 import styled from "styled-components";
->>>>>>> Login
 
 const Wrapper = styled.div`
   width: 100%;
@@ -117,11 +114,7 @@ const ImgItem = styled.div`
       height: 205px;
       background: var(--color-gray-02);
       gap: 8px;
-<<<<<<< HEAD
       cursor: pointer;
-=======
-      border: 1px solid red;
->>>>>>> Login
     }
   }
 `;

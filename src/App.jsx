@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import styled from "styled-components";
 import { Routes, Route } from "react-router-dom";
 import Main from "./pages/Main";
@@ -20,18 +19,6 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "./firebase.js";
 import { signInWithEmailAndPassword } from "firebase/auth";
-=======
-import React, { useEffect, useReducer } from "react";
-import { Routes, Route } from "react-router-dom";
-import styled from "styled-components";
-
-import Detail from "./pages/Detail";
-import Login from "./pages/Login";
-import Main from "./pages/Main";
-import Signup from "./pages/Signup";
-import GlobalStyles from "./styles/GlobalStyles.styles.js";
-
->>>>>>> Login
 
 const Wrapper = styled.div``;
 
@@ -288,6 +275,7 @@ function App() {
     } catch (error) {
       console.error("댓글 추가 중 오류 발생:", error);
     }
+
   };
   const onDeletePost = (postId) => {
     dispatch({
