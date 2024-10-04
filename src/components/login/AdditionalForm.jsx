@@ -18,6 +18,13 @@ const Wrapper = styled.div`
   background: var(--color-light-gray-02);
   box-shadow: var(--box-shadow-02);
   border-radius: var(--border-radius-08);
+  @media screen and (max-width: 768px) {
+    width: 390px;
+    min-width: 390px;
+    padding: 0 15px;
+    background: var(--color-white);
+    box-shadow: none;
+  }
 `;
 const Label = styled.label`
   display: inline-block;
@@ -87,7 +94,7 @@ const LocationWrapper = styled.ul`
   }
 `;
 
-const AdditionalForm = () => {
+const AdditionalForm = ({ mobileSize, progress }) => {
   // select
   const options = [
     { value: 1, location: "서울" },
@@ -108,9 +115,11 @@ const AdditionalForm = () => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper style={{ display: progress === "2" ? "none" : "flex" }}>
       <Form height={700}>
-        <FormTitle>회원님을 위한 맞춤 홈피드를 준비할게요</FormTitle>
+        {mobileSize ? null : (
+          <FormTitle>회원님을 위한 맞춤 홈피드를 준비할게요</FormTitle>
+        )}
         <Ul>
           <li>
             <FormItemTitle>성별 입력</FormItemTitle>
@@ -177,11 +186,13 @@ const AdditionalForm = () => {
           </li>
         </Ul>
         <div>
-          <Pager>
-            <span className="active"></span>
-            <span></span>
-          </Pager>
-          <Button>다음</Button>
+          {mobileSize ? null : (
+            <Pager>
+              <span className="active"></span>
+              <span></span>
+            </Pager>
+          )}
+          {mobileSize ? null : <Button>다음</Button>}
         </div>
       </Form>
     </Wrapper>

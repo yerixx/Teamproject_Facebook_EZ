@@ -65,7 +65,6 @@ export const Inner = styled.article`
     width: 390px;
     min-width: 390px;
     padding: 0 15px;
-    /* overflow: scroll; */
   }
 `;
 export const FormContainer = styled.div`
