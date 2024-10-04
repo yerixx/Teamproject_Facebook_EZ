@@ -161,7 +161,6 @@ function App() {
     //     dispatch({ type: "SET_CURRENT_USER_DATA", data: null });
     //   }
     // });
-
     // return () => unsubscribe();
   }, []);
   const onCreatePost = async (userId, userName, content, image = null) => {
