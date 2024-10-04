@@ -8,12 +8,20 @@ import PhotoVideoItem from "../detail/PhotoVideoItem.jsx"
 const Wrapper = styled.section`
 display: flex;
 flex-wrap:wrap;
-justify-content:space-between;
-gap:40px;
+justify-content:flex-start;
 width:1050px;
 height:100%;
 padding:0 90px;
 margin:0 auto;
+gap:40px;
+   /* 미디어 쿼리 */
+   @media (max-width : 768px) {
+    width:100%;
+    padding:0px 20px;
+    gap:20px;
+    /* margin: 0 auto; */
+    justify-content:center;
+  }
 `
 
 const PhotoVideoList = () => {
