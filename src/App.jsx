@@ -7,7 +7,6 @@ import Detail from "./pages/Detail";
 import ModalLive from "./components/Modal/ModalLive.jsx";
 import GlobalStyles from "./styles/GlobalStyles.styles.js";
 import React, { useEffect, useReducer } from "react";
-<<<<<<< HEAD
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {
@@ -21,9 +20,6 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "./firebase.js";
 import { signInWithEmailAndPassword } from "firebase/auth";
-=======
-import ModalCont from "./components/Modal/ModalCont";
->>>>>>> ModalCont
 
 const Wrapper = styled.div``;
 
@@ -308,11 +304,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/detail" element={<Detail />} />
-<<<<<<< HEAD
               <Route path="/ModalLive" element={<ModalLive />} />
-=======
-              <Route path="/modalcont" element={<ModalCont />} />
->>>>>>> ModalCont
             </Routes>
           </Wrapper>
         </DataDispatchContext.Provider>
