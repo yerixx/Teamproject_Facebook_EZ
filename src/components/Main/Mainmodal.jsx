@@ -61,6 +61,7 @@ const Inner = styled.div`
       display: flex;
       gap: 10px;
       align-items: center;
+      margin-bottom: 15px;
 
       .profile {
         background: var(--color-gray-01);
@@ -136,7 +137,8 @@ const Inner = styled.div`
 
 const Mainmodal = ({ onClose, onSubmit }) => {
   const [postText, setPostText] = useState("");
-  const [postImage, setPostImage] = useState(null);
+  const [postImage, setPostImage] = useState(null); // const로 유지
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -151,12 +153,20 @@ const Mainmodal = ({ onClose, onSubmit }) => {
     onSubmit({ text: postText, image: postImage });
   };
 
+  const handleCloseModal = () => {
+    // 함수 이름 변경
+    onClose(); // onClose 함수 호출
+    setIsModalOpen();
+  };
+
   return (
     <Wrapper>
       <Inner>
         <div className="maodaltile">
           <div className="title">게시물 올리기</div>
-          <div className="xmark" onClick={onClose}>
+          <div className="xmark" onClick={handleCloseModal}>
+            {" "}
+            {/* 수정된 부분 */}
             <FiX />
           </div>
         </div>

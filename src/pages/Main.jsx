@@ -11,6 +11,7 @@ import Mainupload from "../components/Main/Mainupload";
 import Mainstory from "../components/Main/Mainstory";
 import Mainlive from "../components/Main/Mainlive";
 import MainGroup from "../components/Main/MainGroup";
+import PostUploadField from "../components/common/PostUploadField";
 // import Mainbutton from "../components/Main/Mainbutton";
 
 const Wrapper = styled.div`
@@ -33,11 +34,6 @@ const MainSection = styled.section`
   }
 `;
 
-const Container = styled.div`
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-`;
 // const Maintest = styled.div`
 //   width: 1000px;
 //   border: 1px solid #f00;
@@ -51,15 +47,15 @@ const Main = () => {
   // };
   return (
     <Wrapper>
-    
       <HeaderTop />
       <HeaderBottom />
       {/* <SideBarWallet /> */}
       {/* <SideBarGroup /> */}
       {/* <SideBarMenu /> */}
-       <MainSection> 
+      <MainSection>
         <Mainstory />
-        <Container>{/* <Mainmodal /> */}</Container>
+        <Mainupload />
+        {/* <PostUploadField /> */}
         <MainGroup />
         <MainPage />
         {/* <Maintest>
@@ -70,8 +66,6 @@ const Main = () => {
         </Maintest> */}
         <Mainlive />
       </MainSection>
-
-
     </Wrapper>
   );
 };
