@@ -1,3 +1,5 @@
+import React from "react";
+// import { MainHeader01Style } from "../styles/GlobalStyles.styles";
 import styled from "styled-components";
 import { HeaderBottom, HeaderTop } from "../components/common/Header";
 // import LeftSideBar from "../components/common/LeftSideBar";
@@ -5,30 +7,30 @@ import ModalCont from "../components/Modal/ModalCont";
 // import { useContext } from "react";
 // import { DataDispatchContext, DataStateContext } from "../App";
 import MainPage from "../components/Main/Mainpage";
-import SideBarGroup from "../components/common/SideBarGroup";
-import SideBarWallet from "../components/common/SideBarWallet";
-import SideBarMenu from "../components/common/SideBarMenu";
+import Mainupload from "../components/Main/Mainupload";
 import Mainstory from "../components/Main/Mainstory";
 import Mainlive from "../components/Main/Mainlive";
 import MainGroup from "../components/Main/MainGroup";
-import Mainmodal from "../components/Main/Mainmodal";
+// import Mainbutton from "../components/Main/Mainbutton";
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 2000px;
-  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: center;
 `;
 const MainSection = styled.section`
-  width: 100%;
+  width: 1050px;
+  padding: 0 90px;
   display: flex;
   flex-direction: column;
   gap: 30px;
   /* padding: 28px 20px; */
   position: absolute;
   top: 140px;
+  @media screen and (max-width: 768px) {
+    top: 80px;
+  }
 `;
 
 const Container = styled.div`
@@ -49,12 +51,13 @@ const Main = () => {
   // };
   return (
     <Wrapper>
+    
       <HeaderTop />
       <HeaderBottom />
       {/* <SideBarWallet /> */}
       {/* <SideBarGroup /> */}
       {/* <SideBarMenu /> */}
-      <MainSection>
+       <MainSection> 
         <Mainstory />
         <Container>{/* <Mainmodal /> */}</Container>
         <MainGroup />
@@ -68,7 +71,7 @@ const Main = () => {
         <Mainlive />
       </MainSection>
 
-      <ModalCont />
+
     </Wrapper>
   );
 };

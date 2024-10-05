@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 import styled from "styled-components";
 import { FaUser } from "react-icons/fa6";
 import Slider from "react-slick";
@@ -71,7 +73,7 @@ const StoryItem = styled.div`
   height: 320px;
   border-radius: 8px;
   position: relative;
-
+  overflow: hidden;
   div {
     width: 100%;
     height: 70%;
@@ -252,11 +254,13 @@ const PrevArrow = ({ onClick }) => {
 const MainStory = () => {
   const settings = {
     dots: false,
-    infinite: false,
-    speed: 700,
+    // infinite: true,
+    speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
     swipe: true,
+    // autoplay: true,
+    autoplaySpeed: 5000,
     nextArrow: <NextArrow />, // 화살표 버튼을 커스텀해서 사용
     prevArrow: <PrevArrow />,
     responsive: [
