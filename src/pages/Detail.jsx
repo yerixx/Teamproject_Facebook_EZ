@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
 import { HeaderBottom, HeaderTop } from "../components/common/Header";
 import PostUploadField from "../components/common/PostUploadField.jsx";
 import PhotoVideoList from "../components/detail/PhotoVideoList";
 import PostList from "../components/detail/PostList";
 import TopCover from "../components/detail/TopCover";
-import { Paragraph_20_n, SubDescription_14_n } from "../styles/GlobalStyles.styles.js";
+import {
+  Paragraph_20_n,
+  SubDescription_14_n,
+} from "../styles/GlobalStyles.styles.js";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -75,7 +78,7 @@ const Detail = (props) => {
   const { layoutId } = props;
 
   const [id, setId] = useState(0);
-  
+
   const handleClick = (tabId) => {
     setId(tabId);
   };
@@ -95,12 +98,12 @@ const Detail = (props) => {
           </button>
           <motion.div
             className="underline"
-            layoutId="underline" 
+            layoutId="underline"
             style={{
               width: "50%",
-              left: id === 0 ? "0%" : "50%", 
+              left: id === 0 ? "0%" : "50%",
             }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }} 
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
           />
         </ContChangeBtn>
         <UploadInner>
