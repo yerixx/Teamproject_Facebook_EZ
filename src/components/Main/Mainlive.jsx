@@ -110,9 +110,12 @@ const Livecard = styled.div`
     .liveBage {
       background: #ed413f;
       ${SubDescription_16_n}
-      padding: 4px 7px;
+      padding: 4px 5px;
       border-radius: 3px;
       margin-right: 5px;
+      @media screen and (max-width: 768px) {
+        font-size: 14px;
+      }
     }
     .item {
       display: flex;
@@ -121,7 +124,7 @@ const Livecard = styled.div`
       .viewers {
         ${SubDescription_16_n}
         @media screen and (max-width: 768px) {
-          ${SubDescription_16_n}
+          font-size: 14px;
         }
       }
       .point {
@@ -129,7 +132,7 @@ const Livecard = styled.div`
         position: absolute;
         right: 10px;
         @media screen and (max-width: 768px) {
-          ${SubDescription_16_n}
+          font-size: 14px;
         }
       }
     }
@@ -178,7 +181,7 @@ const Livecard = styled.div`
         @media (max-width: 768px) {
           font-size: 14px;
           @media screen and (max-width: 768px) {
-            ${SubDescription_16_n}
+            ${SubDescription_12_m}
           }
         }
       }
@@ -192,7 +195,7 @@ const Livecard = styled.div`
           display: flex;
           gap: 3px;
           @media screen and (max-width: 768px) {
-            ${SubDescription_16_n}
+            ${SubDescription_12_m}
           }
 
           span {
@@ -201,7 +204,7 @@ const Livecard = styled.div`
         }
 
         button {
-          font-size: 11px;
+          ${SubDescription_12_m}
           border: none;
           border-radius: 8px;
           padding: 3px 7px;
@@ -224,7 +227,7 @@ const NextArrow = (props) => {
       style={{
         ...style,
         display: "block",
-        right: "18px",
+        right: "15px",
         fontSize: "40px",
         color: "gray",
       }}

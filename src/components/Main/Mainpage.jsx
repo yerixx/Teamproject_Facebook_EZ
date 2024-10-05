@@ -30,7 +30,7 @@ const Inner = styled.div`
   border-radius: var(--border-radius-30);
   position: relative;
 
-  @media screen and (max-width: 390px) {
+  @media screen and (max-width: 1050px) {
     width: 100%;
     height: auto;
     gap: 5px;
@@ -43,7 +43,7 @@ const Inner = styled.div`
     gap: 10px;
     ${MainTitle_24_m}
   }
-  @media screen and (max-width: 390px) {
+  @media screen and (max-width: 768px) {
     width: 100%;
     height: auto;
     padding: 15px;
@@ -86,7 +86,7 @@ const PostInfo = styled.div`
       }
     }
   }
-  @media screen and (max-width: 390px) {
+  @media screen and (max-width: 768px) {
     width: 100%;
     height: auto;
   }
@@ -94,8 +94,8 @@ const PostInfo = styled.div`
 const PostText = styled.div`
   margin-left: 63px;
   ${SubDescription_16_n}
-  @media screen and (max-width: 390px) {
-    margin-left: 40px;
+  @media screen and (max-width: 768px) {
+    margin-left: 58px;
     ${SubDescription_16_n}
   }
 `;
@@ -106,45 +106,19 @@ const ImgItem = styled.div`
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 7px;
     img {
       width: 100%;
       height: 370px;
       background: var(--color-gray-02);
       gap: 8px;
       cursor: pointer;
+      @media screen and (max-width: 768px) {
+        height: 250px;
+      }
     }
   }
 `;
-
-// const SocialBtnIcon = styled.div`
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   width: 100%;
-//   height: 80px;
-//   padding: 10px 20px;
-//   ${MainTitle_18_n}
-//   border-top: 1px solid var(--color-light-gray-01);
-//   .socialIcon {
-//     cursor: pointer;
-//     display: flex;
-//     align-items: center;
-//     gap: 10px;
-//     &:hover {
-//       color: var(--color-facebookblue);
-//     }
-//   }
-//   @media screen and (max-width: 390px) {
-//     height: auto;
-//     padding: 10px;
-
-//     .socialIcon {
-//       gap: 6px;
-//       ${SubDescription_16_n}
-//     }
-//   }
-// `;
 
 const MainPost = () => {
   return (
@@ -172,24 +146,6 @@ const MainPost = () => {
             <img src="../public/img/imgtest.jpg" alt="img" />
           </div>
         </ImgItem>
-        {/* <SocialBtnIcon>
-          <div className="socialIcon">
-            <FaRegHeart />
-            좋아요
-          </div>
-          <div className="socialIcon">
-            <FaRegComment />
-            댓글
-          </div>
-          <div className="socialIcon">
-            <FiShare />
-            공유하기
-          </div>
-          <div className="socialIcon">
-            <FaRegBookmark />
-            저장하기
-          </div>
-        </SocialBtnIcon> */}
         <SocialBtnIcon />
       </Inner>
     </Wrapper>
