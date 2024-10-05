@@ -40,7 +40,7 @@ const ContChangeBtn = styled(motion.div)`
   width: 100%;
   padding: 20px 0;
   position: relative;
-
+  border-bottom: 1px solid var(--color-light-gray-01);
   @media (max-width: 768px) {
     bottom: -60px;
   }
@@ -78,9 +78,11 @@ const Detail = (props) => {
   const { layoutId } = props;
 
   const [id, setId] = useState(0);
+  const [upload, setUpload] = useState(false);
 
   const handleClick = (tabId) => {
     setId(tabId);
+    setUpload((prev) => !prev);
   };
 
   return (
@@ -106,7 +108,7 @@ const Detail = (props) => {
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           />
         </ContChangeBtn>
-        <UploadInner>
+        <UploadInner style={{ display: !upload ? "block" : "none" }}>
           <PostUploadField placeholder="무슨 생각을 하고 계신가요?" />
         </UploadInner>
         <div style={{ display: id === 0 ? "block" : "none" }}>

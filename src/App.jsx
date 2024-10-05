@@ -49,7 +49,6 @@ const reducer = (state, action) => {
       const updatedPosts = state.posts.map((post) => {
         if (post.id === action.postId) {
           const updatedLikes = action.isLiked ? post.likes - 1 : post.likes + 1; // 좋아요 수 증가/감소
-
           return {
             ...post,
             likes: updatedLikes, // 업데이트된 좋아요 수
@@ -57,10 +56,8 @@ const reducer = (state, action) => {
         }
         return post;
       });
-
       return { ...state, posts: updatedPosts };
     }
-
     case "ADD_COMMENT": {
       // 포스트 ID에 맞는 포스트를 찾아서 댓글 추가
       const updatedPosts = state.posts.map((post) => {
@@ -276,7 +273,6 @@ function App() {
     } catch (error) {
       console.error("댓글 추가 중 오류 발생:", error);
     }
-
   };
   const onDeletePost = (postId) => {
     dispatch({

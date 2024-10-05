@@ -32,6 +32,7 @@ const WrapperFrom = styled.form`
   padding: 0 90px;
   background: var(--color-white);
   border-radius: 30px 30px 0 0;
+
   /* 미디어 쿼리 */
   @media (max-width: 768px) {
     top: -30px;
@@ -104,6 +105,7 @@ const ProfileText = styled.div`
     /* 미디어 쿼리 */
     @media (max-width: 768px) {
       align-items: center;
+      padding-right: 20px;
     }
     .profileName {
       ${MainTitle_26_b}
@@ -135,11 +137,13 @@ const EditProfileDesc = styled.div`
     textarea {
       ${SubDescription_16_n};
       resize: none;
+      padding: 0 10px;
       &:focus {
         outline: none;
       }
       @media (max-width: 768px) {
-        ${SubDescription_14_n}
+        ${SubDescription_14_n};
+        width: 94%;
       }
     }
     .editBtns {
@@ -162,6 +166,9 @@ const EditProfileDesc = styled.div`
         @media (max-width: 768px) {
           ${SubDescription_12_m};
           height: 26px;
+          &:last-child {
+            margin-right: 20px;
+          }
         }
       }
     }
