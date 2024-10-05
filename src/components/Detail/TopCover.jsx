@@ -33,7 +33,7 @@ const Inner = styled.article`
 `
 const CoverImg = styled.img`
   position:relative;
-  background:var(--color-gray-01);
+  background: var(--color-gray-01);
   width:100%;
   /* height 변경 금지 */
   height:550px;

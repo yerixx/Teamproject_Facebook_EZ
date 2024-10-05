@@ -1,11 +1,14 @@
 import styled from "styled-components";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { SubTitle_16_b } from "../../styles/GlobalStyles.styles";
+import { IoClose } from "react-icons/io5";
+import { useContext, useEffect, useRef } from "react";
+import { DataStateContext } from "../../App";
 
 const Wrapper = styled.div`
   z-index: 3;
-  position: sticky;
-  top: 110px;
+  position: absolute;
+  top: 100px;
   right: 20px;
   width: 382px;
   display: flex;
@@ -15,10 +18,25 @@ const Wrapper = styled.div`
   padding: 28px 20px;
   border-radius: var(--border-radius-30);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  max-height: 80vh;
+  overflow-y: auto;
+  -ms-overflow-style: none; /* IE, Edge */
+  scrollbar-width: none;
+  @media screen and (max-width: 1050px) {
+    top: 130px;
+    right: 10px;
+  }
+  @media screen and (max-width: 768px) {
+    width: 330px;
+    top: 70px;
+  }
 `;
 const Title = styled.div`
   display: flex;
   justify-content: space-between;
+  span {
+    cursor: pointer;
+  }
 `;
 
 const Box = styled.div`
@@ -78,6 +96,9 @@ const RecentProductItem = styled.div`
       font-size: 30px;
     }
   }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 const ProductItemInfo = styled.div`
   width: 180px;
@@ -98,21 +119,41 @@ const ProductItemInfo = styled.div`
     }
   }
 `;
-const SideBarWallet = () => {
+/* eslint-disable react/prop-types */
+const SideBarWallet = ({ onClick, closeModal }) => {
+  const data = useContext(DataStateContext);
+  const currentUser = data.currentUserData;
+  const closeRef = useRef(null);
+  const handleClickOutside = (event) => {
+    if (closeRef.current && !closeRef.current.contains(event.target)) {
+      closeModal(); // 모달을 닫는 함수 호출
+    }
+  };
+  useEffect(() => {
+    // 모달이 마운트되면 클릭 이벤트 추가
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      // 모달이 언마운트되면 클릭 이벤트 제거
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
-    <Wrapper>
+    <Wrapper ref={closeRef}>
       <Title>
         <h3>Wallett +</h3>
-        <span>12,300p</span>
+        <span>
+          <IoClose onClick={onClick} />
+        </span>
       </Title>
       <Box>
         <WalletItem>
           <img />
-          <span>10,700 원</span>
+          <span>{currentUser.wallet.point} p</span>
         </WalletItem>
         <WalletItem>
           <img />
-          <span>10,700 원</span>
+          <span>{currentUser.wallet.wan} 원</span>
         </WalletItem>
         <WalletItem>
           <div>+</div>
@@ -123,19 +164,6 @@ const SideBarWallet = () => {
         <h3>최근 본 상품</h3>
       </Title>
       <Box>
-        <RecentProductItem>
-          <img />
-          <ProductItemInfo>
-            <h4>★5%추가할인★스프라이트 백트임 긴팔니트..</h4>
-            <div>
-              <span>30%</span>
-              <span>19,000원</span>
-            </div>
-          </ProductItemInfo>
-          <div className="icon">
-            <MdOutlineShoppingBag />
-          </div>
-        </RecentProductItem>
         <RecentProductItem>
           <img />
           <ProductItemInfo>

@@ -49,7 +49,7 @@ const Mainupload = () => {
     // 폼 제출 또는 딜레이 시뮬레이션
     setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 1000);''
   };
 
   return (

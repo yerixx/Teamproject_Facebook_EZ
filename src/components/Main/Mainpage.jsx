@@ -8,10 +8,9 @@ import {
   MainTitle_18_b,
   MainTitle_18_n,
   MainTitle_24_m,
-  SubDescription_12_m,
+
   SubDescription_16_n,
-  SubDescription_22_n,
-  SubTitle_16_b,
+
 } from "../../styles/GlobalStyles.styles";
 
 const Wrapper = styled.div`
@@ -23,13 +22,13 @@ const Wrapper = styled.div`
 
 const Inner = styled.div`
   width: 1000px;
-  height: 600px;
+  height: 419px;
   padding: 27px 30px 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-  border-radius: var(--border-radius-30);
+  border-radius: var(--border-radius-08);
   position: relative;
 
   @media screen and (max-width: 390px) {
@@ -104,14 +103,13 @@ const PostText = styled.div`
 
 const ImgItem = styled.div`
   .postImg {
-    width: 100%;
     display: flex;
     justify-content: center;
     gap: 10px;
     margin-bottom: 10px;
     img {
       width: 100%;
-      height: 370px;
+      height: 205px;
       background: var(--color-gray-02);
       gap: 8px;
       cursor: pointer;
