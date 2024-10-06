@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
 
-  margin-top: 20px;
+  /* margin-top: 20px; */
   @media screen and (max-width: 1050px) {
     margin-top: 50px;
   }
@@ -33,7 +33,6 @@ const Inner = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   gap: 10px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius-30);

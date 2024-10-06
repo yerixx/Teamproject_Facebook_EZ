@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import SocialBtnIcon from "../common/SocialBtnIcon.jsx";
-import PostUploadField from "../common/PostUploadField";
+import UploadField from "../common/UploadField.jsx";
+import EditeBox from "../common/EditeBox.jsx";
 
 // react-icon
 import { BsThreeDots } from "react-icons/bs";
@@ -55,6 +56,7 @@ const Profile = styled.div`
     display: flex;
     align-items: center;
     gap: 30px;
+
     /* 미디어 쿼리 */
     @media (max-width: 768px) {
       width: 100%;
@@ -170,8 +172,8 @@ const PostItem = ({ imageSrc, contentDesc }) => {
             </div>
           </div>
           <div className="ControlsIcon">
-            <div>
-              <BsThreeDots />
+            <div style={{ zIndex: 999 }}>
+              <EditeBox Title={<BsThreeDots className="ControlsIcon" />} />
             </div>
             <div>
               <IoCloseOutline />
@@ -185,7 +187,7 @@ const PostItem = ({ imageSrc, contentDesc }) => {
           {imageSrc && <ContImg src={imageSrc} alt={"Content Image"} />}
         </Contents>
         <SocialBtnIcon />
-        <PostUploadField />
+        <UploadField />
       </Inner>
     </Wrapper>
   );

@@ -18,7 +18,7 @@ const Wrapper = styled.div`
     margin-top: 10px;
   }
   @media screen and (max-width: 768px) {
-    margin-top: 0;
+    margin-top: 10px;
     height: 250px;
   }
 `;
@@ -90,7 +90,7 @@ const Livecard = styled.div`
 
   > img {
     width: 100%;
-    height: 250px;
+    height: 90%;
     object-fit: cover;
     border-radius: 8px 8px 0 0;
   }
@@ -110,9 +110,12 @@ const Livecard = styled.div`
     .liveBage {
       background: #ed413f;
       ${SubDescription_16_n}
-      padding: 4px 7px;
+      padding: 4px 5px;
       border-radius: 3px;
-      margin-right: 5%;
+      margin-right: 5px;
+      @media screen and (max-width: 768px) {
+        font-size: 14px;
+      }
     }
     .item {
       display: flex;
@@ -120,9 +123,17 @@ const Livecard = styled.div`
 
       .viewers {
         ${SubDescription_16_n}
+        @media screen and (max-width: 768px) {
+          font-size: 14px;
+        }
       }
       .point {
         ${SubDescription_16_n}
+        position: absolute;
+        right: 10px;
+        @media screen and (max-width: 768px) {
+          font-size: 14px;
+        }
       }
     }
   }
@@ -131,16 +142,23 @@ const Livecard = styled.div`
     display: flex;
     align-items: center;
     padding: 5px 5px;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.5);
     color: var(--color-white);
     height: 85px;
-
-    > img {
+    border-radius: 0 0 8px 8px;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    @media screen and (max-width: 768px) {
+      bottom: 38px;
+    }
+    /* > img {
       width: 50px;
       height: 50px;
+      border: 1px solid red;
       opacity: 0.8;
       border-radius: 8px;
-    }
+    } */
 
     .info {
       flex-grow: 1;
@@ -153,12 +171,18 @@ const Livecard = styled.div`
         display: flex;
         align-items: center;
         gap: 5px;
+        @media screen and (max-width: 768px) {
+          ${SubDescription_12_m}
+        }
       }
 
       .title {
         ${SubDescription_16_n}
         @media (max-width: 768px) {
           font-size: 14px;
+          @media screen and (max-width: 768px) {
+            ${SubDescription_12_m}
+          }
         }
       }
 
@@ -167,9 +191,12 @@ const Livecard = styled.div`
         justify-content: space-between;
 
         .price {
-          ${SubDescription_12_m}
+          ${SubDescription_16_n}
           display: flex;
           gap: 3px;
+          @media screen and (max-width: 768px) {
+            ${SubDescription_12_m}
+          }
 
           span {
             color: red;
@@ -177,13 +204,16 @@ const Livecard = styled.div`
         }
 
         button {
-          font-size: 11px;
+          ${SubDescription_12_m}
           border: none;
           border-radius: 8px;
           padding: 3px 7px;
           background: var(--color-gray-01);
           color: var(--color-white);
           cursor: pointer;
+          @media screen and (max-width: 768px) {
+            ${SubDescription_12_m}
+          }
         }
       }
     }
@@ -197,7 +227,7 @@ const NextArrow = (props) => {
       style={{
         ...style,
         display: "block",
-        right: "18px",
+        right: "15px",
         fontSize: "40px",
         color: "gray",
       }}
@@ -275,7 +305,7 @@ const Mainlive = () => {
                   </div>
                 </div>
                 <div className="liveinfo">
-                  <img src="../public/img/live.jpg" alt="profile" />
+                  {/* <img src="../public/img/live.jpg" alt="profile" /> */}
                   <div className="info">
                     <span className="subtitle">
                       <FaStar />

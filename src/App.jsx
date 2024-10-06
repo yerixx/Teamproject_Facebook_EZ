@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Detail from "./pages/Detail";
 import ModalLive from "./components/Modal/ModalLive.jsx";
+import ModalCont from "./components/Modal/ModalCont.jsx";
 import GlobalStyles from "./styles/GlobalStyles.styles.js";
 import React, { useEffect, useReducer } from "react";
 import "slick-carousel/slick/slick.css";
@@ -173,7 +174,6 @@ function App() {
     };
     try {
       const docRef = await addDoc(collection(db, "posts"), newPost);
-
       // Firestore에 추가된 데이터로 상태를 업데이트
       dispatch({
         type: "ADD_POST",
@@ -299,8 +299,9 @@ function App() {
               <Route path="/" element={<Main />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/detail" element={<Detail />} />
-              <Route path="/ModalLive" element={<ModalLive />} />
+              <Route path="/mypage" element={<Detail />} />
+              <Route path="/modallive" element={<ModalLive />} />
+              <Route path="/modalcont" element={<ModalCont />} />
             </Routes>
           </Wrapper>
         </DataDispatchContext.Provider>

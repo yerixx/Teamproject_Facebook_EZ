@@ -160,7 +160,8 @@ const EditProfileDesc = styled.div`
         cursor: pointer;
         transition: all 0.3s;
         &:hover {
-          color: var(--color-facebookblue);
+          background: var(--color-facebookblue);
+          color: var(--color-white);
           font-weight: 600;
         }
         @media (max-width: 768px) {
@@ -193,11 +194,11 @@ const Button = styled.div`
     border-radius: var(--border-radius-08);
     cursor: pointer;
     transition: opacity 0.8s;
-    /* &:nth-child(1){
-    background:var(--color-facebookblue);
-    color:var(--color-white);
-  } */
-    &:nth-child(1),
+    &:nth-child(1) {
+      background: var(--color-facebookblue);
+      color: var(--color-white);
+    }
+    /* &:nth-child(1), */
     &:nth-child(2) {
       background: var(--color-light-gray-01);
       color: var(--color-gray-01);
@@ -236,7 +237,8 @@ const ProfileCard = () => {
     }, 1000);
   };
   const profileEdite = () => {
-    setEditing(true);
+    const confirmEdit = window.confirm("프로필을 수정 하시겠습니까?");
+    if (confirmEdit) setEditing((prev) => !prev);
   };
   const editCencel = () => {
     const confirmCencel = window.confirm(

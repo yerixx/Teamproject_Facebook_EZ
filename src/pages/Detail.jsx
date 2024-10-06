@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 
 import { HeaderBottom, HeaderTop } from "../components/common/Header";
-import PostUploadField from "../components/common/PostUploadField.jsx";
+import PostUploadField from "../components/common/UploadField.jsx";
 import PhotoVideoList from "../components/detail/PhotoVideoList";
 import PostList from "../components/detail/PostList";
 import TopCover from "../components/detail/TopCover";
