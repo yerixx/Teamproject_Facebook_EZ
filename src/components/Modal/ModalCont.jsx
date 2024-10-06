@@ -9,14 +9,37 @@ import PostReply from "../ModalConts/PostReply";
 import Reply from "../ModalConts/Reply";
 import SelectBox from "../ModalConts/SelectBox";
 import TopProfileMob from "../ModalConts/TopProfileMob";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FaDove } from "react-icons/fa6";
 
 const Wrapper = styled.div`
   display: flex;
   border: 1px solid #f00;
   height: 100vh;
   width: 100%;
+  .onlyPc {
+    display: block;
+  }
+  .onlyMob {
+    display: none;
+  }
+  .onlyMob {
+    .closeBtn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: #fff;
+    }
+  }
   @media screen and (max-width: 1050px) {
     flex-direction: column;
+    background: #000;
+    .onlyPc {
+      display: none;
+    }
+    .onlyMob {
+      display: block;
+    }
   }
 `;
 
@@ -42,6 +65,9 @@ const WrapperPost = styled.div`
   flex-direction: column;
   gap: 20px;
   border: 1px solid aqua;
+  @media screen and (max-width: 1050px) {
+    width: calc(100vw - (100vw - 100%));
+  }
 `;
 
 const Line = styled.hr`
@@ -71,25 +97,30 @@ const Latest = styled.div``;
 const ModalCont = () => {
   return (
     <Wrapper>
-      <TopProfileMob />
+      <div className="onlyMob">
+        <div className="closeBtn">X</div>
+        <TopProfileMob />
+      </div>
       <ContentsSec />
       <WrapperRight>
         <Inner>
-          <TopProfile />
+          <div className="onlyPc">
+            <TopProfile />
+          </div>
           <WrapperPost>
             <PostCont />
             <Buttons />
           </WrapperPost>
           <Line />
           <Inner02>
-            <ReplyNum>
+            <ReplyNum className="onlyPc">
               <div>총 개의 갯글</div>
             </ReplyNum>
             <Latest>
               <SelectBox /> {/* <- 정렬 버튼 */}
             </Latest>
           </Inner02>
-          <ReplyWrapper>
+          <ReplyWrapper className="onlyPc">
             <PostReply />
             <PostReply />
             <PostReply />

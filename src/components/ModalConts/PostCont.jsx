@@ -4,6 +4,10 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
+  @media screen and (max-width: 1050px) {
+    height: 100px;
+    width: calc(100vw - (100vw - 100%));
+  }
 `;
 
 const PostCont = () => {
