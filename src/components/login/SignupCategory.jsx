@@ -10,6 +10,7 @@ import categoryImg06 from "../../img/signup-category06.jpg";
 import categoryImg07 from "../../img/signup-category07.jpg";
 import categoryImg08 from "../../img/signup-category08.jpg";
 import categoryImg09 from "../../img/signup-category09.jpg";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   height: 750px;
@@ -20,6 +21,16 @@ const Wrapper = styled.div`
   background: var(--color-light-gray-02);
   box-shadow: var(--box-shadow-02);
   border-radius: var(--border-radius-08);
+  @media screen and (max-width: 768px) {
+    width: 390px;
+    min-width: 390px;
+    height: auto;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 15px;
+    background: var(--color-white);
+    box-shadow: none;
+  }
 `;
 const CategoryUl = styled.ul`
   display: grid;
@@ -32,16 +43,44 @@ const CategoryUl = styled.ul`
     align-items: center;
     gap: 8px;
     cursor: pointer;
-    img {
+    .img-wrapper {
       width: 114px;
       height: 114px;
-      object-fit: cover;
       border-radius: var(--border-radius-08);
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: all 0.3s;
+      }
     }
+    &:hover,
+    &:active {
+      .img-wrapper {
+        img {
+          transform: scale(1.05);
+        }
+      }
+    }
+    &.checked {
+      .img-wrapper {
+        img {
+          transform: scale(1.05);
+          filter: brightness(0.6);
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 768px) {
+    margin-bottom: 0;
+    gap: 9px;
   }
 `;
 
-const SignupCategory = () => {
+const SignupCategory = ({ mobileSize, progress }) => {
+  const navigate = useNavigate();
+
   const categoryItems = [
     { id: 1, src: categoryImg01, title: "반려동물" },
     { id: 2, src: categoryImg02, title: "해외축구" },
@@ -54,24 +93,36 @@ const SignupCategory = () => {
     { id: 9, src: categoryImg09, title: "영화" },
   ];
 
+  const handlePrevSignupStep = () => {
+    navigate("/signup");
+  };
+
   return (
-    <Wrapper>
-      <FormTitle>회원님을 위한 맞춤 홈피드를 준비할게요</FormTitle>
+    <Wrapper style={{ display: progress === "2" ? "flex" : "none" }}>
+      {mobileSize ? null : (
+        <FormTitle>회원님을 위한 맞춤 홈피드를 준비할게요</FormTitle>
+      )}
       <FormDesc>선택된 3개 분야로 그룹을 추천해 드릴게요</FormDesc>
       <CategoryUl>
         {categoryItems.map((item) => (
           <li key={item.id}>
-            <img src={item.src} />
+            <div className="img-wrapper">
+              <img src={item.src} />
+            </div>
             <p>{item.title}</p>
           </li>
         ))}
       </CategoryUl>
       <div>
-        <Pager>
-          <span className="active"></span>
-          <span></span>
-        </Pager>
-        <Button>이전</Button>
+        {mobileSize ? null : (
+          <Pager>
+            <span className="active"></span>
+            <span></span>
+          </Pager>
+        )}
+        {mobileSize ? null : (
+          <Button onClick={handlePrevSignupStep}>이전</Button>
+        )}
       </div>
     </Wrapper>
   );

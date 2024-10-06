@@ -37,6 +37,7 @@ const GoBackBtn = styled.button`
 `;
 
 const MobileHeader = ({ title }) => {
+  console.log(title);
   return (
     <Wrapper>
       <GoBackBtn>

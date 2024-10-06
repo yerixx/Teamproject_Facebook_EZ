@@ -17,6 +17,7 @@ import {
 const SignupForm = ({ mobileSize }) => {
   return (
     <Form height={700}>
+      {mobileSize ? null : <FormTitle>Facebook에 가입하기</FormTitle>}
       <Ul>
         <li>
           <FormItemTitle>이름 입력</FormItemTitle>

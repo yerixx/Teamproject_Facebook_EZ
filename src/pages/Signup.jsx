@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import letterLogoImg from "../img/HeaderLogo.svg";
 import circleLogoImg from "../img/Logo.svg";
@@ -19,6 +20,8 @@ const Signup = () => {
   // responsive
   const [mobileSize, setMobileSize] = useState(false);
 
+  const [searchParams] = useSearchParams();
+  const signupProcess = searchParams.get("progress");
   const updateSize = (e) => {
     if (e.target.innerWidth <= 768) setMobileSize(true);
     else setMobileSize(false);
@@ -43,10 +46,12 @@ const Signup = () => {
       }}
     >
       {mobileSize ? (
-        <MobileHeader title={"Facebook에 가입하기"}></MobileHeader>
-      ) : (
-        <FormTitle>Facebook에 가입하기</FormTitle>
-      )}
+        <MobileHeader
+          title={
+            signupProcess === "2" ? "추가정보 입력하기" : "Facebook에 가입하기"
+          }
+        ></MobileHeader>
+      ) : null}
       <Inner>
         {mobileSize ? null : (
           <Logo>
@@ -55,12 +60,24 @@ const Signup = () => {
         )}
         <FormContainer>
           {mobileSize ? (
-            <SignupForm mobileSize={mobileSize} setMobileSize={setMobileSize} />
+            // <SignupForm mobileSize={mobileSize} setMobileSize={setMobileSize} />
+            <>
+              <AdditionalForm
+                mobileSize={mobileSize}
+                setMobileSize={setMobileSize}
+                progress={signupProcess}
+              />
+              <SignupCategory progress={signupProcess} />
+            </>
           ) : (
+            // <SignupCategory
+            //   mobileSize={mobileSize}
+            //   setMobileSize={setMobileSize}
+            // />
             <>
               <SignupForm />
-              <AdditionalForm />
-              {/* <SignupCategory /> */}
+              {/* <AdditionalForm /> */}
+              <SignupCategory />
             </>
           )}
         </FormContainer>
