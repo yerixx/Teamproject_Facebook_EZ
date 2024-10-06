@@ -9,6 +9,7 @@ import { FaPlus } from "react-icons/fa6";
 import { SubDescription_16_n } from "../../styles/GlobalStyles.styles";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { MdOutlineNavigateBefore } from "react-icons/md";
+import { useState } from "react";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -244,7 +245,8 @@ const PrevBtn = styled.span`
     display: none;
   }
 `;
-const PrevArrow = ({ onClick }) => {
+const PrevArrow = ({ onClick, currentSlide }) => {
+  if (currentSlide === 0) return null;
   return (
     <PrevBtn onClick={onClick}>
       <MdOutlineNavigateBefore />
@@ -253,17 +255,21 @@ const PrevArrow = ({ onClick }) => {
 };
 
 const MainStory = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
   const settings = {
     dots: false,
-    // infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
     swipe: true,
+    swipeToSlide: true,
+    touchMove: true,
     // autoplay: true,
     autoplaySpeed: 5000,
     nextArrow: <NextArrow />, // 화살표 버튼을 커스텀해서 사용
-    prevArrow: <PrevArrow />,
+    prevArrow: <PrevArrow currentSlide={currentSlide} />,
+    beforeChange: (current, next) => setCurrentSlide(next),
     responsive: [
       {
         breakpoint: 1050, // 1024px 이하일 때

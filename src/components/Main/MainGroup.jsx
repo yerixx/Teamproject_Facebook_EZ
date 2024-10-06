@@ -251,7 +251,7 @@ const MainGroup = () => {
         <Items>
           <Slider className="slider" {...settings}>
             <Item>
-              <IoClose />
+              {/* <IoClose /> */}
               <div>
                 <h3>함께하는 세계여행</h3>
                 <h4>멤버 4.4천명</h4>
@@ -259,7 +259,7 @@ const MainGroup = () => {
               </div>
             </Item>
             <Item>
-              <IoClose />
+              {/* <IoClose /> */}
               <div>
                 <h3>반려동물</h3>
                 <h4>멤버 2.4천명</h4>
@@ -267,7 +267,7 @@ const MainGroup = () => {
               </div>
             </Item>
             <Item>
-              <IoClose />
+              {/* <IoClose /> */}
               <div>
                 <h3>운동</h3>
                 <h4>멤버 3.2천명</h4>
@@ -275,7 +275,7 @@ const MainGroup = () => {
               </div>
             </Item>
             <Item>
-              <IoClose />
+              {/* <IoClose /> */}
               <div>
                 <h3>1</h3>
                 <h4>멤버 3.2천명</h4>
@@ -283,7 +283,7 @@ const MainGroup = () => {
               </div>
             </Item>
             <Item>
-              <IoClose />
+              {/* <IoClose /> */}
               <div>
                 <h3>2</h3>
                 <h4>멤버 3.2천명</h4>
@@ -291,7 +291,7 @@ const MainGroup = () => {
               </div>
             </Item>
             <Item>
-              <IoClose />
+              {/* <IoClose /> */}
               <div>
                 <h3>운동</h3>
                 <h4>멤버 3.2천명</h4>
