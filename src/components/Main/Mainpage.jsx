@@ -16,7 +16,6 @@ import {
 
 const Wrapper = styled.div`
   width: 100%;
-
   margin-top: 20px;
   @media screen and (max-width: 1050px) {
     width: 100%;
@@ -32,6 +31,7 @@ const Inner = styled.div`
   padding: 27px 30px 0;
   display: flex;
   flex-direction: column;
+
   gap: 10px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius-30);

@@ -194,7 +194,7 @@ const Mainupload = ({ placeholder }) => {
             className="profileInputText"
             onChange={onChange}
             type="text"
-            placeholder={placeholder || "댓글을 입력하세요"}
+            placeholder={placeholder || "게시물을 입력하세요"}
             value={inputText}
             required
           />
