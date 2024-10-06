@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useState, useContext } from "react";
+import { DataDispatchContext } from "../../App.jsx";
 import CommentList from "../detail/CommentList";
 import styled from "styled-components";
 
@@ -48,7 +49,8 @@ const SocialIcon = styled.div`
   }
 `;
 
-const SocialBtnIcon = () => {
+const SocialBtnIcon = ({ postId, isLiked }) => {
+  const { onToggleLike } = useContext(DataDispatchContext);
   const [toggle, setToggle] = useState(false);
   const [like, setLike] = useState(false);
   const [save, setSave] = useState(false);
@@ -56,8 +58,14 @@ const SocialBtnIcon = () => {
   const handleCommentToggle = () => {
     setToggle((prev) => !prev);
   };
-  const handleLikeToggle = () => {
-    setLike((prev) => !prev);
+  const handleLikeToggle = async (e) => {
+    e.preventDefault();
+    try {
+      await onToggleLike(postId, like);
+      setLike((prev) => !prev);
+    } catch (err) {
+      console.error("Like error", err);
+    }
   };
   const handlSaveToggle = () => {
     setSave((prev) => !prev);

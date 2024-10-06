@@ -160,6 +160,8 @@ const ContImg = styled.img`
 `;
 
 const PostItem = ({ imageSrc, contentDesc }) => {
+  const postId = "12345"; // 실제 포스트 ID
+  const isLiked = false; // 초기 좋아요 여부
   return (
     <Wrapper>
       <Inner>
@@ -186,7 +188,7 @@ const PostItem = ({ imageSrc, contentDesc }) => {
           </div>
           {imageSrc && <ContImg src={imageSrc} alt={"Content Image"} />}
         </Contents>
-        <SocialBtnIcon />
+        <SocialBtnIcon postId={postId} isLiked={isLiked} />
         <UploadField />
       </Inner>
     </Wrapper>

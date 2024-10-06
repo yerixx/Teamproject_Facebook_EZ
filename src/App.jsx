@@ -7,6 +7,7 @@ import Detail from "./pages/Detail";
 import ModalLive from "./components/Modal/ModalLive.jsx";
 import ModalCont from "./components/Modal/ModalCont.jsx";
 import GlobalStyles from "./styles/GlobalStyles.styles.js";
+
 import React, { useEffect, useReducer } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -237,7 +238,17 @@ function App() {
     }
   };
 
-  const onToggleLike = (postId, isLiked) => {
+  const onToggleLike = async (postId, isLiked) => {
+    // try {
+    //   const postDocRef = doc(db, "posts", postId);
+
+    //   await updateDoc(postDocRef, {
+    //     likes: isLiked ? true : false,
+    //   });
+    // } catch (err) {
+    //   console.error("Like error :", err);
+    // }
+
     dispatch({
       type: "LIKE_POST",
       postId: postId, // 좋아요가 눌린 포스트 ID
@@ -254,7 +265,6 @@ function App() {
       createdAt: new Date().toISOString(), // 댓글 작성 시간
       likes: 0, // 좋아요 기본값
     };
-
     try {
       // Firestore에서 해당 포스트 문서 참조
       const postDocRef = doc(db, "posts", postId);

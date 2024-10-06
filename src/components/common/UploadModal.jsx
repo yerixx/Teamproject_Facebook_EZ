@@ -1,9 +1,8 @@
 import React, { useState, useContext } from "react";
 import { DataDispatchContext } from "../../App";
 
-import { storage, db } from "../../firebase";
+import { storage } from "../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { collection, addDoc } from "firebase/firestore";
 import styled from "styled-components";
 import { FiX } from "react-icons/fi";
 import { CiCamera } from "react-icons/ci";
@@ -144,7 +143,6 @@ const PostingBtn = styled.button`
 
 const UploadModal = ({ onClose, onSubmit }) => {
   const { onCreatePost } = useContext(DataDispatchContext);
-
   const [isLoading, setIsLoading] = useState(false);
   const [uploadText, setUploadText] = useState("");
   const [uploadFile, setUploadFile] = useState(null);
@@ -188,6 +186,11 @@ const UploadModal = ({ onClose, onSubmit }) => {
       }
     }
     try {
+      if (uploadText === "" || uploadText === null) {
+        alert("내용을 입력해주세요");
+        setIsLoading(false);
+        return;
+      }
       // Firestore에 게시물 추가
       await onCreatePost("testUserId", "TestUser", uploadText, imageUrl);
       // 성공 후 모달 닫기 및 입력 필드 초기화
