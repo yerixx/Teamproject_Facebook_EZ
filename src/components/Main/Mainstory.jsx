@@ -1,15 +1,15 @@
 /* eslint-disable react/prop-types */
 
+import React, { useState } from "react"; // useState 임포트 추가
 import styled from "styled-components";
-import { FaUser } from "react-icons/fa6";
+import { FaUser, FaPlus } from "react-icons/fa6";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { FaPlus } from "react-icons/fa6";
 import { SubDescription_16_n } from "../../styles/GlobalStyles.styles";
-import { MdOutlineNavigateNext } from "react-icons/md";
-import { MdOutlineNavigateBefore } from "react-icons/md";
-import { useState } from "react";
+import { MdOutlineNavigateNext, MdOutlineNavigateBefore } from "react-icons/md";
+import Mainmodal from "./Mainmodal"; // 모달 컴포넌트 임포트
+import MainStory from './Mainstory';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
 
-  margin-top: 20px;
+  /* margin-top: 20px; */
   @media screen and (max-width: 1050px) {
     margin-top: 50px;
   }
@@ -34,7 +34,6 @@ const Inner = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   gap: 10px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius-30);
@@ -51,6 +50,7 @@ const Inner = styled.div`
     margin: 0 auto;
   }
 `;
+
 const Items = styled.div`
   .slider {
     width: 100%;
@@ -107,6 +107,7 @@ const StoryItem = styled.div`
       font-size: 30px;
       color: #fff;
     }
+    cursor: pointer; /* 커서 포인터로 변경 */
   }
   h2 {
     ${SubDescription_16_n}
@@ -189,6 +190,7 @@ const StoryFriend = styled.div`
     height: 200px;
   }
 `;
+
 // 슬릭슬라이더 커스텀 화살표
 const NextBtn = styled.span`
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -213,6 +215,7 @@ const NextBtn = styled.span`
     display: none;
   }
 `;
+
 const NextArrow = ({ onClick }) => {
   return (
     <NextBtn onClick={onClick}>
@@ -220,6 +223,7 @@ const NextArrow = ({ onClick }) => {
     </NextBtn>
   );
 };
+
 // 슬릭슬라이더 커스텀 화살표
 const PrevBtn = styled.span`
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -247,6 +251,8 @@ const PrevBtn = styled.span`
 `;
 const PrevArrow = ({ onClick, currentSlide }) => {
   if (currentSlide === 0) return null;
+
+const PrevArrow = ({ onClick }) => {
   return (
     <PrevBtn onClick={onClick}>
       <MdOutlineNavigateBefore />
@@ -256,6 +262,27 @@ const PrevArrow = ({ onClick, currentSlide }) => {
 
 const MainStory = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태 관리
+  const [postImage, setPostImage] = useState(null); // 모달에서 업로드된 이미지 상태
+
+  // 모달 열기 핸들러
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // 모달 닫기 핸들러
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  // 모달 제출 핸들러
+  const handleModalSubmit = ({ text, image }) => {
+    // 필요한 경우 제출된 데이터를 처리
+    console.log("모달 제출 데이터:", text, image);
+    setPostImage(image);
+    setIsModalOpen(false);
+  };
+
   const settings = {
     dots: false,
     infinite: false,
@@ -272,23 +299,23 @@ const MainStory = () => {
     beforeChange: (current, next) => setCurrentSlide(next),
     responsive: [
       {
-        breakpoint: 1050, // 1024px 이하일 때
+        breakpoint: 1050, // 1050px 이하일 때
         settings: {
-          slidesToShow: 4, // 슬라이드를 2개만 보여줌
+          slidesToShow: 4, // 슬라이드를 4개만 보여줌
           slidesToScroll: 1,
         },
       },
       {
-        breakpoint: 768, // 600px 이하일 때
+        breakpoint: 768, // 768px 이하일 때
         settings: {
-          slidesToShow: 4, // 슬라이드를 1개만 보여줌
+          slidesToShow: 3, // 슬라이드를 3개만 보여줌
           slidesToScroll: 1,
         },
       },
       {
-        breakpoint: 580, // 600px 이하일 때
+        breakpoint: 580, // 580px 이하일 때
         settings: {
-          slidesToShow: 3, // 슬라이드를 1개만 보여줌
+          slidesToShow: 2, // 슬라이드를 2개만 보여줌
           slidesToScroll: 1,
         },
       },
@@ -304,7 +331,9 @@ const MainStory = () => {
               <div>
                 <FaUser />
               </div>
-              <span>
+              <span onClick={openModal}>
+                {" "}
+                {/* 클릭 시 모달 열기 */}
                 <FaPlus />
               </span>
               <h2>스토리 만들기</h2>
@@ -375,8 +404,16 @@ const MainStory = () => {
           </Slider>
         </Items>
       </Inner>
+      {/* 모달 컴포넌트 렌더링 */}
+      {isModalOpen && (
+        <Mainmodal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          onSubmit={handleModalSubmit}
+        />
+      )}
     </Wrapper>
   );
 };
 
-export default MainStory;
+export default MainStory
