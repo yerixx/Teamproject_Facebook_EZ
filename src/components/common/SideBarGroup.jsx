@@ -97,22 +97,23 @@ const GroupTitle = styled.div`
 /* eslint-disable react/prop-types */
 const SideBarGroup = ({ openGroup, closeModal }) => {
   const closeRef = useRef(null);
+
   const handleClickOutside = (event) => {
     if (closeRef.current && !closeRef.current.contains(event.target)) {
-      closeModal(); // 모달을 닫는 함수 호출
+      closeModal();
     }
   };
   useEffect(() => {
     // 모달이 마운트되면 클릭 이벤트 추가
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
 
     return () => {
       // 모달이 언마운트되면 클릭 이벤트 제거
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, []);
   return (
-    <Wrapper ref={closeRef}>
+    <Wrapper ref={closeRef} onClick={(e) => e.stopPropagation()}>
       <TopTitle>
         <h2>회원님을 위한 커뮤니티</h2>
         <span>

@@ -207,11 +207,18 @@ const NextBtn = styled.span`
   font-size: 40px;
   color: #fff;
   cursor: pointer;
+  opacity: 0.4;
+  transition: all 0.3s;
+  scale: 0.8;
   svg {
     margin-left: 5px;
   }
   @media screen and (max-width: 768px) {
     display: none;
+  }
+  &:hover {
+    opacity: 1;
+    scale: 1;
   }
 `;
 
@@ -241,11 +248,18 @@ const PrevBtn = styled.span`
   font-size: 40px;
   color: #fff;
   cursor: pointer;
+  opacity: 0.4;
+  transition: all 0.3s;
+  scale: 0.8;
   svg {
     margin-left: 3px;
   }
   @media screen and (max-width: 768px) {
     display: none;
+  }
+  &:hover {
+    opacity: 1;
+    scale: 1;
   }
 `;
 

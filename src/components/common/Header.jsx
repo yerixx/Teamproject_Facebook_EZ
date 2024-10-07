@@ -249,8 +249,7 @@ export const HeaderTop = () => {
 export const HeaderBottom = () => {
   const data = useContext(DataStateContext);
   const currentUser = data.currentUserData;
-  // console.log(currentUser);
-  // console.log(data);
+
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
   const [sideBarGroupOpen, setSideBarGroupOpen] = useState(false);
   const [sideWalletOpen, setSideWalletOpen] = useState(false);
@@ -272,17 +271,21 @@ export const HeaderBottom = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  const sideMenu = () => {
+  const sideMenu = (e) => {
+    e.stopPropagation();
     setSideMenuOpen((prev) => !prev);
     setSideBarGroupOpen(false);
     setSideWalletOpen(false);
   };
-  const sideGroup = () => {
+  const sideGroup = (e) => {
+    e.stopPropagation();
     setSideBarGroupOpen((prev) => !prev);
     setSideMenuOpen(false);
     setSideWalletOpen(false);
   };
-  const sideWallet = () => {
+
+  const sideWallet = (e) => {
+    e.stopPropagation();
     setSideWalletOpen((prev) => !prev);
     setSideMenuOpen(false);
     setSideBarGroupOpen(false);

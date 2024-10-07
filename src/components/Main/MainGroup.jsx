@@ -165,8 +165,15 @@ const NextBtn = styled.span`
   font-size: 40px;
   color: #fff;
   cursor: pointer;
+  opacity: 0.4;
+  transition: all 0.3s;
+  scale: 0.8;
   svg {
     margin-left: 5px;
+  }
+  &:hover {
+    opacity: 1;
+    scale: 1;
   }
   @media screen and (max-width: 768px) {
     display: none;
@@ -197,8 +204,15 @@ const PrevBtn = styled.span`
   font-size: 40px;
   color: #fff;
   cursor: pointer;
+  opacity: 0.4;
+  scale: 0.8;
+  transition: all 0.3s;
   svg {
     margin-left: 3px;
+  }
+  &:hover {
+    opacity: 1;
+    scale: 1;
   }
   @media screen and (max-width: 768px) {
     display: none;

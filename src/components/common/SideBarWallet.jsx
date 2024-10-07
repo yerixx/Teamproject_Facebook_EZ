@@ -131,15 +131,15 @@ const SideBarWallet = ({ onClick, closeModal }) => {
   };
   useEffect(() => {
     // 모달이 마운트되면 클릭 이벤트 추가
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
 
     return () => {
       // 모달이 언마운트되면 클릭 이벤트 제거
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, []);
   return (
-    <Wrapper ref={closeRef}>
+    <Wrapper ref={closeRef} onClick={(e) => e.stopPropagation()}>
       <Title>
         <h3>Wallett +</h3>
         <span>

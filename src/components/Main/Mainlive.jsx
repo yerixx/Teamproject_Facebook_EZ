@@ -8,6 +8,7 @@ import {
   SubDescription_12_m,
   SubDescription_16_n,
 } from "../../styles/GlobalStyles.styles";
+import { MdOutlineNavigateBefore, MdOutlineNavigateNext } from "react-icons/md";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -207,37 +208,84 @@ const Livecard = styled.div`
     }
   }
 `;
-const NextArrow = (props) => {
-  const { className, style, onClick } = props;
+// 슬릭슬라이더 커스텀 화살표
+const NextBtn = styled.span`
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-light-gray-01);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  font-size: 40px;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0.9;
+  transition: all 0.3s;
+  scale: 0.8;
+  svg {
+    margin-left: 5px;
+  }
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+  &:hover {
+    opacity: 1;
+    scale: 1;
+  }
+`;
+
+const NextArrow = ({ onClick }) => {
   return (
-    <div
-      className={`${className} custom-arrow next-arrow`}
-      style={{
-        ...style,
-        display: "block",
-        right: "15px",
-        fontSize: "40px",
-        color: "gray",
-      }}
-      onClick={onClick}
-    ></div>
+    <NextBtn onClick={onClick}>
+      <MdOutlineNavigateNext />
+    </NextBtn>
   );
 };
-const PrevArrow = (props) => {
-  const { className, style, onClick } = props;
+
+// 슬릭슬라이더 커스텀 화살표
+const PrevBtn = styled.span`
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-light-gray-01);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  font-size: 40px;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0.9;
+  transition: all 0.3s;
+  scale: 0.8;
+  svg {
+    margin-left: 3px;
+  }
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+  &:hover {
+    opacity: 1;
+    scale: 1;
+  }
+`;
+
+const PrevArrow = ({ onClick }) => {
   return (
-    <div
-      className={`${className} custom-arrow next-arrow`}
-      style={{
-        ...style,
-        display: "block",
-        left: "15px", // Move the previous arrow to the left
-        zIndex: 1,
-        fontSize: "40px",
-        color: "gray",
-      }}
-      onClick={onClick}
-    ></div>
+    <PrevBtn onClick={onClick}>
+      <MdOutlineNavigateBefore />
+    </PrevBtn>
   );
 };
 
