@@ -4,12 +4,12 @@ import { getStorage } from "firebase/storage";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBYeuo-EPq744pRHWJNMV3wZeCI-GwquSQ",
-  authDomain: "teamproject-facebook-ez.firebaseapp.com",
-  projectId: "teamproject-facebook-ez",
-  storageBucket: "teamproject-facebook-ez.appspot.com",
-  messagingSenderId: "970648790828",
-  appId: "1:970648790828:web:548d0376041d6c32c42e89",
+  apiKey: "AIzaSyDwSseOE054eaAqZ6bb0UTnsQvcj3JS3ps",
+  authDomain: "sns-platform-a9f1e.firebaseapp.com",
+  projectId: "sns-platform-a9f1e",
+  storageBucket: "sns-platform-a9f1e.appspot.com",
+  messagingSenderId: "443637872256",
+  appId: "1:443637872256:web:fa69921c55510798e41865",
 };
 
 // Initialize Firebase

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import styled from "styled-components";
 import letterLogoImg from "../img/HeaderLogo.svg";
 import circleLogoImg from "../img/Logo.svg";

@@ -1,5 +1,8 @@
+import { useState } from "react";
 import styled from "styled-components";
-import { Routes, Route } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Layout from "./components/common/Layout.jsx";
+import LoadingScreen from "./components/common/LoadingScreen.jsx";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -20,8 +23,43 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "./firebase.js";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import ProtectedRoute from "./components/common/ProtectedRoute.jsx";
 
-const Wrapper = styled.div``;
+// Page Router
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        path: "",
+        element: <Main />,
+      },
+      {
+        path: "mypage",
+        element: <Detail />,
+      },
+      {
+        path: "modallive",
+        element: <ModalLive />,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+  },
+]);
+
+// const Wrapper = styled.div``;
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -101,6 +139,20 @@ export const DataStateContext = React.createContext();
 export const DataDispatchContext = React.createContext();
 
 function App() {
+  // Loading
+  const [isLoading, setIsLoading] = useState(true);
+
+  const init = async () => {
+    await auth.authStateReady();
+
+    setTimeout(() => setIsLoading(false), 2000);
+    // setIsLoading(false);
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
+
   const initialState = {
     users: [],
     posts: [],
@@ -276,7 +328,6 @@ function App() {
     } catch (error) {
       console.error("댓글 추가 중 오류 발생:", error);
     }
-
   };
   const onDeletePost = (postId) => {
     dispatch({
@@ -298,15 +349,17 @@ function App() {
             onDeletePost,
           }}
         >
-          <Wrapper>
+          {/* <Wrapper>
             <Routes>
               <Route path="/" element={<Main />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/detail" element={<Detail />} />
-              <Route path="/ModalLive" element={<ModalLive />} />
+              <Route path="/mypage" element={<Detail />} />
+              <Route path="/modallive" element={<ModalLive />} />
             </Routes>
-          </Wrapper>
+          </Wrapper> */}
+
+          {isLoading ? <LoadingScreen /> : <RouterProvider router={router} />}
         </DataDispatchContext.Provider>
       </DataStateContext.Provider>
     </>
