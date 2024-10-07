@@ -36,7 +36,7 @@ const MainSection = styled.section`
   position: absolute;
   top: 140px;
   @media screen and (max-width: 768px) {
-    top: 80px;
+    top: 70px;
   }
 `;
 
@@ -57,7 +57,7 @@ const Main = () => {
       <HeaderBottom />
       <MainSection>
         <Mainstory />
-        {/* <Mainupload /> */}
+        <Mainupload />
         {/* <PostUploadField /> */}
         <MainGroup />
         <MainPage />

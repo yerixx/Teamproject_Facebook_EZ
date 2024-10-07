@@ -15,15 +15,13 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   @media screen and (max-width: 1050px) {
-    margin-top: 50px;
   }
   @media screen and (max-width: 768px) {
-    margin-top: 10px;
   }
 `;
 
 const Inner = styled.div`
-  margin: 50px 0;
+  margin: 20px 0;
   /* border: 1px solid red; */
   width: 1000px;
   height: 430px;
@@ -40,6 +38,7 @@ const Inner = styled.div`
     width: 100%;
   }
   @media screen and (max-width: 768px) {
+    margin: 0;
     box-shadow: none;
     padding: 0;
     width: 90vw;

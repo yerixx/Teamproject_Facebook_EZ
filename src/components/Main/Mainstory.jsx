@@ -15,14 +15,13 @@ const Wrapper = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
-
+  margin: 20px 0;
   /* margin-top: 20px; */
   @media screen and (max-width: 1050px) {
-    margin-top: 50px;
   }
   @media screen and (max-width: 768px) {
-    margin-top: 0;
-    height: 250px;
+    margin: 0;
+    /* height: 250px; */
   }
 `;
 
@@ -305,16 +304,9 @@ const MainStory = () => {
         },
       },
       {
-        breakpoint: 768, // 768px 이하일 때
-        settings: {
-          slidesToShow: 3, // 슬라이드를 3개만 보여줌
-          slidesToScroll: 1,
-        },
-      },
-      {
         breakpoint: 580, // 580px 이하일 때
         settings: {
-          slidesToShow: 2, // 슬라이드를 2개만 보여줌
+          slidesToShow: 3, // 슬라이드를 2개만 보여줌
           slidesToScroll: 1,
         },
       },

@@ -43,9 +43,7 @@ const CommentCont = styled.div`
 
   /* 미디어 쿼리 */
   @media (max-width: 768px) {
-    ${SubDescription_16_n}
-    margin: 0 10px;
-    height: 110px;
+    ${SubDescription_16_n};
   }
 
   .commentUpLoadprofile {
@@ -101,20 +99,21 @@ const CommentCont = styled.div`
       border: none;
       border-radius: 50px;
       cursor: pointer;
-      /* 미디어 쿼리 */
+
       @media (max-width: 768px) {
         width: 44px;
         height: 44px;
         padding: 12px;
+        svg {
+        }
       }
     }
 
     .submitBtn {
-      padding: 0;
       ${MainTitle_18_n}
-      padding:0 20px;
+      padding: 0 20px;
       margin-right: 30px;
-      /* 미디어 쿼리 */
+
       @media (max-width: 768px) {
         margin-right: 10px;
       }
@@ -127,8 +126,9 @@ const CommentCont = styled.div`
 
   /* 미디어 쿼리 */
   @media (max-width: 768px) {
-    width: 100%;
-    margin: 60px 0;
+    width: 90vw;
+    .submitBtn {
+    }
   }
 `;
 

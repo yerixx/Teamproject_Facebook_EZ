@@ -52,7 +52,6 @@ const HeaderSticky = styled.div`
   box-shadow: 0 4px 6px -6px #222;
   margin-bottom: 20px;
   @media screen and (max-width: 1050px) {
-    height: 120px;
     justify-content: center;
   }
   @media screen and (max-width: 768px) {
@@ -144,10 +143,7 @@ const Right = styled.div`
   justify-content: space-between;
   gap: 15px;
   @media screen and (max-width: 1050px) {
-    flex-direction: column;
-    width: 100%;
-    justify-content: center;
-    align-items: flex-end;
+    justify-content: flex-end;
   }
 `;
 const RightFirst = styled.div`
@@ -161,9 +157,16 @@ const RightFirst = styled.div`
     color: var(--color-facebookblue);
   }
   @media screen and (max-width: 1050px) {
+    width: 20px;
+    h3 {
+      display: none;
+    }
+    span {
+      display: none;
+    }
   }
   @media screen and (max-width: 768px) {
-    display: none;
+    /* display: none; */
   }
 `;
 const ProfileWrap = styled.div`
@@ -174,10 +177,16 @@ const ProfileWrap = styled.div`
   align-items: center;
   gap: 3px;
   div {
-    background: #999;
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    overflow: hidden;
+    img {
+      object-fit: cover;
+      object-position: center;
+      width: 100%;
+      height: 100%;
+    }
   }
   h3 {
     font-size: var(--font-size-subtitle);
@@ -185,6 +194,7 @@ const ProfileWrap = styled.div`
   }
   @media screen and (max-width: 1050px) {
     width: 100px;
+    justify-content: flex-end;
     div {
     }
   }
@@ -309,7 +319,9 @@ export const HeaderBottom = () => {
       <Right>
         <RightFirst onClick={sideWallet}>
           <ProfileWrap>
-            <div></div>
+            <div>
+              <img src="/img/testcat.jpg" alt="" />
+            </div>
             <h3>
               {currentUser?.userName.fistName}
               {currentUser?.userName.lastName}
