@@ -2,26 +2,26 @@ import React from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
+  .onlyPc {
+    display: flex;
+  }
+  .onlyMob {
+    display: none;
+  }
   .btns {
     display: flex;
     gap: 60px;
     width: 100%;
     justify-content: space-between;
-  }
-  .onlyPc {
-    display: block;
-  }
-  .onlyMob {
-    display: none;
+    border: 1px solid #f0f;
   }
   @media screen and (max-width: 1050px) {
     .onlyPc {
       display: none;
     }
     .onlyMob {
-      border: 1px solid #f0f;
-      display: flex;
-      color: #fff;
+      display: block;
+      display: display;
       width: calc(100vw - (100vw - 100%));
     }
   }

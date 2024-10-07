@@ -1,8 +1,39 @@
-import React from "react";
-import styled from "styled-components";
+import { useRef, useEffect, useState } from "react";
+import {
+  delay,
+  motion,
+  useMotionValue,
+  useTransform,
+  useScroll,
+  AnimatePresence,
+} from "framer-motion";
+import { createGlobalStyle, styled } from "styled-components";
+import reset from "styled-reset";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FaX } from "react-icons/fa6";
-// import { motion } from "framer-motion";
+
+const GlobalStyles = createGlobalStyle`
+  ${reset};
+
+  * {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: "Source Sans 3", sans-serif;
+    background: linear-gradient(135deg, #e09, #d0e);
+  }
+
+  ul, li {
+    list-style: none;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+`;
 
 const ContSlide = styled.div`
   flex: 2;
@@ -32,7 +63,10 @@ const Wrapper = styled.div`
     position: absolute;
     top: 40px;
     right: 40px;
-    background: #fff;
+    /* background: #fff; */
+    .fa-x {
+      color: #fff;
+    }
   }
   .slideBtn {
     position: absolute;
