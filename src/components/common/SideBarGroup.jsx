@@ -76,6 +76,8 @@ const GroupContents = styled.div`
     border-radius: var(--border-radius-08);
     color: var(--color-facebookblue);
   }
+  @media screen and (max-width: 768px) {
+  }
 `;
 const GroupTitle = styled.div`
   display: flex;
@@ -92,6 +94,17 @@ const GroupTitle = styled.div`
     gap: 4px;
     font-size: 14px;
     color: var(--color-gray-01);
+  }
+  @media screen and (max-width: 768px) {
+    div {
+      flex-direction: column;
+      span {
+        font-size: 12px;
+      }
+      span:nth-child(2) {
+        display: none;
+      }
+    }
   }
 `;
 /* eslint-disable react/prop-types */
@@ -129,7 +142,9 @@ const SideBarGroup = ({ openGroup, closeModal }) => {
           <GroupTitle>
             <h2>여행</h2>
             <div>
-              <span>동영상 크리에이터</span> ・ <span>팔로워 10만명</span>
+              <span>동영상 크리에이터</span>
+              <span>・</span>
+              <span>팔로워 10만명</span>
             </div>
           </GroupTitle>
           <span>팔로우</span>
@@ -139,7 +154,9 @@ const SideBarGroup = ({ openGroup, closeModal }) => {
           <GroupTitle>
             <h2>여행</h2>
             <div>
-              <span>동영상 크리에이터</span> ・ <span>팔로워 10만명</span>
+              <span>동영상 크리에이터</span>
+              <span>・</span>
+              <span>팔로워 10만명</span>
             </div>
           </GroupTitle>
           <span>팔로우</span>
@@ -149,7 +166,9 @@ const SideBarGroup = ({ openGroup, closeModal }) => {
           <GroupTitle>
             <h2>여행</h2>
             <div>
-              <span>동영상 크리에이터</span> ・ <span>팔로워 10만명</span>
+              <span>동영상 크리에이터</span>
+              <span>・</span>
+              <span>팔로워 10만명</span>
             </div>
           </GroupTitle>
           <span>팔로우</span>
@@ -164,7 +183,9 @@ const SideBarGroup = ({ openGroup, closeModal }) => {
           <GroupTitle>
             <h2>여행</h2>
             <div>
-              <span>동영상 크리에이터</span> ・ <span>팔로워 10만명</span>
+              <span>동영상 크리에이터</span>
+              <span>・</span>
+              <span>팔로워 10만명</span>
             </div>
           </GroupTitle>
           <span>팔로우</span>
@@ -174,7 +195,9 @@ const SideBarGroup = ({ openGroup, closeModal }) => {
           <GroupTitle>
             <h2>여행</h2>
             <div>
-              <span>동영상 크리에이터</span> ・ <span>팔로워 10만명</span>
+              <span>동영상 크리에이터</span>
+              <span>・</span>
+              <span>팔로워 10만명</span>
             </div>
           </GroupTitle>
           <span>팔로우</span>
@@ -184,7 +207,9 @@ const SideBarGroup = ({ openGroup, closeModal }) => {
           <GroupTitle>
             <h2>여행</h2>
             <div>
-              <span>동영상 크리에이터</span> ・ <span>팔로워 10만명</span>
+              <span>동영상 크리에이터</span>
+              <span>・</span>
+              <span>팔로워 10만명</span>
             </div>
           </GroupTitle>
           <span>팔로우</span>
