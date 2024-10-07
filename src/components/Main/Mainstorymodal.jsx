@@ -35,11 +35,11 @@ const Inner = styled.div`
     height: 60px;
     position: relative;
     margin-bottom: 15px;
-
+    /* 스토리 올리기 제목 */
     .title {
       font-weight: bold;
     }
-
+    /* 닫는 버튼 */
     .xmark {
       width: 26px;
       height: 26px;
@@ -79,7 +79,7 @@ const Inner = styled.div`
         color: var(--color-gray-01);
       }
     }
-
+    /* 이미지 올리는 아이콘 */
     .camera {
       font-size: 30px;
       cursor: pointer;
@@ -110,7 +110,7 @@ const Inner = styled.div`
       display: flex;
       flex-direction: column;
       align-items: center;
-
+      /* 입력 텍스트칸 */
       textarea {
         width: 100%;
         height: 100px;
@@ -121,7 +121,7 @@ const Inner = styled.div`
         resize: vertical; /* 세로 방향으로 크기 조절 가능 */
         margin-bottom: 20px;
       }
-
+      /* 제출 버튼 */
       button {
         background: var(--color-facebookblue);
         width: 100%;
@@ -140,8 +140,8 @@ const Inner = styled.div`
   }
 `;
 
-// Mainmodal 컴포넌트 정의
-const Mainmodal = ({ onClose, onSubmit }) => {
+// Mainstorymodal 컴포넌트 정의
+const Mainstorymodal = ({ onClose, onSubmit }) => {
   // 상태 관리: 게시물 텍스트
   const [postText, setPostText] = useState("");
   // 상태 관리: 게시물 이미지
@@ -175,7 +175,7 @@ const Mainmodal = ({ onClose, onSubmit }) => {
     <Wrapper>
       <Inner>
         <div className="maodaltile">
-          <div className="title">게시물 올리기</div>
+          <div className="title">스토리 올리기</div>
           <div className="xmark" onClick={handleCloseModal}>
             <FiX />
           </div>
@@ -203,12 +203,12 @@ const Mainmodal = ({ onClose, onSubmit }) => {
             <textarea
               value={postText}
               onChange={(e) => setPostText(e.target.value)}
-              placeholder="게시물을 입력하세요."
+              placeholder="스토리를 입력하세요."
               required
             />
             {postImage && (
               <div className="postimg">
-                <img src={postImage} alt="게시물 이미지" />
+                <img src={postImage} alt="스토리 이미지" />
               </div>
             )}
             <button type="submit">게시하기</button>
@@ -219,4 +219,4 @@ const Mainmodal = ({ onClose, onSubmit }) => {
   );
 };
 
-export default Mainmodal;
+export default Mainstorymodal;

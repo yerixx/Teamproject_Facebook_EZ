@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { SubDescription_16_n } from "../../styles/GlobalStyles.styles";
 import { MdOutlineNavigateNext, MdOutlineNavigateBefore } from "react-icons/md";
-import Mainmodal from "./Mainmodal"; // 모달 컴포넌트 임포트
+import Mainstorymodal from "../Main/Mainstorymodal"; // 모달 컴포넌트 임포트
 
 const Wrapper = styled.div`
   width: 100%;
@@ -399,7 +399,7 @@ const MainStory = () => {
       </Inner>
       {/* 모달 컴포넌트 렌더링 */}
       {isModalOpen && (
-        <Mainmodal
+        <Mainstorymodal
           isOpen={isModalOpen}
           onClose={closeModal}
           onSubmit={handleModalSubmit}

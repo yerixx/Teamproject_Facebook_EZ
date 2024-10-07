@@ -1,13 +1,17 @@
-import React from "react";
-import styled from "styled-components";
-import { FaStar } from "react-icons/fa";
-import Slider from "react-slick"; // 슬릭 슬라이더 import
+import React, { useState } from "react"; // React와 useState 훅을 임포트
+import styled from "styled-components"; // styled-components 라이브러리 임포트
+import { FaStar } from "react-icons/fa"; // 별 아이콘 임포트
+import Slider from "react-slick"; // 슬릭 슬라이더 컴포넌트 임포트
+import "slick-carousel/slick/slick.css"; // 슬릭 슬라이더 기본 스타일 임포트
+import "slick-carousel/slick/slick-theme.css"; // 슬릭 슬라이더 테마 스타일 임포트
 import {
   MainTitle_18_b,
   SubDescription_12_m,
   SubDescription_16_n,
-} from "../../styles/GlobalStyles.styles";
+} from "../../styles/GlobalStyles.styles"; // 전역 스타일에서 텍스트 스타일 가져오기
+import { MdOutlineNavigateBefore, MdNavigateNext } from "react-icons/md";
 
+// 전체 컴포넌트를 감싸는 Wrapper 스타일 컴포넌트
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -23,6 +27,7 @@ const Wrapper = styled.div`
   }
 `;
 
+// 내부 컨텐츠를 담는 Inner 스타일 컴포넌트
 const Inner = styled.div`
   width: 1000px;
   height: 430px;
@@ -41,7 +46,7 @@ const Inner = styled.div`
   @media screen and (max-width: 768px) {
     box-shadow: none;
     padding: 0;
-    width: 90vw;
+    width: 90vw; // 화면 너비의 90%로 설정
     min-width: 360px;
     margin: 0 auto;
   }
@@ -52,24 +57,26 @@ const Inner = styled.div`
   }
 `;
 
+// 슬라이더 내의 아이템들을 감싸는 Items 스타일 컴포넌트
 const Items = styled.div`
   .slider {
     width: 100%;
     height: 100%;
   }
   .slick-slide {
-    margin: 0 5px;
+    margin: 0 5px; // 슬라이드 간의 간격 설정
   }
   .slick-list {
-    margin: 0 -10px;
+    margin: 0 -10px; // 슬라이더 전체의 간격 조정
   }
   .slick-track {
     display: flex;
     justify-content: flex-start;
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.5s ease-in-out; // 슬라이드 전환 애니메이션
   }
 `;
 
+// 개별 라이브 카드를 위한 Livecard 스타일 컴포넌트
 const Livecard = styled.div`
   flex: 1 1 244px;
   max-width: 244px;
@@ -95,6 +102,7 @@ const Livecard = styled.div`
     border-radius: 8px 8px 0 0;
   }
 
+  // 라이브 헤더 섹션 스타일
   .liveheader {
     display: flex;
     align-items: center;
@@ -113,10 +121,12 @@ const Livecard = styled.div`
       padding: 4px 5px;
       border-radius: 3px;
       margin-right: 5px;
+
       @media screen and (max-width: 768px) {
         font-size: 14px;
       }
     }
+
     .item {
       display: flex;
       gap: 40px;
@@ -127,6 +137,7 @@ const Livecard = styled.div`
           font-size: 14px;
         }
       }
+
       .point {
         ${SubDescription_16_n}
         position: absolute;
@@ -138,6 +149,7 @@ const Livecard = styled.div`
     }
   }
 
+  // 라이브 정보 섹션 스타일
   .liveinfo {
     display: flex;
     align-items: center;
@@ -152,14 +164,6 @@ const Livecard = styled.div`
     @media screen and (max-width: 768px) {
       bottom: 38px;
     }
-    /* > img {
-      width: 50px;
-      height: 50px;
-      border: 1px solid red;
-      opacity: 0.8;
-      border-radius: 8px;
-    } */
-
     .info {
       flex-grow: 1;
       padding-left: 10px;
@@ -171,6 +175,7 @@ const Livecard = styled.div`
         display: flex;
         align-items: center;
         gap: 5px;
+
         @media screen and (max-width: 768px) {
           ${SubDescription_12_m}
         }
@@ -178,8 +183,10 @@ const Livecard = styled.div`
 
       .title {
         ${SubDescription_16_n}
+
         @media (max-width: 768px) {
           font-size: 14px;
+
           @media screen and (max-width: 768px) {
             ${SubDescription_12_m}
           }
@@ -194,6 +201,7 @@ const Livecard = styled.div`
           ${SubDescription_16_n}
           display: flex;
           gap: 3px;
+
           @media screen and (max-width: 768px) {
             ${SubDescription_12_m}
           }
@@ -211,6 +219,7 @@ const Livecard = styled.div`
           background: var(--color-gray-01);
           color: var(--color-white);
           cursor: pointer;
+
           @media screen and (max-width: 768px) {
             ${SubDescription_12_m}
           }
@@ -218,70 +227,125 @@ const Livecard = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 768px) {
+    height: 200px;
+
+    div {
+      svg {
+        font-size: 100px;
+      }
+    }
+
+    span {
+      border: 3px solid #fff;
+      width: 34px;
+      height: 34px;
+
+      svg {
+        font-size: 16px;
+      }
+    }
+
+    h2 {
+      line-height: 5;
+    }
+  }
 `;
+
+// 슬릭 슬라이더의 커스텀 다음 화살표 컴포넌트
 const NextArrow = (props) => {
-  const { className, style, onClick } = props;
+  const { className, style, onClick } = props; // props에서 클래스 이름, 스타일, 클릭 핸들러 추출
   return (
     <div
-      className={`${className} custom-arrow next-arrow`}
+      className={`${className} custom-arrow next-arrow`} // 기본 클래스와 커스텀 클래스 추가
       style={{
-        ...style,
+        ...style, // 기본 스타일 적용
         display: "block",
         right: "15px",
         fontSize: "40px",
         color: "gray",
       }}
-      onClick={onClick}
-    ></div>
-  );
-};
-const PrevArrow = (props) => {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={`${className} custom-arrow next-arrow`}
-      style={{
-        ...style,
-        display: "block",
-        left: "15px", // Move the previous arrow to the left
-        zIndex: 1,
-        fontSize: "40px",
-        color: "gray",
-      }}
-      onClick={onClick}
-    ></div>
+      onClick={onClick} // 클릭 시 핸들러 호출
+    >
+      <MdNavigateNext />
+    </div>
   );
 };
 
+// 슬릭 슬라이더의 커스텀 이전 화살표 컴포넌트
+const PrevArrow = (props) => {
+  const { className, style, onClick } = props; // props에서 클래스 이름, 스타일, 클릭 핸들러 추출
+  return (
+    <div
+      className={`${className} custom-arrow prev-arrow`} // 기본 클래스와 커스텀 클래스 추가
+      style={{
+        ...style, // 기본 스타일 적용
+        display: "block",
+        left: "15px", // 이전 화살표를 왼쪽에 위치
+        zIndex: 1, // 다른 요소들보다 위에 표시
+        fontSize: "40px",
+        color: "gray",
+      }}
+      onClick={onClick} // 클릭 시 핸들러 호출
+    >
+      <MdOutlineNavigateBefore />
+    </div>
+  );
+};
+
+// 메인 라이브 컴포넌트
 const Mainlive = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태 관리
+  const [postImage, setPostImage] = useState(null); // 모달에서 업로드된 이미지 상태 관리
+
+  // 모달 열기 핸들러
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // 모달 닫기 핸들러
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  // 모달 제출 핸들러
+  const handleModalSubmit = ({ text, image }) => {
+    // 필요한 경우 제출된 데이터를 처리
+    console.log("모달 제출 데이터:", text, image);
+    setPostImage(image); // 업로드된 이미지 상태 업데이트
+    setIsModalOpen(false); // 모달 닫기
+  };
+
+  // 슬릭 슬라이더 설정 객체
   const settings = {
-    dots: false,
-    infinite: true,
-    speed: 700,
-    swipe: true,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
+    dots: false, // 하단 점 표시 여부
+    infinite: true, // 무한 반복 여부
+    speed: 700, // 슬라이드 전환 속도 (ms)
+    swipe: true, // 스와이프 가능 여부
+    slidesToShow: 4, // 한 번에 보여줄 슬라이드 수
+    slidesToScroll: 1, // 스크롤 시 이동할 슬라이드 수
+    nextArrow: <NextArrow />, // 커스텀 다음 화살표 컴포넌트
+    prevArrow: <PrevArrow />, // 커스텀 이전 화살표 컴포넌트
     responsive: [
       {
-        breakpoint: 1050,
+        breakpoint: 1050, // 화면 너비가 1050px 이하일 때
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 4, // 슬라이드 4개 표시
           slidesToScroll: 1,
         },
       },
       {
-        breakpoint: 768,
+        breakpoint: 768, // 화면 너비가 768px 이하일 때
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 2, // 슬라이드 2개 표시
           slidesToScroll: 1,
         },
       },
       {
-        breakpoint: 580,
+        breakpoint: 580, // 화면 너비가 580px 이하일 때
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 2, // 슬라이드 2개 표시
           slidesToScroll: 1,
         },
       },
@@ -292,43 +356,54 @@ const Mainlive = () => {
     <Wrapper>
       <Inner>
         <Items>
-          <div className="livetext">라이브 커머스</div>
+          <div className="livetext">라이브 커머스</div> {/* 섹션 제목 */}
           <Slider {...settings}>
-            {[...Array(8)].map((index) => (
-              <Livecard key={index}>
-                <img src="../public/img/live.jpg" alt="testimg" />
-                <div className="liveheader">
-                  <div className="liveBage">LIVE</div>
-                  <div className="item">
-                    <div className="viewers">9,452 시청</div>
-                    <div className="point">+500P</div>
-                  </div>
-                </div>
-                <div className="liveinfo">
-                  {/* <img src="../public/img/live.jpg" alt="profile" /> */}
-                  <div className="info">
-                    <span className="subtitle">
-                      <FaStar />
-                      5% 추가할인
-                      <FaStar />
-                    </span>
-                    <span className="title">NEW ARRIVAL SHOES</span>
+            {" "}
+            {[...Array(8)].map(
+              (
+                index // 8개의 라이브 카드 생성
+              ) => (
+                <Livecard key={index}>
+                  <img src="/img/live.jpg" alt="testimg" />
+                  <div className="liveheader">
+                    <div className="liveBage">LIVE</div>
                     <div className="item">
-                      <span className="price">
-                        <span>30%</span>
-                        19,000원
-                      </span>
-                      <button>라이브 보기</button>
+                      <div className="viewers">9,452 시청</div>
+                      <div className="point">+500P</div>
                     </div>
                   </div>
-                </div>
-              </Livecard>
-            ))}
+                  <div className="liveinfo">
+                    <div className="info">
+                      <span className="subtitle">
+                        <FaStar />
+                        5% 추가할인
+                        <FaStar />
+                      </span>
+                      <span className="title">NEW ARRIVAL SHOES</span>
+                      <div className="item">
+                        <span className="price">
+                          <span>30%</span>
+                          19,000원
+                        </span>
+                        <button>라이브 보기</button>
+                      </div>
+                    </div>
+                  </div>
+                </Livecard>
+              )
+            )}
           </Slider>
         </Items>
       </Inner>
+      {isModalOpen && (
+        <Mainstorymodal
+          isOpen={isModalOpen} // 모달 열림 상태 전달
+          onClose={closeModal} // 모달 닫기 핸들러 전달
+          onSubmit={handleModalSubmit} // 모달 제출 핸들러 전달
+        />
+      )}
     </Wrapper>
   );
 };
 
-export default Mainlive;
+export default Mainlive; // Mainlive 컴포넌트 내보내기
