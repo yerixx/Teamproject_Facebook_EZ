@@ -5,7 +5,7 @@ import ProfileCard from "./ProfileCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 
-import testCat from "/img/testcat.jpg";
+// import testCat from "/img/testcat.jpg";
 
 import testCat from "/img/testcat.jpg";
 

@@ -16,13 +16,9 @@ import {
 
 const Wrapper = styled.div`
   width: 100%;
+  display: flex;
+  justify-content: center;
   margin-top: 20px;
-  @media screen and (max-width: 1050px) {
-    width: 100%;
-  }
-  @media screen and (max-width: 768px) {
-    width: 100%;
-  }
 `;
 
 const Inner = styled.div`
@@ -31,14 +27,15 @@ const Inner = styled.div`
   padding: 27px 30px 0;
   display: flex;
   flex-direction: column;
-
   gap: 10px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius-30);
   position: relative;
 
-  @media screen and (max-width: 1050px) {
+  @media screen and (max-width: 390px) {
     width: 100%;
+    height: auto;
+    gap: 5px;
   }
   .icon {
     position: absolute;
@@ -48,7 +45,7 @@ const Inner = styled.div`
     gap: 10px;
     ${MainTitle_24_m}
   }
-  @media screen and (max-width: 1050px) {
+  @media screen and (max-width: 390px) {
     width: 100%;
     height: auto;
     padding: 15px;
@@ -56,7 +53,7 @@ const Inner = styled.div`
 
     .icon {
       top: 10px;
-      right: 15px;
+      right: 10px;
       ${MainTitle_24_m}
     }
   }
@@ -91,10 +88,18 @@ const PostInfo = styled.div`
       }
     }
   }
+  @media screen and (max-width: 390px) {
+    width: 100%;
+    height: auto;
+  }
 `;
 const PostText = styled.div`
   margin-left: 63px;
   ${SubDescription_16_n}
+  @media screen and (max-width: 390px) {
+    margin-left: 40px;
+    ${SubDescription_16_n}
+  }
 `;
 
 const ImgItem = styled.div`
@@ -132,9 +137,14 @@ const SocialBtnIcon = styled.div`
       color: var(--color-facebookblue);
     }
   }
-  .socialIcon {
-    gap: 6px;
-    ${SubDescription_16_n}
+  @media screen and (max-width: 390px) {
+    height: auto;
+    padding: 10px;
+
+    .socialIcon {
+      gap: 6px;
+      ${SubDescription_16_n}
+    }
   }
 `;
 
