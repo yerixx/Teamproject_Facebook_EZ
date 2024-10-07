@@ -276,7 +276,6 @@ function App() {
     } catch (error) {
       console.error("댓글 추가 중 오류 발생:", error);
     }
-
   };
   const onDeletePost = (postId) => {
     dispatch({

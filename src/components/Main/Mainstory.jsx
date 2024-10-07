@@ -9,7 +9,6 @@ import "slick-carousel/slick/slick-theme.css";
 import { SubDescription_16_n } from "../../styles/GlobalStyles.styles";
 import { MdOutlineNavigateNext, MdOutlineNavigateBefore } from "react-icons/md";
 import Mainmodal from "./Mainmodal"; // 모달 컴포넌트 임포트
-import MainStory from './Mainstory';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -28,6 +27,7 @@ const Wrapper = styled.div`
 `;
 
 const Inner = styled.div`
+  /* border: 1px solid red; */
   width: 1000px;
   height: 360px;
   padding: 27px 30px;
@@ -249,10 +249,9 @@ const PrevBtn = styled.span`
     display: none;
   }
 `;
+
 const PrevArrow = ({ onClick, currentSlide }) => {
   if (currentSlide === 0) return null;
-
-const PrevArrow = ({ onClick }) => {
   return (
     <PrevBtn onClick={onClick}>
       <MdOutlineNavigateBefore />
@@ -416,4 +415,4 @@ const MainStory = () => {
   );
 };
 
-export default MainStory
+export default MainStory;

@@ -4,6 +4,7 @@ import { FaStar } from "react-icons/fa";
 import Slider from "react-slick"; // 슬릭 슬라이더 import
 import {
   MainTitle_18_b,
+  MainTitle_22_b,
   SubDescription_12_m,
   SubDescription_16_n,
 } from "../../styles/GlobalStyles.styles";
@@ -13,17 +14,17 @@ const Wrapper = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
-
   @media screen and (max-width: 1050px) {
-    margin-top: 10px;
+    margin-top: 50px;
   }
   @media screen and (max-width: 768px) {
     margin-top: 10px;
-    height: 250px;
   }
 `;
 
 const Inner = styled.div`
+  margin: 50px 0;
+  /* border: 1px solid red; */
   width: 1000px;
   height: 430px;
   padding: 27px 30px;
@@ -43,11 +44,10 @@ const Inner = styled.div`
     padding: 0;
     width: 90vw;
     min-width: 360px;
-    margin: 0 auto;
   }
 
   .livetext {
-    ${MainTitle_18_b};
+    ${MainTitle_22_b}
     margin-bottom: 15px;
   }
 `;
@@ -71,11 +71,10 @@ const Items = styled.div`
 `;
 
 const Livecard = styled.div`
-  flex: 1 1 244px;
   max-width: 244px;
+  height: 100%;
   height: auto;
   border-radius: 8px;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -85,7 +84,7 @@ const Livecard = styled.div`
   }
   @media screen and (max-width: 768px) {
     width: 100%;
-    height: 52vh;
+    /* height: 52vh; */
   }
 
   > img {
@@ -149,16 +148,6 @@ const Livecard = styled.div`
     position: absolute;
     bottom: 0px;
     width: 100%;
-    @media screen and (max-width: 768px) {
-      bottom: 38px;
-    }
-    /* > img {
-      width: 50px;
-      height: 50px;
-      border: 1px solid red;
-      opacity: 0.8;
-      border-radius: 8px;
-    } */
 
     .info {
       flex-grow: 1;
@@ -265,16 +254,9 @@ const Mainlive = () => {
     prevArrow: <PrevArrow />,
     responsive: [
       {
-        breakpoint: 1050,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-        },
-      },
-      {
         breakpoint: 768,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 3,
           slidesToScroll: 1,
         },
       },
@@ -294,7 +276,7 @@ const Mainlive = () => {
         <Items>
           <div className="livetext">라이브 커머스</div>
           <Slider {...settings}>
-            {[...Array(8)].map((index) => (
+            {[...Array(5)].map((index) => (
               <Livecard key={index}>
                 <img src="../public/img/live.jpg" alt="testimg" />
                 <div className="liveheader">

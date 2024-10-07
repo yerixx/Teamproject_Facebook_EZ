@@ -1,23 +1,22 @@
 // import { AiFillHome } from "react-icons/ai";
 import { AiOutlineShop } from "react-icons/ai";
 import { BsCollectionPlay } from "react-icons/bs";
-import { FaBell , FaMoon } from "react-icons/fa";
+import { FaBell, FaMoon } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { AiFillHome } from "react-icons/ai";
 
 import { IoPeopleOutline } from "react-icons/io5";
 import { MdOutlineLogout } from "react-icons/md";
 
-
 import { TbGridDots } from "react-icons/tb";
 import { FaSearch } from "react-icons/fa";
 import mobileLogo from "../../img/Logo.png";
 import SideBarMenu from "./SideBarMenu";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SideBarGroup from "./SideBarGroup";
 import SideBarWallet from "./SideBarWallet";
 import { DataStateContext } from "../../App";
-import HeaderlogoImg from "../../img/HeaderLogo.svg"
+import HeaderlogoImg from "../../img/HeaderLogo.svg";
 import styled from "styled-components";
 
 const Header = styled.div`
@@ -45,9 +44,9 @@ const HeaderSticky = styled.div`
   background: var(--color-white);
   display: flex;
   align-items: center;
-  position: sticky;
   top: 0;
   left: 0;
+  position: ${(prop) => (prop.isSticky ? "fixed" : "relative")};
   -webkit-box-shadow: 0 4px 6px -6px #222;
   -moz-box-shadow: 0 4px 6px -6px #222;
   box-shadow: 0 4px 6px -6px #222;
@@ -57,6 +56,7 @@ const HeaderSticky = styled.div`
     justify-content: center;
   }
   @media screen and (max-width: 768px) {
+    position: fixed;
     height: 60px;
   }
 `;
@@ -244,6 +244,24 @@ export const HeaderBottom = () => {
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
   const [sideBarGroupOpen, setSideBarGroupOpen] = useState(false);
   const [sideWalletOpen, setSideWalletOpen] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
+
+  // 스크롤 위치 감지 및 상태 업데이트
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        // 스크롤 위치가 100px 이상일 때 고정
+        setIsSticky(true);
+      } else {
+        // 스크롤 위치가 100px 이하일 때 원래 상태로
+        setIsSticky(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   const sideMenu = () => {
     setSideMenuOpen((prev) => !prev);
     setSideBarGroupOpen(false);
@@ -266,7 +284,7 @@ export const HeaderBottom = () => {
   };
 
   return (
-    <HeaderSticky>
+    <HeaderSticky isSticky={isSticky}>
       <Left>
         <img className="mobileLogo" src={mobileLogo} alt="mobileLogo" />
         <div>

@@ -15,16 +15,22 @@ import PostUploadField from "../components/common/PostUploadField";
 // import Mainbutton from "../components/Main/Mainbutton";
 
 const Wrapper = styled.div`
+  position: relative;
   width: 100%;
+  height: auto;
+  /* overflow: auto; */
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 const MainSection = styled.section`
+  margin-top: 20px;
   width: 1050px;
   padding: 0 90px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 30px;
   /* padding: 28px 20px; */
   position: absolute;
@@ -49,14 +55,13 @@ const Main = () => {
     <Wrapper>
       <HeaderTop />
       <HeaderBottom />
-      {/* <SideBarWallet /> */}
-      {/* <SideBarGroup /> */}
-      {/* <SideBarMenu /> */}
       <MainSection>
         <Mainstory />
-        <Mainupload />
+        {/* <Mainupload /> */}
         {/* <PostUploadField /> */}
         <MainGroup />
+        <MainPage />
+        <MainPage />
         <MainPage />
         {/* <Maintest>
           <button onClick={create}>생성</button>
