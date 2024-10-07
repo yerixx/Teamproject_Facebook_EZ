@@ -1,10 +1,17 @@
-import React from "react";
-import { BsThreeDots } from "react-icons/bs";
-import { FaRegHeart, FaRegComment } from "react-icons/fa";
-import { FaEarthAmericas, FaRegBookmark } from "react-icons/fa6";
-import { FiShare } from "react-icons/fi";
-import { IoCloseOutline } from "react-icons/io5";
 import styled from "styled-components";
+import { BsThreeDots } from "react-icons/bs";
+import { FaEarthAmericas, FaRegBookmark } from "react-icons/fa6";
+import { IoCloseOutline } from "react-icons/io5";
+import { FaRegHeart, FaRegComment } from "react-icons/fa";
+import { FiShare } from "react-icons/fi";
+import {
+  MainTitle_18_b,
+  MainTitle_18_n,
+  MainTitle_24_m,
+
+  SubDescription_16_n,
+
+} from "../../styles/GlobalStyles.styles";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -23,16 +30,31 @@ const Inner = styled.div`
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius-08);
   position: relative;
+
+  @media screen and (max-width: 390px) {
+    width: 100%;
+    height: auto;
+    gap: 5px;
+  }
   .icon {
     position: absolute;
     top: 20px;
     right: 20px;
     display: flex;
     gap: 10px;
-    font-size: var(--font-size-paragraph);
+    ${MainTitle_24_m}
   }
-  @media screen and (max-width: 1050px) {
-    width: 768px;
+  @media screen and (max-width: 390px) {
+    width: 100%;
+    height: auto;
+    padding: 15px;
+    gap: 5px;
+
+    .icon {
+      top: 10px;
+      right: 10px;
+      ${MainTitle_24_m}
+    }
   }
 `;
 
@@ -52,23 +74,31 @@ const PostInfo = styled.div`
     display: flex;
     flex-direction: column;
     .name {
-      font-size: var(--font-size-title-04);
-      font-weight: var(--font-weight-bold);
+      ${MainTitle_18_b}
     }
     .item {
       display: flex;
       gap: 5px;
       .clock {
-        font-size: var(--font-size-subtitle);
+        ${SubDescription_16_n}
       }
       .menuIcon {
-        font-size: var(--font-size-subtitle);
+        ${SubDescription_16_n}
       }
     }
+  }
+  @media screen and (max-width: 390px) {
+    width: 100%;
+    height: auto;
   }
 `;
 const PostText = styled.div`
   margin-left: 63px;
+  ${SubDescription_16_n}
+  @media screen and (max-width: 390px) {
+    margin-left: 40px;
+    ${SubDescription_16_n}
+  }
 `;
 
 const ImgItem = styled.div`
@@ -82,7 +112,7 @@ const ImgItem = styled.div`
       height: 205px;
       background: var(--color-gray-02);
       gap: 8px;
-      border: 1px solid red;
+      cursor: pointer;
     }
   }
 `;
@@ -94,14 +124,24 @@ const SocialBtnIcon = styled.div`
   width: 100%;
   height: 80px;
   padding: 10px 20px;
-  font-size: var(--font-size-paragraph);
+  ${MainTitle_18_n}
   border-top: 1px solid var(--color-light-gray-01);
   .socialIcon {
     cursor: pointer;
     display: flex;
+    align-items: center;
     gap: 10px;
     &:hover {
       color: var(--color-facebookblue);
+    }
+  }
+  @media screen and (max-width: 390px) {
+    height: auto;
+    padding: 10px;
+
+    .socialIcon {
+      gap: 6px;
+      ${SubDescription_16_n}
     }
   }
 `;
@@ -129,9 +169,7 @@ const MainPost = () => {
         <PostText>내 최애</PostText>
         <ImgItem>
           <div className="postImg">
-            <img />
-            <img />
-            <img />
+            <img src="../public/img/imgtest.jpg" alt="img" />
           </div>
         </ImgItem>
         <SocialBtnIcon>

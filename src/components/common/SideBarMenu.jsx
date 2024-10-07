@@ -1,9 +1,11 @@
+import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
+  transition: all 0.3s;
   z-index: 3;
-  position: sticky;
-  top: 110px;
+  position: absolute;
+  top: 100px;
   right: 20px;
   width: 280px;
   display: flex;
@@ -12,6 +14,18 @@ const Wrapper = styled.div`
   padding: 20px;
   border-radius: var(--border-radius-30);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  max-height: 80vh; /* 모달 콘텐츠의 최대 높이 */
+  overflow-y: auto;
+  -ms-overflow-style: none; /* IE, Edge */
+  scrollbar-width: none;
+  @media screen and (max-width: 1050px) {
+    top: 130px;
+    right: 10px;
+  }
+  @media screen and (max-width: 768px) {
+    width: 330px;
+    top: 70px;
+  }
 `;
 
 const Item = styled.div`
@@ -25,12 +39,31 @@ const Item = styled.div`
   &:hover {
     background-color: var(--color-light-gray-01);
   }
+  svg {
+    width: 40px;
+  }
 `;
+/* eslint-disable react/prop-types */
+const SideBarMenu = ({ openGroup, closeModal }) => {
+  const closeRef = useRef(null);
+  const handleClickOutside = (event) => {
+    if (closeRef.current && !closeRef.current.contains(event.target)) {
+      closeModal(); // 모달을 닫는 함수 호출
+    }
+  };
+  useEffect(() => {
+    // 모달이 마운트되면 클릭 이벤트 추가
+    document.addEventListener("mousedown", handleClickOutside);
 
-const SideBarMenu = () => {
+    return () => {
+      // 모달이 언마운트되면 클릭 이벤트 제거
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <Wrapper>
-      <Item>
+    <Wrapper ref={closeRef}>
+      <Item onClick={openGroup}>
         <svg
           width="36"
           height="36"

@@ -28,7 +28,7 @@ const SocialIcon = styled.div`
         width:50%;
         justify-content: center;
         margin-right:20px;
-        font-size:30px;
+        font-size:24px;
         color:var(--color-gray-01);
         /* border:1px solid #f00; */
         &:last-child{
