@@ -1,24 +1,25 @@
 // import { AiFillHome } from "react-icons/ai";
 import { AiOutlineShop } from "react-icons/ai";
 import { BsCollectionPlay } from "react-icons/bs";
-import { FaBell , FaMoon } from "react-icons/fa";
+import { FaBell, FaMoon } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { AiFillHome } from "react-icons/ai";
 
 import { IoPeopleOutline } from "react-icons/io5";
 import { MdOutlineLogout } from "react-icons/md";
 
-
 import { TbGridDots } from "react-icons/tb";
 import { FaSearch } from "react-icons/fa";
 import mobileLogo from "../../img/Logo.png";
 import SideBarMenu from "./SideBarMenu";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SideBarGroup from "./SideBarGroup";
 import SideBarWallet from "./SideBarWallet";
 import { DataStateContext } from "../../App";
-import HeaderlogoImg from "../../img/HeaderLogo.svg"
+import HeaderlogoImg from "../../img/HeaderLogo.svg";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../firebase";
 
 const Header = styled.div`
   background-color: var(--color-white);
@@ -45,18 +46,18 @@ const HeaderSticky = styled.div`
   background: var(--color-white);
   display: flex;
   align-items: center;
-  position: sticky;
   top: 0;
   left: 0;
+  position: ${(prop) => (prop.isSticky ? "fixed" : "relative")};
   -webkit-box-shadow: 0 4px 6px -6px #222;
   -moz-box-shadow: 0 4px 6px -6px #222;
   box-shadow: 0 4px 6px -6px #222;
   margin-bottom: 20px;
   @media screen and (max-width: 1050px) {
-    height: 120px;
     justify-content: center;
   }
   @media screen and (max-width: 768px) {
+    position: fixed;
     height: 60px;
   }
 `;
@@ -144,10 +145,7 @@ const Right = styled.div`
   justify-content: space-between;
   gap: 15px;
   @media screen and (max-width: 1050px) {
-    flex-direction: column;
-    width: 100%;
-    justify-content: center;
-    align-items: flex-end;
+    justify-content: flex-end;
   }
 `;
 const RightFirst = styled.div`
@@ -161,9 +159,16 @@ const RightFirst = styled.div`
     color: var(--color-facebookblue);
   }
   @media screen and (max-width: 1050px) {
+    width: 20px;
+    h3 {
+      display: none;
+    }
+    span {
+      display: none;
+    }
   }
   @media screen and (max-width: 768px) {
-    display: none;
+    /* display: none; */
   }
 `;
 const ProfileWrap = styled.div`
@@ -174,10 +179,16 @@ const ProfileWrap = styled.div`
   align-items: center;
   gap: 3px;
   div {
-    background: #999;
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    overflow: hidden;
+    img {
+      object-fit: cover;
+      object-position: center;
+      width: 100%;
+      height: 100%;
+    }
   }
   h3 {
     font-size: var(--font-size-subtitle);
@@ -185,6 +196,7 @@ const ProfileWrap = styled.div`
   }
   @media screen and (max-width: 1050px) {
     width: 100px;
+    justify-content: flex-end;
     div {
     }
   }
@@ -237,24 +249,46 @@ export const HeaderTop = () => {
 };
 
 export const HeaderBottom = () => {
+  const navigate = useNavigate();
   const data = useContext(DataStateContext);
   const currentUser = data.currentUserData;
-  // console.log(currentUser);
-  // console.log(data);
+
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
   const [sideBarGroupOpen, setSideBarGroupOpen] = useState(false);
   const [sideWalletOpen, setSideWalletOpen] = useState(false);
-  const sideMenu = () => {
+  const [isSticky, setIsSticky] = useState(false);
+
+  // 스크롤 위치 감지 및 상태 업데이트
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        // 스크롤 위치가 100px 이상일 때 고정
+        setIsSticky(true);
+      } else {
+        // 스크롤 위치가 100px 이하일 때 원래 상태로
+        setIsSticky(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+  const sideMenu = (e) => {
+    e.stopPropagation();
     setSideMenuOpen((prev) => !prev);
     setSideBarGroupOpen(false);
     setSideWalletOpen(false);
   };
-  const sideGroup = () => {
+  const sideGroup = (e) => {
+    e.stopPropagation();
     setSideBarGroupOpen((prev) => !prev);
     setSideMenuOpen(false);
     setSideWalletOpen(false);
   };
-  const sideWallet = () => {
+
+  const sideWallet = (e) => {
+    e.stopPropagation();
     setSideWalletOpen((prev) => !prev);
     setSideMenuOpen(false);
     setSideBarGroupOpen(false);
@@ -265,8 +299,19 @@ export const HeaderBottom = () => {
     setSideWalletOpen(false);
   };
 
+  // LogOut
+  const onLogOut = async () => {
+    const confirmation = confirm("페이스북에서 로그아웃 하시겠습니까?");
+    if (confirmation) {
+      await auth.signOut();
+      navigate("/login");
+    }
+  };
+
+  console.log(currentUser);
+
   return (
-    <HeaderSticky>
+    <HeaderSticky isSticky={isSticky}>
       <Left>
         <img className="mobileLogo" src={mobileLogo} alt="mobileLogo" />
         <div>
@@ -291,13 +336,15 @@ export const HeaderBottom = () => {
       <Right>
         <RightFirst onClick={sideWallet}>
           <ProfileWrap>
-            <div></div>
+            <div>
+              <img src="/img/testcat.jpg" alt="" />
+            </div>
             <h3>
-              {currentUser?.userName.fistName}
-              {currentUser?.userName.lastName}
+              {auth.currentUser.email.split("@")[0]}
+              {/* {currentUser?.userName.lastName} */}
             </h3>
           </ProfileWrap>
-          <span>{currentUser?.wallet.point}p</span>
+          {/* <span>{currentUser?.wallet.point}p</span> */}
         </RightFirst>
         <RightSecond>
           <IconWrap>
@@ -313,7 +360,7 @@ export const HeaderBottom = () => {
             <FaMoon />
           </IconWrap>
           <IconWrap>
-            <MdOutlineLogout />
+            <MdOutlineLogout onClick={onLogOut} />
           </IconWrap>
         </RightSecond>
       </Right>

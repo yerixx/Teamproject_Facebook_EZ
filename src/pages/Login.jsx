@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import styled from "styled-components";
 import letterLogoImg from "../img/HeaderLogo.svg";
 import circleLogoImg from "../img/Logo.svg";
 import AccountLogin from "../components/login/AccountLogin";
@@ -38,7 +36,9 @@ const Login = () => {
         <Logo>
           <img src={mobileSize ? circleLogoImg : letterLogoImg} alt="Logo" />
         </Logo>
-        <FormContainer style={{ gap: `30px` }}>
+        <FormContainer
+          style={{ gap: `30px`, padding: mobileSize ? 0 : `60px` }}
+        >
           {mobileSize ? (
             <>
               <LoginForm

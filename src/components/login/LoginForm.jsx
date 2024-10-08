@@ -9,11 +9,12 @@ import {
   FormTitle,
   FormItemDesc,
 } from "./login-components";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const Error = styled.p`
   text-align: center;
   color: var(--color-error);
+  font-weight: 600;
 `;
 
 const LoginForm = ({ mobileSize }) => {
@@ -37,22 +38,29 @@ const LoginForm = ({ mobileSize }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    if (isLoading || emaiemaillTel === "" || password === "") return;
+    if (isLoading || email === "" || password === "") return;
 
     try {
-      const credentials = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      setIsLoading(true);
 
-      // await updateProfile(credentials.user, {});
+      await signInWithEmailAndPassword(auth, email, password);
 
       navigate("/");
     } catch (e) {
+      console.log(e);
       setIsLoading(true);
-      if (e) setError(e.message);
-      alert(e);
+      if (e) {
+        let errorCode;
+        switch (e.message) {
+          case "Firebase: Error (auth/invalid-credential).":
+            errorCode = "유효하지 않은 계정입니다.";
+            break;
+        }
+        setError(errorCode);
+      }
+      // if (e) {
+      //   setError(e.message);
+      // }
     } finally {
       setIsLoading(false);
     }
@@ -84,14 +92,8 @@ const LoginForm = ({ mobileSize }) => {
       <FormItemDesc style={{ textAlign: "center" }}>
         아이디, 비밀번호를 잊으셨나요?
       </FormItemDesc>
-      <Input
-        name="submit"
-        type="submit"
-        required
-        width={430}
-        value={isLoading ? "Loading..." : "로그인"}
-      />
-      <Error> Don't you have an account?</Error>
+      <Input name="submit" type="submit" required width={430} value="로그인" />
+      {error !== "" ? <Error>{error}</Error> : null}
     </Form>
   );
 };

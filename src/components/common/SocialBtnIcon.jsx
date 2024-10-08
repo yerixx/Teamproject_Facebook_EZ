@@ -1,8 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-
 import {Paragraph_20_n} from '../../styles/GlobalStyles.styles.js';
-
 // react-icon
 import { FaRegHeart , FaRegComment } from "react-icons/fa";
 import { FaRegBookmark } from "react-icons/fa6";
