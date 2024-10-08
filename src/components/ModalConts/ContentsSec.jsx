@@ -9,7 +9,8 @@ import {
 } from "framer-motion";
 import { createGlobalStyle, styled } from "styled-components";
 import reset from "styled-reset";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
+import { CgClose } from "react-icons/cg";
 
 const GlobalStyles = createGlobalStyle`
   ${reset};
@@ -49,10 +50,6 @@ const Wrapper = styled.div`
     width: 746px;
     height: 746px;
     border: 1px solid #f00;
-    img {
-      width: 100%;
-      height: 100%;
-    }
   }
   .closeBtn {
     display: flex;
@@ -60,13 +57,12 @@ const Wrapper = styled.div`
     justify-content: center;
     width: 40px;
     height: 40px;
+    /* border: 1px solid #f0f; */
     position: absolute;
     top: 40px;
     right: 40px;
-    /* background: #fff; */
-    .fa-x {
-      color: #fff;
-    }
+    font-size: 40px;
+    color: #fff;
   }
   .slideBtn {
     position: absolute;
@@ -75,26 +71,7 @@ const Wrapper = styled.div`
     transform: translateX(-50%);
     display: flex;
     gap: 50vw;
-    .prev {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #fff;
-      border-radius: 50%;
-      width: 68px;
-      height: 68px;
-      color: #000;
-    }
-    .next {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 68px;
-      height: 68px;
-      background: #fff;
-      border-radius: 50%;
-      color: #000;
-    }
+    font-size: 35px;
   }
   @media screen and (max-width: 1050px) {
     .contImg {
@@ -115,26 +92,41 @@ const Wrapper = styled.div`
   }
 `;
 
+const ContImg = styled.div`
+  width: 100%;
+  height: 100%;
+  background: url("https://www.next-t.co.kr/public/uploads/7b7f7e2138e29e598cd0cdf2c85ea08d.jpg")
+    center/cover no-repeat;
+`;
+
+const Button = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 50%;
+  width: 68px;
+  height: 68px;
+  color: #000;
+`;
+
 const ContentsSec = () => {
   return (
     <ContSlide>
       <Wrapper>
         <div className="contImg">
-          <img src="" alt="" />
+          <ContImg />
         </div>
         <div className="closeBtn">
-          X
-          <FontAwesomeIcon icon="fa-solid fa-x" />
+          <CgClose />
         </div>
         <div className="slideBtn">
-          <div className="prev">
-            <FontAwesomeIcon icon="fa-solid fa-angle-left" />
-            left
-          </div>
-          <div className="next">
-            right
-            <FontAwesomeIcon icon="fa-solid fa-angle-right" />
-          </div>
+          <Button className="prev">
+            <FaAngleLeft />
+          </Button>
+          <Button className="next">
+            <FaAngleRight />
+          </Button>
         </div>
       </Wrapper>
     </ContSlide>

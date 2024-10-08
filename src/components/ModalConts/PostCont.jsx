@@ -5,7 +5,9 @@ const Wrapper = styled.div`
   display: flex;
   width: 100%;
   @media screen and (max-width: 1050px) {
-    height: 100px;
+    color: #fff;
+    height: 140px;
+    padding: 14px;
     width: calc(100vw - (100vw - 100%));
   }
 `;

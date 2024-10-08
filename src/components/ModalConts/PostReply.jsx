@@ -33,6 +33,9 @@ const Wrapper = styled.div`
       color: #ccc;
     }
   }
+  @media screen and (max-width: 1050px) {
+    display: none;
+  }
 `;
 
 const PostReply = () => {
