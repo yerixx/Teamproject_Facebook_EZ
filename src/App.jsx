@@ -197,12 +197,12 @@ function App() {
     userId,
     firstName,
     lastName,
-    emailOrPhone,
+    email,
     password,
     gender = null,
     birthdate = null,
     city = null,
-    likeCategory = null
+    likeCategory = []
   ) => {
     try {
       const docRef = await addDoc(collection(db, "users"), {
@@ -211,7 +211,7 @@ function App() {
           firstName,
           lastName,
         },
-        emailOrPhone,
+        email,
         password,
         gender,
         birthdate,
@@ -227,7 +227,7 @@ function App() {
             firstName,
             lastName,
           },
-          emailOrPhone,
+          email,
           password,
           gender,
           birthdate,

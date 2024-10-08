@@ -12,11 +12,12 @@ import {
   Pager,
   Button,
 } from "./login-components";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const Wrapper = styled.div`
   padding: 25px;
   background: var(--color-light-gray-02);
-  box-shadow: var(--box-shadow-02);
+  box-shadow: var(--box-shadow-01);
   border-radius: var(--border-radius-08);
   @media screen and (max-width: 768px) {
     width: 390px;
@@ -94,7 +95,7 @@ const LocationWrapper = styled.ul`
   }
 `;
 
-const AdditionalForm = ({ mobileSize, progress }) => {
+const AdditionalForm = ({ updateUserData, mobileSize, progress }) => {
   // select
   const options = [
     { value: 1, location: "서울" },
@@ -105,17 +106,38 @@ const AdditionalForm = ({ mobileSize, progress }) => {
 
   const [location, setLocation] = useState("지역");
   const [isSelectOpen, setIsSelectOpen] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleNext = (e) => {
+    e.preventDefault(); // 폼의 기본 제출 동작 방지
+    // progress 값을 2로 설정하여 URL에 반영
+    searchParams.set("progress", "2");
+    setSearchParams(searchParams);
+  };
+  const handleGenderChange = (e) => {
+    updateUserData("gender", e.target.value);
+  };
+
+  const handleBirthChange = (e) => {
+    updateUserData("birthdate", e.target.value);
+  };
+
+  const handleLocationChange = (location) => {
+    setLocation(location);
+    updateUserData("city", location);
+  };
 
   const toggleOption = () => {
     setIsSelectOpen((current) => !current);
   };
+
   const closeOption = (e) => {
     setIsSelectOpen(false);
-    setLocation(e.target.innerText);
+    handleLocationChange(e.target.innerText);
   };
 
   return (
-    <Wrapper style={{ display: progress === "2" ? "none" : "flex" }}>
+    <Wrapper>
       <Form height={700}>
         {mobileSize ? null : (
           <FormTitle>회원님을 위한 맞춤 홈피드를 준비할게요</FormTitle>
@@ -129,11 +151,23 @@ const AdditionalForm = ({ mobileSize, progress }) => {
             <InputWrapperRow>
               <Label htmlFor="woman">
                 여성
-                <Input name="gender" type="radio" value="female" id="woman" />
+                <Input
+                  name="gender"
+                  type="radio"
+                  value="female"
+                  id="woman"
+                  onChange={handleGenderChange}
+                />
               </Label>
               <Label htmlFor="man">
                 남성
-                <Input name="gender" type="radio" value="male" id="man" />
+                <Input
+                  name="gender"
+                  type="radio"
+                  value="male"
+                  id="man"
+                  onChange={handleGenderChange}
+                />
               </Label>
             </InputWrapperRow>
           </li>
@@ -143,7 +177,13 @@ const AdditionalForm = ({ mobileSize, progress }) => {
               생년월일을 선택하세요. <br />
               언제든지 비공개로 변경할 수 있습니다.
             </FormItemDesc>
-            <Input id="birth" name="birth" type="date" width={430} />
+            <Input
+              id="birth"
+              name="birth"
+              type="date"
+              width={430}
+              onChange={handleBirthChange}
+            />
           </li>
           <li>
             <FormItemTitle>지역 입력</FormItemTitle>
@@ -186,13 +226,7 @@ const AdditionalForm = ({ mobileSize, progress }) => {
           </li>
         </Ul>
         <div>
-          {mobileSize ? null : (
-            <Pager>
-              <span className="active"></span>
-              <span></span>
-            </Pager>
-          )}
-          {mobileSize ? null : <Button>다음</Button>}
+          {mobileSize ? null : <Button onClick={handleNext}>다음</Button>}
         </div>
       </Form>
     </Wrapper>

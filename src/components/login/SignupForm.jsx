@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MobileFormHeader from "./MobileHeader";
 import {
   Form,
@@ -11,67 +11,113 @@ import {
   FormItemDesc,
   Button,
 } from "./login-components";
-
+import { useForm } from "react-hook-form";
+import styled from "styled-components";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../firebase";
 // <FormTitle className={mobileSize ? "isMobile" : ""}>
 
-const SignupForm = ({ mobileSize }) => {
+const InputWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  span {
+    position: absolute;
+    bottom: -23px;
+    font-size: 14px;
+    color: crimson;
+  }
+`;
+const Erorr = styled.span`
+  width: 100%;
+  margin-top: -8px;
+  font-size: 14px;
+  color: crimson;
+  text-align: start;
+`;
+
+const SignupForm = ({ mobileSize, updateUserData, handleSignup }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm();
+
+  const onValid = async (data) => {
+    if (data.password1 !== data.password2) {
+      setError("password1", { message: "비밀번호가 같지 않습니다." });
+      return;
+    }
+    handleSignup(data);
+  };
+
   return (
-    <Form height={700}>
+    <Form onSubmit={handleSubmit(onValid)}>
       {mobileSize ? null : <FormTitle>Facebook에 가입하기</FormTitle>}
       <Ul>
         <li>
           <FormItemTitle>이름 입력</FormItemTitle>
           <FormItemDesc>실명을 입력하세요.</FormItemDesc>
           <InputWrapperRow>
-            <Input
-              name="lastName"
-              type="text"
-              required
-              placeholder="성"
-              width={210}
-            />
-            <Input
-              name="firstName"
-              type="text"
-              required
-              placeholder="이름"
-              width={210}
-            />
+            <InputWrap>
+              <Input
+                {...register("firstName", { required: "성을 입력해주세요." })}
+                placeholder="성"
+                width={210}
+              />
+              <span>{errors?.firstName?.message}</span>
+            </InputWrap>
+            <InputWrap>
+              <Input
+                {...register("lastName", { required: "이름을 입력해주세요." })}
+                placeholder="이름"
+                width={210}
+              />
+              <span>{errors?.lastName?.message}</span>
+            </InputWrap>
           </InputWrapperRow>
         </li>
         <li>
-          <FormItemTitle>이메일 또는 휴대폰 번호 입력</FormItemTitle>
+          <FormItemTitle>이메일 입력</FormItemTitle>
           <FormItemDesc>
-            회원님에게 연락할 수 있는 휴대폰 번호를 입력하세요.
-            <br /> 이 휴대폰 번호는 다른 사람에게 공개되지 않습니다.
+            회원님에게 연락할 수 있는 이메일을 입력하세요.
+            <br /> 이 이메일은 다른 사람에게 공개되지 않습니다.
           </FormItemDesc>
           <InputWrapperColumn>
             <InputWrapperRow>
               <Input
-                name="emailTel"
-                type="text"
-                required
-                placeholder="이메일 또는 휴대폰 번호"
-                style={{
-                  width: mobileSize ? 270 : 320,
-                }}
+                {...register("email", {
+                  required: "이메일를 입력해주세요.",
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                    message: "이메일 형식을 맞춰주세요.",
+                  },
+                })}
+                placeholder="이메일"
+                width={430}
               />
-              <Input
+              {/* <Input
                 name="certification"
-                type="submit"
+                type="button"
+                onClick={handleSendVerification}
                 value="인증"
-                required
                 style={{
                   width: mobileSize ? `80px` : 100,
                   borderRadius: `var(--border-radius-08)`,
                 }}
-              />
+              /> */}
             </InputWrapperRow>
-            <InputWrapperRow>
+            <Erorr>{errors?.email?.message}</Erorr>
+            {/* <InputWrapperRow>
               <Input
-                name="emailTel-code"
-                type="text"
-                required
+                {...register("emailTelCode", {
+                  required: "인증코드를 입력해주세요.",
+                })}
                 placeholder="인증코드"
                 style={{
                   width: mobileSize ? 270 : 320,
@@ -81,13 +127,13 @@ const SignupForm = ({ mobileSize }) => {
                 name="confirm"
                 type="submit"
                 value="확인"
-                required
                 style={{
                   width: mobileSize ? `80px` : 100,
                   borderRadius: `var(--border-radius-08)`,
                 }}
               />
-            </InputWrapperRow>
+            </InputWrapperRow> */}
+            <Erorr>{errors?.emailTelCode?.message}</Erorr>
           </InputWrapperColumn>
         </li>
         <li>
@@ -97,19 +143,29 @@ const SignupForm = ({ mobileSize }) => {
           </FormItemDesc>
           <InputWrapperColumn>
             <Input
-              name="password01"
+              {...register("password1", {
+                required: "비밀번호를 입력해주세요.",
+                minLength: {
+                  value: 8,
+                  message: "비밀번호는 8자 이상 입력해주세요.",
+                },
+              })}
               type="password"
-              required
               placeholder="비밀번호"
               width={430}
             />
+
+            <Erorr>{errors?.password1?.message}</Erorr>
             <Input
-              name="password02"
+              {...register("password2", {
+                required: "비밀번호 확인을 입력해주세요.",
+                minLength: 8,
+              })}
               type="password"
-              required
               placeholder="비밀번호 확인"
               width={430}
             />
+            <Erorr>{errors?.password2?.message}</Erorr>
           </InputWrapperColumn>
         </li>
       </Ul>
