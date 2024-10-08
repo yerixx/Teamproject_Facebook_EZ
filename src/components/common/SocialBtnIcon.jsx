@@ -3,7 +3,10 @@ import { DataDispatchContext } from "../../App.jsx";
 import CommentList from "../detail/CommentList";
 import styled from "styled-components";
 
-import { Paragraph_20_n } from "../../styles/GlobalStyles.styles.js";
+import {
+  MainTitle_18_n,
+  SubDescription_16_n,
+} from "../../styles/GlobalStyles.styles.js";
 
 // react-icon
 import { FaRegHeart, FaRegComment } from "react-icons/fa";
@@ -11,16 +14,15 @@ import { FaRegBookmark } from "react-icons/fa6";
 import { FiShare } from "react-icons/fi";
 
 const SocialIcon = styled.div`
-  ${Paragraph_20_n}
+  ${MainTitle_18_n}
   display:flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 80px;
+  height: 50px;
   padding: 0 10px 20px;
   border-bottom: 1px solid var(--color-light-gray-01);
   .socialIcon {
-    ${Paragraph_20_n}
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -31,7 +33,7 @@ const SocialIcon = styled.div`
       justify-content: center;
       margin-right: 20px;
       font-size: 24px;
-      color: var(--color-gray-01);
+      /* color: var(--color-gray-01); */
       /* border:1px solid #f00; */
       &:last-child {
         margin-right: 0px;
@@ -41,7 +43,7 @@ const SocialIcon = styled.div`
       color: var(--color-facebookblue) !important;
     }
     .socialIconText {
-      /* 미디어 쿼리 */
+      ${SubDescription_16_n}
       @media (max-width: 768px) {
         display: none;
       }
@@ -77,7 +79,7 @@ const SocialBtnIcon = ({ postId, isLiked }) => {
         <div
           onClick={handleLikeToggle}
           style={{
-            color: !like ? "var(--color-gray-01)" : "var(--color-facebookblue)",
+            color: !like ? "var(--color-black)" : "var(--color-facebookblue)",
           }}
           className="socialIcon"
         >
@@ -95,7 +97,7 @@ const SocialBtnIcon = ({ postId, isLiked }) => {
         <div
           onClick={handlSaveToggle}
           style={{
-            color: !save ? "var(--color-gray-01)" : "var(--color-facebookblue)",
+            color: !save ? "var(--color-black)" : "var(--color-facebookblue)",
           }}
           className="socialIcon"
         >

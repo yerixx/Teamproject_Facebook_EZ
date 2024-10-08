@@ -21,7 +21,6 @@ const WrapperFrom = styled.form`
   position: absolute;
   top: -100px;
   width: 100%;
-  /* height:320px; */
   height: 261px;
   display: flex;
   flex-direction: column;
@@ -33,20 +32,17 @@ const WrapperFrom = styled.form`
   background: var(--color-white);
   border-radius: 30px 30px 0 0;
 
-  /* 미디어 쿼리 */
   @media (max-width: 768px) {
     top: -30px;
     max-width: 100%;
     height: 200px;
     padding: 0;
-    /* border:1px solid #f00; */
   }
 `;
 const ProfileContain = styled.div`
   width: 100%;
   display: flex;
   gap: 20px;
-  /* border:1px solid #f00; */
 `;
 const ProfileImgCont = styled.div`
   position: relative;
@@ -64,7 +60,6 @@ const ProfileImgCont = styled.div`
     background: var(--color-gray-01);
     border-radius: 100%;
     object-fit: cover;
-    /* 미디어 쿼리 */
     @media (max-width: 768px) {
       width: 110px;
       height: 110px;
@@ -92,6 +87,7 @@ const ProfileImgCont = styled.div`
     }
   }
 `;
+
 const ProfileText = styled.div`
   width: 100%;
   display: flex;
@@ -102,15 +98,12 @@ const ProfileText = styled.div`
     max-width: 100%;
     display: flex;
     justify-content: space-between;
-    /* 미디어 쿼리 */
     @media (max-width: 768px) {
       align-items: center;
       padding-right: 20px;
     }
     .profileName {
       ${MainTitle_26_b}
-      color:var(--color-gray-01);
-      /* 미디어 쿼리 */
       @media (max-width: 768px) {
         ${Paragraph_20_n}
         font-weight:700;
@@ -188,12 +181,12 @@ const Button = styled.div`
   gap: 20px;
   * {
     ${SubDescription_16_n}
-    width:165px;
+    width:120px;
     height: 42px;
     border: none;
     border-radius: var(--border-radius-08);
     cursor: pointer;
-    transition: opacity 0.8s;
+    transition: all 0.3s;
     &:nth-child(1) {
       background: var(--color-facebookblue);
       color: var(--color-white);
@@ -259,15 +252,8 @@ const ProfileCard = () => {
     const file = e.target.files[0];
     if (file) {
       const fileUrl = URL.createObjectURL(file);
-      setProfileImg(fileUrl); // 선택한 파일로 아이콘 업데이트
+      setProfileImg(fileUrl);
     }
-    // if (file && file.length === 1) {
-    //   if (file[0].size > maxFileSize) {
-    //     alert("The Maximum Capacity that can be uploaded is 5MB");
-    //     return;
-    //   }
-    //   setFile(file[0]);
-    // }
   };
   const handleIconClick = () => {
     fileRef.current.click();

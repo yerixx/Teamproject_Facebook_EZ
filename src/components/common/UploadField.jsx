@@ -21,18 +21,16 @@ const WrapperForm = styled.form`
   height: fit-content;
   display: flex;
   justify-content: center;
-  align-items: center;
   @media (max-width: 768px) {
     margin-top: 60px;
     height: 150px;
   }
 `;
 const CommentCont = styled.div`
-  width: 870px;
+  width: var(--inner-width-02);
   display: flex;
   align-items: center;
-  margin: 30px 0;
-  padding: 40px 0;
+  padding: 70px 60px;
   /* 미디어 쿼리 */
   @media (max-width: 768px) {
     ${SubDescription_16_n}
@@ -45,6 +43,7 @@ const CommentCont = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     .profileImg {
       width: 60px;
       height: 60px;
@@ -62,12 +61,13 @@ const CommentCont = styled.div`
       /* width:640px; */
       width:100%;
       height: 60px;
-      margin: 0 30px;
+      margin: 0 15px;
       padding: 0 30px;
       background: var(--color-light-gray-01);
       color: var(--color-gray-01);
       border: none;
       border-radius: 50px;
+
       &:focus {
         outline: none;
       }
@@ -99,10 +99,10 @@ const CommentCont = styled.div`
       }
     }
     .submitBtn {
-      padding: 0;
       ${MainTitle_18_n}
       padding:0 19px;
-      margin-right: 30px;
+      display: flex;
+      margin-right: 15px;
       /* 미디어 쿼리 */
       @media (max-width: 768px) {
         margin-right: 10px;
@@ -127,7 +127,7 @@ const UploadField = ({ placeholder }) => {
 
   // 모달 상태 관리
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [uploadFile, setUploadFile] = useState(null); // 모달에서 업로드된 이미지 상태
+  const [uploadFile, setUploadFile] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

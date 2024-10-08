@@ -8,7 +8,7 @@ import PhotoVideoList from "../components/detail/PhotoVideoList";
 import PostList from "../components/detail/PostList";
 import TopCover from "../components/detail/TopCover";
 import {
-  Paragraph_20_n,
+  MainTitle_18_n,
   SubDescription_14_n,
 } from "../styles/GlobalStyles.styles.js";
 
@@ -24,7 +24,7 @@ const Wrapper = styled.div`
 `;
 
 const Inner = styled.div`
-  width: 1050px;
+  width: var(--inner-width-02);
   height: fit-content;
   margin: 0 auto;
   box-shadow: var(--box-shadow-01);
@@ -46,11 +46,12 @@ const ContChangeBtn = styled(motion.div)`
   }
 
   .postBtn {
-    ${Paragraph_20_n}
+    ${MainTitle_18_n}
+    font-weight:600;
     flex: 1;
     background: none;
     border: none;
-    color: var(--color-gray-01);
+    /* color: var(--color-gray-01); */
     padding-bottom: 10px;
     position: relative;
     cursor: pointer;

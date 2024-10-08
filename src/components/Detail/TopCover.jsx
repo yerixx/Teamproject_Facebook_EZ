@@ -9,24 +9,23 @@ import testCat from "/img/testcat.jpg";
 
 const Wrapper = styled.section`
   width: 100%;
-  height: 575px;
+  /* => CoverImg height와 같이 수정해야함 */
+  height: 475px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 140px;
 
-  /* 미디어 쿼리 */
   @media (max-width: 768px) {
-    /* border:1px solid #f00; */
     max-width: 100%;
     height: 400px;
     margin-bottom: 0;
   }
 `;
 const Inner = styled.article`
-  width: 1050px;
+  width: var(--inner-width-02);
   height: 100%;
-  /* 미디어 쿼리 */
+
   @media (max-width: 768px) {
     max-width: 100%;
   }
@@ -35,10 +34,10 @@ const CoverImg = styled.img`
   position: relative;
   background: var(--color-gray-01);
   width: 100%;
-  /* height 변경 금지 */
-  height: 550px;
+  /*Wrapper height와 같이 수정해야함  */
+  height: 475px;
   object-fit: cover;
-  /* 미디어 쿼리 */
+
   @media (max-width: 768px) {
     width: 100%;
     height: 300px;

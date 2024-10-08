@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   z-index: 1000;
 `;
 const Inner = styled.div`
-  width: 900px;
+  width: var(--inner-width-02);
   padding: 50px 20px;
   border-radius: 30px;
   box-shadow: var(--box-shadow-01);

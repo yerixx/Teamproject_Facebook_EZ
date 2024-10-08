@@ -10,16 +10,14 @@ import { IoCloseOutline } from "react-icons/io5";
 
 //font
 import {
-  MainTitle_26_b,
-  Paragraph_20_n,
+  MainTitle_22_b,
   MainTitle_18_b,
   MainTitle_18_n,
-  MainTitle_22_b,
+  SubDescription_16_n,
   SubDescription_14_n,
 } from "../../styles/GlobalStyles.styles.js";
 
 const Wrapper = styled.section`
-  /* border: 1px solid #f00; */
   border-radius: var(--border-radius-30);
   padding-top: 50px;
   width: calc(100% - 90px);
@@ -29,16 +27,14 @@ const Wrapper = styled.section`
   justify-content: center;
   align-items: center;
   box-shadow: var(--box-shadow-01);
-  /* 미디어 쿼리 */
   @media (max-width: 768px) {
     width: 90%;
   }
 `;
 const Inner = styled.article`
-  width: 1050px;
+  width: var(--inner-width-02);
   height: 100%;
   padding: 0 90px;
-  /* 미디어 쿼리 */
   @media (max-width: 768px) {
     max-width: 100%;
     padding: 0 20px;
@@ -46,18 +42,14 @@ const Inner = styled.article`
 `;
 const Profile = styled.div`
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  /* 미디어 쿼리 */
   @media (max-width: 768px) {
     width: 100%;
   }
   .profileContent {
     display: flex;
     align-items: center;
-    gap: 30px;
-
-    /* 미디어 쿼리 */
+    gap: 20px;
     @media (max-width: 768px) {
       width: 100%;
     }
@@ -68,16 +60,16 @@ const Profile = styled.div`
       border-radius: 100px;
     }
     .profileName {
-      ${MainTitle_26_b}
-      color:var(--color-gray-01);
+      ${MainTitle_22_b}
+      /* color:var(--color-gray-01); */
       @media (max-width: 768px) {
         ${MainTitle_22_b}
       }
     }
     .profileDesc {
-      ${Paragraph_20_n}
+      ${SubDescription_16_n}
       padding:4px 0;
-      color: var(--color-gray-02);
+      color: var(--color-gray-01);
       @media (max-width: 768px) {
         ${MainTitle_18_n}
       }
@@ -85,9 +77,8 @@ const Profile = styled.div`
   }
   .ControlsIcon {
     display: flex;
-    gap: 17px;
-    font-size: 40px;
-    color: var(--color-gray-01);
+    gap: 0;
+    font-size: 24px;
     cursor: pointer;
     transition: opacity 0.5s;
     *:hover {
@@ -103,7 +94,7 @@ const Contents = styled.div`
   position: relative;
   padding: 30px 0 0;
   .contentDesc {
-    ${MainTitle_18_b};
+    ${SubDescription_16_n};
     font-weight: normal;
     word-break: break-all;
     margin-bottom: 30px;
@@ -141,18 +132,16 @@ const Contents = styled.div`
       transform: translateX(30px);
     }
   }
-  /* 미디어 쿼리 */
   @media (max-width: 768px) {
     max-width: 100%;
   }
 `;
 const ContImg = styled.img`
   margin-bottom: 30px;
-  width: 850px;
-  height: 400px;
+  width: 100%;
+  height: 350px;
   background: var(--color-light-gray-01);
   object-fit: cover;
-  /* 미디어 쿼리 */
   @media (max-width: 768px) {
     max-width: 100%;
     height: 250px;
@@ -162,6 +151,7 @@ const ContImg = styled.img`
 const PostItem = ({ imageSrc, contentDesc }) => {
   const postId = "12345"; // 실제 포스트 ID
   const isLiked = false; // 초기 좋아요 여부
+
   return (
     <Wrapper>
       <Inner>
