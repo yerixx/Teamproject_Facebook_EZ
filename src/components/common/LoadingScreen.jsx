@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Logoimg from "../../img/Logo.svg";
 
 const Wrapper = styled.div`
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
