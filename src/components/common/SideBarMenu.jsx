@@ -1,8 +1,8 @@
+import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
-const Wrapper = styled.div`
-  transition: all 0.3s;
+const Wrapper = styled(motion.div)`
   z-index: 3;
   position: absolute;
   top: 100px;
@@ -20,7 +20,6 @@ const Wrapper = styled.div`
   -ms-overflow-style: none; /* IE, Edge */
   scrollbar-width: none;
   @media screen and (max-width: 1050px) {
-    top: 130px;
     right: 10px;
   }
   @media screen and (max-width: 768px) {
@@ -46,7 +45,7 @@ const Item = styled.div`
   }
 `;
 /* eslint-disable react/prop-types */
-const SideBarMenu = ({ openGroup, closeModal }) => {
+const SideBarMenu = ({ openGroup, closeModal, sideMenuOpen }) => {
   const closeRef = useRef(null);
   const handleClickOutside = (event) => {
     if (closeRef.current && !closeRef.current.contains(event.target)) {
@@ -61,7 +60,14 @@ const SideBarMenu = ({ openGroup, closeModal }) => {
   }, []);
 
   return (
-    <Wrapper ref={closeRef} onClick={(e) => e.stopPropagation()}>
+    <Wrapper
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      ref={closeRef}
+      onClick={(e) => e.stopPropagation()}
+    >
       <Item onClick={openGroup}>
         <svg
           width="36"

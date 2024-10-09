@@ -94,6 +94,8 @@ const Signup = () => {
         data.lastName,
         data.email,
         data.password1,
+        userData.point,
+        userData.won,
         userData.gender,
         userData.birthdate,
         userData.city,
@@ -146,6 +148,7 @@ const Signup = () => {
             <AdditionalForm
               updateUserData={updateUserData}
               userData={userData}
+              progress={progress}
               mobileSize={mobileSize}
             />
           )}
@@ -158,7 +161,7 @@ const Signup = () => {
             />
           )}
         </FormContainer>
-        {mobileSize ? <MobileButtonWrapper></MobileButtonWrapper> : null}
+        {/* {mobileSize ? <MobileButtonWrapper></MobileButtonWrapper> : null} */}
       </Inner>
     </Wrapper>
   );

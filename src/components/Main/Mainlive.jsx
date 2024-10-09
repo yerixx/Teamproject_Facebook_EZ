@@ -295,10 +295,12 @@ const Mainlive = () => {
   const settings = {
     dots: false,
     infinite: true,
-    speed: 700,
-    swipe: true,
+    speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
+    swipe: true,
+    swipeToSlide: true,
+    touchMove: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     responsive: [

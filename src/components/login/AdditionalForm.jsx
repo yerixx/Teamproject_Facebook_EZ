@@ -17,7 +17,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 const Wrapper = styled.div`
   padding: 25px;
   background: var(--color-light-gray-02);
-  box-shadow: var(--box-shadow-01);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   border-radius: var(--border-radius-08);
   @media screen and (max-width: 768px) {
     width: 390px;
@@ -113,6 +113,15 @@ const AdditionalForm = ({ updateUserData, mobileSize, progress }) => {
     // progress 값을 2로 설정하여 URL에 반영
     searchParams.set("progress", "2");
     setSearchParams(searchParams);
+
+    if (mobileSize) {
+      setTimeout(() => {
+        window.scrollTo({
+          top: document.body.scrollHeight, // 페이지의 가장 아래로 이동
+          behavior: "smooth", // 부드럽게 스크롤
+        });
+      }, 5);
+    }
   };
   const handleGenderChange = (e) => {
     updateUserData("gender", e.target.value);
@@ -226,7 +235,13 @@ const AdditionalForm = ({ updateUserData, mobileSize, progress }) => {
           </li>
         </Ul>
         <div>
-          {mobileSize ? null : <Button onClick={handleNext}>다음</Button>}
+          {mobileSize ? null : (
+            <Pager>
+              <span className="active"></span>
+              <span></span>
+            </Pager>
+          )}
+          <Button onClick={handleNext}>다음</Button>
         </div>
       </Form>
     </Wrapper>

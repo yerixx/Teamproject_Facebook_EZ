@@ -226,21 +226,23 @@ const MainGroup = () => {
     slidesToScroll: 1,
     autoplay: true,
     swipe: true,
+    swipeToSlide: true,
+    touchMove: true,
     autoplaySpeed: 8000,
-    nextArrow: <NextArrow />, // 화살표 버튼을 커스텀해서 사용
+    nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     responsive: [
       {
-        breakpoint: 768, // 1024px 이하일 때
+        breakpoint: 768,
         settings: {
-          slidesToShow: 3, // 슬라이드를 2개만 보여줌
+          slidesToShow: 3,
           slidesToScroll: 1,
         },
       },
       {
-        breakpoint: 550, // 600px 이하일 때
+        breakpoint: 550,
         settings: {
-          slidesToShow: 2, // 슬라이드를 1개만 보여줌
+          slidesToShow: 2,
           slidesToScroll: 1,
         },
       },

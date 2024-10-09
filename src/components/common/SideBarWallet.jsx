@@ -4,8 +4,9 @@ import { SubTitle_16_b } from "../../styles/GlobalStyles.styles";
 import { IoClose } from "react-icons/io5";
 import { useContext, useEffect, useRef } from "react";
 import { DataStateContext } from "../../App";
+import { motion } from "framer-motion";
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   z-index: 3;
   position: absolute;
   top: 100px;
@@ -23,7 +24,6 @@ const Wrapper = styled.div`
   -ms-overflow-style: none; /* IE, Edge */
   scrollbar-width: none;
   @media screen and (max-width: 1050px) {
-    top: 130px;
     right: 10px;
   }
   @media screen and (max-width: 768px) {
@@ -142,7 +142,14 @@ const SideBarWallet = ({ onClick, closeModal }) => {
     };
   }, []);
   return (
-    <Wrapper ref={closeRef} onClick={(e) => e.stopPropagation()}>
+    <Wrapper
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      ref={closeRef}
+      onClick={(e) => e.stopPropagation()}
+    >
       <Title>
         <h3>Wallett +</h3>
         <span>
@@ -156,7 +163,7 @@ const SideBarWallet = ({ onClick, closeModal }) => {
         </WalletItem>
         <WalletItem>
           <img />
-          <span>{currentUser.wallet.wan} 원</span>
+          <span>{currentUser.wallet.won} 원</span>
         </WalletItem>
         <WalletItem>
           <div>+</div>

@@ -2,8 +2,9 @@ import styled from "styled-components";
 import { Paragraph_20_n } from "../../styles/GlobalStyles.styles";
 import { IoClose } from "react-icons/io5";
 import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 
-const Wrapper = styled.div.withConfig({
+const Wrapper = styled(motion.div).withConfig({
   shouldForwardProp: (prop) => prop !== "isOpen",
 })`
   z-index: 3;
@@ -24,7 +25,6 @@ const Wrapper = styled.div.withConfig({
   scrollbar-width: none;
   background-color: ${(props) => props.theme.ContainColor};
   @media screen and (max-width: 1050px) {
-    top: 130px;
     right: 10px;
   }
   @media screen and (max-width: 768px) {
@@ -130,7 +130,14 @@ const SideBarGroup = ({ openGroup, closeModal }) => {
     };
   }, []);
   return (
-    <Wrapper ref={closeRef} onClick={(e) => e.stopPropagation()}>
+    <Wrapper
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      ref={closeRef}
+      onClick={(e) => e.stopPropagation()}
+    >
       <TopTitle>
         <h2>회원님을 위한 커뮤니티</h2>
         <span>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { FormTitle, FormDesc, Pager, Button } from "./login-components";
+import { FormTitle, FormDesc, Pager, Button, Input } from "./login-components";
 import categoryImg01 from "../../img/signup-category01.jpg";
 import categoryImg02 from "../../img/signup-category02.jpg";
 import categoryImg03 from "../../img/signup-category03.jpg";
@@ -19,7 +19,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   background: var(--color-light-gray-02);
-  box-shadow: var(--box-shadow-01);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   border-radius: var(--border-radius-08);
   @media screen and (max-width: 768px) {
     width: 390px;
@@ -30,6 +30,7 @@ const Wrapper = styled.div`
     padding: 0 15px;
     background: var(--color-white);
     box-shadow: none;
+    margin-bottom: 60px;
   }
 `;
 const CategoryUl = styled.ul`
@@ -136,15 +137,11 @@ const SignupCategory = ({ updateUserData, userData, mobileSize, progress }) => {
       <div>
         {mobileSize ? null : (
           <Pager>
-            <span className="active"></span>
             <span></span>
+            <span className="active"></span>
           </Pager>
         )}
-        {mobileSize ? null : (
-          <Button onClick={() => setSearchParams({ progress: "1" })}>
-            이전
-          </Button>
-        )}
+        <Button onClick={() => setSearchParams({ progress: "1" })}>이전</Button>
       </div>
     </Wrapper>
   );

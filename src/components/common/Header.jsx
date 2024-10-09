@@ -346,7 +346,7 @@ export const HeaderBottom = () => {
               {currentUser?.userName.lastName}
             </h3>
           </ProfileWrap>
-          {/* <span>{currentUser?.wallet.point}p</span> */}
+          <span>{currentUser?.wallet.point}p</span>
         </RightFirst>
         <RightSecond>
           <IconWrap>
@@ -367,7 +367,11 @@ export const HeaderBottom = () => {
         </RightSecond>
       </Right>
       {sideMenuOpen && (
-        <SideBarMenu openGroup={sideGroup} closeModal={closeModal} />
+        <SideBarMenu
+          sideMenuOpen={sideMenuOpen}
+          openGroup={sideGroup}
+          closeModal={closeModal}
+        />
       )}
       {sideBarGroupOpen && (
         <SideBarGroup openGroup={sideGroup} closeModal={closeModal} />

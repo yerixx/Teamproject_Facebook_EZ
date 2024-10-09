@@ -61,6 +61,7 @@ export const Inner = styled.article`
   align-items: center;
   justify-content: center;
   gap: 30px;
+  position: relative;
   @media screen and (max-width: 768px) {
     width: 390px;
     min-width: 390px;
