@@ -4,11 +4,12 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   position: relative;
   display: flex;
-  width: 180px;
-  /* height: 38px; */
+  width: 160px;
+  height: 30px;
+  align-items: center;
   border-radius: 8px;
   font-size: 16px;
-  font-weight: 700;
+  text-align: center;
   cursor: pointer;
   .label {
     display: flex;
@@ -16,10 +17,9 @@ const Wrapper = styled.div`
     width: inherit;
     border: 0 none;
     outline: 0 none;
-    padding: 5px 27px;
+    padding: 5px 25px;
     background: transparent;
     font-size: 16px;
-    font-weight: 700;
     cursor: pointer;
   }
   .optionList {
@@ -84,9 +84,12 @@ const EditeBox = ({ Title, desc }) => {
   };
 
   const profileEdite = () => {
-    setIsOpen(false); // 옵션 선택 후 드롭다운 닫기
+    confirm("게시물을 수정 하시겠습니까?");
+    if (confirm) {
+      setEditing((prev) => !prev);
+    }
+    setIsOpen(false);
   };
-
   return (
     <Wrapper className={isOpen ? "active" : ""} ref={dropdownRef}>
       <button className="label" onClick={toggleDropdown}>

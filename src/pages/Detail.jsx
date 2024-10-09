@@ -76,7 +76,7 @@ const UploadInner = styled.div`
 `;
 
 const Detail = (props) => {
-  const { layoutId } = props;
+  // const { layoutId } = props;
 
   const [id, setId] = useState(0);
   const [upload, setUpload] = useState(false);
@@ -110,7 +110,7 @@ const Detail = (props) => {
           />
         </ContChangeBtn>
         <UploadInner style={{ display: !upload ? "block" : "none" }}>
-          <PostUploadField placeholder="무슨 생각을 하고 계신가요?" />
+          <PostUploadField placeholder="오늘 어떤일이 있으셨나요?" />
         </UploadInner>
         <div style={{ display: id === 0 ? "block" : "none" }}>
           <PostList />

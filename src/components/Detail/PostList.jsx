@@ -1,33 +1,55 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import PostItem from "../detail/PostItem";
 
-import testCat from "/img/testcat.jpg";
-import summerImg from "/img/summer.png";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { db } from "../../firebase";
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 60px;
   padding-bottom: 60px;
-  /* border:1px solid #f00; */
 `;
 
 const PostList = () => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const postsQuery = query(
+          collection(db, "posts"),
+          orderBy("createdAt", "desc")
+        );
+        const querySnapshot = await getDocs(postsQuery);
+        const postData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setPosts(postData);
+      } catch (err) {
+        console.error("게시물 데이터를 가져오는 중 오류 발생:", err);
+      }
+    };
+    fetchPosts();
+  }, []);
+
+  const onDeletePost = (postId) => {
+    setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
+  };
+
   return (
     <Wrapper>
-      <PostItem
-        imageSrc={testCat}
-        contentDesc={"고양이는 정말 귀여운거 같아.."}
-      />
-      <PostItem />
-      <PostItem
-        imageSrc={summerImg}
-        contentDesc={
-          "셋이서 강을 바라보던 모습이 폰디체리 바다를 하염없이 바라보던 내 틴 시절과 겹쳐져서 한참을 바라봤었다 "
-        }
-      />
+      {posts.map((post) => (
+        <PostItem
+          key={post.id}
+          postId={post.id}
+          imageSrc={post.image}
+          contentDesc={post.content}
+          onDeletePost={onDeletePost}
+        />
+      ))}
     </Wrapper>
   );
 };

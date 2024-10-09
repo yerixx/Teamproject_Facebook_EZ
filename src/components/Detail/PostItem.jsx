@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import SocialBtnIcon from "../common/SocialBtnIcon.jsx";
 import UploadField from "../common/UploadField.jsx";
@@ -11,7 +11,6 @@ import { IoCloseOutline } from "react-icons/io5";
 //font
 import {
   MainTitle_22_b,
-  MainTitle_18_b,
   MainTitle_18_n,
   SubDescription_16_n,
   SubDescription_14_n,
@@ -46,48 +45,47 @@ const Profile = styled.div`
   @media (max-width: 768px) {
     width: 100%;
   }
-  .profileContent {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+`;
+const ProfileContent = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+  .profileImg {
+    width: 60px;
+    height: 60px;
+    background: var(--color-gray-01);
+    border-radius: 100px;
+  }
+  .profileName {
+    ${MainTitle_22_b}
     @media (max-width: 768px) {
-      width: 100%;
-    }
-    .profileImg {
-      width: 80px;
-      height: 80px;
-      background: var(--color-gray-01);
-      border-radius: 100px;
-    }
-    .profileName {
       ${MainTitle_22_b}
-      /* color:var(--color-gray-01); */
-      @media (max-width: 768px) {
-        ${MainTitle_22_b}
-      }
-    }
-    .profileDesc {
-      ${SubDescription_16_n}
-      padding:4px 0;
-      color: var(--color-gray-01);
-      @media (max-width: 768px) {
-        ${MainTitle_18_n}
-      }
     }
   }
-  .ControlsIcon {
-    display: flex;
-    gap: 0;
-    font-size: 24px;
-    cursor: pointer;
-    transition: opacity 0.5s;
-    *:hover {
-      color: var(--color-facebookblue);
-    }
-
+  .profileDesc {
+    ${SubDescription_16_n}
+    padding:4px 0;
+    color: var(--color-gray-01);
     @media (max-width: 768px) {
-      font-size: 30px;
+      ${MainTitle_18_n}
     }
+  }
+`;
+const ControlsIcon = styled.div`
+  display: flex;
+  gap: 0;
+  font-size: 24px;
+  cursor: pointer;
+  transition: opacity 0.5s;
+  *:hover {
+    color: var(--color-facebookblue);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 30px;
   }
 `;
 const Contents = styled.div`
@@ -148,35 +146,48 @@ const ContImg = styled.img`
   }
 `;
 
-const PostItem = ({ imageSrc, contentDesc }) => {
-  const postId = "12345"; // 실제 포스트 ID
+const PostItem = ({ postId, imageSrc, contentDesc, onDeletePost }) => {
   const isLiked = false; // 초기 좋아요 여부
 
+  const handleChangeDesc = () => {};
+
+  const postDeletBtn = async (e) => {
+    e.preventDefault();
+    const isConfirmed = confirm("게시물을 삭제하시겠습니까?");
+    if (isConfirmed) {
+      try {
+        await onDeletePost(postId);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
   return (
-    <Wrapper>
+    <Wrapper setId>
       <Inner>
         <Profile>
-          <div className="profileContent">
+          <ProfileContent>
             <div className="profileImg"></div>
             <div className="profileText">
               <h1 className="profileName">박예림</h1>
               <p className="profileDesc"> 8시간전</p>
             </div>
-          </div>
-          <div className="ControlsIcon">
+          </ProfileContent>
+          <ControlsIcon>
             <div style={{ zIndex: 999 }}>
               <EditeBox Title={<BsThreeDots className="ControlsIcon" />} />
             </div>
             <div>
-              <IoCloseOutline />
+              <IoCloseOutline onClick={postDeletBtn} />
             </div>
-          </div>
+          </ControlsIcon>
         </Profile>
         <Contents>
-          <div className="contentDesc">
-            {contentDesc || "우리의 여행 sub folder만 몇 개인지 모르겠다. "}
+          <div onChange={handleChangeDesc} className="contentDesc">
+            {contentDesc}
           </div>
-          {imageSrc && <ContImg src={imageSrc} alt={"Content Image"} />}
+          {imageSrc && <ContImg src={imageSrc} alt="Post content image" />}
         </Contents>
         <SocialBtnIcon postId={postId} isLiked={isLiked} />
         <UploadField />
