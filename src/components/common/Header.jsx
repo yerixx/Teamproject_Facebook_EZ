@@ -330,7 +330,7 @@ export const HeaderBottom = () => {
               {currentUser?.userName.lastName}
             </h3>
           </ProfileWrap>
-          <span>{currentUser?.wallet.point}p</span>
+          {/* <span>{currentUser?.wallet.point}p</span> */}
         </RightFirst>
         <RightSecond>
           <IconWrap>

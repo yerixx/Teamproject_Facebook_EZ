@@ -29,6 +29,7 @@ const Signup = () => {
     lastName: "",
     email: "",
     password: "",
+    // wallet: "",
     gender: null,
     birthdate: null,
     city: null,
