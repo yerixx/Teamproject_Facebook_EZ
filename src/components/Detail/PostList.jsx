@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import PostItem from "../detail/PostItem";
-
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../../firebase";
+import { DataDispatchContext } from "../../App";
 
 const Wrapper = styled.div`
   display: flex;
@@ -14,6 +14,7 @@ const Wrapper = styled.div`
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);
+  const { onDeletePost } = useContext(DataDispatchContext);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -27,17 +28,13 @@ const PostList = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        setPosts(postData);
+        setPosts(postData); // 초기 데이터 설정
       } catch (err) {
-        console.error("게시물 데이터를 가져오는 중 오류 발생:", err);
+        console.error("Post 데이터를 가져오는 중 오류 발생:", err);
       }
     };
     fetchPosts();
   }, []);
-
-  const onDeletePost = (postId) => {
-    setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
-  };
 
   return (
     <Wrapper>
@@ -46,6 +43,7 @@ const PostList = () => {
           key={post.id}
           postId={post.id}
           imageSrc={post.image}
+          createdAt={post.createdAt}
           contentDesc={post.content}
           onDeletePost={onDeletePost}
         />

@@ -31,7 +31,7 @@ const SocialIcon = styled.div`
       width: 50%;
       justify-content: center;
       margin-right: 20px;
-      font-size: 24px;
+      font-size: 20px;
       &:last-child {
         margin-right: 0px;
       }

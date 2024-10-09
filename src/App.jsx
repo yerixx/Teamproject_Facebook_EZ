@@ -19,6 +19,7 @@ import {
   getDoc,
   getDocs,
   updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { auth, db } from "./firebase.js";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -290,11 +291,13 @@ function App() {
     }
   };
 
-  const onDeletePost = (postId) => {
-    dispatch({
-      type: "DELETE_POST",
-      targetId: postId, // 삭제할 포스트의 ID
-    });
+  const onDeletePost = async (postId) => {
+    try {
+      await deleteDoc(doc(db, "posts", postId));
+      dispatch({ type: "DELETE_POST", targetId: postId });
+    } catch (error) {
+      console.error("Firestore에서 포스트 삭제 중 오류 발생:", error);
+    }
   };
 
   return (
