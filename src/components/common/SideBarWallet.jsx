@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background: #fff;
+  background: ${(props) => props.theme.ContainColor};
   padding: 28px 20px;
   border-radius: var(--border-radius-30);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
@@ -32,6 +32,7 @@ const Wrapper = styled.div`
   }
 `;
 const Title = styled.div`
+  color: ${(props) => props.theme.textColor};
   display: flex;
   justify-content: space-between;
   span {
@@ -48,6 +49,7 @@ const Box = styled.div`
   }
 `;
 const WalletItem = styled.div`
+  color: ${(props) => props.theme.textColor};
   display: flex;
   align-items: center;
   gap: 15px;
@@ -70,7 +72,7 @@ const WalletItem = styled.div`
 
 const RecentProductItem = styled.div`
   padding: 0 10px;
-  background: var(--color-light-gray-02);
+  background: ${(props) => props.theme.cardColor};
   width: 347px;
   height: 90px;
   border-radius: 10px;
@@ -106,6 +108,7 @@ const ProductItemInfo = styled.div`
   flex-direction: column;
   h4 {
     ${SubTitle_16_b}
+    color: ${(props) => props.theme.textColor};
   }
   div {
     font-weight: bold;
@@ -115,7 +118,7 @@ const ProductItemInfo = styled.div`
       color: red;
     }
     span:nth-child(2) {
-      color: var(--color-gray-01);
+      color: ${(props) => props.theme.subTextColor};
     }
   }
 `;

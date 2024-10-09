@@ -7,6 +7,7 @@ import { AiFillHome } from "react-icons/ai";
 
 import { IoPeopleOutline } from "react-icons/io5";
 import { MdOutlineLogout } from "react-icons/md";
+import { FiSun } from "react-icons/fi";
 
 import { TbGridDots } from "react-icons/tb";
 import { FaSearch } from "react-icons/fa";
@@ -14,13 +15,14 @@ import mobileLogo from "../../img/Logo.png";
 import SideBarMenu from "./SideBarMenu";
 import { useContext, useEffect, useState } from "react";
 import SideBarGroup from "./SideBarGroup";
-import SideBarWallet from "./SideBarWallet";
-import { DataStateContext } from "../../App";
+
+import { DarkThemeContext, DataStateContext } from "../../App";
 import HeaderlogoImg from "../../img/HeaderLogo.svg";
 import styled from "styled-components";
+import SideBarWallet from "./SideBarWallet";
 
 const Header = styled.div`
-  background-color: var(--color-white);
+  background-color: ${(props) => props.theme.bgColor};
   z-index: 100;
   width: 100%;
   height: 56px;
@@ -36,12 +38,11 @@ const Header = styled.div`
   }
 `;
 const HeaderSticky = styled.div`
-  background-color: var(--color-white);
+  background-color: ${(props) => props.theme.bgColor};
   z-index: 100;
   padding: 0 15px;
   width: 100%;
   height: 88px;
-  background: var(--color-white);
   display: flex;
   align-items: center;
   top: 0;
@@ -71,6 +72,7 @@ const Left = styled.div`
   div {
     position: relative;
     svg {
+      color: ${(props) => props.theme.textColor};
       position: absolute;
       left: 20px;
       top: 50%;
@@ -80,8 +82,8 @@ const Left = styled.div`
       width: 254px;
       height: 48px;
       border-radius: 140px;
-      border: none;
-      background-color: #e5e6eb;
+      border: 1px solid ${(props) => props.theme.borderColor};
+      background-color: ${(props) => props.theme.inputColor};
       padding-left: 50px;
       font-size: 16px;
     }
@@ -123,6 +125,7 @@ const Center = styled.div`
     align-items: center;
     border-bottom: 2.5px solid var(--color-facebookblue);
     svg {
+      color: ${(props) => props.theme.textColor};
       font-size: 24px;
     }
   }
@@ -189,6 +192,7 @@ const ProfileWrap = styled.div`
     }
   }
   h3 {
+    color: ${(props) => props.theme.textColor};
     font-size: var(--font-size-subtitle);
     font-weight: normal;
   }
@@ -254,7 +258,7 @@ export const HeaderBottom = () => {
   const [sideBarGroupOpen, setSideBarGroupOpen] = useState(false);
   const [sideWalletOpen, setSideWalletOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
-
+  console.log(data);
   // 스크롤 위치 감지 및 상태 업데이트
   useEffect(() => {
     const handleScroll = () => {
@@ -296,6 +300,10 @@ export const HeaderBottom = () => {
     setSideWalletOpen(false);
   };
 
+  const { isDark, setIsDark } = useContext(DarkThemeContext);
+  const toggleTheme = () => {
+    setIsDark((prev) => !prev);
+  };
   return (
     <HeaderSticky isSticky={isSticky}>
       <Left>
@@ -326,7 +334,7 @@ export const HeaderBottom = () => {
               <img src="/img/testcat.jpg" alt="" />
             </div>
             <h3>
-              {currentUser?.userName.fistName}
+              {currentUser?.userName.firstName}
               {currentUser?.userName.lastName}
             </h3>
           </ProfileWrap>
@@ -342,8 +350,8 @@ export const HeaderBottom = () => {
           <IconWrap>
             <FaBell />
           </IconWrap>
-          <IconWrap>
-            <FaMoon />
+          <IconWrap onClick={toggleTheme}>
+            {isDark ? <FiSun /> : <FaMoon />}
           </IconWrap>
           <IconWrap>
             <MdOutlineLogout />

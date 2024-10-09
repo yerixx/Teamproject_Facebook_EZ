@@ -37,6 +37,7 @@ const Inner = styled.div`
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius-30);
   position: relative;
+  background-color: ${(props) => props.theme.ContainColor};
   @media screen and (max-width: 1050px) {
     width: 100%;
   }
@@ -113,6 +114,7 @@ const StoryItem = styled.div`
     display: flex;
     justify-content: center;
     line-height: 8;
+    color: ${(props) => props.theme.textColor};
   }
   @media screen and (max-width: 768px) {
     height: 200px;

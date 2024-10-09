@@ -34,6 +34,7 @@ const Inner = styled.div`
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius-30);
   position: relative;
+  background-color: ${(props) => props.theme.ContainColor};
 
   @media screen and (max-width: 1050px) {
     width: 100%;
@@ -49,6 +50,7 @@ const Inner = styled.div`
   .livetext {
     ${MainTitle_22_b}
     margin-bottom: 15px;
+    color: ${(props) => props.theme.textColor};
   }
 `;
 
@@ -91,7 +93,7 @@ const Livecard = styled.div`
     width: 100%;
     height: 90%;
     object-fit: cover;
-    border-radius: 8px 8px 0 0;
+    border-radius: 8px;
   }
 
   .liveheader {

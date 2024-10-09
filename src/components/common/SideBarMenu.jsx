@@ -10,7 +10,8 @@ const Wrapper = styled.div`
   width: 280px;
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: ${(props) => props.theme.ContainColor};
+  color: ${(props) => props.theme.textColor};
   padding: 20px;
   border-radius: var(--border-radius-30);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);

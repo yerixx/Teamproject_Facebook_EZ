@@ -33,6 +33,7 @@ const Inner = styled.div`
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius-30);
   position: relative;
+  background-color: ${(props) => props.theme.ContainColor};
   @media screen and (max-width: 1050px) {
     width: 100%;
   }
@@ -51,10 +52,11 @@ const Title = styled.div`
   h2 {
     ${MainTitle_22_b}
     margin-bottom: 5px;
+    color: ${(props) => props.theme.textColor};
   }
   span {
     ${MainTitle_18_n}
-    color: var(--color-gray-01);
+    color: ${(props) => props.theme.subTextColor};
   }
 `;
 
@@ -79,27 +81,15 @@ const Items = styled.div`
 const Item = styled.div`
   width: 100%;
   height: 320px;
-  background: #999;
+  background: #444;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   overflow: hidden;
   position: relative;
-
-  svg {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    font-size: 40px;
-    font-weight: bold;
-    color: #fff;
-    background-color: var(--color-light-gray-01);
-    border-radius: 50%;
-  }
-
   div {
-    background: var(--color-light-gray-02);
+    background: ${(props) => props.theme.cardColor};
     padding: 10px 20px;
     height: 130px;
     display: flex;
@@ -108,7 +98,7 @@ const Item = styled.div`
     width: 100%;
     position: absolute;
     bottom: 0;
-
+    color: ${(props) => props.theme.dfaultColor};
     h3 {
       ${MainTitle_18_n}
     }
@@ -120,6 +110,7 @@ const Item = styled.div`
     }
 
     span {
+      color: #222;
       font-size: 14px;
       font-weight: normal;
       margin-bottom: 10px;

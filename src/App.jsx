@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import { Routes, Route } from "react-router-dom";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
@@ -6,7 +6,7 @@ import Signup from "./pages/Signup";
 import Detail from "./pages/Detail";
 import ModalLive from "./components/Modal/ModalLive.jsx";
 import GlobalStyles from "./styles/GlobalStyles.styles.js";
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {
@@ -20,6 +20,8 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "./firebase.js";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { darkTheme } from "./styles/theme.js";
+import { lightTheme } from "./styles/theme.js";
 
 const Wrapper = styled.div``;
 
@@ -99,8 +101,11 @@ const reducer = (state, action) => {
 
 export const DataStateContext = React.createContext();
 export const DataDispatchContext = React.createContext();
+export const DarkThemeContext = React.createContext();
 
 function App() {
+  const [isDark, setIsDark] = useState(false);
+
   const initialState = {
     users: [],
     posts: [],
@@ -199,6 +204,8 @@ function App() {
     lastName,
     email,
     password,
+    point = null,
+    won = null,
     gender = null,
     birthdate = null,
     city = null,
@@ -212,6 +219,10 @@ function App() {
           lastName,
         },
         email,
+        wallet: {
+          point,
+          won,
+        },
         password,
         gender,
         birthdate,
@@ -226,6 +237,10 @@ function App() {
           userName: {
             firstName,
             lastName,
+          },
+          wallet: {
+            point,
+            won,
           },
           email,
           password,
@@ -286,28 +301,32 @@ function App() {
 
   return (
     <>
-      <GlobalStyles />
-      <DataStateContext.Provider value={state}>
-        <DataDispatchContext.Provider
-          value={{
-            onCreatePost,
-            onAddUser,
-            onCreateComment,
-            onToggleLike,
-            onDeletePost,
-          }}
-        >
-          <Wrapper>
-            <Routes>
-              <Route path="/" element={<Main />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/detail" element={<Detail />} />
-              <Route path="/ModalLive" element={<ModalLive />} />
-            </Routes>
-          </Wrapper>
-        </DataDispatchContext.Provider>
-      </DataStateContext.Provider>
+      <DarkThemeContext.Provider value={{ isDark, setIsDark }}>
+        <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+          <GlobalStyles />
+          <DataStateContext.Provider value={state}>
+            <DataDispatchContext.Provider
+              value={{
+                onCreatePost,
+                onAddUser,
+                onCreateComment,
+                onToggleLike,
+                onDeletePost,
+              }}
+            >
+              <Wrapper>
+                <Routes>
+                  <Route path="/" element={<Main />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/signup" element={<Signup />} />
+                  <Route path="/detail" element={<Detail />} />
+                  <Route path="/ModalLive" element={<ModalLive />} />
+                </Routes>
+              </Wrapper>
+            </DataDispatchContext.Provider>
+          </DataStateContext.Provider>
+        </ThemeProvider>
+      </DarkThemeContext.Provider>
     </>
   );
 }

@@ -1,5 +1,4 @@
 import { createGlobalStyle, css } from "styled-components";
-
 import font from "../font/NotoSansKR-VariableFont_wght.ttf";
 
 const GlobalStyles = createGlobalStyle`
@@ -28,6 +27,7 @@ input{
 body{
     font-family: 'Noto Sans KR', sans-serif;
     letter-spacing:-1px;
+    background-color: ${(props) => props.theme.bgColor}
 }
 :root {
    /* Color */
