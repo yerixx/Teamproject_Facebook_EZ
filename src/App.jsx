@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Detail from "./pages/Detail";
 import ModalLive from "./components/Modal/ModalLive.jsx";
+import ModalCont from "./components/Modal/ModalCont.jsx";
 import GlobalStyles from "./styles/GlobalStyles.styles.js";
 import React, { useEffect, useReducer, useState } from "react";
 import "slick-carousel/slick/slick.css";
@@ -51,7 +52,6 @@ const reducer = (state, action) => {
       const updatedPosts = state.posts.map((post) => {
         if (post.id === action.postId) {
           const updatedLikes = action.isLiked ? post.likes - 1 : post.likes + 1; // 좋아요 수 증가/감소
-
           return {
             ...post,
             likes: updatedLikes, // 업데이트된 좋아요 수
@@ -59,10 +59,8 @@ const reducer = (state, action) => {
         }
         return post;
       });
-
       return { ...state, posts: updatedPosts };
     }
-
     case "ADD_COMMENT": {
       // 포스트 ID에 맞는 포스트를 찾아서 댓글 추가
       const updatedPosts = state.posts.map((post) => {
@@ -105,6 +103,17 @@ export const DarkThemeContext = React.createContext();
 
 function App() {
   const [isDark, setIsDark] = useState(false);
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("isDark");
+    if (savedTheme) {
+      setIsDark(JSON.parse(savedTheme));
+    }
+  }, []);
+
+  // 다크 모드 상태가 변경될 때마다 로컬 스토리지에 저장
+  useEffect(() => {
+    localStorage.setItem("isDark", JSON.stringify(isDark));
+  }, [isDark]);
 
   const initialState = {
     users: [],
@@ -169,19 +178,24 @@ function App() {
     // });
     // return () => unsubscribe();
   }, []);
+
   const onCreatePost = async (userId, userName, content, image = null) => {
     const newPost = {
       userId,
       userName,
       content,
-      image: image ? [image] : [],
       createdAt: new Date().toISOString(),
       likes: 0,
       comments: [],
     };
+
+    // 이미지가 존재할 때만 newPost에 image 필드를 추가
+    if (image) {
+      newPost.image = [image];
+    }
+
     try {
       const docRef = await addDoc(collection(db, "posts"), newPost);
-
       // Firestore에 추가된 데이터로 상태를 업데이트
       dispatch({
         type: "ADD_POST",
@@ -197,7 +211,6 @@ function App() {
       console.error("Firestore에 포스트 추가 중 오류 발생:", error);
     }
   };
-
   const onAddUser = async (
     userId,
     firstName,
@@ -255,7 +268,17 @@ function App() {
     }
   };
 
-  const onToggleLike = (postId, isLiked) => {
+  const onToggleLike = async (postId, isLiked) => {
+    // try {
+    //   const postDocRef = doc(db, "posts", postId);
+
+    //   await updateDoc(postDocRef, {
+    //     likes: isLiked ? true : false,
+    //   });
+    // } catch (err) {
+    //   console.error("Like error :", err);
+    // }
+
     dispatch({
       type: "LIKE_POST",
       postId: postId, // 좋아요가 눌린 포스트 ID
@@ -272,7 +295,6 @@ function App() {
       createdAt: new Date().toISOString(), // 댓글 작성 시간
       likes: 0, // 좋아요 기본값
     };
-
     try {
       // Firestore에서 해당 포스트 문서 참조
       const postDocRef = doc(db, "posts", postId);
@@ -292,6 +314,7 @@ function App() {
       console.error("댓글 추가 중 오류 발생:", error);
     }
   };
+
   const onDeletePost = (postId) => {
     dispatch({
       type: "DELETE_POST",

@@ -38,7 +38,8 @@ const Item = styled.div`
   gap: 30px;
   transition: all 0.3s;
   &:hover {
-    background-color: var(--color-light-gray-01);
+    background-color: ${(props) => props.theme.cardColor};
+    color: ${(props) => props.theme.subTextColor};
   }
   svg {
     width: 40px;

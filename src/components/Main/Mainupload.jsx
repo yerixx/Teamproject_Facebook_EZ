@@ -22,7 +22,7 @@ import {
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 // Modal 컴포넌트 임포트
-import Mainmodal from "../Main/Mainmodal.jsx"; // 올바른 경로로 수정
+// import Mainmodal from "../Main/Mainmodal.jsx"; // 올바른 경로로 수정
 
 const WrapperForm = styled.form`
   width: 100%;
@@ -71,9 +71,9 @@ const CommentCont = styled.div`
       height: 60px;
       margin: 0 30px;
       padding: 0 30px;
-      background: var(--color-light-gray-01);
+      background: ${(props) => props.theme.inputColor};
       color: var(--color-gray-01);
-      border: none;
+      border: 1px solid ${(props) => props.theme.borderColor};
       border-radius: 50px;
       &:focus {
         outline: none;
@@ -89,7 +89,7 @@ const CommentCont = styled.div`
 
     .ciEdit,
     .submitBtn {
-      color: var(--color-black);
+      color: ${(props) => props.theme.textColor};
       display: flex;
       justify-content: center;
       align-items: center;
@@ -113,7 +113,8 @@ const CommentCont = styled.div`
       ${MainTitle_18_n}
       padding: 0 20px;
       margin-right: 30px;
-
+      border: 1px solid ${(props) => props.theme.borderColor};
+      background-color: ${(props) => props.theme.inputColor};
       @media (max-width: 768px) {
         margin-right: 10px;
       }
@@ -121,6 +122,8 @@ const CommentCont = styled.div`
 
     .ciEdit {
       padding: 13px;
+      border: 1px solid ${(props) => props.theme.borderColor};
+      background-color: ${(props) => props.theme.inputColor};
     }
   }
 
@@ -205,7 +208,7 @@ const Mainupload = ({ placeholder }) => {
               <BsArrowReturnLeft />
             )}
           </button>
-          <div>
+          <div className="submitBtn2">
             <CiEdit
               className="ciEdit"
               onClick={openModal} // 모달 열기 함수 연결

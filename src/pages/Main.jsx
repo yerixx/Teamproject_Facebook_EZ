@@ -1,18 +1,12 @@
 import React from "react";
-// import { MainHeader01Style } from "../styles/GlobalStyles.styles";
 import styled from "styled-components";
 import { HeaderBottom, HeaderTop } from "../components/common/Header";
-// import LeftSideBar from "../components/common/LeftSideBar";
-import ModalCont from "../components/Modal/ModalCont";
-// import { useContext } from "react";
-// import { DataDispatchContext, DataStateContext } from "../App";
 import MainPage from "../components/Main/Mainpage";
-import Mainupload from "../components/Main/Mainupload";
+import UploadField from "../components/common/UploadField";
 import Mainstory from "../components/Main/Mainstory";
 import Mainlive from "../components/Main/Mainlive";
 import MainGroup from "../components/Main/MainGroup";
-import PostUploadField from "../components/common/PostUploadField";
-// import Mainbutton from "../components/Main/Mainbutton";
+import Mainupload from "../components/Main/Mainupload";
 
 const Wrapper = styled.div`
   position: relative;
@@ -39,11 +33,6 @@ const MainSection = styled.section`
     top: 70px;
   }
 `;
-
-// const Maintest = styled.div`
-//   width: 1000px;
-//   border: 1px solid #f00;
-// `;
 
 const Main = () => {
   // const { onCreatePost } = useContext(DataDispatchContext);

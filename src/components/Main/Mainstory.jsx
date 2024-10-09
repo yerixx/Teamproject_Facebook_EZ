@@ -8,7 +8,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { SubDescription_16_n } from "../../styles/GlobalStyles.styles";
 import { MdOutlineNavigateNext, MdOutlineNavigateBefore } from "react-icons/md";
-import Mainmodal from "./Mainmodal"; // 모달 컴포넌트 임포트
 
 const Wrapper = styled.div`
   width: 100%;
@@ -27,7 +26,7 @@ const Wrapper = styled.div`
 
 const Inner = styled.div`
   /* border: 1px solid red; */
-  width: 1000px;
+  width: var(--inner-width-02);
   height: 360px;
   padding: 27px 30px;
   display: flex;
@@ -70,7 +69,7 @@ const Items = styled.div`
 `;
 
 const StoryItem = styled.div`
-  border: 1px solid var(--color-light-gray-01);
+  border: 2px solid ${(props) => props.theme.cardColor};
   width: 100%;
   height: 320px;
   border-radius: 8px;

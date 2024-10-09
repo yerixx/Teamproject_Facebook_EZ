@@ -15,7 +15,7 @@ import {
 } from "../../styles/GlobalStyles.styles";
 
 const Wrapper = styled.div`
-  width: 1000px;
+  width: var(--inner-width-02);
   margin-top: 20px;
 
   @media screen and (max-width: 1050px) {
@@ -27,13 +27,14 @@ const Wrapper = styled.div`
 `;
 
 const Inner = styled.div`
-  width: 1000px;
+  width: var(--inner-width-02);
   /* height: 600px; */
   padding: 27px 30px 0;
   display: flex;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius-30);
   position: relative;
+  background-color: ${(props) => props.theme.ContainColor};
   @media screen and (max-width: 1050px) {
     width: 100%;
     height: auto;
@@ -52,6 +53,7 @@ const Items = styled.div`
   flex-direction: column;
   gap: 10px;
   .icon {
+    color: ${(props) => props.theme.dfaultColor};
     position: absolute;
     top: 20px;
     right: 20px;
@@ -71,6 +73,7 @@ const PostInfo = styled.div`
   display: flex;
   align-items: center;
   gap: 14px;
+  color: ${(props) => props.theme.textColor};
   .profile {
     width: 44px;
     height: 44px;
@@ -98,6 +101,7 @@ const PostInfo = styled.div`
 const PostText = styled.div`
   padding: 10px 0;
   ${SubDescription_16_n}
+  color: ${(props) => props.theme.textColor};
 `;
 
 const ImgItem = styled.div`
@@ -130,6 +134,7 @@ const ImgItem = styled.div`
 `;
 
 const SocialBtnIcon = styled.div`
+  color: ${(props) => props.theme.textColor};
   display: flex;
   justify-content: space-between;
   align-items: center;

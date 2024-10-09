@@ -20,6 +20,7 @@ import { DarkThemeContext, DataStateContext } from "../../App";
 import HeaderlogoImg from "../../img/HeaderLogo.svg";
 import styled from "styled-components";
 import SideBarWallet from "./SideBarWallet";
+import { Link } from "react-router-dom";
 
 const Header = styled.div`
   background-color: ${(props) => props.theme.bgColor};
@@ -47,7 +48,7 @@ const HeaderSticky = styled.div`
   align-items: center;
   top: 0;
   left: 0;
-  position: ${(prop) => (prop.isSticky ? "fixed" : "relative")};
+  position: ${(props) => (props.$sticky ? "fixed" : "relative")};
   -webkit-box-shadow: 0 4px 6px -6px #222;
   -moz-box-shadow: 0 4px 6px -6px #222;
   box-shadow: 0 4px 6px -6px #222;
@@ -215,6 +216,11 @@ const RightSecond = styled.div`
   & > div:nth-child(1) {
     display: none;
   }
+  @media screen and (max-width: 1050px) {
+    & > div:nth-child(3) {
+      display: none;
+    }
+  }
   @media screen and (max-width: 768px) {
     & > div:nth-child(1) {
       display: flex;
@@ -245,7 +251,9 @@ const IconWrap = styled.div`
 export const HeaderTop = () => {
   return (
     <Header>
-      <img src={HeaderlogoImg} alt="" />
+      <Link to="/">
+        <img src={HeaderlogoImg} alt="haederLogo" />
+      </Link>
     </Header>
   );
 };
@@ -257,17 +265,17 @@ export const HeaderBottom = () => {
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
   const [sideBarGroupOpen, setSideBarGroupOpen] = useState(false);
   const [sideWalletOpen, setSideWalletOpen] = useState(false);
-  const [isSticky, setIsSticky] = useState(false);
+  const [issticky, setissticky] = useState(false);
   console.log(data);
   // 스크롤 위치 감지 및 상태 업데이트
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
         // 스크롤 위치가 100px 이상일 때 고정
-        setIsSticky(true);
+        setissticky(true);
       } else {
         // 스크롤 위치가 100px 이하일 때 원래 상태로
-        setIsSticky(false);
+        setissticky(false);
       }
     };
     window.addEventListener("scroll", handleScroll);
@@ -305,7 +313,7 @@ export const HeaderBottom = () => {
     setIsDark((prev) => !prev);
   };
   return (
-    <HeaderSticky isSticky={isSticky}>
+    <HeaderSticky $sticky={issticky ? "true" : null}>
       <Left>
         <img className="mobileLogo" src={mobileLogo} alt="mobileLogo" />
         <div>

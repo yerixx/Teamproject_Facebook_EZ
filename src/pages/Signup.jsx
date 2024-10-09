@@ -29,7 +29,6 @@ const Signup = () => {
     lastName: "",
     email: "",
     password: "",
-    // wallet: "",
     gender: null,
     birthdate: null,
     city: null,
@@ -46,6 +45,8 @@ const Signup = () => {
     if (e.target.innerWidth <= 768) setMobileSize(true);
     else setMobileSize(false);
   };
+
+  const signupProcess = () => {};
 
   useEffect(() => {
     window.innerWidth <= 768 ? setMobileSize(true) : setMobileSize(false);
@@ -133,6 +134,7 @@ const Signup = () => {
             <img src={letterLogoImg} alt="Logo" />
           </Logo>
         )}
+
         <FormContainer>
           <SignupForm
             updateUserData={updateUserData}

@@ -24,7 +24,7 @@ const Wrapper = styled.div`
 const Inner = styled.div`
   margin: 20px 0;
   /* border: 1px solid red; */
-  width: 1000px;
+  width: var(--inner-width-02);
   height: 430px;
   padding: 27px 30px;
   display: flex;
@@ -325,7 +325,7 @@ const Mainlive = () => {
         <Items>
           <div className="livetext">라이브 커머스</div>
           <Slider {...settings}>
-            {[...Array(5)].map((index) => (
+            {[...Array(5)].map((item, index) => (
               <Livecard key={index}>
                 <img src="../public/img/live.jpg" alt="testimg" />
                 <div className="liveheader">
