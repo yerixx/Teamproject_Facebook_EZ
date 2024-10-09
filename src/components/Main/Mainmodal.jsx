@@ -81,21 +81,29 @@ const Inner = styled.div`
     }
 
     .camera {
+      padding: 4px 10px;
       font-size: 30px;
+      border: 50%;
       cursor: pointer;
+      transition: all 0.3s;
+      &:hover {
+        padding: 4px 10px;
+        border-radius: 50%;
+        color: var(--color-facebookblue);
+      }
     }
   }
 
   /* 게시물 작성 섹션 */
   .posting {
     padding: 0 60px;
-
     .posttext {
       display: flex;
       margin: 20px 0;
     }
-
     .postimg {
+      width: 740px;
+      height: 360px;
       display: flex;
       justify-content: center;
       margin-bottom: 20px;
@@ -118,7 +126,7 @@ const Inner = styled.div`
         padding: 10px;
         font-size: 16px;
         border: 1px solid #ccc;
-        resize: vertical; /* 세로 방향으로 크기 조절 가능 */
+        resize: none; /* 세로 방향으로 크기 조절 가능 */
         margin-bottom: 20px;
       }
 

@@ -21,7 +21,7 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 const MainSection = styled.section`
-  width: 1050px;
+  width: var(--inner-width-02);
   padding: 0 90px;
   display: flex;
   flex-direction: column;

@@ -215,7 +215,7 @@ const Mainupload = ({ placeholder }) => {
               <input
                 type='file'
                 id='fileInput'
-                accept='image/*'
+              `  accept='image/*'
                 style={{ display: 'none' }}
                 onChange={handleImageUpload}
               />

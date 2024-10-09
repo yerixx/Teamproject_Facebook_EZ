@@ -140,29 +140,6 @@ function App() {
   };
   useEffect(() => {
     fetchData();
-    // 로그인 기능이 구현되지 않았으므로, Firebase Auth 리스너는 일단 생략
-    // 나중에 로그인 기능을 구현한 후 아래 코드를 사용하세요.
-    // const unsubscribe = auth.onAuthStateChanged(async (user) => {
-    //   if (user) {
-    //     // 로그인한 사용자 정보 가져오기
-    //     try {
-    //       const userDocRef = doc(db, "users", user.uid);
-    //       const userDoc = await getDoc(userDocRef);
-    //       if (userDoc.exists()) {
-    //         dispatch({ type: "SET_CURRENT_USER_DATA", data: userDoc.data() });
-    //       } else {
-    //         console.log("사용자 데이터가 없습니다.");
-    //         dispatch({ type: "SET_CURRENT_USER_DATA", data: null });
-    //       }
-    //     } catch (error) {
-    //       console.error("사용자 데이터 가져오기 오류:", error);
-    //     }
-    //   } else {
-    //     // 로그아웃 상태
-    //     dispatch({ type: "SET_CURRENT_USER_DATA", data: null });
-    //   }
-    // });
-    // return () => unsubscribe();
   }, []);
   const onCreatePost = async (userId, userName, content, image = null) => {
     const newPost = {
@@ -276,7 +253,6 @@ function App() {
     } catch (error) {
       console.error("댓글 추가 중 오류 발생:", error);
     }
-
   };
   const onDeletePost = (postId) => {
     dispatch({

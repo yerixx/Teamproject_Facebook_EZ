@@ -29,7 +29,7 @@ const Wrapper = styled.div`
 
 // 내부 컨텐츠를 담는 Inner 스타일 컴포넌트
 const Inner = styled.div`
-  width: 1000px;
+  width: var(--inner-width-02);
   height: 430px;
   padding: 27px 30px;
   display: flex;
@@ -103,7 +103,7 @@ const Livecard = styled.div`
   }
 
   // 라이브 헤더 섹션 스타일
-  .liveheader {
+  .liveHeader {
     display: flex;
     align-items: center;
     padding-left: 10px;
@@ -150,7 +150,7 @@ const Livecard = styled.div`
   }
 
   // 라이브 정보 섹션 스타일
-  .liveinfo {
+  .liveInfo {
     display: flex;
     align-items: center;
     padding: 5px 5px;
@@ -361,18 +361,19 @@ const Mainlive = () => {
             {" "}
             {[...Array(8)].map(
               (
-                index // 8개의 라이브 카드 생성
+                index,
+                i // 8개의 라이브 카드 생성
               ) => (
-                <Livecard key={index}>
+                <Livecard key={i}>
                   <img src="/img/live.jpg" alt="testimg" />
-                  <div className="liveheader">
+                  <div className="liveHeader">
                     <div className="liveBage">LIVE</div>
                     <div className="item">
                       <div className="viewers">9,452 시청</div>
                       <div className="point">+500P</div>
                     </div>
                   </div>
-                  <div className="liveinfo">
+                  <div className="liveInfo">
                     <div className="info">
                       <span className="subtitle">
                         <FaStar />

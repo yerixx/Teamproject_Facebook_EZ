@@ -52,6 +52,7 @@ body{
     
      /* Inner size */
     --inner-width: 1050px;
+    --inner-width-02: 900px;
 }
 `;
 // Font
