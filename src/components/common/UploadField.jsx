@@ -2,10 +2,7 @@ import React, { useState, useContext } from "react";
 import { DataDispatchContext } from "../../App.jsx";
 
 import styled from "styled-components";
-import {
-  SubDescription_16_n,
-  SubDescription_12_m,
-} from "../../styles/GlobalStyles.styles.js";
+import { SubDescription_16_n } from "../../styles/GlobalStyles.styles.js";
 
 import { BsArrowReturnLeft } from "react-icons/bs";
 import { FaSpinner } from "react-icons/fa";

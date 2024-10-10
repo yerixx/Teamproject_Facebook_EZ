@@ -10,6 +10,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   gap: 60px;
   padding-bottom: 60px;
+  cursor: pointer;
 `;
 
 const PostList = () => {

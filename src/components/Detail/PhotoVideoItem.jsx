@@ -107,7 +107,6 @@ const PhotoVideoItem = ({ imageSrc, contentDesc, createdAt }) => {
           <div className="contTitle">{contentDesc}</div>
           <div className="createdAt">{formatDate(createdAt)} </div>
         </ContText>
-        {/* <SocialBtnIcon/> */}
       </Contents>
     </Inner>
   );

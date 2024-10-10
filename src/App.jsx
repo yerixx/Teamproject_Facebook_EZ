@@ -174,12 +174,10 @@ function App() {
       likes: 0,
       comments: [],
     };
-
     // 이미지가 존재할 때만 newPost에 image 필드를 추가
     if (image) {
       newPost.image = [image];
     }
-
     try {
       const docRef = await addDoc(collection(db, "posts"), newPost);
       // Firestore에 추가된 데이터로 상태를 업데이트
@@ -197,6 +195,7 @@ function App() {
       console.error("Firestore에 포스트 추가 중 오류 발생:", error);
     }
   };
+
   const onAddUser = async (
     userId,
     firstName,
