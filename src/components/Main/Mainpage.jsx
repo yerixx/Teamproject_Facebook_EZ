@@ -4,43 +4,76 @@ import { FaEarthAmericas, FaRegBookmark } from "react-icons/fa6";
 import { IoCloseOutline } from "react-icons/io5";
 import { FaRegHeart, FaRegComment } from "react-icons/fa";
 import { FiShare } from "react-icons/fi";
+import {
+  MainTitle_18_b,
+  MainTitle_18_n,
+  MainTitle_24_m,
+  SubDescription_12_m,
+  SubDescription_16_n,
+  SubDescription_22_n,
+  SubTitle_16_b,
+} from "../../styles/GlobalStyles.styles";
 
 const Wrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
+  width: var(--inner-width-02);
   margin-top: 20px;
+
+  @media screen and (max-width: 1050px) {
+    width: 100%;
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const Inner = styled.div`
-  width: 1000px;
-  height: 600px;
+  width: var(--inner-width-02);
+  /* height: 600px; */
   padding: 27px 30px 0;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius-30);
   position: relative;
+  background-color: ${(props) => props.theme.ContainColor};
+  @media screen and (max-width: 1050px) {
+    width: 100%;
+    height: auto;
+    gap: 5px;
+  }
+  @media screen and (max-width: 768px) {
+    margin: 0 auto;
+    width: 90vw;
+    height: 100%;
+  }
+`;
+const Items = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   .icon {
+    color: ${(props) => props.theme.dfaultColor};
     position: absolute;
     top: 20px;
     right: 20px;
     display: flex;
     gap: 10px;
-    font-size: var(--font-size-paragraph);
+    ${MainTitle_24_m}
   }
   @media screen and (max-width: 1050px) {
-    width: 768px;
+    .icon {
+      ${MainTitle_24_m}
+    }
   }
 `;
 
 const PostInfo = styled.div`
   width: 200px;
-  height: 50px;
   display: flex;
   align-items: center;
   gap: 14px;
+  color: ${(props) => props.theme.textColor};
   .profile {
     width: 44px;
     height: 44px;
@@ -51,26 +84,29 @@ const PostInfo = styled.div`
     display: flex;
     flex-direction: column;
     .name {
-      font-size: var(--font-size-title-04);
-      font-weight: var(--font-weight-bold);
+      ${MainTitle_18_b}
     }
     .item {
       display: flex;
       gap: 5px;
       .clock {
-        font-size: var(--font-size-subtitle);
+        ${SubDescription_16_n}
       }
       .menuIcon {
-        font-size: var(--font-size-subtitle);
+        ${SubDescription_16_n}
       }
     }
   }
 `;
 const PostText = styled.div`
-  margin-left: 63px;
+  padding: 10px 0;
+  ${SubDescription_16_n}
+  color: ${(props) => props.theme.textColor};
 `;
 
 const ImgItem = styled.div`
+  display: flex;
+  gap: 5px;
   .postImg {
     width: 100%;
     display: flex;
@@ -78,28 +114,54 @@ const ImgItem = styled.div`
     gap: 10px;
     margin-bottom: 10px;
     img {
+      object-fit: cover;
       width: 100%;
       height: 370px;
+      border-radius: 8px;
       background: var(--color-gray-02);
+      gap: 8px;
+      cursor: pointer;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    height: 150px;
+    .postImg {
+      img {
+        height: 100%;
+      }
     }
   }
 `;
 
 const SocialBtnIcon = styled.div`
+  color: ${(props) => props.theme.textColor};
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 80px;
-  padding: 10px 20px;
-  font-size: var(--font-size-paragraph);
+  height: 100%;
+  padding: 20px;
+  ${MainTitle_18_n}
   border-top: 1px solid var(--color-light-gray-01);
   .socialIcon {
     cursor: pointer;
     display: flex;
+    align-items: center;
     gap: 10px;
+    ${SubDescription_16_n}
     &:hover {
       color: var(--color-facebookblue);
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    height: 100%;
+    .socialIcon {
+      padding: 10px 0;
+      font-size: 20px;
+      span {
+        display: none;
+      }
     }
   }
 `;
@@ -108,48 +170,56 @@ const MainPost = () => {
   return (
     <Wrapper>
       <Inner>
-        <div className="icon">
-          <BsThreeDots />
-          <IoCloseOutline />
-        </div>
-        <PostInfo>
-          <div className="profile"></div>
-          <div className="info">
-            <div className="name">김정하</div>
-            <div className="item">
-              <span className="clock">1시간전</span>
-              <span className="menuIcon">
-                <FaEarthAmericas />
-              </span>
+        <Items>
+          <div className="icon">
+            <BsThreeDots />
+            <IoCloseOutline />
+          </div>
+          <PostInfo>
+            <div className="profile"></div>
+            <div className="info">
+              <div className="name">김정하</div>
+              <div className="item">
+                <span className="clock">1시간전</span>
+                <span className="menuIcon">
+                  <FaEarthAmericas />
+                </span>
+              </div>
             </div>
-          </div>
-        </PostInfo>
-        <PostText>내 최애</PostText>
-        <ImgItem>
-          <div className="postImg">
-            <img />
-            <img />
-            <img />
-          </div>
-        </ImgItem>
-        <SocialBtnIcon>
-          <div className="socialIcon">
-            <FaRegHeart />
-            좋아요
-          </div>
-          <div className="socialIcon">
-            <FaRegComment />
-            댓글
-          </div>
-          <div className="socialIcon">
-            <FiShare />
-            공유하기
-          </div>
-          <div className="socialIcon">
-            <FaRegBookmark />
-            저장하기
-          </div>
-        </SocialBtnIcon>
+          </PostInfo>
+          <PostText>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam iste
+            quia corporis unde in, odit sunt eligendi quod vero impedit,
+            dignissimos iure molestias doloribus non reiciendis incidunt dolor,
+            adipisci distinctio.
+          </PostText>
+          <ImgItem>
+            <div className="postImg">
+              <img src="../public/img/imgtest.jpg" alt="img" />
+            </div>
+            <div className="postImg">
+              <img src="../public/img/imgtest.jpg" alt="img" />
+            </div>
+          </ImgItem>
+          <SocialBtnIcon>
+            <div className="socialIcon">
+              <FaRegHeart />
+              <span>좋아요</span>
+            </div>
+            <div className="socialIcon">
+              <FaRegComment />
+              <span>댓글</span>
+            </div>
+            <div className="socialIcon">
+              <FiShare />
+              <span>공유하기</span>
+            </div>
+            <div className="socialIcon">
+              <FaRegBookmark />
+              <span>저장하기</span>
+            </div>
+          </SocialBtnIcon>
+        </Items>
       </Inner>
     </Wrapper>
   );

@@ -3,17 +3,17 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   position: relative;
+  display: flex;
   width: 180px;
-  height: 38px;
+  /* height: 38px; */
   border-radius: 8px;
   font-size: 16px;
   font-weight: 700;
-  letter-spacing: 0.1px;
-  cursor: pointer;
 
+  cursor: pointer;
   .label {
     display: flex;
-    align-items: center;
+    justify-content: end;
     width: inherit;
     border: 0 none;
     outline: 0 none;
@@ -38,7 +38,15 @@ const Wrapper = styled.div`
     opacity: 0.2;
     visibility: hidden;
     overflow: hidden;
-    transition: max-height 0.3s ease, opacity 0.1s ease, visibility 0.1s;
+    transition:
+      max-height 0.3s ease,
+      opacity 0.1s ease,
+      visibility 0.1s;
+    *:hover {
+      background: var(--color-facebookblue);
+      color: #fff;
+      box-shadow: 3px 4px 8px rgba(170, 170, 170, 0.7);
+    }
   }
 
   &.active .optionList {
@@ -52,12 +60,7 @@ const Wrapper = styled.div`
     transition: 0.1s;
     margin-bottom: 8px;
     border-radius: 8px;
-    transition: background 0.1s;
-    &:hover {
-      background: var(--color-facebookblue);
-      color: #fff;
-      box-shadow: 3px 4px 8px rgba(170, 170, 170, 0.7);
-    }
+    transition: all 0.1s;
     &:last-child {
       border-bottom: 0 none;
     }
@@ -67,9 +70,9 @@ const Wrapper = styled.div`
   }
 `;
 
-const SelectBox = () => {
+const SelectBox = ({ Title, desc1, desc2, desc3 }) => {
   const [isOpen, setIsOpen] = useState(false); // 드롭다운 열림/닫힘 상태 관리
-  const [selectedOption, setSelectedOption] = useState("최신순"); // 선택된 옵션 관리
+  // const [selectedOption, setSelectedOption] = useState("최신순"); // 선택된 옵션 관리
   const dropdownRef = useRef(null); // 드롭다운 요소 참조
 
   // 외부 클릭 감지 후 드롭다운 닫기
@@ -98,23 +101,23 @@ const SelectBox = () => {
   return (
     <Wrapper className={isOpen ? "active" : ""} ref={dropdownRef}>
       <button className="label" onClick={toggleDropdown}>
-        {selectedOption}
+        {Title || "최신순"}
       </button>
       <ul className="optionList">
         <li className="optionItem" onClick={() => handleOptionClick("최신순")}>
-          최신순
+          {desc1 || "최신순"}
         </li>
         <li
           className="optionItem"
           onClick={() => handleOptionClick("좋아요 많은 순")}
         >
-          좋아요 많은 순
+          {desc2 || "좋아요 많은 순"}
         </li>
         <li
           className="optionItem"
           onClick={() => handleOptionClick("관련성 높은 순")}
         >
-          관련성 높은 순
+          {desc3 || "관련성 높은 순"}
         </li>
       </ul>
     </Wrapper>

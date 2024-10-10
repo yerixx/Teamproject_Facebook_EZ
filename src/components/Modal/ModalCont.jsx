@@ -155,4 +155,4 @@ const ModalCont = () => {
   );
 };
 
-export default ModalCont;
+export default ModalCont

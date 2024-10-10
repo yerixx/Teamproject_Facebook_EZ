@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useRef, useEffect, useState } from "react";
 import {
   delay,
@@ -38,6 +39,9 @@ const GlobalStyles = createGlobalStyle`
     color: inherit;
   }
 `;
+=======
+import styled from "styled-components";
+>>>>>>> Signup
 
 const ContSlide = styled.div`
   flex: 2;
