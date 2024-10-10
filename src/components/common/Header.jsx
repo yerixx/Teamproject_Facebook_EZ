@@ -252,7 +252,7 @@ export const HeaderBottom = () => {
   const navigate = useNavigate();
   const data = useContext(DataStateContext);
   const currentUser = data.currentUserData;
-
+  console.log(currentUser);
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
   const [sideBarGroupOpen, setSideBarGroupOpen] = useState(false);
   const [sideWalletOpen, setSideWalletOpen] = useState(false);
@@ -308,7 +308,7 @@ export const HeaderBottom = () => {
     }
   };
 
-  console.log(currentUser);
+  // console.log(auth.currentUser);
 
   return (
     <HeaderSticky isSticky={isSticky}>
@@ -340,8 +340,8 @@ export const HeaderBottom = () => {
               <img src="/img/testcat.jpg" alt="" />
             </div>
             <h3>
-              {auth.currentUser.email.split("@")[0]}
-              {/* {currentUser?.userName.lastName} */}
+              {/* {auth.currentUser.email.split("@")[0]} */}
+              {currentUser?.userName.lastName}
             </h3>
           </ProfileWrap>
           {/* <span>{currentUser?.wallet.point}p</span> */}

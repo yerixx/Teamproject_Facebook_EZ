@@ -1,11 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  GoogleAuthProvider,
-  TwitterAuthProvider,
-  GithubAuthProvider,
-  signInWithPopup,
-} from "firebase/auth";
+import { GithubAuthProvider, signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 import googleIcon from "../../img/google-icon.svg";
@@ -45,16 +40,10 @@ const Wrapper = styled.div`
 const SNSLogin = () => {
   const navigate = useNavigate();
 
-  const onClick = async (e) => {
+  const onClick = async () => {
     try {
-      if (e.target.id === "google") {
-        const providerGoogle = new GoogleAuthProvider();
-        await signInWithPopup(auth, providerGoogle);
-      } else if (e.target.id === "github") {
-        const providerGithub = new GithubAuthProvider();
-        await signInWithPopup(auth, providerGithub);
-      }
-
+      const providerGithub = new GithubAuthProvider();
+      await signInWithPopup(auth, providerGithub);
       navigate("/");
     } catch (e) {
       console.log(e);
@@ -65,14 +54,14 @@ const SNSLogin = () => {
     <Wrapper>
       <FormDesc>다른 방법으로 로그인</FormDesc>
       <ul>
-        <li onClick={onClick} id="google">
+        <li onClick={onClick}>
+          <img src={githubIcon} />
+        </li>
+        <li>
           <img src={googleIcon} />
         </li>
-        <li onClick={onClick} id="apple">
+        <li>
           <img src={appleIcon} />
-        </li>
-        <li onClick={onClick} id="github">
-          <img src={githubIcon} />
         </li>
       </ul>
     </Wrapper>
