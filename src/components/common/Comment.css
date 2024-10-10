@@ -1,0 +1,62 @@
+.app {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.comment {
+  display: flex;
+  align-items: center;
+  /* margin-bottom: 20px; */
+  padding: 10px;
+  /* border: 1px solid #ccc; */
+  border-radius: 8px;
+}
+
+.profile-pic {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.comment-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 15px;
+  font-size: 14px;
+  border-radius: 8px;
+  margin: 3px;
+  gap: 5px;
+  /* border: 1px solid #f00; */
+  background: var(--color-light-gray-01);
+  input {
+    width: 300px;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  /* border: 1px solid #f00; */
+}
+
+.actions button {
+  margin-left: 10px;
+  font-size: 10px;
+  padding: 5px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.3s;
+}
+
+.actions button.liked {
+  color: #007bff; /* 파란색으로 유지 */
+  font-weight: 600;
+}
+
+.actions button:hover {
+  color: #0056b3; /* 어두운 파란색으로 변경 */
+}

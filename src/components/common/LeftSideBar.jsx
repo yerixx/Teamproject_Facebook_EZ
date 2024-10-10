@@ -1,14 +1,22 @@
 import styled from "styled-components";
 
 const Wrapper = styled.div`
+  z-index: 3;
+  position: sticky;
+  top: 110px;
+  right: 20px;
+  width: 382px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  background: #fff;
+  padding: 28px 20px;
+  border-radius: var(--border-radius-30);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 `;
 
 const Group = styled.div`
-  padding: 28px 20px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); */
   border-radius: var(--border-radius-30);
   display: flex;
   flex-direction: column;

@@ -12,6 +12,8 @@ import { FaMoon } from "react-icons/fa";
 import { TbGridDots } from "react-icons/tb";
 
 const Header = styled.div`
+  background-color: var(--color-white);
+  z-index: 100;
   width: 100%;
   height: 56px;
   display: flex;
@@ -20,8 +22,11 @@ const Header = styled.div`
   img {
     height: 26px;
   }
+  z-index: 5;
 `;
 const HeaderSticky = styled.div`
+  background-color: var(--color-white);
+  z-index: 100;
   padding: 0 15px;
   width: 100%;
   height: 88px;
@@ -34,6 +39,7 @@ const HeaderSticky = styled.div`
   -webkit-box-shadow: 0 4px 6px -6px #222;
   -moz-box-shadow: 0 4px 6px -6px #222;
   box-shadow: 0 4px 6px -6px #222;
+  margin-bottom: 20px;
 `;
 
 const Left = styled.div`
@@ -86,10 +92,10 @@ const Center = styled.div`
   }
 `;
 const Right = styled.div`
-  width: 100%;
+  width: 500px;
   height: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 15px;
 `;
 const RightFirst = styled.div`
