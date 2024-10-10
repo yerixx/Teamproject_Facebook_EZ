@@ -1,18 +1,29 @@
-import styled from "styled-components";
-// import logoImg from "../../img/Logo.png";
-import HeaderlogoImg from "../../img/HeaderLogo.svg";
+// import { AiFillHome } from "react-icons/ai";
+import { AiOutlineShop } from "react-icons/ai";
+import { BsCollectionPlay } from "react-icons/bs";
+import { FaBell, FaMoon } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { AiFillHome } from "react-icons/ai";
-import { BsCollectionPlay } from "react-icons/bs";
-import { AiOutlineShop } from "react-icons/ai";
+
 import { IoPeopleOutline } from "react-icons/io5";
 import { MdOutlineLogout } from "react-icons/md";
-import { FaBell } from "react-icons/fa";
-import { FaMoon } from "react-icons/fa";
+import { FiSun } from "react-icons/fi";
+
 import { TbGridDots } from "react-icons/tb";
+import { FaSearch } from "react-icons/fa";
+import mobileLogo from "../../img/Logo.png";
+import SideBarMenu from "./SideBarMenu";
+import { useContext, useEffect, useState } from "react";
+import SideBarGroup from "./SideBarGroup";
+
+import { DarkThemeContext, DataStateContext } from "../../App";
+import HeaderlogoImg from "../../img/HeaderLogo.svg";
+import styled from "styled-components";
+import SideBarWallet from "./SideBarWallet";
+import { Link } from "react-router-dom";
 
 const Header = styled.div`
-  background-color: var(--color-white);
+  background-color: ${(props) => props.theme.bgColor};
   z-index: 100;
   width: 100%;
   height: 56px;
@@ -23,23 +34,32 @@ const Header = styled.div`
     height: 26px;
   }
   z-index: 5;
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 const HeaderSticky = styled.div`
-  background-color: var(--color-white);
+  background-color: ${(props) => props.theme.bgColor};
   z-index: 100;
   padding: 0 15px;
   width: 100%;
   height: 88px;
-  background: var(--color-white);
   display: flex;
   align-items: center;
-  position: sticky;
   top: 0;
   left: 0;
+  position: ${(props) => (props.$sticky ? "fixed" : "relative")};
   -webkit-box-shadow: 0 4px 6px -6px #222;
   -moz-box-shadow: 0 4px 6px -6px #222;
   box-shadow: 0 4px 6px -6px #222;
   margin-bottom: 20px;
+  @media screen and (max-width: 1050px) {
+    justify-content: center;
+  }
+  @media screen and (max-width: 768px) {
+    position: fixed;
+    height: 60px;
+  }
 `;
 
 const Left = styled.div`
@@ -53,6 +73,7 @@ const Left = styled.div`
   div {
     position: relative;
     svg {
+      color: ${(props) => props.theme.textColor};
       position: absolute;
       left: 20px;
       top: 50%;
@@ -62,10 +83,28 @@ const Left = styled.div`
       width: 254px;
       height: 48px;
       border-radius: 140px;
-      border: none;
-      background-color: #e5e6eb;
+      border: 1px solid ${(props) => props.theme.borderColor};
+      background-color: ${(props) => props.theme.inputColor};
       padding-left: 50px;
       font-size: 16px;
+    }
+  }
+  .mobileLogo {
+    display: none;
+  }
+  @media screen and (max-width: 1050px) {
+    div {
+      input {
+        width: 220px;
+      }
+    }
+  }
+  @media screen and (max-width: 768px) {
+    div {
+      display: none;
+    }
+    .mobileLogo {
+      display: block;
     }
   }
 `;
@@ -87,8 +126,18 @@ const Center = styled.div`
     align-items: center;
     border-bottom: 2.5px solid var(--color-facebookblue);
     svg {
+      color: ${(props) => props.theme.textColor};
       font-size: 24px;
     }
+  }
+  @media screen and (max-width: 1050px) {
+    /* gap: 0; */
+    div {
+      width: 50px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    display: none;
   }
 `;
 const Right = styled.div`
@@ -97,6 +146,9 @@ const Right = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 15px;
+  @media screen and (max-width: 1050px) {
+    justify-content: flex-end;
+  }
 `;
 const RightFirst = styled.div`
   display: flex;
@@ -108,22 +160,48 @@ const RightFirst = styled.div`
     font-size: 14px;
     color: var(--color-facebookblue);
   }
+  @media screen and (max-width: 1050px) {
+    width: 20px;
+    h3 {
+      display: none;
+    }
+    span {
+      display: none;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    /* display: none; */
+  }
 `;
 const ProfileWrap = styled.div`
+  cursor: pointer;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 3px;
   div {
-    background: #999;
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    overflow: hidden;
+    img {
+      object-fit: cover;
+      object-position: center;
+      width: 100%;
+      height: 100%;
+    }
   }
   h3 {
+    color: ${(props) => props.theme.textColor};
     font-size: var(--font-size-subtitle);
     font-weight: normal;
+  }
+  @media screen and (max-width: 1050px) {
+    width: 100px;
+    justify-content: flex-end;
+    div {
+    }
   }
 `;
 
@@ -134,6 +212,29 @@ const RightSecond = styled.div`
   gap: 5px;
   svg {
     font-size: 18px;
+  }
+  & > div:nth-child(1) {
+    display: none;
+  }
+  @media screen and (max-width: 1050px) {
+    & > div:nth-child(3) {
+      display: none;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    & > div:nth-child(1) {
+      display: flex;
+    }
+    & > div:nth-child(2) {
+    }
+    & > div:nth-child(3) {
+      display: none;
+    }
+    & > div:nth-child(4) {
+    }
+    & > div:nth-child(5) {
+      display: none;
+    }
   }
 `;
 const IconWrap = styled.div`
@@ -150,16 +251,71 @@ const IconWrap = styled.div`
 export const HeaderTop = () => {
   return (
     <Header>
-      <img src={HeaderlogoImg} alt="" />
+      <Link to="/">
+        <img src={HeaderlogoImg} alt="haederLogo" />
+      </Link>
     </Header>
   );
 };
 
 export const HeaderBottom = () => {
+  const data = useContext(DataStateContext);
+  const currentUser = data.currentUserData;
+
+  const [sideMenuOpen, setSideMenuOpen] = useState(false);
+  const [sideBarGroupOpen, setSideBarGroupOpen] = useState(false);
+  const [sideWalletOpen, setSideWalletOpen] = useState(false);
+  const [issticky, setissticky] = useState(false);
+  console.log(data);
+  // 스크롤 위치 감지 및 상태 업데이트
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        // 스크롤 위치가 100px 이상일 때 고정
+        setissticky(true);
+      } else {
+        // 스크롤 위치가 100px 이하일 때 원래 상태로
+        setissticky(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+  const sideMenu = (e) => {
+    e.stopPropagation();
+    setSideMenuOpen((prev) => !prev);
+    setSideBarGroupOpen(false);
+    setSideWalletOpen(false);
+  };
+  const sideGroup = (e) => {
+    e.stopPropagation();
+    setSideBarGroupOpen((prev) => !prev);
+    setSideMenuOpen(false);
+    setSideWalletOpen(false);
+  };
+
+  const sideWallet = (e) => {
+    e.stopPropagation();
+    setSideWalletOpen((prev) => !prev);
+    setSideMenuOpen(false);
+    setSideBarGroupOpen(false);
+  };
+  const closeModal = () => {
+    setSideMenuOpen(false);
+    setSideBarGroupOpen(false);
+    setSideWalletOpen(false);
+  };
+
+  const { isDark, setIsDark } = useContext(DarkThemeContext);
+  const toggleTheme = () => {
+    setIsDark((prev) => !prev);
+  };
   return (
-    <HeaderSticky>
+    <HeaderSticky $sticky={issticky ? "true" : null}>
       <Left>
-        {/* <img src={logoImg} alt="" /> */}
+        <img className="mobileLogo" src={mobileLogo} alt="mobileLogo" />
         <div>
           <FaMagnifyingGlass />
           <input type="text" placeholder="Search Facebook" />
@@ -180,28 +336,49 @@ export const HeaderBottom = () => {
         </div>
       </Center>
       <Right>
-        <RightFirst>
+        <RightFirst onClick={sideWallet}>
           <ProfileWrap>
-            <div></div>
-            <h3>박태환</h3>
+            <div>
+              <img src="/img/testcat.jpg" alt="" />
+            </div>
+            <h3>
+              {currentUser?.userName.firstName}
+              {currentUser?.userName.lastName}
+            </h3>
           </ProfileWrap>
-          <span>12,300p</span>
+          <span>{currentUser?.wallet.point}p</span>
         </RightFirst>
         <RightSecond>
           <IconWrap>
+            <FaSearch />
+          </IconWrap>
+          <IconWrap onClick={sideMenu}>
             <TbGridDots />
           </IconWrap>
           <IconWrap>
             <FaBell />
           </IconWrap>
-          <IconWrap>
-            <FaMoon />
+          <IconWrap onClick={toggleTheme}>
+            {isDark ? <FiSun /> : <FaMoon />}
           </IconWrap>
           <IconWrap>
             <MdOutlineLogout />
           </IconWrap>
         </RightSecond>
       </Right>
+      {sideMenuOpen && (
+        <SideBarMenu
+          sideMenuOpen={sideMenuOpen}
+          openGroup={sideGroup}
+          closeModal={closeModal}
+        />
+      )}
+      {sideBarGroupOpen && (
+        <SideBarGroup openGroup={sideGroup} closeModal={closeModal} />
+      )}
+      {sideWalletOpen && (
+        <SideBarWallet onClick={sideWallet} closeModal={closeModal} />
+      )}
     </HeaderSticky>
   );
 };

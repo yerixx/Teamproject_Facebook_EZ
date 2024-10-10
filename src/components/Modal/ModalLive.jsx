@@ -1,10 +1,9 @@
-import React, {useState} from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {createGlobalStyle, styled} from 'styled-components';
 import GlobalStyles from '../../styles/GlobalStyles.styles';
 
-import PostUploadField from '../detail/PostUploadField';
 import CountdownCircle from '../common/CountdownCircle';
 import { faComments } from "@fortawesome/free-solid-svg-icons";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -25,11 +24,6 @@ const Commerce = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  @media screen and (max-width: 768px) {
-    width: 100%;
-    height: 100vh;
-    position: relative;
-  }
 `;
 
 const LeftContent = styled.section`
@@ -50,9 +44,6 @@ const LeftContent = styled.section`
     font-size: 25px;
     cursor: pointer;
   }
-  @media screen and (max-width: 768px) {
-    height: 100vh;
-  }
 `;
 
 const Live = styled.div`
@@ -65,9 +56,6 @@ const Live = styled.div`
   background-image: url(${LiveView});
   background-repeat: no-repeat;
   background-position: top center;
-  video {
-    display: none;
-  }
   background-size: cover;
   @media screen and (max-width: 1050px) {
     width: 400px;
@@ -75,120 +63,7 @@ const Live = styled.div`
   }
   @media screen and (max-width: 768px) {
     width: 390px;
-    height: 100vh;
-    background-image: none;
-    .liveVideo {
-      video {
-        display: flex;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 390px;
-        height: 100vh;
-        /* transform: translate(-50%, -50%); */
-        object-fit: cover;
-      }
-    }
   }
-`;
-
-const SellItemsmb = styled.div`
-  display: none;
-  @media screen and (max-width: 768px) {
-    width: 350px;
-    display: flex;
-    justify-content: space-between;
-    position: absolute;
-    top: 150px;
-    padding: 8px;
-    border-radius: 8px;
-    background: var(--color-light-gray-02);
-    h2 {
-      display: flex;
-      text-align: left;
-      margin-left: 5px;
-      font-size: 12px;
-      color: var(--color-gray-01);
-    }
-  }
-`;
-
-const SellItemsinfomb = styled.div`
-  display: none;
-  @media screen and (max-width: 768px) {
-    width: 350px;
-    height: 80px;
-    top: 185px;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: absolute;
-    border-radius: 8px;
-    background: var(--color-light-gray-02);
-  }
-`;
-
-const SellItemImgmb = styled.div`
-    display: none;
-  @media screen and (max-width: 768px) {
-    display: flex;
-    position: absolute;
-    img {
-      width: 50px;
-      height: 50px;
-      border-radius: 8px;
-    }
-  }
-`;
-
-const SellItemDescmb = styled.div`
-  display: none;
-  @media screen and (max-width: 768px) {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    font-size: 12px;
-    margin-left: 60px;
-    gap: 3px;
-    span {
-      color: #f00;
-      padding-right: 5px;
-    }
-  }
-`;
-
-const CommenstMb = styled.div`
-  display: none;
-  @media screen and (max-width: 768px) {
-    width: 390px;
-    position: absolute;
-    bottom: 70px;
-    display: flex;
-    flex-direction: column;
-    /* gap: 10px; */
-    background-color: rgba(0,0,0,0.6);
-  }
-`;
-
-const CommentLiveInfomb = styled.div`
-display: none;
-@media screen and (max-width: 768px) {
-  width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 10px 20px;
-    font-size: 12px;
-    color: #fff;
-    gap: 10px;
-    /* border: 1px solid #f00; */
-    img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-    }
-}
 `;
 
 const LiveStatus = styled.div`
@@ -202,6 +77,9 @@ const LiveStatus = styled.div`
   left: 10px;
   gap: 10px;
   color: #fff;
+  .liveViewer {
+    margin-left: 13px;
+  }
   @media screen and (max-width: 1050px) {
     font-size: 12px;
     top: 0;
@@ -210,26 +88,6 @@ const LiveStatus = styled.div`
       margin-left: 5px;
       font-size: 12px;
     }
-  }
-  @media screen and (max-width: 768px) {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    padding: 20px;
-    margin-top: 20px;
-    object-fit: cover;
-    /* border: 1px solid #f00; */
-    .fbLogo, .liveLogo, .liveViewer {
-    position: absolute;
-    z-index: 1;
-  }
-  .liveLogo {
-    margin-left: 40px;
-  }
-  .liveViewer {
-    padding: 0 80px;
-    margin-right: 70px;
-  }
   }
 `;
 
@@ -287,9 +145,6 @@ const LivePoint = styled.div`
       font-size: 12px;
     }
   }
-  @media screen and (max-width: 768px) {
-    width: 390px;
-  }
 `;
 
 const RightContent = styled.section`
@@ -301,52 +156,25 @@ const RightContent = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* gap: 10px; */
-  border: 1px solid #f00;
-  .rightWrapper {
-    height: 100vh;
-    padding: 30px;
-    font-size: 14px;
-  }
-  @media screen and (max-width: 768px) {
-    display: none;
-  }
+  gap: 20px;
+  /* border: 1px solid #f00; */
 `;
 
 const LiveProfile = styled.div`
   width: 100%;
-  display: flex;
   padding: 0 40px;
-  margin-bottom: 13px;
   /* border: 1px solid #f00; */
+  display: flex;
   .profileImg {
-    /* background-color: var(--color-light-gray-02); */
+    background-color: var(--color-light-gray-02);
     border-radius: 50%;
     img {
-      width: 60px;
+      width: 80px;
       border-radius: 50%;
     }
   }
   @media screen and (max-width: 1050px) {
     padding: 0 50px;
-  }
-`;
-
-const LiveProfilemb = styled.div`
-  display: none;
-    @media screen and (max-width: 768px) {
-      display: flex;
-      align-items: center;
-      position: absolute;
-      top: 80px;
-      left: 20px;
-      .profileImgmb {
-        img {
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-        }
-      }
   }
 `;
 
@@ -368,29 +196,14 @@ const LiveProfileSelf = styled.div`
   }
 `;
 
-const LiveProfileSelfmb = styled.div`
-  display: none;
-  @media screen and (max-width: 768px) {
-    display: flex;
-    flex-direction: column;
-    margin-left: 13px;
-    gap: 5px;
-    font-size: 12px;
-    color: #fff;
-    padding-bottom: 10px;
-  }
-`;
-
 const LiveContents = styled.div`
   width: 100%;
   padding: 0 40px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 20px;
   font-size: var(--font-size-description-01);
   color: var(--color-gray-01);
-  /* border: 1px solid #f00; */
   h3 {
     border-bottom: 1px solid var(--color-light-gray-01);
     padding-bottom: 15px;
@@ -401,22 +214,14 @@ const LiveContents = styled.div`
     padding: 0 50px;
     font-size: 14px;
   }
-  @media screen and (max-width: 768px) {
-    display: none;
-  }
 `;
 
 const SellItems = styled.div`
 width: 100%;
 /* border: 1px solid #f00; */
 padding: 0 40px;
-margin-bottom: 13px;
-font-size: 13px;
 @media screen and (max-width: 1050px) {
     padding: 0 50px;
-  }
-  @media screen and (max-width: 768px) {
-    display: none;
   }
 `;
 
@@ -516,7 +321,7 @@ const Comment = styled.div`
   }
   .test{
     height: 60px;
-    border: 1px solid #f00;
+    background-color: #ccc;
     border-radius: 8px;
     margin-bottom: 10px;
   }
@@ -529,9 +334,6 @@ const Comment = styled.div`
     .test {
       height: 50px;
     }
-  }
-  @media screen and (max-width: 768px) {
-    display: none;
   }
 `;
 
@@ -562,12 +364,6 @@ const NoComment = styled.div`
 `;
 
 const ModalLive = () => {
-  const [isSellItemsVisible, setSellItemsVisible] = useState(false);
-
-  const toggleSellItems = () => {
-    setSellItemsVisible(!isSellItemsVisible);
-  };
-
   return (
     <>
       <Commerce>
@@ -582,122 +378,73 @@ const ModalLive = () => {
                 <img src={liveIcon} />
               </div>
               <div className='liveViewer'>2,023명 시청 중</div>
-              <div className='liveVideo'>
-                <video 
-                src='/video/liveFood.mp4'
-                autoPlay
-                muted
-                loop
-                />
-              </div>
               {/* <img src={LiveView} alt="Live" width="560px" height="860px" /> */}
             </LiveStatus>
             <LivePoint>
               <button className='point'>포인트 더 모으기</button>
               <div className='pointDS'>7초 후에 500 포인트가 적립됩니다.</div>
+              {/* <div className='pointTime'>7</div> */}
               <div className='countdown'><CountdownCircle /></div>
             </LivePoint>
           </Live>
-          <SellItemsmb>
-            <h2 onClick={toggleSellItems} style={{ cursor: 'pointer' }}>
-              판매중인 상품
-              </h2>
-          </SellItemsmb>
-          {isSellItemsVisible && (
-            <SellItemsinfomb>
-              <SellItemImgmb>
-                <img src={SellItem1Img} alt="SellItem1Img" height="70px" width="70px" />
-              </SellItemImgmb>
-              <SellItemDescmb>
-                <p>★5%추가할인★스프라이트 백트임 긴팔니트</p>
-                <b><span>30%</span>19,900원</b>
-              </SellItemDescmb>
-            </SellItemsinfomb>
-          )}
-          <CommenstMb>
-              <CommentLiveInfomb>
-                  <img src='/img/commentProfile1.jpg'/>
-                  <div className='desc'>
-                    <h3>이승연</h3>
-                    <p>제가 너무 갖고 싶었던 물건인데 이런 가격에!</p>
-                  </div>
-              </CommentLiveInfomb>
-              <CommentLiveInfomb>
-                  <img src='/img/commentProfile2.jpg'/>
-                  <div className='desc'>
-                    <h3>김예지</h3>
-                    <p>너무 예뻐요~~</p>
-                  </div>
-              </CommentLiveInfomb>
-          </CommenstMb>
         </LeftContent>
         <RightContent>
-          <div className='rightWrapper'>
-            <LiveProfile>
-              <div className='profileImg'>
-              <img src={LiveProfileImg} alt="LiveProfileImg" />
-              </div>
-              <LiveProfileSelf>
-                <div className='profileName'>미니멀데이</div>
-                <div className='profiledesc'>가을옷 보러오세요~~</div>
-              </LiveProfileSelf>
-            </LiveProfile>
-            <LiveContents>
-              <h3>라이브 안내</h3>
-              <p>안녕하세요~~ <br/> 고퀄리티 옷들만 판매해요. 미니멀 데이에서 가을옷 득템하세요!</p>
-            </LiveContents>
-            <SellItems>
-              <SellItem>
-                <h3>판매중인 상품</h3>
-                <SellInfos>
-                  <SellItemInfo>
-                    <SellItemImg>
-                      <div className='sellItemImg'></div>
-                      <img src={SellItem1Img} alt="SellItem1Img" height="70px" width="70px" />
-                      </SellItemImg>
-                    <SellItemDesc>
-                      <p>★5%추가할인★스프라이트 백트임 긴팔니트</p>
-                      <b><span>30%</span>19,900원</b>
-                    </SellItemDesc>
-                  </SellItemInfo>
-                  <SellItemInfo>
-                    <SellItemImg>
-                      <div className='sellItemImg'></div>
-                      <img src={SellItem2Img} alt="SellItem2Img" height="70px" width="70px" />
-                      </SellItemImg>
-                    <SellItemDesc>
-                      <p>메디슨 클래식 플랩 레더백</p>
-                      <b>34,000원</b>
-                    </SellItemDesc>
-                  </SellItemInfo>
-                </SellInfos>
-              </SellItem>
-            </SellItems>
-            <Comment>
-              <h3>댓글</h3>
-              <span>영상과 무관하거나 욕설, 비방 등의 댓글은 관리자에 의해 삭제될 수 있습니다.</span>
-              <NoComment>
-                <div className='commentIcon'>
-                <FontAwesomeIcon className='faComments' icon={faComments} />
-                </div>
-                <p>댓글이 없습니다. <br/> 첫 번째 댓글을 남겨주세요.</p>
-              </NoComment>
-              <div className='test'></div>
-            </Comment>
-          </div>
-        </RightContent>
-        <LiveProfilemb>
-            <div className='profileImgmb'>
-            <img src={LiveProfileImg} alt="LiveProfileImgmb" />
+          <LiveProfile>
+            <div className='profileImg'>
+            <img src={LiveProfileImg} alt="LiveProfileImg" />
             </div>
-            <LiveProfileSelfmb>
-              <div className='profileNamemb'><h4>미니멀데이</h4></div>
-              <div className='profiledescmb'>가을옷 보러오세요~~</div>
-            </LiveProfileSelfmb>
-        </LiveProfilemb>
+            <LiveProfileSelf>
+              <div className='profileName'>미니멀데이</div>
+              <div className='profiledesc'>가을옷 보러오세요~~</div>
+            </LiveProfileSelf>
+          </LiveProfile>
+          <LiveContents>
+            <h3>라이브 안내</h3>
+            <p>안녕하세요~~ <br/> 고퀄리티 옷들만 판매하고 있어요. 미니멀 데이에서 가을옷 득템하세요!</p>
+          </LiveContents>
+          <SellItems>
+            <SellItem>
+              <h3>판매중인 상품</h3>
+              <SellInfos>
+                <SellItemInfo>
+                  <SellItemImg>
+                    <div className='sellItemImg'></div>
+                    <img src={SellItem1Img} alt="SellItem1Img" height="70px" width="70px" />
+                    </SellItemImg>
+                  <SellItemDesc>
+                    <p>★5%추가할인★스프라이트 백트임 긴팔니트</p>
+                    <b><span>30%</span>19,900원</b>
+                  </SellItemDesc>
+                </SellItemInfo>
+                <SellItemInfo>
+                  <SellItemImg>
+                    <div className='sellItemImg'></div>
+                    <img src={SellItem2Img} alt="SellItem2Img" height="70px" width="70px" />
+                    </SellItemImg>
+                  <SellItemDesc>
+                    <p>메디슨 클래식 플랩 레더백</p>
+                    <b>34,000원</b>
+                  </SellItemDesc>
+                </SellItemInfo>
+              </SellInfos>
+            </SellItem>
+          </SellItems>
+          <Comment>
+            <h3>댓글</h3>
+            <span>영상과 무관하거나 욕설, 비방 등의 댓글은 관리자에 의해 삭제될 수 있습니다.</span>
+            <NoComment>
+              <div className='commentIcon'>
+              <FontAwesomeIcon className='faComments' icon={faComments} />
+              </div>
+              <p>댓글이 없습니다. <br/> 첫 번째 댓글을 남겨주세요.</p>
+            </NoComment>
+            <div className='test'></div>
+          </Comment>
+        </RightContent>
       </Commerce>
     </>
   )
 }
 
 export default ModalLive
+

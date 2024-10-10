@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import PostUploadField from '../detail/PostUploadField';
+import UploadField from '../common/UploadField.jsx';
 import './Comment.css';
 
 const Comment = ({ profilePic, username, initialContent, onDelete }) => {
@@ -73,7 +73,7 @@ const App1 = () => {
 
     return (
         <div className="app">
-            <h2>댓글</h2>
+            {/* <h2>댓글</h2> */}
             {comments.map(comment => (
                 <Comment 
                     key={comment.id}
@@ -83,7 +83,7 @@ const App1 = () => {
                     onDelete={() => handleDeleteComment(comment.id)}
                 />
             ))}
-            <PostUploadField/>
+
         </div>
     );
 };
