@@ -11,6 +11,9 @@ import { createGlobalStyle, styled } from "styled-components";
 import reset from "styled-reset";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { CgClose } from "react-icons/cg";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const GlobalStyles = createGlobalStyle`
   ${reset};
@@ -92,7 +95,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const ContImg = styled.div`
+const ContentsImg = styled.div`
   width: 100%;
   height: 100%;
   background: url("https://www.next-t.co.kr/public/uploads/7b7f7e2138e29e598cd0cdf2c85ea08d.jpg")
@@ -111,12 +114,21 @@ const Button = styled.div`
 `;
 
 const ContentsSec = () => {
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    nextArrow: <FaAngleRight />,
+    prevArrow: <FaAngleLeft />,
+  };
+
   return (
     <ContSlide>
       <Wrapper>
-        <div className="contImg">
-          <ContImg />
-        </div>
+        <Slider {...sliderSettings}></Slider>
+
         <div className="closeBtn">
           <CgClose />
         </div>
