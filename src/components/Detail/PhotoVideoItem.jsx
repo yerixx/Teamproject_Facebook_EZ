@@ -1,21 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 
-import testCat from "/img/testcat.jpg";
-
 //font
 import {
-  MainTitle_18_b,
-  MainTitle_18_n,
+  SubTitle_16_b,
+  SubDescription_14_n,
   SubDescription_12_m,
 } from "../../styles/GlobalStyles.styles.js";
 
 const Inner = styled.article`
   display: flex;
-  width: 260px;
-  height: 350px;
+  width: 230px;
+  height: 310px;
   cursor: pointer;
-  /* 미디어 쿼리 */
+  border: 1px solid var(--color-light-gray-02);
+  border-radius: var(--border-radius-08);
   @media (max-width: 768px) {
     display: flex;
     justify-content: center;
@@ -24,17 +23,17 @@ const Inner = styled.article`
   }
 `;
 const Contents = styled.div`
+  width: 100%;
   border: 1px solid var(--color-light-gray-02);
   border-radius: var(--border-radius-08);
   box-shadow: var(--box-shadow-01);
-  /* 미디어 쿼리 */
   @media (max-width: 768px) {
     width: 160px;
     height: 200px;
   }
 `;
 const ContImg = styled.img`
-  width: 260px;
+  width: 100%;
   height: 200px;
   object-fit: cover;
   border-radius: 8px 8px 0 0;
@@ -48,28 +47,31 @@ const ContText = styled.div`
   flex-direction: column;
   gap: 10px;
   padding: 26px 30px 30px;
-  .contTitle {
-    ${MainTitle_18_b}
-    @media (max-width : 768px) {
-      ${SubDescription_12_m}
-      width:160px;
-      margin-left: 4px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+  @media (max-width: 768px) {
+    gap: 4px;
   }
-  .contDesc {
-    ${MainTitle_18_n}
-    color:var(--color-gray-02);
-
+  .contTitle {
+    ${SubTitle_16_b}
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     @media (max-width: 768px) {
       ${SubDescription_12_m}
       width:160px;
-      margin-left: 4px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      padding-top: 10px;
+      padding-left: 10px;
+    }
+  }
+  .createdAt {
+    ${SubDescription_14_n}
+    color:var(--color-gray-02);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @media (max-width: 768px) {
+      ${SubDescription_12_m}
+      padding-left: 10px;
     }
   }
   @media (max-width: 768px) {
@@ -78,16 +80,33 @@ const ContText = styled.div`
   }
 `;
 
-const PhotoVideoItem = ({ title, desc, imageSrc }) => {
+const PhotoVideoItem = ({ imageSrc, contentDesc, createdAt }) => {
+  const isLiked = false; // 초기 좋아요 여부
+
+  const formatDate = (isoString) => {
+    const date = new Date(isoString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}.${month}.${day}`;
+  };
+
   return (
     <Inner>
       <Contents>
-        <ContImg src={imageSrc || testCat} alt="contentImage" />
+        <div>
+          {imageSrc && (
+            <ContImg
+              src={imageSrc}
+              alt="contentImage"
+              style={{ display: imageSrc ? "block" : "none" }}
+            />
+          )}
+        </div>
         <ContText>
-          <div className="contTitle">{title || "Summer~ ✨"}</div>
-          <div className="contDesc">{desc || "18 Image"} </div>
+          <div className="contTitle">{contentDesc}</div>
+          <div className="createdAt">{formatDate(createdAt)} </div>
         </ContText>
-        {/* <SocialBtnIcon/> */}
       </Contents>
     </Inner>
   );

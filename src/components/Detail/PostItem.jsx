@@ -7,11 +7,12 @@ import EditeBox from "../common/EditeBox.jsx";
 // react-icon
 import { BsThreeDots } from "react-icons/bs";
 import { IoCloseOutline } from "react-icons/io5";
+import { FaEarthAmericas } from "react-icons/fa6";
 
 //font
 import {
   MainTitle_22_b,
-  MainTitle_18_n,
+  SubTitle_16_b,
   SubDescription_16_n,
   SubDescription_14_n,
 } from "../../styles/GlobalStyles.styles.js";
@@ -28,6 +29,7 @@ const Wrapper = styled.section`
   box-shadow: var(--box-shadow-01);
   @media (max-width: 768px) {
     width: 90%;
+    padding-top: 20px;
   }
 `;
 const Inner = styled.article`
@@ -44,6 +46,7 @@ const Profile = styled.div`
   justify-content: space-between;
   @media (max-width: 768px) {
     width: 100%;
+    margin-bottom: 20px;
   }
 `;
 const ProfileContent = styled.div`
@@ -52,6 +55,7 @@ const ProfileContent = styled.div`
   gap: 20px;
   @media (max-width: 768px) {
     width: 100%;
+    gap: 16px;
   }
   .profileImg {
     width: 60px;
@@ -62,15 +66,18 @@ const ProfileContent = styled.div`
   .profileName {
     ${MainTitle_22_b}
     @media (max-width: 768px) {
-      ${MainTitle_22_b}
+      ${SubTitle_16_b}
     }
   }
-  .profileDesc {
+  .createdAt {
     ${SubDescription_16_n}
-    padding:4px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
     color: var(--color-gray-01);
     @media (max-width: 768px) {
-      ${MainTitle_18_n}
+      ${SubDescription_14_n}
     }
   }
 `;
@@ -83,14 +90,20 @@ const ControlsIcon = styled.div`
   *:hover {
     color: var(--color-facebookblue);
   }
-
+`;
+const EditeIcon = styled.div``;
+const DeletIcon = styled.div`
   @media (max-width: 768px) {
-    font-size: 30px;
+    font-size: 24px;
   }
 `;
 const Contents = styled.div`
   position: relative;
-  padding: 30px 0 0;
+  padding: 30px 0;
+  @media (max-width: 768px) {
+    padding: 0;
+    max-width: 100%;
+  }
   .contentDesc {
     ${SubDescription_16_n};
     font-weight: normal;
@@ -98,6 +111,7 @@ const Contents = styled.div`
     margin-bottom: 30px;
     @media (max-width: 768px) {
       ${SubDescription_14_n}
+      padding:0 4px;
     }
   }
   .contentImgs {
@@ -130,9 +144,6 @@ const Contents = styled.div`
       transform: translateX(30px);
     }
   }
-  @media (max-width: 768px) {
-    max-width: 100%;
-  }
 `;
 const ContImg = styled.img`
   margin-bottom: 30px;
@@ -141,52 +152,72 @@ const ContImg = styled.img`
   background: var(--color-light-gray-01);
   object-fit: cover;
   @media (max-width: 768px) {
+    padding: 0;
     max-width: 100%;
-    height: 250px;
+    height: 200px;
   }
 `;
 
-const PostItem = ({ postId, imageSrc, contentDesc, onDeletePost }) => {
+const PostItem = ({
+  postId,
+  imageSrc,
+  contentDesc,
+  onDeletePost,
+  createdAt,
+}) => {
   const isLiked = false; // 초기 좋아요 여부
 
-  const handleChangeDesc = () => {};
+  const formatDate = (isoString) => {
+    const date = new Date(isoString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}.${month}.${day}`;
+  };
 
-  const postDeletBtn = async (e) => {
+  const postDeleteBtn = async (e) => {
     e.preventDefault();
     const isConfirmed = confirm("게시물을 삭제하시겠습니까?");
     if (isConfirmed) {
       try {
-        await onDeletePost(postId);
+        await onDeletePost(postId); // 삭제 함수 호출
       } catch (err) {
-        console.error(err);
+        console.error("게시물 삭제 중 오류:", err);
       }
     }
   };
 
   return (
-    <Wrapper setId>
+    <Wrapper>
       <Inner>
         <Profile>
           <ProfileContent>
             <div className="profileImg"></div>
             <div className="profileText">
               <h1 className="profileName">박예림</h1>
-              <p className="profileDesc"> 8시간전</p>
+              <p className="createdAt">
+                {formatDate(createdAt)}{" "}
+                <FaEarthAmericas
+                  style={{
+                    fontSize: "14px",
+                    color: "black",
+                    marginTop: "2px",
+                  }}
+                />
+              </p>
             </div>
           </ProfileContent>
           <ControlsIcon>
-            <div style={{ zIndex: 999 }}>
-              <EditeBox Title={<BsThreeDots className="ControlsIcon" />} />
-            </div>
-            <div>
-              <IoCloseOutline onClick={postDeletBtn} />
-            </div>
+            <EditeIcon style={{ zIndex: 999 }}>
+              <EditeBox Title={<BsThreeDots />} />
+            </EditeIcon>
+            <DeletIcon>
+              <IoCloseOutline onClick={postDeleteBtn} />
+            </DeletIcon>
           </ControlsIcon>
         </Profile>
         <Contents>
-          <div onChange={handleChangeDesc} className="contentDesc">
-            {contentDesc}
-          </div>
+          <div className="contentDesc">{contentDesc}</div>
           {imageSrc && <ContImg src={imageSrc} alt="Post content image" />}
         </Contents>
         <SocialBtnIcon postId={postId} isLiked={isLiked} />

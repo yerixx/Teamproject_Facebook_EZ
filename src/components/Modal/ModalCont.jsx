@@ -1,105 +1,243 @@
-import React from "react";
-import styled from "styled-components";
-import ContentsSec from "../ModalConts/ContentsSec";
-import PostSec from "../ModalConts/PostSec";
-import TopProfile from "../ModalConts/TopProfile";
-import PostCont from "../ModalConts/PostCont";
-import Buttons from "../ModalConts/Buttons";
-import PostReply from "../ModalConts/PostReply";
-import Reply from "../ModalConts/Reply";
-import SelectBox from "../ModalConts/SelectBox";
-import TopProfileMob from "../ModalConts/TopProfileMob";
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { styled } from "styled-components";
+
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import testCat from "/img/testcat.jpg";
+import testImg from "/img/testImg.png";
+
+import SocialBtnIcon from "../common/SocialBtnIcon";
+
+import {
+  SubTitle_16_b,
+  SubDescription_14_n,
+} from "../../styles/GlobalStyles.styles.js";
 
 const Wrapper = styled.div`
-  display: flex;
-  border: 1px solid #f00;
-  height: 100vh;
   width: 100%;
-  @media screen and (max-width: 1050px) {
-    flex-direction: column;
-  }
-`;
-
-const WrapperRight = styled.div`
+  height: 100vh;
   display: flex;
-  flex: 1;
-  flex-direction: column;
-  border: 2px solid #f00;
-  align-items: center;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
 `;
-
-const Inner = styled.div`
+const DeskTop = styled.div`
+  width: 100%;
   display: flex;
-  flex-direction: column;
-`;
-
-const WrapperPost = styled.div`
-  width: 502px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  border: 1px solid aqua;
-`;
-
-const Line = styled.hr`
-  margin-top: 65px;
-  margin-bottom: 35px;
-`;
-
-const Inner02 = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 44px;
-`;
-
-const ReplyWrapper = styled.div`
-  border: 1px solid #f0f;
-  height: 290px;
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
+  @media (max-width: 768px) {
     display: none;
   }
 `;
 
-const ReplyNum = styled.div``;
+const LeftContent = styled.section`
+  flex: 2;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.9);
+`;
+const RightContent = styled.section`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+  margin: 0 auto;
+  padding-top: 40px;
+  gap: 20px;
+  background: #fff;
+`;
+const Xmark = styled.div`
+  .faXmark {
+    position: absolute;
+    top: 33px;
+    right: 30px;
+    color: #fff;
+    font-size: 25px;
+    cursor: pointer;
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+`;
+const ArrowBtn = styled.div``;
+const Trigger = styled.div``;
 
-const Latest = styled.div``;
+const ImageContent = styled.div`
+  width: 800px;
+  height: 700px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 390px;
+    object-fit: cover;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    @media screen and (max-width: 768px) {
+      width: 100%;
+      height: 390px;
+      object-fit: cover;
+    }
+  }
+`;
+const ModalProfileImg = styled.div`
+  width: 100%;
+  padding: 0 40px;
+  display: flex;
+  .profileImg {
+    width: 80px;
+    height: 80px;
+    background-color: var(--color-light-gray-02);
+    border-radius: 50%;
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    padding: 50px 20px;
+  }
+`;
+const ModalProfileSelf = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  margin-left: 20px;
+  .profileName {
+    ${SubTitle_16_b}
+    @media screen and (max-width: 768px) {
+      color: var(--color-white);
+    }
+  }
+  .profiledesc {
+    ${SubDescription_14_n}
+    @media screen and (max-width: 768px) {
+      color: var(--color-white);
+    }
+  }
+`;
+const ModalDesc = styled.div`
+  width: 100%;
+  padding: 0 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: var(--font-size-description-01);
+  color: var(--color-gray-01);
+  @media screen and (max-width: 1050px) {
+    width: 100%;
+    height: 100px;
+    padding: 0;
+    font-size: 14px;
+    overflow-y: scroll;
+    color: var(--color-white);
+    background: rgba(0, 0, 0, 0.5);
+  }
+  p {
+    word-wrap: keep-all;
+    border-bottom: 1px solid var(--color-light-gray-01);
+    padding-bottom: 15px;
+    font-size: var(--font-size-description-01);
+    @media screen and (max-width: 1050px) {
+      padding: 20px;
+      font-size: 14px;
+    }
+  }
+`;
+const SocialIcon = styled.div`
+  width: 90%;
+  @media (max-width: 768px) {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    * {
+      color: var(--color-white);
+    }
+  }
+`;
+const Mobile = styled.div`
+  display: none;
+  @media (max-width: 768px) {
+    display: block;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+  }
+`;
 
-const ModalCont = () => {
+const ModalLive = () => {
   return (
     <Wrapper>
-      <TopProfileMob />
-      <ContentsSec />
-      <WrapperRight>
-        <Inner>
-          <TopProfile />
-          <WrapperPost>
-            <PostCont />
-            <Buttons />
-          </WrapperPost>
-          <Line />
-          <Inner02>
-            <ReplyNum>
-              <div>총 개의 갯글</div>
-            </ReplyNum>
-            <Latest>
-              <SelectBox /> {/* <- 정렬 버튼 */}
-            </Latest>
-          </Inner02>
-          <ReplyWrapper>
-            <PostReply />
-            <PostReply />
-            <PostReply />
-            <PostReply />
-          </ReplyWrapper>
-        </Inner>
-        <Reply />
-      </WrapperRight>
+      {/* Desktop */}
+      <DeskTop>
+        <LeftContent>
+          <Xmark>
+            <FontAwesomeIcon className="faXmark" icon={faXmark} />
+          </Xmark>
+          <ArrowBtn></ArrowBtn>
+          <Trigger></Trigger>
+          <ImageContent>
+            <img src={testImg} />
+          </ImageContent>
+        </LeftContent>
+        <RightContent>
+          <ModalProfileImg>
+            <div className="profileImg">
+              <img src={testCat} alt="ModalProfileImg" />
+            </div>
+            <ModalProfileSelf>
+              <div className="profileName">미니멀데이</div>
+              <div className="profiledesc">6시간 전</div>
+            </ModalProfileSelf>
+          </ModalProfileImg>
+          <ModalDesc>
+            <p>아침, 저녁 젤 바쁜 방학의 일요일이 끝났다 😎💪🏻</p>
+          </ModalDesc>
+          <SocialIcon>
+            <SocialBtnIcon />
+          </SocialIcon>
+        </RightContent>
+      </DeskTop>
+      {/* mobile */}
+      <Mobile>
+        <Xmark>
+          <FontAwesomeIcon className="faXmark" icon={faXmark} />
+        </Xmark>
+        <ModalProfileImg>
+          <div className="profileImg">
+            <img src={testCat} alt="ModalProfileImg" />
+          </div>
+          <ModalProfileSelf>
+            <div className="profileName">박예림</div>
+            <div className="profiledesc">6시간 전</div>
+          </ModalProfileSelf>
+        </ModalProfileImg>
+        <ImageContent>
+          <img src={testImg} />
+        </ImageContent>
+        <ModalDesc>
+          <p>
+            아침, 저녁 젤 바쁜 방학의 일요일이 끝났다 😎💪🏻 <br /> 또 다시
+            월요일이라니!!
+            <br />
+            월요팅 하세요~~
+          </p>
+        </ModalDesc>
+        <SocialIcon>
+          <SocialBtnIcon />
+        </SocialIcon>
+      </Mobile>
     </Wrapper>
   );
 };
 
-export default ModalCont
+export default ModalLive;

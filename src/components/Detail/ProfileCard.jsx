@@ -49,7 +49,7 @@ const ProfileImgCont = styled.div`
   display: flex;
   gap: 30px;
   @media (max-width: 768px) {
-    padding: 0 20px;
+    padding-left: 24px;
     align-items: center;
     gap: 15px;
   }
@@ -61,8 +61,8 @@ const ProfileImgCont = styled.div`
     border-radius: 100%;
     object-fit: cover;
     @media (max-width: 768px) {
-      width: 110px;
-      height: 110px;
+      width: 90px;
+      height: 90px;
     }
   }
   .editIcon {
@@ -83,7 +83,7 @@ const ProfileImgCont = styled.div`
     }
     cursor: pointer;
     @media (max-width: 768px) {
-      right: 10px;
+      right: -10px;
     }
   }
 `;

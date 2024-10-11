@@ -19,7 +19,7 @@ const WrapperForm = styled.form`
   display: flex;
   justify-content: center;
   @media (max-width: 768px) {
-    margin-top: 60px;
+    margin: 16px 0;
     height: 150px;
   }
 `;
@@ -161,6 +161,9 @@ const Posting = styled.div`
     border: 1px solid #ccc;
     margin-bottom: 20px;
     resize: none;
+    @media (max-width: 768px) {
+      font-size: 12px;
+    }
     &:focus {
       outline: none;
     }
@@ -242,8 +245,11 @@ const UploadField = ({ placeholder }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!uploadFile && !uploadText) {
+      alert("내용을 입력해주세요");
+      return;
+    }
     setIsLoading(true);
-
     let imageUrl = null;
 
     if (uploadFile) {
@@ -257,9 +263,11 @@ const UploadField = ({ placeholder }) => {
     }
 
     try {
+      // 여기에서 content에는 업로드된 텍스트를, image에는 이미지 URL을 전달
       await onCreatePost("testUserId", "TestUser", uploadText, imageUrl);
       setUploadText("");
       setUploadFile(null);
+      alert("게시물 업로드가 완료됐습니다");
     } catch (err) {
       console.error("게시물 업로드 중 오류:", err);
     } finally {
