@@ -11,18 +11,24 @@ const Wrapper = styled.div`
   flex-direction: column;
   gap: 60px;
   padding-bottom: 60px;
-  cursor: pointer;
 `;
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);
+  const [isContOpen, setIsContOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { onDeletePost } = useContext(DataDispatchContext);
 
-  const handleModal = () => {
-    setIsModalOpen(true);
+  const handleModalOpen = () => {
+    try {
+      setIsModalOpen(true);
+    } catch (err) {
+      console.error(err);
+    }
   };
-
+  const handleContOpen = () => {
+    setIsContOpen(true);
+  };
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -54,11 +60,13 @@ const PostList = () => {
             createdAt={post.createdAt}
             contentDesc={post.content}
             onDeletePost={onDeletePost}
-            onClick={handleModal}
+            handleModalOpen={handleModalOpen}
+            handleContOpen={handleContOpen}
           />
         ))}
       </Wrapper>
-      {isModalOpen && <ModalCont />}
+      {isContOpen && <ModalCont />}
+      {/* <ModalCont /> */}
     </>
   );
 };

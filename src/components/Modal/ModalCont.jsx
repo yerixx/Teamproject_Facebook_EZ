@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { styled } from "styled-components";
 
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import EditeBox from "../common/EditeBox.jsx";
+import SocialBtnIcon from "../common/SocialBtnIcon";
+
+import { BsThreeDots } from "react-icons/bs";
+import { IoCloseOutline } from "react-icons/io5";
+
 import testCat from "/img/testcat.jpg";
 import testImg from "/img/testImg.png";
-
-import SocialBtnIcon from "../common/SocialBtnIcon";
 
 import {
   SubTitle_16_b,
@@ -57,16 +60,39 @@ const RightContent = styled.section`
   gap: 20px;
   background: #fff;
 `;
-const Xmark = styled.div`
-  .faXmark {
-    position: absolute;
-    top: 33px;
-    right: 30px;
-    font-size: 25px;
-    cursor: pointer;
-  }
+const ControlsIcon = styled.div`
+  display: flex;
   @media screen and (max-width: 768px) {
     width: 100%;
+  }
+`;
+const EditeIcon = styled.div`
+  position: absolute;
+  top: 33px;
+  right: 50px;
+  font-size: 25px;
+  cursor: pointer;
+  @media screen and (max-width: 768px) {
+    * {
+      color: var(--color-white);
+    }
+    .optionItem {
+      color: black;
+    }
+    .optionList {
+      box-shadow: none;
+    }
+  }
+`;
+
+const CloseIcon = styled.div`
+  position: absolute;
+  top: 33px;
+  right: 30px;
+  font-size: 25px;
+  cursor: pointer;
+  @media screen and (max-width: 768px) {
+    color: var(--color-white);
   }
 `;
 const ArrowBtn = styled.div``;
@@ -182,16 +208,8 @@ const Mobile = styled.div`
 
 const ModalCont = () => {
   const [closeBtn, setCloseBtn] = useState(false);
-
   const closeButton = () => {
-    const userConfirmed = window.confirm("게시물 수정을 취소하시겠습니까?");
-    try {
-      if (confirm) {
-        setCloseBtn(true);
-      }
-    } catch (err) {
-      console.error(err);
-    }
+    setCloseBtn(true);
   };
 
   return (
@@ -206,9 +224,21 @@ const ModalCont = () => {
           </ImageContent>
         </LeftContent>
         <RightContent>
-          <Xmark onClick={closeButton}>
-            <FontAwesomeIcon className="faXmark" icon={faXmark} />
-          </Xmark>
+          <ControlsIcon>
+            <EditeIcon>
+              <EditeBox
+                //이거 쓰면됨
+                // handleEditBtn={handleEditBtn}
+                Title={<BsThreeDots className="bsThreeDots" />}
+              />
+            </EditeIcon>
+            <CloseIcon onClick={closeButton}>
+              <IoCloseOutline
+                className="closeIcon"
+                // onClick={postDeleteBtn}
+              />
+            </CloseIcon>
+          </ControlsIcon>
           <ModalProfileImg>
             <div className="profileImg">
               <img src={testCat} alt="ModalProfileImg" />
@@ -228,9 +258,21 @@ const ModalCont = () => {
       </DeskTop>
       {/* mobile */}
       <Mobile>
-        <Xmark>
-          <FontAwesomeIcon className="faXmark" icon={faXmark} />
-        </Xmark>
+        <ControlsIcon>
+          <EditeIcon>
+            <EditeBox
+              //이거 쓰면됨
+              // handleEditBtn={handleEditBtn}
+              Title={<BsThreeDots />}
+            />
+          </EditeIcon>
+          <CloseIcon onClick={closeButton}>
+            <IoCloseOutline
+              className="closeIcon"
+              // onClick={postDeleteBtn}
+            />
+          </CloseIcon>
+        </ControlsIcon>
         <ModalProfileImg>
           <div className="profileImg">
             <img src={testCat} alt="ModalProfileImg" />

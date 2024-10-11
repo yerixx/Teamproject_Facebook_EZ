@@ -3,6 +3,8 @@ import styled from "styled-components";
 import SocialBtnIcon from "../common/SocialBtnIcon.jsx";
 import UploadField from "../common/UploadField.jsx";
 import EditeBox from "../common/EditeBox.jsx";
+import UploadModal from "../common/UploadModal.jsx";
+
 import ModalCont from "../Modal/ModalCont.jsx";
 
 // react-icon
@@ -152,6 +154,7 @@ const ContImg = styled.img`
   height: 350px;
   background: var(--color-light-gray-01);
   object-fit: cover;
+  cursor: pointer;
   @media (max-width: 768px) {
     padding: 0;
     max-width: 100%;
@@ -165,6 +168,7 @@ const PostItem = ({
   contentDesc,
   onDeletePost,
   createdAt,
+  handleContOpen,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -193,10 +197,14 @@ const PostItem = ({
 
   const handleEditBtn = () => {
     if (confirm("게시물을 수정 하시겠습니까?")) {
-      setIsEditing((prev) => !prev);
-      setIsModalOpen(true);
+      setIsEditing(true);
+      setIsModalOpen(true); // 수정 모달 열기
     }
-    setIsOpen(false);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false); // 모달 닫기
+    setIsEditing(false); // 수정 모드 해제
   };
 
   return (
@@ -209,7 +217,7 @@ const PostItem = ({
               <div className="profileText">
                 <h1 className="profileName">박예림</h1>
                 <p className="createdAt">
-                  {formatDate(createdAt)}{" "}
+                  {formatDate(createdAt)}
                   <FaEarthAmericas
                     style={{
                       fontSize: "14px",
@@ -234,13 +242,19 @@ const PostItem = ({
           </Profile>
           <Contents>
             <div className="contentDesc">{contentDesc}</div>
-            {imageSrc && <ContImg src={imageSrc} alt="Post content image" />}
+            {imageSrc && (
+              <ContImg
+                onClick={handleContOpen}
+                src={imageSrc}
+                alt="Post content image"
+              />
+            )}
           </Contents>
           <SocialBtnIcon postId={postId} isLiked={isLiked} />
           <UploadField />
         </Inner>
       </Wrapper>
-      {isEditing && <ModalCont />}
+      {isModalOpen && <UploadModal closeModal={closeModal} />}
     </>
   );
 };
