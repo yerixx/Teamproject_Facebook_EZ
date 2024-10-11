@@ -459,7 +459,6 @@ const ModalLive = () => {
           </Comment>
         </RightContent>
       </Commerce>
-      <Mobile></Mobile>
     </>
   );
 };

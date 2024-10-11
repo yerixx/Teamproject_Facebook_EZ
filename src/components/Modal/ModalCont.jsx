@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { styled } from "styled-components";
 
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import LiveProfileImg from "../../img/LiveProfile.jpg";
-import LiveView from "../../img/Live.jpg";
+import testCat from "/img/testcat.jpg";
+import testImg from "/img/testImg.png";
+
 import SocialBtnIcon from "../common/SocialBtnIcon";
 
+import {
+  SubTitle_16_b,
+  SubDescription_14_n,
+} from "../../styles/GlobalStyles.styles.js";
+
+const DeskTop = styled.div`
+  width: 100%;
+  display: flex;
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
 const Commerce = styled.div`
   width: 100%;
   height: 100vh;
@@ -15,7 +28,6 @@ const Commerce = styled.div`
   top: 0;
   left: 0;
 `;
-
 const LeftContent = styled.section`
   flex: 2;
   height: 100%;
@@ -24,6 +36,8 @@ const LeftContent = styled.section`
   align-items: center;
   position: relative;
   background-color: rgba(0, 0, 0, 0.9);
+`;
+const Xmark = styled.div`
   .faXmark {
     position: absolute;
     top: 33px;
@@ -32,155 +46,86 @@ const LeftContent = styled.section`
     font-size: 25px;
     cursor: pointer;
   }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
+const ArrowBtn = styled.div``;
+const Trigger = styled.div``;
 
-const Live = styled.div`
-  width: 500px;
+const ImageContent = styled.div`
+  width: 800px;
   height: 700px;
   position: relative;
   display: flex;
   flex-direction: column;
-  border-radius: 8px;
-  background-image: url(${LiveView});
-  background-repeat: no-repeat;
-  background-position: top center;
-  background-size: cover;
-  @media screen and (max-width: 1050px) {
-    width: 400px;
-    height: 600px;
-  }
   @media screen and (max-width: 768px) {
-    width: 390px;
+    width: 100%;
+    height: 390px;
+    object-fit: cover;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    @media screen and (max-width: 768px) {
+      width: 100%;
+      height: 390px;
+      object-fit: cover;
+    }
   }
 `;
-
-// const LiveStatus = styled.div`
-//   width: 224px;
-//   height: 57px;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   position: relative;
-//   top: 5px;
-//   left: 10px;
-//   gap: 10px;
-//   color: #fff;
-//   .liveViewer {
-//     margin-left: 13px;
-//   }
-//   @media screen and (max-width: 1050px) {
-//     font-size: 12px;
-//     top: 0;
-//     left: 0;
-//     .liveViewer {
-//       margin-left: 5px;
-//       font-size: 12px;
-//     }
-//   }
-// `;
-
-// const LivePoint = styled.div`
-//   width: 500px;
-//   height: 85px;
-//   display: flex;
-//   justify-content: space-around;
-//   align-items: center;
-//   position: absolute;
-//   bottom: 0;
-//   border-radius: 0 0 8px 8px;
-//   background-color: rgba(0, 0, 0, 0.8);
-//   .point {
-//     width: 140px;
-//     height: 36px;
-//     border: none;
-//     border-radius: 8px;
-//     background-color: var(--color-white);
-//     cursor: pointer;
-//     transition: all 0.3s;
-//     &:hover {
-//       background-color: var(--color-facebookblue);
-//       color: var(--color-white);
-//     }
-//   }
-//   .pointDS {
-//     color: var(--color-white);
-//   }
-
-//   @media screen and (max-width: 1050px) {
-//     width: 400px;
-//     height: 70px;
-//     padding: 0 20px;
-//     .point {
-//       width: 100px;
-//       height: 26px;
-//       font-size: 12px;
-//     }
-//     .pointDS {
-//       font-size: 12px;
-//     }
-//     .pointTime {
-//       width: 20px;
-//       height: 20px;
-//       font-size: 12px;
-//     }
-//   }
-// `;
-
 const RightContent = styled.section`
-  background: #fff;
   flex: 1;
-  height: 100%;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  height: 100%;
+  margin: 0 auto;
+  padding-top: 40px;
   gap: 20px;
-  .socialBtnIcon {
-    width: 90%;
-  }
-  /* .commentList {
-    width: 90%;
-    border: 1px solid #f00;
-  } */
+  background: #fff;
 `;
-
-const LiveProfile = styled.div`
+const ModalProfileImg = styled.div`
   width: 100%;
   padding: 0 40px;
   display: flex;
   .profileImg {
+    width: 80px;
+    height: 80px;
     background-color: var(--color-light-gray-02);
     border-radius: 50%;
     img {
-      width: 80px;
+      width: 100%;
+      height: 100%;
       border-radius: 50%;
     }
   }
-  @media screen and (max-width: 1050px) {
-    padding: 0 50px;
+  @media screen and (max-width: 768px) {
+    padding: 50px 20px;
   }
 `;
-
-const LiveProfileSelf = styled.div`
+const ModalProfileSelf = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 5px;
   margin-left: 20px;
   .profileName {
-    font-size: var(--font-size-title-04);
-    font-weight: bold;
-    color: var(--color-gray-01);
+    ${SubTitle_16_b}
+    @media screen and (max-width: 768px) {
+      color: var(--color-white);
+    }
   }
   .profiledesc {
-    font-size: var(--font-size-description-01);
-    font-weight: 400;
-    color: var(--color-gray-01);
+    ${SubDescription_14_n}
+    @media screen and (max-width: 768px) {
+      color: var(--color-white);
+    }
   }
 `;
-
-const LiveContents = styled.div`
+const ModalDesc = styled.div`
   width: 100%;
   padding: 0 40px;
   display: flex;
@@ -188,15 +133,43 @@ const LiveContents = styled.div`
   gap: 10px;
   font-size: var(--font-size-description-01);
   color: var(--color-gray-01);
-  h3 {
+  @media screen and (max-width: 1050px) {
+    width: 100%;
+    height: 100px;
+    padding: 0;
+    font-size: 14px;
+    overflow-y: scroll;
+    color: var(--color-white);
+    background: rgba(0, 0, 0, 0.5);
+  }
+  p {
+    word-wrap: keep-all;
     border-bottom: 1px solid var(--color-light-gray-01);
     padding-bottom: 15px;
-    /* padding: 15px 0; */
     font-size: var(--font-size-description-01);
+    @media screen and (max-width: 1050px) {
+      padding: 20px;
+      font-size: 14px;
+    }
   }
-  @media screen and (max-width: 1050px) {
-    padding: 0 50px;
-    font-size: 14px;
+`;
+const SocialIcon = styled.div`
+  width: 90%;
+  @media (max-width: 768px) {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    * {
+      color: var(--color-white);
+    }
+  }
+`;
+const Mobile = styled.div`
+  display: none;
+  @media (max-width: 768px) {
+    display: block;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
   }
 `;
 
@@ -204,35 +177,65 @@ const ModalLive = () => {
   return (
     <>
       <Commerce>
-        <LeftContent>
-          <FontAwesomeIcon className="faXmark" icon={faXmark} />
-          <Live></Live>
-        </LeftContent>
-        <RightContent>
-          <LiveProfile>
+        {/* Desktop */}
+        <DeskTop>
+          <LeftContent>
+            <Xmark>
+              <FontAwesomeIcon className="faXmark" icon={faXmark} />
+            </Xmark>
+            <ArrowBtn></ArrowBtn>
+            <Trigger></Trigger>
+            <ImageContent>
+              <img src={testImg} />
+            </ImageContent>
+          </LeftContent>
+          <RightContent>
+            <ModalProfileImg>
+              <div className="profileImg">
+                <img src={testCat} alt="ModalProfileImg" />
+              </div>
+              <ModalProfileSelf>
+                <div className="profileName">미니멀데이</div>
+                <div className="profiledesc">6시간 전</div>
+              </ModalProfileSelf>
+            </ModalProfileImg>
+            <ModalDesc>
+              <p>아침, 저녁 젤 바쁜 방학의 일요일이 끝났다 😎💪🏻</p>
+            </ModalDesc>
+            <SocialIcon>
+              <SocialBtnIcon />
+            </SocialIcon>
+          </RightContent>
+        </DeskTop>
+        {/* mobile */}
+        <Mobile>
+          <Xmark>
+            <FontAwesomeIcon className="faXmark" icon={faXmark} />
+          </Xmark>
+          <ModalProfileImg>
             <div className="profileImg">
-              <img src={LiveProfileImg} alt="LiveProfileImg" />
+              <img src={testCat} alt="ModalProfileImg" />
             </div>
-            <LiveProfileSelf>
-              <div className="profileName">미니멀데이</div>
+            <ModalProfileSelf>
+              <div className="profileName">박예림</div>
               <div className="profiledesc">6시간 전</div>
-            </LiveProfileSelf>
-          </LiveProfile>
-          <LiveContents>
+            </ModalProfileSelf>
+          </ModalProfileImg>
+          <ImageContent>
+            <img src={testImg} />
+          </ImageContent>
+          <ModalDesc>
             <p>
-              문장 때 그래픽 차지하는 프로젝트 무언가를 입숨은 때로 지칭하는
-              로렘 표준 문장 차지하는 채움 폰트, 채워지기 입숨을 내용이 모형의
-              사용된다. 분야에서 채워지기 최종 요소나 용도로 채우기 무언가를
-              때로 이용된다.
+              아침, 저녁 젤 바쁜 방학의 일요일이 끝났다 😎💪🏻 <br /> 또 다시
+              월요일이라니!!
+              <br />
+              월요팅 하세요~~
             </p>
-          </LiveContents>
-          <div className="socialBtnIcon">
+          </ModalDesc>
+          <SocialIcon>
             <SocialBtnIcon />
-          </div>
-          {/* <div className="commentList">
-            <CommentList />
-          </div> */}
-        </RightContent>
+          </SocialIcon>
+        </Mobile>
       </Commerce>
     </>
   );
