@@ -13,14 +13,7 @@ import {
   SubDescription_14_n,
 } from "../../styles/GlobalStyles.styles.js";
 
-const DeskTop = styled.div`
-  width: 100%;
-  display: flex;
-  @media (max-width: 768px) {
-    display: none;
-  }
-`;
-const Commerce = styled.div`
+const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
   display: flex;
@@ -28,6 +21,14 @@ const Commerce = styled.div`
   top: 0;
   left: 0;
 `;
+const DeskTop = styled.div`
+  width: 100%;
+  display: flex;
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
 const LeftContent = styled.section`
   flex: 2;
   height: 100%;
@@ -36,6 +37,18 @@ const LeftContent = styled.section`
   align-items: center;
   position: relative;
   background-color: rgba(0, 0, 0, 0.9);
+`;
+const RightContent = styled.section`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+  margin: 0 auto;
+  padding-top: 40px;
+  gap: 20px;
+  background: #fff;
 `;
 const Xmark = styled.div`
   .faXmark {
@@ -74,18 +87,6 @@ const ImageContent = styled.div`
       object-fit: cover;
     }
   }
-`;
-const RightContent = styled.section`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  height: 100%;
-  margin: 0 auto;
-  padding-top: 40px;
-  gap: 20px;
-  background: #fff;
 `;
 const ModalProfileImg = styled.div`
   width: 100%;
@@ -175,69 +176,67 @@ const Mobile = styled.div`
 
 const ModalLive = () => {
   return (
-    <>
-      <Commerce>
-        {/* Desktop */}
-        <DeskTop>
-          <LeftContent>
-            <Xmark>
-              <FontAwesomeIcon className="faXmark" icon={faXmark} />
-            </Xmark>
-            <ArrowBtn></ArrowBtn>
-            <Trigger></Trigger>
-            <ImageContent>
-              <img src={testImg} />
-            </ImageContent>
-          </LeftContent>
-          <RightContent>
-            <ModalProfileImg>
-              <div className="profileImg">
-                <img src={testCat} alt="ModalProfileImg" />
-              </div>
-              <ModalProfileSelf>
-                <div className="profileName">미니멀데이</div>
-                <div className="profiledesc">6시간 전</div>
-              </ModalProfileSelf>
-            </ModalProfileImg>
-            <ModalDesc>
-              <p>아침, 저녁 젤 바쁜 방학의 일요일이 끝났다 😎💪🏻</p>
-            </ModalDesc>
-            <SocialIcon>
-              <SocialBtnIcon />
-            </SocialIcon>
-          </RightContent>
-        </DeskTop>
-        {/* mobile */}
-        <Mobile>
+    <Wrapper>
+      {/* Desktop */}
+      <DeskTop>
+        <LeftContent>
           <Xmark>
             <FontAwesomeIcon className="faXmark" icon={faXmark} />
           </Xmark>
+          <ArrowBtn></ArrowBtn>
+          <Trigger></Trigger>
+          <ImageContent>
+            <img src={testImg} />
+          </ImageContent>
+        </LeftContent>
+        <RightContent>
           <ModalProfileImg>
             <div className="profileImg">
               <img src={testCat} alt="ModalProfileImg" />
             </div>
             <ModalProfileSelf>
-              <div className="profileName">박예림</div>
+              <div className="profileName">미니멀데이</div>
               <div className="profiledesc">6시간 전</div>
             </ModalProfileSelf>
           </ModalProfileImg>
-          <ImageContent>
-            <img src={testImg} />
-          </ImageContent>
           <ModalDesc>
-            <p>
-              아침, 저녁 젤 바쁜 방학의 일요일이 끝났다 😎💪🏻 <br /> 또 다시
-              월요일이라니!!
-              <br />
-              월요팅 하세요~~
-            </p>
+            <p>아침, 저녁 젤 바쁜 방학의 일요일이 끝났다 😎💪🏻</p>
           </ModalDesc>
           <SocialIcon>
             <SocialBtnIcon />
           </SocialIcon>
-        </Mobile>
-      </Commerce>
-    </>
+        </RightContent>
+      </DeskTop>
+      {/* mobile */}
+      <Mobile>
+        <Xmark>
+          <FontAwesomeIcon className="faXmark" icon={faXmark} />
+        </Xmark>
+        <ModalProfileImg>
+          <div className="profileImg">
+            <img src={testCat} alt="ModalProfileImg" />
+          </div>
+          <ModalProfileSelf>
+            <div className="profileName">박예림</div>
+            <div className="profiledesc">6시간 전</div>
+          </ModalProfileSelf>
+        </ModalProfileImg>
+        <ImageContent>
+          <img src={testImg} />
+        </ImageContent>
+        <ModalDesc>
+          <p>
+            아침, 저녁 젤 바쁜 방학의 일요일이 끝났다 😎💪🏻 <br /> 또 다시
+            월요일이라니!!
+            <br />
+            월요팅 하세요~~
+          </p>
+        </ModalDesc>
+        <SocialIcon>
+          <SocialBtnIcon />
+        </SocialIcon>
+      </Mobile>
+    </Wrapper>
   );
 };
 
