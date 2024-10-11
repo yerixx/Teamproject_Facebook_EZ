@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import PostItem from "../detail/PostItem";
+import ModalCont from "../Modal/ModalCont";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../../firebase";
 import { DataDispatchContext } from "../../App";
@@ -15,7 +16,12 @@ const Wrapper = styled.div`
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { onDeletePost } = useContext(DataDispatchContext);
+
+  const handleModal = () => {
+    setIsModalOpen(true);
+  };
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -38,18 +44,22 @@ const PostList = () => {
   }, []);
 
   return (
-    <Wrapper>
-      {posts.map((post) => (
-        <PostItem
-          key={post.id}
-          postId={post.id}
-          imageSrc={post.image}
-          createdAt={post.createdAt}
-          contentDesc={post.content}
-          onDeletePost={onDeletePost}
-        />
-      ))}
-    </Wrapper>
+    <>
+      <Wrapper>
+        {posts.map((post) => (
+          <PostItem
+            key={post.id}
+            postId={post.id}
+            imageSrc={post.image}
+            createdAt={post.createdAt}
+            contentDesc={post.content}
+            onDeletePost={onDeletePost}
+            onClick={handleModal}
+          />
+        ))}
+      </Wrapper>
+      {isModalOpen && <ModalCont />}
+    </>
   );
 };
 

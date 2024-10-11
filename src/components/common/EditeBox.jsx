@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
+import ModalCont from "../Modal/ModalCont";
 
 const Wrapper = styled.div`
   position: relative;
@@ -67,8 +68,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const EditeBox = ({ Title, desc }) => {
-  const [isEditing, setEditing] = useState(false);
+const EditeBox = ({ Title, desc, handleEditBtn }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -90,24 +90,17 @@ const EditeBox = ({ Title, desc }) => {
     setIsOpen(!isOpen);
   };
 
-  const handleEditPost = () => {
-    if (confirm("게시물을 수정 하시겠습니까?")) {
-      setEditing((prev) => !prev);
-    }
-    setIsOpen(false);
-  };
-
   return (
-    <Wrapper className={isOpen ? "active" : ""} ref={dropdownRef}>
-      <button className="label" onClick={toggleDropdown}>
-        {Title || "최신순"}
-      </button>
-      <ul className="optionList">
-        <li className="optionItem" onClick={handleEditPost}>
-          {desc || "게시물 수정하기"}
-        </li>
-      </ul>
-    </Wrapper>
+    <>
+      <Wrapper className={isOpen ? "active" : ""} ref={dropdownRef}>
+        <button className="label" onClick={toggleDropdown}>
+          {Title || "최신순"}
+        </button>
+        <ul onClick={handleEditBtn} className="optionList">
+          <li className="optionItem">{desc || "게시물 수정하기"}</li>
+        </ul>
+      </Wrapper>
+    </>
   );
 };
 

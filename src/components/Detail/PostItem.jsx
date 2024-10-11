@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import SocialBtnIcon from "../common/SocialBtnIcon.jsx";
 import UploadField from "../common/UploadField.jsx";
 import EditeBox from "../common/EditeBox.jsx";
+import ModalCont from "../Modal/ModalCont.jsx";
 
 // react-icon
 import { BsThreeDots } from "react-icons/bs";
@@ -165,6 +166,9 @@ const PostItem = ({
   onDeletePost,
   createdAt,
 }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const isLiked = false; // 초기 좋아요 여부
 
   const formatDate = (isoString) => {
@@ -187,43 +191,57 @@ const PostItem = ({
     }
   };
 
+  const handleEditBtn = () => {
+    if (confirm("게시물을 수정 하시겠습니까?")) {
+      setIsEditing((prev) => !prev);
+      setIsModalOpen(true);
+    }
+    setIsOpen(false);
+  };
+
   return (
-    <Wrapper>
-      <Inner>
-        <Profile>
-          <ProfileContent>
-            <div className="profileImg"></div>
-            <div className="profileText">
-              <h1 className="profileName">박예림</h1>
-              <p className="createdAt">
-                {formatDate(createdAt)}{" "}
-                <FaEarthAmericas
-                  style={{
-                    fontSize: "14px",
-                    color: "black",
-                    marginTop: "2px",
-                  }}
+    <>
+      <Wrapper>
+        <Inner>
+          <Profile>
+            <ProfileContent>
+              <div className="profileImg"></div>
+              <div className="profileText">
+                <h1 className="profileName">박예림</h1>
+                <p className="createdAt">
+                  {formatDate(createdAt)}{" "}
+                  <FaEarthAmericas
+                    style={{
+                      fontSize: "14px",
+                      color: "black",
+                      marginTop: "2px",
+                    }}
+                  />
+                </p>
+              </div>
+            </ProfileContent>
+            <ControlsIcon>
+              <EditeIcon style={{ zIndex: 1 }}>
+                <EditeBox
+                  handleEditBtn={handleEditBtn}
+                  Title={<BsThreeDots />}
                 />
-              </p>
-            </div>
-          </ProfileContent>
-          <ControlsIcon>
-            <EditeIcon style={{ zIndex: 999 }}>
-              <EditeBox Title={<BsThreeDots />} />
-            </EditeIcon>
-            <DeletIcon>
-              <IoCloseOutline onClick={postDeleteBtn} />
-            </DeletIcon>
-          </ControlsIcon>
-        </Profile>
-        <Contents>
-          <div className="contentDesc">{contentDesc}</div>
-          {imageSrc && <ContImg src={imageSrc} alt="Post content image" />}
-        </Contents>
-        <SocialBtnIcon postId={postId} isLiked={isLiked} />
-        <UploadField />
-      </Inner>
-    </Wrapper>
+              </EditeIcon>
+              <DeletIcon>
+                <IoCloseOutline onClick={postDeleteBtn} />
+              </DeletIcon>
+            </ControlsIcon>
+          </Profile>
+          <Contents>
+            <div className="contentDesc">{contentDesc}</div>
+            {imageSrc && <ContImg src={imageSrc} alt="Post content image" />}
+          </Contents>
+          <SocialBtnIcon postId={postId} isLiked={isLiked} />
+          <UploadField />
+        </Inner>
+      </Wrapper>
+      {isEditing && <ModalCont />}
+    </>
   );
 };
 

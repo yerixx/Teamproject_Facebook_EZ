@@ -14,21 +14,28 @@ import {
 } from "../../styles/GlobalStyles.styles.js";
 
 const Wrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+`;
+
+const DeskTop = styled.div`
   width: 100%;
   height: 100vh;
   display: flex;
-  position: absolute;
-  top: 0;
-  left: 0;
-`;
-const DeskTop = styled.div`
-  width: 100%;
-  display: flex;
+  background: var(--color-white);
+
   @media (max-width: 768px) {
     display: none;
   }
 `;
-
 const LeftContent = styled.section`
   flex: 2;
   height: 100%;
@@ -55,7 +62,6 @@ const Xmark = styled.div`
     position: absolute;
     top: 33px;
     right: 30px;
-    color: #fff;
     font-size: 25px;
     cursor: pointer;
   }
@@ -174,15 +180,25 @@ const Mobile = styled.div`
   }
 `;
 
-const ModalLive = () => {
+const ModalCont = () => {
+  const [closeBtn, setCloseBtn] = useState(false);
+
+  const closeButton = () => {
+    const userConfirmed = window.confirm("게시물 수정을 취소하시겠습니까?");
+    try {
+      if (confirm) {
+        setCloseBtn(true);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
-    <Wrapper>
+    <Wrapper style={{ display: closeBtn ? "none" : "block" }}>
       {/* Desktop */}
       <DeskTop>
         <LeftContent>
-          <Xmark>
-            <FontAwesomeIcon className="faXmark" icon={faXmark} />
-          </Xmark>
           <ArrowBtn></ArrowBtn>
           <Trigger></Trigger>
           <ImageContent>
@@ -190,6 +206,9 @@ const ModalLive = () => {
           </ImageContent>
         </LeftContent>
         <RightContent>
+          <Xmark onClick={closeButton}>
+            <FontAwesomeIcon className="faXmark" icon={faXmark} />
+          </Xmark>
           <ModalProfileImg>
             <div className="profileImg">
               <img src={testCat} alt="ModalProfileImg" />
@@ -240,4 +259,4 @@ const ModalLive = () => {
   );
 };
 
-export default ModalLive;
+export default ModalCont;
