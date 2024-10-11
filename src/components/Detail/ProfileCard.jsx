@@ -218,6 +218,7 @@ const ProfileCard = () => {
   const [isEditing, setEditing] = useState(false);
   const [profileImg, setProfileImg] = useState(testCat);
   const [desc, setDesc] = useState("A Photographer @pylpic");
+
   const fileRef = useRef(null);
 
   const onSubmit = async (e) => {

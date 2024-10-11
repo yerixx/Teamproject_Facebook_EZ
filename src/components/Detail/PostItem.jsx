@@ -168,7 +168,7 @@ const PostItem = ({
   contentDesc,
   onDeletePost,
   createdAt,
-  handleContOpen,
+  handleModalContOpen,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -244,7 +244,7 @@ const PostItem = ({
             <div className="contentDesc">{contentDesc}</div>
             {imageSrc && (
               <ContImg
-                onClick={handleContOpen}
+                onClick={handleModalContOpen}
                 src={imageSrc}
                 alt="Post content image"
               />

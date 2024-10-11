@@ -17,6 +17,7 @@ const PostList = () => {
   const [posts, setPosts] = useState([]);
   const [isContOpen, setIsContOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [postedCont, setPostedCont] = useState(null);
   const { onDeletePost } = useContext(DataDispatchContext);
 
   const handleModalOpen = () => {
@@ -26,9 +27,16 @@ const PostList = () => {
       console.error(err);
     }
   };
-  const handleContOpen = () => {
+
+  const handleModalContOpen = (post) => {
     setIsContOpen(true);
+    setPostedCont(post);
   };
+  const handleModalContClose = () => {
+    setIsContOpen(false);
+    setPostedCont(null);
+  };
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -61,12 +69,16 @@ const PostList = () => {
             contentDesc={post.content}
             onDeletePost={onDeletePost}
             handleModalOpen={handleModalOpen}
-            handleContOpen={handleContOpen}
+            handleModalContOpen={() => handleModalContOpen(post)}
           />
         ))}
       </Wrapper>
-      {isContOpen && <ModalCont />}
-      {/* <ModalCont /> */}
+      {isContOpen && (
+        <ModalCont
+          post={postedCont}
+          handleModalContClose={handleModalContClose}
+        />
+      )}
     </>
   );
 };

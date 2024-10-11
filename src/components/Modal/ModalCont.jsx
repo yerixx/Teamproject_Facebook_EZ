@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { styled } from "styled-components";
 
 import EditeBox from "../common/EditeBox.jsx";
@@ -206,10 +205,17 @@ const Mobile = styled.div`
   }
 `;
 
-const ModalCont = () => {
+const ModalCont = ({ post, handleModalContClose }) => {
   const [closeBtn, setCloseBtn] = useState(false);
   const closeButton = () => {
     setCloseBtn(true);
+  };
+  const formatDate = (isoString) => {
+    const date = new Date(isoString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}.${month}.${day}`;
   };
 
   return (
@@ -220,7 +226,7 @@ const ModalCont = () => {
           <ArrowBtn></ArrowBtn>
           <Trigger></Trigger>
           <ImageContent>
-            <img src={testImg} />
+            <img src={post.image} />
           </ImageContent>
         </LeftContent>
         <RightContent>
@@ -244,12 +250,12 @@ const ModalCont = () => {
               <img src={testCat} alt="ModalProfileImg" />
             </div>
             <ModalProfileSelf>
-              <div className="profileName">미니멀데이</div>
-              <div className="profiledesc">6시간 전</div>
+              <div className="profileName">박예림</div>
+              <div className="profiledesc">{formatDate(post.createdAt)}</div>
             </ModalProfileSelf>
           </ModalProfileImg>
           <ModalDesc>
-            <p>아침, 저녁 젤 바쁜 방학의 일요일이 끝났다 😎💪🏻</p>
+            <p>{post.content}</p>
           </ModalDesc>
           <SocialIcon>
             <SocialBtnIcon />
