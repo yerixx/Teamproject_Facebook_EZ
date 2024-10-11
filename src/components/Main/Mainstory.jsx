@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import React, { useState } from "react"; // useState 임포트 추가
+import React, { useContext, useState } from "react"; // useState 임포트 추가
 import styled from "styled-components";
 import { FaUser, FaPlus } from "react-icons/fa6";
 import Slider from "react-slick";
@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { SubDescription_16_n } from "../../styles/GlobalStyles.styles";
 import { MdOutlineNavigateNext, MdOutlineNavigateBefore } from "react-icons/md";
+import { DataStateContext } from "../../App";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -277,6 +278,8 @@ const MainStory = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태 관리
   const [postImage, setPostImage] = useState(null); // 모달에서 업로드된 이미지 상태
+  const data = useContext(DataStateContext);
+  console.log(data.mockData);
 
   // 모달 열기 핸들러
   const openModal = () => {
@@ -291,7 +294,6 @@ const MainStory = () => {
   // 모달 제출 핸들러
   const handleModalSubmit = ({ text, image }) => {
     // 필요한 경우 제출된 데이터를 처리
-    console.log("모달 제출 데이터:", text, image);
     setPostImage(image);
     setIsModalOpen(false);
   };

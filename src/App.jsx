@@ -139,9 +139,10 @@ function App() {
         id: doc.id,
         ...doc.data(),
       }));
-
+      const response = await fetch("/mockData/mockData.json");
+      const mockData = await response.json();
       // 데이터를 상태에 저장
-      dispatch({ type: "INIT", data: { users, posts } });
+      dispatch({ type: "INIT", data: { users, posts, mockData } });
 
       // 목업 사용자 설정 (예: 첫 번째 사용자)
       if (users.length > 0) {

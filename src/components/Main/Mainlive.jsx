@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { FaStar } from "react-icons/fa";
 import Slider from "react-slick"; // 슬릭 슬라이더 import
@@ -9,6 +9,8 @@ import {
   SubDescription_16_n,
 } from "../../styles/GlobalStyles.styles";
 import { MdOutlineNavigateBefore, MdOutlineNavigateNext } from "react-icons/md";
+import { DataStateContext } from "../../App";
+import ModalLive from "../Modal/ModalLive";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -88,12 +90,15 @@ const Livecard = styled.div`
     width: 100%;
     /* height: 52vh; */
   }
-
-  > img {
+  .liveVideo {
     width: 100%;
-    height: 90%;
-    object-fit: cover;
-    border-radius: 8px;
+    height: 350px;
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
   }
 
   .liveheader {
@@ -292,6 +297,9 @@ const PrevArrow = ({ onClick }) => {
 };
 
 const Mainlive = () => {
+  const data = useContext(DataStateContext);
+  const mockData = data?.mockData?.liveCommerce;
+  console.log(mockData);
   const settings = {
     dots: false,
     infinite: true,
@@ -320,47 +328,57 @@ const Mainlive = () => {
       },
     ],
   };
+  const openLive = () => {};
 
   return (
-    <Wrapper>
-      <Inner>
-        <Items>
-          <div className="livetext">라이브 커머스</div>
-          <Slider {...settings}>
-            {[...Array(5)].map((item, index) => (
-              <Livecard key={index}>
-                <img src="../public/img/live.jpg" alt="testimg" />
-                <div className="liveheader">
-                  <div className="liveBage">LIVE</div>
-                  <div className="item">
-                    <div className="viewers">9,452 시청</div>
-                    <div className="point">+500P</div>
-                  </div>
-                </div>
-                <div className="liveinfo">
-                  {/* <img src="../public/img/live.jpg" alt="profile" /> */}
-                  <div className="info">
-                    <span className="subtitle">
-                      <FaStar />
-                      5% 추가할인
-                      <FaStar />
-                    </span>
-                    <span className="title">NEW ARRIVAL SHOES</span>
-                    <div className="item">
-                      <span className="price">
-                        <span>30%</span>
-                        19,000원
-                      </span>
-                      <button>라이브 보기</button>
+    <>
+      <Wrapper>
+        <Inner>
+          <Items>
+            <div className="livetext">라이브 커머스</div>
+            <Slider {...settings}>
+              {mockData &&
+                mockData.map((item, index) => (
+                  <Livecard key={index} onClick={openLive}>
+                    <div className="liveVideo">
+                      <video autoPlay muted>
+                        <source
+                          src={item?.liveStream?.videoUrl}
+                          type="video/mp4"
+                        ></source>
+                      </video>
                     </div>
-                  </div>
-                </div>
-              </Livecard>
-            ))}
-          </Slider>
-        </Items>
-      </Inner>
-    </Wrapper>
+                    <div className="liveheader">
+                      <div className="liveBage">LIVE</div>
+                      <div className="item">
+                        <div className="viewers">9,452 시청</div>
+                        <div className="point">+500P</div>
+                      </div>
+                    </div>
+                    <div className="liveinfo">
+                      <div className="info">
+                        <span className="subtitle">
+                          {/* <FaStar />
+                        5% 추가할인
+                        <FaStar /> */}
+                        </span>
+                        <span className="title">{item?.products?.name}</span>
+                        <div className="item">
+                          <span className="price">
+                            <span>30%</span>
+                            19,000원
+                          </span>
+                          <button>라이브 보기</button>
+                        </div>
+                      </div>
+                    </div>
+                  </Livecard>
+                ))}
+            </Slider>
+          </Items>
+        </Inner>
+      </Wrapper>
+    </>
   );
 };
 
