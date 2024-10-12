@@ -7,6 +7,7 @@ import Mainlive from "../components/Main/Mainlive";
 import MainGroup from "../components/Main/MainGroup";
 import Mainpage from "../components/Main/Mainpage";
 import { auth } from "../firebase";
+import ModalCont from "../components/Modal/ModalCont";
 
 const Wrapper = styled.div`
   position: relative;
@@ -18,7 +19,7 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 const PostUploadField = styled.div`
-  background: #fff;
+  background-color: ${(props) => props.theme.ContainColor};
   box-shadow: var(--box-shadow-01);
   margin-top: 30px;
   padding: 20px 0;
@@ -58,8 +59,9 @@ const Main = () => {
         </PostUploadField>
         <Mainstory />
         {/* <PostUploadField /> */}
-        {/* <MainGroup /> */}
+        <MainGroup />
         <Mainpage />
+        <ModalCont />
         {/* <Mainlive /> */}
       </MainSection>
     </Wrapper>

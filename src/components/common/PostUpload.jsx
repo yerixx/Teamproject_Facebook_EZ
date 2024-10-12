@@ -55,10 +55,11 @@ const CommentCont = styled.div`
       height: 60px;
       margin: 0 15px;
       padding: 0 30px;
-      background: var(--color-light-gray-01);
+      background: ${(props) => props.theme.inputColor};
+      border: 1px solid ${(props) => props.theme.borderColor};
       color: var(--color-gray-01);
-      border: none;
       border-radius: 50px;
+
       &:focus {
         outline: none;
       }

@@ -29,6 +29,7 @@ const Wrapper = styled.section`
   justify-content: center;
   align-items: center;
   box-shadow: var(--box-shadow-01);
+  background-color: ${(props) => props.theme.ContainColor};
   @media (max-width: 768px) {
     width: 90%;
     padding-top: 20px;
@@ -66,18 +67,19 @@ const ProfileContent = styled.div`
     border-radius: 100px;
   }
   .profileName {
+    color: ${(props) => props.theme.textColor};
     ${MainTitle_22_b}
     @media (max-width: 768px) {
       ${SubTitle_16_b}
     }
   }
   .createdAt {
+    color: ${(props) => props.theme.subTextColor};
     ${SubDescription_16_n}
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 4px;
-    color: var(--color-gray-01);
+    gap: 6px;
     @media (max-width: 768px) {
       ${SubDescription_14_n}
     }
@@ -87,14 +89,18 @@ const ControlsIcon = styled.div`
   display: flex;
   gap: 0;
   font-size: 24px;
+
   cursor: pointer;
   transition: opacity 0.5s;
   *:hover {
     color: var(--color-facebookblue);
   }
 `;
-const EditeIcon = styled.div``;
+const EditeIcon = styled.div`
+  color: ${(props) => props.theme.textColor};
+`;
 const DeletIcon = styled.div`
+  color: ${(props) => props.theme.textColor};
   @media (max-width: 768px) {
     font-size: 24px;
   }
@@ -108,6 +114,7 @@ const Contents = styled.div`
   }
   .contentDesc {
     ${SubDescription_16_n};
+    color: ${(props) => props.theme.textColor};
     font-weight: normal;
     word-break: break-all;
     margin-bottom: 30px;
@@ -122,6 +129,7 @@ const Contents = styled.div`
     padding: 30px 0;
   }
   .Buttons {
+    color: ${(props) => props.theme.textColor};
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -208,7 +216,7 @@ const Mainpage = ({ postId, onDeletePost }) => {
                         <FaEarthAmericas
                           style={{
                             fontSize: "14px",
-                            color: "black",
+
                             marginTop: "2px",
                           }}
                         />

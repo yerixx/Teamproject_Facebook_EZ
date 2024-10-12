@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { FaStar } from "react-icons/fa";
 import Slider from "react-slick"; // 슬릭 슬라이더 import
@@ -289,6 +289,8 @@ const PrevArrow = ({ onClick }) => {
 
 const Mainlive = () => {
   const data = useContext(DataStateContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
   const mockData = data?.mockData?.liveCommerce?.map((item) => ({
     ...item,
     formattedPrice: new Intl.NumberFormat("ko-KR", {
@@ -325,7 +327,16 @@ const Mainlive = () => {
       },
     ],
   };
-  const openLive = () => {};
+  const openLive = (item) => {
+    setSelectedItem(item); // 선택된 항목 데이터를 상태에 저장
+    setIsModalOpen(true); // 모달을 열기
+  };
+
+  // 모달 닫기 함수
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedItem(null);
+  };
 
   return (
     <>
@@ -336,9 +347,16 @@ const Mainlive = () => {
             <Slider {...settings}>
               {mockData &&
                 mockData.map((item, index) => (
-                  <Livecard key={index} onClick={openLive}>
+                  <Livecard key={index} onClick={() => openLive(item)}>
                     <div className="liveVideo">
-                      <video muted>
+                      <video
+                        muted
+                        loop
+                        onMouseEnter={(e) => e.target.play()} // 마우스 오버 시 재생
+                        onMouseLeave={(e) => {
+                          e.target.pause();
+                        }}
+                      >
                         <source
                           src={item?.liveStream?.videoUrl}
                           type="video/mp4"
@@ -375,6 +393,7 @@ const Mainlive = () => {
           </Items>
         </Inner>
       </Wrapper>
+      {isModalOpen && <ModalLive item={selectedItem} closeModal={closeModal} />}
     </>
   );
 };

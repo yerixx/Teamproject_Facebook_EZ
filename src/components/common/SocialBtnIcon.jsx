@@ -22,11 +22,13 @@ const SocialIcon = styled.div`
   height: 50px;
   padding: 0 10px 20px;
   border-bottom: 1px solid var(--color-light-gray-01);
+  color: ${(props) => props.theme.textColor};
   .socialIcon {
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 10px;
+
     @media (max-width: 768px) {
       width: 50%;
       justify-content: center;
@@ -41,6 +43,7 @@ const SocialIcon = styled.div`
     }
     .socialIconText {
       ${SubDescription_16_n}
+      color: ${(props) => props.theme.textColor};
       @media (max-width: 768px) {
         display: none;
       }
@@ -149,7 +152,9 @@ const SocialBtnIcon = ({ postId, isLiked }) => {
         <div
           onClick={handleLikeToggle}
           style={{
-            color: !like ? "var(--color-black)" : "var(--color-facebookblue)",
+            color: !like
+              ? "${(props) => props.theme.textColor}"
+              : "var(--color-facebookblue)",
           }}
           className="socialIcon"
         >
@@ -169,7 +174,9 @@ const SocialBtnIcon = ({ postId, isLiked }) => {
         <div
           onClick={handlSaveToggle}
           style={{
-            color: !save ? "var(--color-black)" : "var(--color-facebookblue)",
+            color: !save
+              ? "${(props) => props.theme.textColor}"
+              : "var(--color-facebookblue)",
           }}
           className="socialIcon"
         >

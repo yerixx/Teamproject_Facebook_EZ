@@ -232,9 +232,7 @@ const ModalCont = ({ post }) => {
         <LeftContent>
           <ArrowBtn></ArrowBtn>
           <Trigger></Trigger>
-          <ImageContent>
-            <img src={post.image} />
-          </ImageContent>
+          <ImageContent>{/* <img src={post.image} /> */}</ImageContent>
         </LeftContent>
         <RightContent>
           <ControlsIcon>
@@ -258,12 +256,10 @@ const ModalCont = ({ post }) => {
             </div>
             <ModalProfileSelf>
               <div className="profileName">박예림</div>
-              <div className="profiledesc">{formatDate(post.createdAt)}</div>
+              {/* <div className="profiledesc">{formatDate(post.createdAt)}</div> */}
             </ModalProfileSelf>
           </ModalProfileImg>
-          <ModalDesc>
-            <p>{post.content}</p>
-          </ModalDesc>
+          <ModalDesc>{/* <p>{post.content}</p> */}</ModalDesc>
           <SocialIcon>
             <SocialBtnIcon />
           </SocialIcon>
@@ -288,19 +284,15 @@ const ModalCont = ({ post }) => {
         </ControlsIcon>
         <ModalProfileImg>
           <div className="profileImg">
-            <img src={post.image} alt="ModalProfileImg" />
+            {/* <img src={post.image} alt="ModalProfileImg" /> */}
           </div>
           <ModalProfileSelf>
             <div className="profileName">박예림</div>
-            <div className="profiledesc">{formatDate(post.createdAt)}</div>
+            {/* <div className="profiledesc">{formatDate(post.createdAt)}</div> */}
           </ModalProfileSelf>
         </ModalProfileImg>
-        <ImageContent>
-          <img src={post.image} />
-        </ImageContent>
-        <ModalDesc>
-          <p>{post.content}</p>
-        </ModalDesc>
+        <ImageContent>{/* <img src={post.image} /> */}</ImageContent>
+        <ModalDesc>{/* <p>{post.content}</p> */}</ModalDesc>
         <SocialIcon>
           <SocialBtnIcon />
         </SocialIcon>

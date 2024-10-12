@@ -8,7 +8,6 @@
       "text": "김정하"
     }
   ],
-
   "groups": [
     {
       "id": "1",
@@ -33,160 +32,153 @@
     {
       "id": "4",
       "name": "사진을 좋아하는 사람들",
-      "image": "path/to/group3.jpg",
+      "image": "path/to/group4.jpg",
       "members": 15450
     },
     {
       "id": "5",
       "name": "자연은 아름답다",
-      "image": "path/to/group3.jpg",
+      "image": "path/to/group5.jpg",
       "members": 15450
     },
     {
       "id": "6",
       "name": "쉽게하는 쿠킹클래스",
-      "image": "path/to/group3.jpg",
+      "image": "path/to/group6.jpg",
       "members": 15450
     },
     {
       "id": "7",
       "name": "예능.ZIF",
-      "image": "path/to/group3.jpg",
+      "image": "path/to/group7.jpg",
       "members": 15450
     },
     {
       "id": "8",
       "name": "영화를 사랑하는 모음",
-      "image": "path/to/group3.jpg",
+      "image": "path/to/group8.jpg",
       "members": 15450
     },
     {
       "id": "9",
       "name": "전국 맛집 어디어디 있을까",
-      "image": "path/to/group3.jpg",
+      "image": "path/to/group9.jpg",
       "members": 15450
     }
   ],
-
   "liveCommerce": [
     {
       "liveStream": {
-        "title": "Autumn Holiday 10% Sale",
-        "currentViewers": 34,
-        "description": "한가위를 맞이하여 의류스타일 특가 할인 혜택! 10% 추가 이벤트 놓치지 마세요!",
+        "title": "PureGlow 화장품 특별 프로모션",
+        "currentViewers": 120,
+        "description": "자연에서 온 성분으로 피부에 건강을 선사하는 PureGlow입니다.",
+        "liveInfo": "피부에 활력을 주는 신제품 비타민C 세럼을 소개합니다. 맑고 투명한 피부를 원하신다면 지금 확인하세요!",
         "videoUrl": "https://firebasestorage.googleapis.com/v0/b/teamproject-facebook-ez.appspot.com/o/LiveVideo%2F7.mp4?alt=media&token=e7c12b38-0ae6-4ead-a7c1-393dc88b5d65",
-        "broadcaster": {
-          "name": "미니멀데이",
-          "profileImage": "path/to/profileImage.jpg"
-        }
+        "name": "PureGlow",
+        "profileImage": "path/to/profileImage1.jpg"
       },
       "products": {
         "id": 1,
-        "name": "가을 윈터 스프라이트 백 팩",
-        "originalPrice": 19900,
-        "discountPrice": 15900,
-        "discountRate": "30%",
-        "productImage": "path/to/productImage.jpg"
+        "name": "PureGlow 색조 화장 세트ㅋ",
+        "originalPrice": 50000,
+        "discountPrice": 45000,
+        "discountRate": "10%",
+        "productImage": "path/to/productImage1.jpg"
       }
     },
     {
       "liveStream": {
-        "title": "Autumn Holiday 10% Sale",
-        "currentViewers": 34,
-        "description": "한가위를 맞이하여 의류스타일 특가 할인 혜택! 10% 추가 이벤트 놓치지 마세요!",
+        "title": "GreenStyle 신상 공개!",
+        "currentViewers": 85,
+        "description": "자연을 담은 패션을 선도하는 GreenStyle입니다.",
+        "liveInfo": "이번 시즌 신상품인 린넨 셔츠를 만나보세요. 편안한 착용감과 세련된 디자인을 제공합니다.",
         "videoUrl": "https://firebasestorage.googleapis.com/v0/b/teamproject-facebook-ez.appspot.com/o/LiveVideo%2F2.mp4?alt=media&token=558cbe73-0047-4915-bcb6-c7bc7504dbe5",
-        "broadcaster": {
-          "name": "미니멀데이",
-          "profileImage": "path/to/profileImage.jpg"
-        }
+        "name": "GreenStyle",
+        "profileImage": "path/to/profileImage2.jpg"
       },
       "products": {
-        "id": 1,
-        "name": "가을 윈터 스프라이트 백 팩",
-        "originalPrice": 19900,
-        "discountPrice": 15900,
-        "discountRate": "30%",
-        "productImage": "path/to/productImage.jpg"
+        "id": 2,
+        "name": "GreenStyle 린넨 셔츠",
+        "originalPrice": 30000,
+        "discountPrice": 27000,
+        "discountRate": "10%",
+        "productImage": "path/to/productImage2.jpg"
       }
     },
     {
       "liveStream": {
-        "title": "Autumn Holiday 10% Sale",
-        "currentViewers": 34,
-        "description": "한가위를 맞이하여 의류스타일 특가 할인 혜택! 10% 추가 이벤트 놓치지 마세요!",
+        "title": "OrangeBag 한정 할인",
+        "currentViewers": 150,
+        "description": "독특한 컬러와 디자인으로 사랑받는 OrangeBag입니다.",
+        "liveInfo": "활기찬 주황색 토트백으로 일상에 포인트를 더해보세요. 한정 수량 할인 중입니다!",
         "videoUrl": "https://firebasestorage.googleapis.com/v0/b/teamproject-facebook-ez.appspot.com/o/LiveVideo%2F3.mp4?alt=media&token=e9430afa-2abe-4411-8df6-550e7baf7682",
-        "broadcaster": {
-          "name": "미니멀데이",
-          "profileImage": "path/to/profileImage.jpg"
-        }
+        "name": "OrangeBag",
+        "profileImage": "path/to/profileImage3.jpg"
       },
       "products": {
-        "id": 1,
-        "name": "가을 윈터 스프라이트 백 팩",
-        "originalPrice": 19900,
-        "discountPrice": 15900,
-        "discountRate": "30%",
-        "productImage": "path/to/productImage.jpg"
+        "id": 3,
+        "name": "OrangeBag 토트백",
+        "originalPrice": 60000,
+        "discountPrice": 48000,
+        "discountRate": "20%",
+        "productImage": "path/to/productImage3.jpg"
       }
     },
     {
       "liveStream": {
-        "title": "Autumn Holiday 10% Sale",
-        "currentViewers": 34,
-        "description": "한가위를 맞이하여 의류스타일 특가 할인 혜택! 10% 추가 이벤트 놓치지 마세요!",
+        "title": "EcoCup으로 지구를 지키자",
+        "currentViewers": 60,
+        "description": "지속 가능한 생활을 지향하는 EcoCup입니다.",
+        "liveInfo": "대나무 소재로 만든 친환경 컵을 소개합니다. 자연을 사랑하는 마음을 담았습니다.",
         "videoUrl": "https://firebasestorage.googleapis.com/v0/b/teamproject-facebook-ez.appspot.com/o/LiveVideo%2F4.mp4?alt=media&token=8519dd5b-becb-4909-aca7-a8fd1208cca1",
-        "broadcaster": {
-          "name": "미니멀데이",
-          "profileImage": "path/to/profileImage.jpg"
-        }
+        "name": "EcoCup",
+        "profileImage": "path/to/profileImage4.jpg"
       },
       "products": {
-        "id": 1,
-        "name": "가을 윈터 스프라이트 백 팩",
-        "originalPrice": 19900,
-        "discountPrice": 15900,
-        "discountRate": "30%",
-        "productImage": "path/to/productImage.jpg"
+        "id": 4,
+        "name": "EcoCup 친환경 컵",
+        "originalPrice": 15000,
+        "discountPrice": 13500,
+        "discountRate": "10%",
+        "productImage": "path/to/productImage4.jpg"
       }
     },
     {
       "liveStream": {
-        "title": "Autumn Holiday 10% Sale",
-        "currentViewers": 34,
-        "description": "한가위를 맞이하여 의류스타일 특가 할인 혜택! 10% 추가 이벤트 놓치지 마세요!",
+        "title": "NutriNuts 건강한 견과류",
+        "currentViewers": 95,
+        "description": "자연 그대로의 맛과 영양을 담은 NutriNuts입니다.",
+        "liveInfo": "신선한 믹스 견과류 세트로 하루의 에너지를 충전하세요. 지금 특별 할인 중입니다.",
         "videoUrl": "https://firebasestorage.googleapis.com/v0/b/teamproject-facebook-ez.appspot.com/o/LiveVideo%2F5.mp4?alt=media&token=da541c95-a814-429c-9e8f-834f41ccfd61",
-        "broadcaster": {
-          "name": "미니멀데이",
-          "profileImage": "path/to/profileImage.jpg"
-        }
+        "name": "NutriNuts",
+        "profileImage": "path/to/profileImage5.jpg"
       },
       "products": {
-        "id": 1,
-        "name": "가을 윈터 스프라이트 백 팩",
-        "originalPrice": 19900,
-        "discountPrice": 15900,
-        "discountRate": "30%",
-        "productImage": "path/to/productImage.jpg"
+        "id": 5,
+        "name": "NutriNuts 믹스 견과류 세트",
+        "originalPrice": 25000,
+        "discountPrice": 22500,
+        "discountRate": "10%",
+        "productImage": "path/to/productImage5.jpg"
       }
     },
     {
       "liveStream": {
-        "title": "Autumn Holiday 10% Sale",
-        "currentViewers": 34,
-        "description": "한가위를 맞이하여 의류스타일 특가 할인 혜택! 10% 추가 이벤트 놓치지 마세요!",
+        "title": "HydraSkin 스킨로션 할인 이벤트",
+        "currentViewers": 110,
+        "description": "피부 본연의 아름다움을 찾아주는 HydraSkin입니다.",
+        "liveInfo": "건조한 피부에 수분을 채워줄 수분 가득 스킨로션을 소개합니다. 촉촉함을 느껴보세요.",
         "videoUrl": "https://firebasestorage.googleapis.com/v0/b/teamproject-facebook-ez.appspot.com/o/LiveVideo%2F6.mp4?alt=media&token=f4d8b557-1a30-48b8-b264-96f87d70c9a1",
-        "broadcaster": {
-          "name": "미니멀데이",
-          "profileImage": "path/to/profileImage.jpg"
-        }
+        "name": "HydraSkin",
+        "profileImage": "path/to/profileImage6.jpg"
       },
       "products": {
-        "id": 1,
-        "name": "가을 윈터 스프라이트 백 팩",
-        "originalPrice": 19900,
-        "discountPrice": 15900,
-        "discountRate": "30%",
-        "productImage": "path/to/productImage.jpg"
+        "id": 6,
+        "name": "HydraSkin 수분 가득 스킨로션",
+        "originalPrice": 40000,
+        "discountPrice": 36000,
+        "discountRate": "10%",
+        "productImage": "path/to/productImage6.jpg"
       }
     }
   ]

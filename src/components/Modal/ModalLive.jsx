@@ -16,9 +16,10 @@ const Commerce = styled.div`
   width: 100%;
   height: 100vh;
   display: flex;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
+  z-index: 1000;
 `;
 
 const LeftContent = styled.section`
@@ -42,6 +43,7 @@ const LeftContent = styled.section`
 `;
 
 const Live = styled.div`
+  overflow: hidden;
   width: 500px;
   height: 700px;
   position: relative;
@@ -52,6 +54,11 @@ const Live = styled.div`
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
   @media screen and (max-width: 1050px) {
     width: 400px;
     height: 600px;
@@ -63,25 +70,24 @@ const Live = styled.div`
 
 const LiveStatus = styled.div`
   width: 224px;
-  height: 57px;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-  top: 5px;
+  position: absolute;
+  top: 10px;
   left: 10px;
   gap: 10px;
   color: #fff;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
   .liveViewer {
     margin-left: 13px;
   }
   @media screen and (max-width: 1050px) {
+    width: 200px;
     font-size: 12px;
-    top: 0;
-    left: 0;
     .liveViewer {
-      margin-left: 5px;
-      font-size: 12px;
     }
   }
 `;
@@ -94,7 +100,6 @@ const LivePoint = styled.div`
   align-items: center;
   position: absolute;
   bottom: 0;
-  border-radius: 0 0 8px 8px;
   background-color: rgba(0, 0, 0, 0.8);
   .point {
     width: 140px;
@@ -187,6 +192,11 @@ const LiveProfileSelf = styled.div`
     font-size: var(--font-size-description-01);
     font-weight: 400;
     color: var(--color-gray-01);
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 표시할 줄 수 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `;
 
@@ -203,6 +213,13 @@ const LiveContents = styled.div`
     padding-bottom: 15px;
     /* padding: 15px 0; */
     font-size: var(--font-size-description-01);
+  }
+  p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 표시할 줄 수 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   @media screen and (max-width: 1050px) {
     padding: 0 50px;
@@ -273,13 +290,12 @@ const SellItemImg = styled.div`
 
 const SellItemDesc = styled.div`
   p {
-    padding-bottom: 8px;
     color: var(--color-gray-01);
     display: -webkit-box;
-    height: 30px;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 2; /* 표시할 줄 수 */
     -webkit-box-orient: vertical;
     overflow: hidden;
+    text-overflow: ellipsis;
   }
   span {
     color: #f00;
@@ -358,13 +374,19 @@ const NoComment = styled.div`
   }
 `;
 
-const ModalLive = () => {
+const ModalLive = ({ item, closeModal }) => {
+  console.log(item);
   return (
     <>
       <Commerce>
         <LeftContent>
-          <FontAwesomeIcon className="faXmark" icon={faXmark} />
+          <FontAwesomeIcon
+            className="faXmark"
+            icon={faXmark}
+            onClick={closeModal}
+          />
           <Live>
+            <video src={item.liveStream.videoUrl} autoPlay loop></video>
             <LiveStatus>
               <div className="fbLogo">
                 <img src={fbIcon} />
@@ -391,16 +413,13 @@ const ModalLive = () => {
               <img src={LiveProfileImg} alt="LiveProfileImg" />
             </div>
             <LiveProfileSelf>
-              <div className="profileName">미니멀데이</div>
-              <div className="profiledesc">가을옷 보러오세요~~</div>
+              <div className="profileName">{item?.liveStream?.name}</div>
+              <div className="profiledesc">{item?.liveStream?.description}</div>
             </LiveProfileSelf>
           </LiveProfile>
           <LiveContents>
             <h3>라이브 안내</h3>
-            <p>
-              안녕하세요~~ <br /> 고퀄리티 옷들만 판매하고 있어요. 미니멀
-              데이에서 가을옷 득템하세요!
-            </p>
+            <p>{item?.liveStream?.liveInfo}</p>
           </LiveContents>
           <SellItems>
             <SellItem>
