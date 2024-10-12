@@ -1,5 +1,8 @@
-import styled, { ThemeProvider } from "styled-components";
 import { Routes, Route } from "react-router-dom";
+import styled, { ThemeProvider } from "styled-components";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Layout from "./components/common/Layout.jsx";
+import LoadingScreen from "./components/common/LoadingScreen.jsx";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -18,14 +21,50 @@ import {
   getDoc,
   getDocs,
   updateDoc,
+  setDoc,
   deleteDoc,
 } from "firebase/firestore";
 import { auth, db } from "./firebase.js";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { darkTheme } from "./styles/theme.js";
 import { lightTheme } from "./styles/theme.js";
+import ProtectedRoute from "./components/common/ProtectedRoute.jsx";
 
-const Wrapper = styled.div``;
+// Page Router
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        path: "",
+        element: <Main />,
+      },
+      {
+        path: "mypage",
+        element: <Detail />,
+      },
+      {
+        path: "modallive",
+        element: <ModalLive />,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+  },
+]);
+
+// const Wrapper = styled.div``;
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -116,6 +155,18 @@ function App() {
     localStorage.setItem("isDark", JSON.stringify(isDark));
   }, [isDark]);
 
+  // Loading
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const init = async () => {
+      await auth.authStateReady(); // 인증 상태가 준비된 후 호출
+      await fetchData(); // 데이터를 불러오는 함수 호출
+      setIsLoading(false); // 데이터가 모두 준비된 후 로딩 상태 해제
+    };
+    init();
+  }, []);
+
   const initialState = {
     users: [],
     posts: [],
@@ -154,31 +205,41 @@ function App() {
       console.error("데이터를 불러오지 못했습니다.", error);
     }
   };
+
+  const fetchUserData = async (user) => {
+    try {
+      console.log("로그인된 UID:", user.uid); // UID 확인 로그
+      const userDocRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userDocRef);
+
+      if (userDoc.exists()) {
+        console.log("Firestore에서 가져온 사용자 데이터:", userDoc.data()); // 데이터 확인
+        dispatch({ type: "SET_CURRENT_USER_DATA", data: userDoc.data() });
+      } else {
+        console.log("사용자 문서가 없습니다.");
+        dispatch({ type: "SET_CURRENT_USER_DATA", data: null });
+      }
+    } catch (error) {
+      console.error("사용자 데이터 가져오기 오류:", error);
+    }
+  };
+
   useEffect(() => {
-    fetchData();
-    // 로그인 기능이 구현되지 않았으므로, Firebase Auth 리스너는 일단 생략
-    // 나중에 로그인 기능을 구현한 후 아래 코드를 사용하세요.
-    // const unsubscribe = auth.onAuthStateChanged(async (user) => {
-    //   if (user) {
-    //     // 로그인한 사용자 정보 가져오기
-    //     try {
-    //       const userDocRef = doc(db, "users", user.uid);
-    //       const userDoc = await getDoc(userDocRef);
-    //       if (userDoc.exists()) {
-    //         dispatch({ type: "SET_CURRENT_USER_DATA", data: userDoc.data() });
-    //       } else {
-    //         console.log("사용자 데이터가 없습니다.");
-    //         dispatch({ type: "SET_CURRENT_USER_DATA", data: null });
-    //       }
-    //     } catch (error) {
-    //       console.error("사용자 데이터 가져오기 오류:", error);
-    //     }
-    //   } else {
-    //     // 로그아웃 상태
-    //     dispatch({ type: "SET_CURRENT_USER_DATA", data: null });
-    //   }
-    // });
-    // return () => unsubscribe();
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      console.log("auth.onAuthStateChanged 이벤트 호출됨. 현재 사용자:", user);
+
+      if (user) {
+        console.log("로그인된 사용자:", user);
+        await fetchUserData(user); // 사용자 데이터 가져오기
+        setIsLoading(false); // 로딩 완료 후 false 설정
+      } else {
+        console.log("사용자가 로그아웃 상태입니다.");
+        dispatch({ type: "SET_CURRENT_USER_DATA", data: null });
+        setIsLoading(false); // 로딩 완료 후 false 설정
+      }
+    });
+
+    return () => unsubscribe(); // 클린업 함수로 리스너 해제
   }, []);
 
   const onCreatePost = async (userId, userName, content, image = null) => {
@@ -226,27 +287,13 @@ function App() {
     likeCategory = []
   ) => {
     try {
-      const docRef = await addDoc(collection(db, "users"), {
-        userId,
-        userName: {
-          firstName,
-          lastName,
-        },
-        email,
-        password,
-        wallet: {
-          point,
-          won,
-        },
-        gender,
-        birthdate,
-        city,
-        likeCategory,
-      });
-      dispatch({
-        type: "ADD_USER",
-        newUser: {
-          id: docRef.id,
+      const user = auth.currentUser; // 현재 로그인한 사용자 가져오기
+      if (user) {
+        const userId = user.uid; // Firebase에서 가져온 사용자 UID
+        console.log("onAddUser 호출됨. Firestore에 저장할 UID:", userId);
+
+        // Firestore에 사용자 UID를 문서 ID로 사용하여 데이터 추가
+        await setDoc(doc(db, "users", userId), {
           userId,
           userName: {
             firstName,
@@ -262,13 +309,39 @@ function App() {
           birthdate,
           city,
           likeCategory,
-        },
-      });
+        });
+
+        console.log("Firestore에 사용자 추가 완료:", userId); // Firestore에 사용자 추가 완료 로그
+
+        // 상태 업데이트를 위해 dispatch 호출
+        dispatch({
+          type: "ADD_USER",
+          newUser: {
+            id: userId,
+            userId,
+            userName: {
+              firstName,
+              lastName,
+            },
+            email,
+            password,
+            wallet: {
+              point,
+              won,
+            },
+            gender,
+            birthdate,
+            city,
+            likeCategory,
+          },
+        });
+      } else {
+        console.error("로그인된 사용자가 없습니다.");
+      }
     } catch (error) {
       console.error("Firestore에 유저 추가 중 오류 발생:", error);
     }
   };
-
   const onToggleLike = async (postId, isLiked) => {
     // try {
     //   const postDocRef = doc(db, "posts", postId);
@@ -340,15 +413,20 @@ function App() {
                 onDeletePost,
               }}
             >
-              <Wrapper>
-                <Routes>
-                  <Route path="/" element={<Main />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/signup" element={<Signup />} />
-                  <Route path="/detail" element={<Detail />} />
-                  <Route path="/ModalLive" element={<ModalLive />} />
-                </Routes>
-              </Wrapper>
+              {/* <Wrapper>
+            <Routes>
+              <Route path="/" element={<Main />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/mypage" element={<Detail />} />
+              <Route path="/modallive" element={<ModalLive />} />
+            </Routes>
+          </Wrapper> */}
+              {isLoading ? (
+                <LoadingScreen />
+              ) : (
+                <RouterProvider router={router} />
+              )}
             </DataDispatchContext.Provider>
           </DataStateContext.Provider>
         </ThemeProvider>

@@ -21,6 +21,8 @@ import HeaderlogoImg from "../../img/HeaderLogo.svg";
 import styled from "styled-components";
 import SideBarWallet from "./SideBarWallet";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../firebase";
 
 const Header = styled.div`
   background-color: ${(props) => props.theme.bgColor};
@@ -259,9 +261,8 @@ export const HeaderTop = () => {
 };
 
 export const HeaderBottom = () => {
-  const data = useContext(DataStateContext);
-  const currentUser = data.currentUserData;
-
+  const navigate = useNavigate();
+  const { currentUserData } = useContext(DataStateContext);
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
   const [sideBarGroupOpen, setSideBarGroupOpen] = useState(false);
   const [sideWalletOpen, setSideWalletOpen] = useState(false);
@@ -312,6 +313,19 @@ export const HeaderBottom = () => {
   const toggleTheme = () => {
     setIsDark((prev) => !prev);
   };
+  // LogOut
+  const onLogOut = async () => {
+    const confirmation = confirm("페이스북에서 로그아웃 하시겠습니까?");
+    if (confirmation) {
+      await auth.signOut();
+      navigate("/login");
+    }
+  };
+
+  if (!currentUserData) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <HeaderSticky $sticky={issticky ? "true" : null}>
       <Left>
@@ -342,11 +356,10 @@ export const HeaderBottom = () => {
               <img src="/img/testcat.jpg" alt="" />
             </div>
             <h3>
-              {currentUser?.userName.firstName}
-              {currentUser?.userName.lastName}
+              {currentUserData?.userName?.firstName}{" "}
+              {currentUserData?.userName?.lastName}
             </h3>
           </ProfileWrap>
-          <span>{currentUser?.wallet.point}p</span>
         </RightFirst>
         <RightSecond>
           <IconWrap>
@@ -358,26 +371,44 @@ export const HeaderBottom = () => {
           <IconWrap>
             <FaBell />
           </IconWrap>
-          <IconWrap onClick={toggleTheme}>
+          <IconWrap onClick={() => setIsDark((prev) => !prev)}>
             {isDark ? <FiSun /> : <FaMoon />}
           </IconWrap>
           <IconWrap>
-            <MdOutlineLogout />
+            <MdOutlineLogout onClick={onLogOut} />
           </IconWrap>
         </RightSecond>
       </Right>
       {sideMenuOpen && (
         <SideBarMenu
           sideMenuOpen={sideMenuOpen}
-          openGroup={sideGroup}
-          closeModal={closeModal}
+          openGroup={() => setSideBarGroupOpen((prev) => !prev)}
+          closeModal={() => {
+            setSideMenuOpen(false);
+            setSideBarGroupOpen(false);
+            setSideWalletOpen(false);
+          }}
         />
       )}
       {sideBarGroupOpen && (
-        <SideBarGroup openGroup={sideGroup} closeModal={closeModal} />
+        <SideBarGroup
+          openGroup={() => setSideBarGroupOpen((prev) => !prev)}
+          closeModal={() => {
+            setSideMenuOpen(false);
+            setSideBarGroupOpen(false);
+            setSideWalletOpen(false);
+          }}
+        />
       )}
       {sideWalletOpen && (
-        <SideBarWallet onClick={sideWallet} closeModal={closeModal} />
+        <SideBarWallet
+          onClick={() => setSideWalletOpen((prev) => !prev)}
+          closeModal={() => {
+            setSideMenuOpen(false);
+            setSideBarGroupOpen(false);
+            setSideWalletOpen(false);
+          }}
+        />
       )}
     </HeaderSticky>
   );

@@ -65,15 +65,6 @@ const Signup = () => {
 
   // 회원가입 완료 시 호출되는 함수
   const handleSignup = async (data) => {
-    // 폼으로부터 받은 데이터로 userData 업데이트
-    setUserData((prevData) => ({
-      ...prevData,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      password: data.password1,
-    }));
-
     try {
       // Firebase Authentication을 통해 사용자 등록
       const userCredential = await createUserWithEmailAndPassword(

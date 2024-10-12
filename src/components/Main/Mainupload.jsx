@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { DataDispatchContext } from "../../App.jsx";
+import { DataDispatchContext, DataStateContext } from "../../App.jsx";
 
 import styled from "styled-components";
 import { SubDescription_16_n } from "../../styles/GlobalStyles.styles.js";
@@ -11,7 +11,6 @@ import { FiX } from "react-icons/fi";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase";
 import testCat from "/img/testcat.jpg";
-
 // Styled-components
 const WrapperForm = styled.form`
   width: 100%;
@@ -237,6 +236,8 @@ const InfoItem = styled.div`
 
 const Mainupload = ({ placeholder }) => {
   const { onCreatePost } = useContext(DataDispatchContext);
+  const { currentUserData } = useContext(DataStateContext);
+
   const [isLoading, setIsLoading] = useState(false);
   const [uploadText, setUploadText] = useState("");
   const [uploadFile, setUploadFile] = useState(null);
@@ -264,7 +265,12 @@ const Mainupload = ({ placeholder }) => {
 
     try {
       // 여기에서 content에는 업로드된 텍스트를, image에는 이미지 URL을 전달
-      await onCreatePost("testUserId", "TestUser", uploadText, imageUrl);
+      await onCreatePost(
+        currentUserData.userId,
+        `${currentUserData.userName.firstName} ${currentUserData.userName.lastName}`,
+        uploadText,
+        imageUrl
+      );
       setUploadText("");
       setUploadFile(null);
       alert("게시물 업로드가 완료됐습니다");
@@ -312,7 +318,15 @@ const Mainupload = ({ placeholder }) => {
     <WrapperForm onSubmit={handleSubmit}>
       <CommentCont>
         <div className="commentUpLoadprofile">
-          <img src={testCat} className="profileImg" alt="profileImg" />
+          <img
+            src={
+              currentUserData
+                ? currentUserData.profileImage || testCat
+                : testCat
+            }
+            className="profileImg"
+            alt="profileImg"
+          />
           <input
             className="profileuploadText"
             onChange={(e) => setUploadText(e.target.value)}

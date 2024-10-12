@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { HeaderBottom, HeaderTop } from "../components/common/Header";
-import MainPage from "../components/Main/Mainpage";
 import UploadField from "../components/common/UploadField";
 import Mainstory from "../components/Main/Mainstory";
 import Mainlive from "../components/Main/Mainlive";
 import MainGroup from "../components/Main/MainGroup";
 import Mainpage from "../components/Main/Mainpage";
 import Mainupload from "../components/Main/Mainupload";
+import { auth } from "../firebase";
+// import Mainbutton from "../components/Main/Mainbutton";
 
 const Wrapper = styled.div`
   position: relative;
@@ -36,6 +37,9 @@ const MainSection = styled.section`
 `;
 
 const Main = () => {
+  useEffect(() => {
+    // console.log(auth.currentUser);
+  }, []);
   // const { onCreatePost } = useContext(DataDispatchContext);
   // const { posts } = useContext(DataStateContext);
   // const create = () => {
