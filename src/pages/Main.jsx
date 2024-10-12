@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 const MainSection = styled.section`
-  margin-top: 20px;
+  margin-bottom: 20px;
   width: 1050px;
   padding: 0 90px;
   display: flex;
@@ -29,7 +29,7 @@ const MainSection = styled.section`
   justify-content: center;
   gap: 30px;
   /* padding: 28px 20px; */
-  position: absolute;
+  /* position: absolute; */
   top: 140px;
   @media screen and (max-width: 768px) {
     top: 70px;

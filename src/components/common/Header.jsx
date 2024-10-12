@@ -263,11 +263,12 @@ export const HeaderTop = () => {
 export const HeaderBottom = () => {
   const navigate = useNavigate();
   const { currentUserData } = useContext(DataStateContext);
+
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
   const [sideBarGroupOpen, setSideBarGroupOpen] = useState(false);
   const [sideWalletOpen, setSideWalletOpen] = useState(false);
   const [issticky, setissticky] = useState(false);
-
+  const [loading, setLoading] = useState(true);
   // 스크롤 위치 감지 및 상태 업데이트
   useEffect(() => {
     const handleScroll = () => {
@@ -284,6 +285,11 @@ export const HeaderBottom = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  useEffect(() => {
+    if (currentUserData) {
+      setLoading(false);
+    }
+  }, [currentUserData]);
   const sideMenu = (e) => {
     e.stopPropagation();
     setSideMenuOpen((prev) => !prev);
@@ -322,7 +328,7 @@ export const HeaderBottom = () => {
     }
   };
 
-  if (!currentUserData) {
+  if (loading) {
     return <div>Loading...</div>;
   }
 
@@ -353,11 +359,18 @@ export const HeaderBottom = () => {
         <RightFirst onClick={sideWallet}>
           <ProfileWrap>
             <div>
-              <img src="/img/testcat.jpg" alt="" />
+              <img
+                src={
+                  currentUserData.profileImage
+                    ? currentUserData.profileImage
+                    : "/img/testcat.jpg"
+                }
+                alt="User Profile"
+              />
             </div>
             <h3>
-              {currentUserData?.userName?.firstName}{" "}
-              {currentUserData?.userName?.lastName}
+              {currentUserData.userName.firstName}{" "}
+              {currentUserData.userName.lastName}
             </h3>
           </ProfileWrap>
         </RightFirst>

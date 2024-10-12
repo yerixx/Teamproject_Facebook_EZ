@@ -361,7 +361,11 @@ const Mainupload = ({ placeholder }) => {
               <InfoItem>
                 <div className="info">
                   <div className="profile"></div>
-                  <div className="profilename">김정하</div>
+                  <div className="profilename">
+                    {currentUserData
+                      ? `${currentUserData.userName.firstName} ${currentUserData.userName.lastName}`
+                      : "사용자"}
+                  </div>
                 </div>
                 <label htmlFor="upload-image">
                   <CiCamera style={{ cursor: "pointer", fontSize: "30px" }} />

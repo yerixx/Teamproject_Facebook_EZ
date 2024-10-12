@@ -33,6 +33,9 @@ const Signup = () => {
     birthdate: null,
     city: null,
     likeCategory: [null],
+    profileImage: "", // 기본값으로 빈 문자열 설정
+    backgroundImage: "", // 기본값으로 빈 문자열 설정
+    introduction: "",
   });
 
   // responsive
@@ -90,7 +93,10 @@ const Signup = () => {
         userData.gender,
         userData.birthdate,
         userData.city,
-        userData.likeCategory
+        userData.likeCategory,
+        userData.profileImage,
+        userData.backgroundImage,
+        userData.introduction
       );
 
       // 회원가입 완료 후 페이지 이동
