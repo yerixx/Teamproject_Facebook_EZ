@@ -6,6 +6,7 @@ import UploadField from "../components/common/UploadField";
 import Mainstory from "../components/Main/Mainstory";
 import Mainlive from "../components/Main/Mainlive";
 import MainGroup from "../components/Main/MainGroup";
+import Mainpage from "../components/Main/Mainpage";
 import Mainupload from "../components/Main/Mainupload";
 
 const Wrapper = styled.div`
@@ -47,18 +48,11 @@ const Main = () => {
       <MainSection>
         <Mainstory />
         <Mainupload />
+
         {/* <PostUploadField /> */}
-        <MainGroup />
-        <MainPage />
-        <MainPage />
-        <MainPage />
-        {/* <Maintest>
-          <button onClick={create}>생성</button>
-          {posts.map((item, i) => (
-            <div key={i}>{item.content}</div>
-          ))}
-        </Maintest> */}
-        <Mainlive />
+        {/* <MainGroup /> */}
+        <Mainpage />
+        {/* <Mainlive /> */}
       </MainSection>
     </Wrapper>
   );

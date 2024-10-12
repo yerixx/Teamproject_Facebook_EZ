@@ -44,6 +44,7 @@ const Inner = styled.div`
   @media screen and (max-width: 768px) {
     margin: 0;
     box-shadow: none;
+    background-color: inherit;
     padding: 0;
     width: 90vw;
     min-width: 360px;
@@ -105,28 +106,25 @@ const Livecard = styled.div`
     display: flex;
     align-items: center;
     padding-left: 10px;
+    gap: 10px;
     background: rgba(0, 0, 0, 0.5);
     color: var(--color-white);
     position: absolute;
     width: 100%;
-    height: 43px;
+    height: 50px;
     border-radius: 8px 8px 0 0;
     top: 0;
-
     .liveBage {
       background: #ed413f;
       ${SubDescription_16_n}
-      padding: 4px 5px;
+      padding: 0 5px;
       border-radius: 3px;
       margin-right: 5px;
-      @media screen and (max-width: 768px) {
-        font-size: 14px;
-      }
+      font-size: 12px;
     }
     .item {
       display: flex;
       gap: 40px;
-
       .viewers {
         ${SubDescription_16_n}
         @media screen and (max-width: 768px) {
@@ -161,25 +159,16 @@ const Livecard = styled.div`
       padding-left: 10px;
       display: flex;
       flex-direction: column;
+      gap: 10px;
 
       .subtitle {
         ${SubDescription_16_n}
         display: flex;
         align-items: center;
-        gap: 5px;
-        @media screen and (max-width: 768px) {
-          ${SubDescription_12_m}
-        }
       }
 
       .title {
         ${SubDescription_16_n}
-        @media (max-width: 768px) {
-          font-size: 14px;
-          @media screen and (max-width: 768px) {
-            ${SubDescription_12_m}
-          }
-        }
       }
 
       .item {
@@ -190,27 +179,29 @@ const Livecard = styled.div`
           ${SubDescription_16_n}
           display: flex;
           gap: 3px;
-          @media screen and (max-width: 768px) {
-            ${SubDescription_12_m}
-          }
-
           span {
             color: red;
           }
         }
 
         button {
+          width: auto;
           ${SubDescription_12_m}
           border: none;
           border-radius: 8px;
-          padding: 3px 7px;
+          padding: 2px 7px;
           background: var(--color-gray-01);
           color: var(--color-white);
           cursor: pointer;
           @media screen and (max-width: 768px) {
-            ${SubDescription_12_m}
+            display: none;
           }
         }
+      }
+    }
+    @media screen and (max-width: 768px) {
+      .info {
+        gap: 0;
       }
     }
   }
@@ -298,8 +289,14 @@ const PrevArrow = ({ onClick }) => {
 
 const Mainlive = () => {
   const data = useContext(DataStateContext);
-  const mockData = data?.mockData?.liveCommerce;
-  console.log(mockData);
+  const mockData = data?.mockData?.liveCommerce?.map((item) => ({
+    ...item,
+    formattedPrice: new Intl.NumberFormat("ko-KR", {
+      style: "currency",
+      currency: "KRW",
+    }).format(item?.products?.discountPrice),
+  }));
+
   const settings = {
     dots: false,
     infinite: true,
@@ -320,7 +317,7 @@ const Mainlive = () => {
         },
       },
       {
-        breakpoint: 580,
+        breakpoint: 616,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
@@ -341,7 +338,7 @@ const Mainlive = () => {
                 mockData.map((item, index) => (
                   <Livecard key={index} onClick={openLive}>
                     <div className="liveVideo">
-                      <video autoPlay muted>
+                      <video muted>
                         <source
                           src={item?.liveStream?.videoUrl}
                           type="video/mp4"
@@ -366,7 +363,7 @@ const Mainlive = () => {
                         <div className="item">
                           <span className="price">
                             <span>30%</span>
-                            19,000원
+                            {item.formattedPrice}
                           </span>
                           <button>라이브 보기</button>
                         </div>

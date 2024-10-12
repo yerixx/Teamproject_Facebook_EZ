@@ -279,7 +279,6 @@ const MainStory = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태 관리
   const [postImage, setPostImage] = useState(null); // 모달에서 업로드된 이미지 상태
   const data = useContext(DataStateContext);
-  console.log(data.mockData);
 
   // 모달 열기 핸들러
   const openModal = () => {

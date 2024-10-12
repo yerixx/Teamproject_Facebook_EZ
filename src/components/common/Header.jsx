@@ -266,7 +266,7 @@ export const HeaderBottom = () => {
   const [sideBarGroupOpen, setSideBarGroupOpen] = useState(false);
   const [sideWalletOpen, setSideWalletOpen] = useState(false);
   const [issticky, setissticky] = useState(false);
-  console.log(data);
+
   // 스크롤 위치 감지 및 상태 업데이트
   useEffect(() => {
     const handleScroll = () => {
