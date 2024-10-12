@@ -1,14 +1,12 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { HeaderBottom, HeaderTop } from "../components/common/Header";
-import UploadField from "../components/common/UploadField";
+import PostUpload from "../components/common/PostUpload";
 import Mainstory from "../components/Main/Mainstory";
 import Mainlive from "../components/Main/Mainlive";
 import MainGroup from "../components/Main/MainGroup";
 import Mainpage from "../components/Main/Mainpage";
-import Mainupload from "../components/Main/Mainupload";
 import { auth } from "../firebase";
-// import Mainbutton from "../components/Main/Mainbutton";
 
 const Wrapper = styled.div`
   position: relative;
@@ -19,6 +17,13 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
 `;
+const PostUploadField = styled.div`
+  background: #fff;
+  box-shadow: var(--box-shadow-01);
+  margin-top: 30px;
+  padding: 20px 0;
+  border-radius: var(--border-radius-30);
+`;
 const MainSection = styled.section`
   margin-bottom: 20px;
   width: 1050px;
@@ -28,8 +33,6 @@ const MainSection = styled.section`
   align-items: center;
   justify-content: center;
   gap: 30px;
-  /* padding: 28px 20px; */
-  /* position: absolute; */
   top: 140px;
   @media screen and (max-width: 768px) {
     top: 70px;
@@ -50,9 +53,10 @@ const Main = () => {
       <HeaderTop />
       <HeaderBottom />
       <MainSection>
+        <PostUploadField>
+          <PostUpload />
+        </PostUploadField>
         <Mainstory />
-        <Mainupload />
-
         {/* <PostUploadField /> */}
         {/* <MainGroup /> */}
         <Mainpage />

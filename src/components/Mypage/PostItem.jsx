@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import SocialBtnIcon from "../common/SocialBtnIcon.jsx";
-import UploadField from "../common/UploadField.jsx";
+import PostUpload from "../common/PostUpload.jsx";
 import EditeBox from "../common/EditeBox.jsx";
-import UploadModal from "../common/UploadModal.jsx";
-
-import ModalCont from "../Modal/ModalCont.jsx";
+import UploadModal from "../ModalConts/UploadModal.jsx";
 
 // react-icon
 import { BsThreeDots } from "react-icons/bs";

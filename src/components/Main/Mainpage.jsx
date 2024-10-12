@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import SocialBtnIcon from "../common/SocialBtnIcon.jsx";
-import UploadField from "../common/UploadField.jsx";
+import PostUpload from "../common/PostUpload.jsx";
 import EditeBox from "../common/EditeBox.jsx";
 
 // react-icon
@@ -231,7 +231,7 @@ const Mainpage = ({ postId, onDeletePost }) => {
                   )}
                 </Contents>
                 <SocialBtnIcon postId={postId} isLiked={isLiked} />
-                <UploadField />
+                <PostUpload />
               </Inner>
             </Wrapper>
             {(i + 1) % 3 === 0 && <Mainlive />}

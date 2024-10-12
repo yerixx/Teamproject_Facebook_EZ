@@ -6,7 +6,7 @@ import LoadingScreen from "./components/common/LoadingScreen.jsx";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Detail from "./pages/Detail";
+import Detail from "./pages/Mypage.jsx";
 import ModalLive from "./components/Modal/ModalLive.jsx";
 import ModalCont from "./components/Modal/ModalCont.jsx";
 import GlobalStyles from "./styles/GlobalStyles.styles.js";

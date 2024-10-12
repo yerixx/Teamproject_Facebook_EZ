@@ -9,7 +9,7 @@ import { FaSpinner } from "react-icons/fa";
 import { CiEdit, CiCamera } from "react-icons/ci";
 import { FiX } from "react-icons/fi";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage } from "../../firebase";
+import { storage } from "../../firebase.js";
 import testCat from "/img/testcat.jpg";
 // Styled-components
 const WrapperForm = styled.form`

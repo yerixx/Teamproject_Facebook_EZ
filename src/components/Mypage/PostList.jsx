@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
-import PostItem from "../detail/PostItem";
+import PostItem from "../Mypage/PostItem";
 import ModalCont from "../Modal/ModalCont";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../../firebase";

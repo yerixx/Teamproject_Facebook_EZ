@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { DataDispatchContext } from "../../App.jsx";
-import CommentList from "../detail/CommentList";
+import CommentList from "../Mypage/CommentList";
 import styled from "styled-components";
 
 import {

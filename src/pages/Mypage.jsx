@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import { HeaderBottom, HeaderTop } from "../components/common/Header";
-import PostUploadField from "../components/common/UploadField.jsx";
-import PhotoVideoList from "../components/detail/PhotoVideoList";
-import PostList from "../components/detail/PostList";
-import TopCover from "../components/detail/TopCover";
+import { HeaderBottom, HeaderTop } from "../components/common/Header.jsx";
+import PostUpload from "../components/common/PostUpload.jsx";
+import PhotoVideoList from "../components/Mypage/PhotoVideoList.jsx";
+import PostList from "../components/Mypage/PostList.jsx";
+import TopCover from "../components/Mypage/TopCover.jsx";
 import {
   MainTitle_18_n,
   SubDescription_14_n,
@@ -110,7 +110,7 @@ const Detail = (props) => {
           />
         </ContChangeBtn>
         <UploadInner style={{ display: !upload ? "block" : "none" }}>
-          <PostUploadField placeholder="오늘 어떤일이 있으셨나요?" />
+          <PostUpload placeholder="오늘 어떤일이 있으셨나요?" />
         </UploadInner>
         <div style={{ display: id === 0 ? "block" : "none" }}>
           <PostList />
