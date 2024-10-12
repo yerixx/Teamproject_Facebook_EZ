@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { DataDispatchContext } from "../../App.jsx";
 
 import styled from "styled-components";
@@ -163,25 +163,29 @@ const UploadModal = ({
   postId,
   imageSrc,
   contentDesc,
-  onDeletePost,
-  createdAt,
   isEditing,
+  currentUserData,
 }) => {
-  const { onCreatePost } = useContext(DataDispatchContext);
+  const { onUpdatePost, onCreatePost } = useContext(DataDispatchContext);
+
   const [isLoading, setIsLoading] = useState(false);
   const [uploadText, setUploadText] = useState("");
   const [uploadFile, setUploadFile] = useState(null);
-
+  useEffect(() => {
+    if (isEditing) {
+      setUploadText(contentDesc || "");
+    }
+  }, [isEditing]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!uploadFile && !uploadText) {
+    if (!uploadFile && !uploadText && !contentDesc) {
       alert("내용을 입력해주세요");
       return;
     }
-    setIsLoading(true);
-    let imageUrl = imageSrc; // 수정 모드일 때 기존 이미지를 기본값으로 설정
 
-    // 파일이 새로 업로드된 경우 이미지 업로드 처리
+    setIsLoading(true);
+    let imageUrl = imageSrc;
+
     if (uploadFile) {
       try {
         imageUrl = await uploadImage(uploadFile);
@@ -194,15 +198,13 @@ const UploadModal = ({
 
     try {
       if (isEditing) {
-        // 게시물 수정
         await onUpdatePost(postId, {
-          content: uploadText || contentDesc, // 텍스트가 없으면 기존 내용 유지
-          image: imageUrl, // 이미지 URL
-          updatedAt: new Date().toISOString(), // 수정 날짜 업데이트
+          content: uploadText || contentDesc,
+          image: imageUrl || null,
+          updatedAt: new Date().toISOString(),
         });
         alert("게시물이 수정되었습니다.");
       } else {
-        // 새 게시물 작성
         await onCreatePost({
           userId: "testUserId",
           userName: "TestUser",
@@ -213,10 +215,9 @@ const UploadModal = ({
         alert("게시물이 성공적으로 업로드되었습니다.");
       }
 
-      // 폼 초기화
       setUploadText("");
       setUploadFile(null);
-      closeModal(); // 모달 닫기
+      closeModal();
     } catch (err) {
       console.error("게시물 처리 중 오류:", err);
     } finally {
@@ -227,24 +228,11 @@ const UploadModal = ({
   const uploadImage = async (file) => {
     try {
       const storageRef = ref(storage, `images/${file.name}-${Date.now()}`);
-      await uploadBytes(storageRef, file); // 파일 업로드
-      const downloadURL = await getDownloadURL(storageRef); // URL 가져오기
-      return downloadURL; // URL 반환
+      await uploadBytes(storageRef, file);
+      return await getDownloadURL(storageRef);
     } catch (err) {
       console.error("이미지 업로드 오류:", err);
-      throw err; // 에러 발생 시 throw
-    }
-  };
-
-  // onUpdatePost 함수 정의
-  const onUpdatePost = async (postId, updatedData) => {
-    try {
-      const postRef = doc(db, "posts", postId); // Firestore에서 posts 컬렉션의 문서 참조
-      await updateDoc(postRef, updatedData); // 문서 업데이트
-      console.log("게시물 수정 성공:", updatedData);
-    } catch (error) {
-      console.error("게시물 수정 중 오류:", error);
-      throw error; // 에러 발생 시 throw
+      throw err;
     }
   };
 
@@ -256,6 +244,17 @@ const UploadModal = ({
       alert("업로드할 수 있는 파일의 최대 크기는 5MB입니다");
     }
   };
+  // onUpdatePost 함수 정의
+  // const onUpdatePost = async (postId, updatedData) => {
+  //   try {
+  //     const postRef = doc(db, "posts", postId); // Firestore에서 posts 컬렉션의 문서 참조
+  //     await updateDoc(postRef, updatedData); // 문서 업데이트
+  //     console.log("게시물 수정 성공:", updatedData);
+  //   } catch (error) {
+  //     console.error("게시물 수정 중 오류:", error);
+  //     throw error; // 에러 발생 시 throw
+  //   }
+  // };
 
   return (
     <Wrapper>
@@ -273,17 +272,20 @@ const UploadModal = ({
             <div className="info">
               <img
                 className="profileImg"
-                src={imageSrc}
+                src={currentUserData.fileImage || imageSrc}
                 alt="profile Image"
               ></img>
-              <div className="profilename">박예림</div>
+              <div className="profilename">
+                {currentUserData.userName.firstName}
+                {currentUserData.userName.lastName}
+              </div>
             </div>
             <label htmlFor="upload-image">
               <CiCamera style={{ cursor: "pointer", fontSize: "30px" }} />
             </label>
           </InfoItem>
           <textarea
-            value={isEditing ? uploadText || contentDesc : uploadText}
+            value={uploadText}
             onChange={(e) => setUploadText(e.target.value)}
             placeholder="오늘 어떤 일이 있으셨나요?"
             required

@@ -13,7 +13,6 @@ const Wrapper = styled.div`
   position: relative;
   width: 100%;
   height: auto;
-  /* overflow: auto; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -54,14 +53,14 @@ const Main = () => {
       <HeaderTop />
       <HeaderBottom />
       <MainSection>
+        <Mainstory />
         <PostUploadField>
           <PostUpload />
         </PostUploadField>
-        <Mainstory />
         {/* <PostUploadField /> */}
         <MainGroup />
         <Mainpage />
-        <ModalCont />
+        {/* <ModalCont /> */}
         {/* <Mainlive /> */}
       </MainSection>
     </Wrapper>

@@ -41,8 +41,6 @@ const CommentCont = styled.div`
     .profileImg {
       width: 60px;
       height: 60px;
-      background: var(--color-light-gray-01);
-      border-radius: 100px;
       @media (max-width: 768px) {
         width: 40px;
         height: 40px;
@@ -265,7 +263,6 @@ const Mainupload = ({ placeholder }) => {
     }
 
     try {
-      // 여기에서 content에는 업로드된 텍스트를, image에는 이미지 URL을 전달
       await onCreatePost(
         currentUserData.userId,
         `${currentUserData.userName.firstName} ${currentUserData.userName.lastName}`,
@@ -320,21 +317,19 @@ const Mainupload = ({ placeholder }) => {
       <CommentCont>
         <div className="commentUpLoadprofile">
           <img
-            src={
-              currentUserData
-                ? currentUserData.profileImage || testCat
-                : testCat
-            }
             className="profileImg"
-            alt="profileImg"
+            src={currentUserData.profileImage || "/img/defaultProfile.jpg"}
+            alt="Profile"
           />
           <input
             className="profileuploadText"
-            onChange={(e) => setUploadText(e.target.value)}
             type="text"
-            placeholder={placeholder || "댓글을 입력하세요"}
+            id="text"
+            name="text"
             value={uploadText}
+            placeholder={placeholder || "댓글을 입력하세요"}
             required
+            onChange={(e) => setUploadText(e.target.value)}
           />
           <button
             onClick={handleCheck}
@@ -388,8 +383,9 @@ const Mainupload = ({ placeholder }) => {
               )}
 
               <input
-                id="upload-image"
                 type="file"
+                id="upload-image"
+                name="upload-image"
                 accept="image/*"
                 style={{ display: "none" }}
                 onChange={handleImageChange}

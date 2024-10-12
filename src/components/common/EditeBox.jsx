@@ -1,15 +1,13 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import styled from "styled-components";
-import ModalCont from "../Modal/ModalCont";
+import { DataDispatchContext } from "../../App";
 
 const Wrapper = styled.div`
   position: relative;
   display: flex;
-  width: 160px;
-  height: 30px;
+  width: 150px;
   align-items: center;
   border-radius: 8px;
-  font-size: 16px;
   text-align: center;
   cursor: pointer;
 
@@ -31,15 +29,16 @@ const Wrapper = styled.div`
 
   .optionList {
     position: absolute;
-    top: 50px;
+    top: 40px;
+    right: 20px;
     width: 100%;
-    background: #fff;
-    box-shadow: 4px 6px 14px rgba(182, 182, 182, 0.8);
-    color: var(--color-gray-01);
-    list-style-type: none;
-    padding: 12px 16px;
-    border-radius: 8px;
     max-height: 0;
+    padding: 12px;
+    font-size: 14px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 4px 6px 14px rgba(182, 182, 182, 0.8);
+    list-style-type: none;
     opacity: 0.2;
     visibility: hidden;
     overflow: hidden;
@@ -61,18 +60,18 @@ const Wrapper = styled.div`
   }
 
   .optionItem {
-    padding: 6px 11px;
     margin-bottom: 8px;
     border-radius: 8px;
     transition: all 0.1s;
   }
 `;
 
-const EditeBox = ({ Title, desc, handleEditBtn }) => {
+const EditeBox = ({ Title, postId, handleEditBtn }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const { onUpdatePost } = useContext(DataDispatchContext); // Context에서 함수 가져오기
 
-  // 외부 클릭 감지 후 드롭다운 닫기
+  // 외부 클릭 시 드롭다운 닫기
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -84,23 +83,31 @@ const EditeBox = ({ Title, desc, handleEditBtn }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [dropdownRef]);
+  }, []);
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
+  const toggleDropdown = () => setIsOpen(!isOpen); // 드롭다운 토글
+
+  const onEditClick = () => {
+    if (postId) {
+      console.log(`Editing postId: ${postId}`); // 디버깅 로그
+      handleEditBtn(postId); // 수정 버튼 클릭 시 처리
+      onUpdatePost(postId, { content: "수정된 내용" }); // 게시물 업데이트
+    } else {
+      console.error("postId가 정의되지 않았습니다.");
+    }
   };
 
   return (
-    <>
-      <Wrapper className={isOpen ? "active" : ""} ref={dropdownRef}>
-        <button className="label" onClick={toggleDropdown}>
-          {Title || "최신순"}
-        </button>
-        <ul onClick={handleEditBtn} className="optionList">
-          <li className="optionItem">{desc || "게시물 수정하기"}</li>
-        </ul>
-      </Wrapper>
-    </>
+    <Wrapper className={isOpen ? "active" : ""} ref={dropdownRef}>
+      <button className="label" onClick={toggleDropdown}>
+        {Title || "옵션"}
+      </button>
+      <ul className="optionList">
+        <li className="optionItem" onClick={onEditClick}>
+          수정하기
+        </li>
+      </ul>
+    </Wrapper>
   );
 };
 

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import SocialBtnIcon from "../common/SocialBtnIcon.jsx";
 import PostUpload from "../common/PostUpload.jsx";
 import EditeBox from "../common/EditeBox.jsx";
 import UploadModal from "../ModalConts/UploadModal.jsx";
+import { DataStateContext } from "../../App.jsx";
 
 // react-icon
 import { BsThreeDots } from "react-icons/bs";
@@ -61,7 +62,7 @@ const ProfileContent = styled.div`
   .profileImg {
     width: 60px;
     height: 60px;
-    background: var(--color-gray-01);
+    object-fit: cover;
     border-radius: 100px;
   }
   .profileName {
@@ -163,18 +164,19 @@ const ContImg = styled.img`
     height: 200px;
   }
 `;
+const PostUploadFidle = styled.div``;
 
 const PostItem = ({
-  postId,
-  imageSrc,
-  contentDesc,
+  post,
   onDeletePost,
-  createdAt,
   handleModalContOpen,
+  handleModalOpen,
 }) => {
+  const { currentUserData } = useContext(DataStateContext);
   const [isEditing, setIsEditing] = useState(false);
+  const [editingPostId, setEditingPostId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const { id, userId, content, createdAt, image } = post;
   const isLiked = false; // 초기 좋아요 여부
 
   const formatDate = (isoString) => {
@@ -190,23 +192,28 @@ const PostItem = ({
     const isConfirmed = confirm("게시물을 삭제하시겠습니까?");
     if (isConfirmed) {
       try {
-        await onDeletePost(postId); // 삭제 함수 호출
+        await onDeletePost(id);
       } catch (err) {
         console.error("게시물 삭제 중 오류:", err);
       }
     }
   };
 
-  const handleEditBtn = () => {
+  const handleEdit = (postId) => {
+    openEditModal(postId); // 수정할 게시물의 ID 전달
+  };
+  const openEditModal = (postId) => {
     if (confirm("게시물을 수정 하시겠습니까?")) {
       setIsEditing(true);
+      setEditingPostId(postId);
       setIsModalOpen(true);
     }
   };
 
   const closeModal = () => {
-    setIsModalOpen(false); // 모달 닫기
-    setIsEditing(false); // 수정 모드 해제
+    setIsModalOpen(false);
+    setIsEditing(false);
+    setEditingPostId(null);
   };
 
   return (
@@ -215,11 +222,18 @@ const PostItem = ({
         <Inner>
           <Profile>
             <ProfileContent>
-              <div className="profileImg"></div>
+              <img
+                className="profileImg"
+                src={currentUserData?.profileImage || "/img/defaultProfile.jpg"}
+                alt="Profile"
+              />
               <div className="profileText">
-                <h1 className="profileName">박예림</h1>
+                <h1 className="profileName">
+                  {currentUserData?.userName.firstName}
+                  {currentUserData?.userName.lastName}
+                </h1>
                 <p className="createdAt">
-                  {formatDate(createdAt)}
+                  {formatDate(post?.createdAt)}
                   <FaEarthAmericas
                     style={{
                       fontSize: "14px",
@@ -233,8 +247,9 @@ const PostItem = ({
             <ControlsIcon>
               <EditeIcon style={{ zIndex: 1 }}>
                 <EditeBox
-                  handleEditBtn={handleEditBtn}
                   Title={<BsThreeDots />}
+                  postId={post.id} // post의 ID 전달
+                  handleEditBtn={handleEdit}
                 />
               </EditeIcon>
               <DeletIcon>
@@ -243,27 +258,31 @@ const PostItem = ({
             </ControlsIcon>
           </Profile>
           <Contents>
-            <div className="contentDesc">{contentDesc}</div>
-            {imageSrc && (
+            <div className="contentDesc">{post?.content}</div>
+            {image && (
               <ContImg
                 onClick={handleModalContOpen}
-                src={imageSrc}
+                src={image}
                 alt="Post content image"
               />
             )}
           </Contents>
-          <SocialBtnIcon postId={postId} isLiked={isLiked} />
-          <UploadField />
+          <SocialBtnIcon postId={post.userId} isLiked={isLiked} />
+          <PostUploadFidle>
+            <PostUpload />
+          </PostUploadFidle>
         </Inner>
       </Wrapper>
       {isModalOpen && (
         <UploadModal
-          postId={postId}
-          imageSrc={imageSrc}
-          contentDesc={contentDesc}
+          userId={userId}
+          postId={editingPostId} // 수정할 게시물의 ID를 전달
+          imageSrc={image}
+          contentDesc={content}
           createdAt={createdAt}
           closeModal={closeModal}
           isEditing={isEditing}
+          currentUserData={currentUserData}
         />
       )}
     </>

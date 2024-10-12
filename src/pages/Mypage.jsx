@@ -72,14 +72,22 @@ const ContChangeBtn = styled(motion.div)`
 `;
 
 const UploadInner = styled.div`
-  padding: 0 30px;
+  padding: 30px;
 `;
 
-const Detail = (props) => {
-  // const { layoutId } = props;
-
+const Mypage = () => {
+  const [activeTab, setActiveTab] = useState(0); // 탭 상태 관리
+  const [isUploadVisible, setIsUploadVisible] = useState(false);
   const [id, setId] = useState(0);
   const [upload, setUpload] = useState(false);
+
+  const handleTabClick = (tabId) => {
+    setActiveTab(tabId);
+  };
+
+  const toggleUpload = () => {
+    setIsUploadVisible((prev) => !prev);
+  };
 
   const handleClick = (tabId) => {
     setId(tabId);
@@ -93,10 +101,10 @@ const Detail = (props) => {
       <Inner>
         <TopCover />
         <ContChangeBtn>
-          <button className="postBtn" onClick={() => handleClick(0)}>
+          <button className="postBtn" onClick={() => handleTabClick(0)}>
             게시글
           </button>
-          <button className="postBtn" onClick={() => handleClick(1)}>
+          <button className="postBtn" onClick={() => handleTabClick(1)}>
             사진 및 동영상
           </button>
           <motion.div
@@ -104,7 +112,7 @@ const Detail = (props) => {
             layoutId="underline"
             style={{
               width: "50%",
-              left: id === 0 ? "0%" : "50%",
+              left: activeTab === 0 ? "0%" : "50%",
             }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           />
@@ -112,15 +120,11 @@ const Detail = (props) => {
         <UploadInner style={{ display: !upload ? "block" : "none" }}>
           <PostUpload placeholder="오늘 어떤일이 있으셨나요?" />
         </UploadInner>
-        <div style={{ display: id === 0 ? "block" : "none" }}>
-          <PostList />
-        </div>
-        <div style={{ display: id === 1 ? "block" : "none" }}>
-          <PhotoVideoList />
-        </div>
+        {activeTab === 0 && <PostList />}
+        {activeTab === 1 && <PhotoVideoList />}
       </Inner>
     </Wrapper>
   );
 };
 
-export default Detail;
+export default Mypage;

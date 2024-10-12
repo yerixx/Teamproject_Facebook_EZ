@@ -4,7 +4,7 @@ import PostItem from "../Mypage/PostItem";
 import ModalCont from "../Modal/ModalCont";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../../firebase";
-import { DataDispatchContext } from "../../App";
+import { DataDispatchContext, DataStateContext } from "../../App";
 
 const Wrapper = styled.div`
   display: flex;
@@ -14,12 +14,21 @@ const Wrapper = styled.div`
 `;
 
 const PostList = () => {
-  const [posts, setPosts] = useState([]);
+  const [userPosts, setUserPosts] = useState([]);
   const [isContOpen, setIsContOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [postedCont, setPostedCont] = useState(null);
   const { onDeletePost } = useContext(DataDispatchContext);
+  const { posts, currentUserData } = useContext(DataStateContext);
 
+  useEffect(() => {
+    if (currentUserData && posts) {
+      const filteredPosts = posts.filter(
+        (post) => post.userId === currentUserData.userId
+      );
+      setUserPosts(filteredPosts);
+    }
+  }, [posts, currentUserData]);
   const handleModalOpen = () => {
     try {
       setIsModalOpen(true);
@@ -36,37 +45,16 @@ const PostList = () => {
     setIsContOpen(false);
     setPostedCont(null);
   };
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const postsQuery = query(
-          collection(db, "posts"),
-          orderBy("createdAt", "desc")
-        );
-        const querySnapshot = await getDocs(postsQuery);
-        const postData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setPosts(postData); // 초기 데이터 설정
-      } catch (err) {
-        console.error("Post 데이터를 가져오는 중 오류 발생:", err);
-      }
-    };
-    fetchPosts();
-  }, []);
-
+  const sortedPosts = userPosts.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
   return (
     <>
       <Wrapper>
-        {posts.map((post) => (
+        {sortedPosts.map((post) => (
           <PostItem
             key={post.id}
-            postId={post.id}
-            imageSrc={post.image}
-            createdAt={post.createdAt}
-            contentDesc={post.content}
+            post={post}
             onDeletePost={onDeletePost}
             handleModalOpen={handleModalOpen}
             handleModalContOpen={() => handleModalContOpen(post)}
@@ -82,5 +70,4 @@ const PostList = () => {
     </>
   );
 };
-
 export default PostList;

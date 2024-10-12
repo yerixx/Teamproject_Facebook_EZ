@@ -16,8 +16,9 @@ import {
   SubDescription_16_n,
   SubDescription_14_n,
 } from "../../styles/GlobalStyles.styles.js";
-import { DataStateContext } from "../../App.jsx";
+import { DataDispatchContext, DataStateContext } from "../../App.jsx";
 import Mainlive from "./Mainlive.jsx";
+import UploadModal from "../ModalConts/UploadModal.jsx";
 
 const Wrapper = styled.section`
   border-radius: var(--border-radius-30);
@@ -168,10 +169,18 @@ const ContImg = styled.img`
   }
 `;
 
-const Mainpage = ({ postId, onDeletePost }) => {
+const Mainpage = ({ postId }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태
+  const [isEditing, setIsEditing] = useState(false); // 편집 모드 여부
+  const [imageSrc, setImageSrc] = useState(""); // 편집할 이미지 소스
+  const [contentDesc, setContentDesc] = useState(""); // 편집할 내용
   const isLiked = false; // 초기 좋아요 여부
   const [posts, setPosts] = useState([]);
+
+  const [editingPostId, setEditingPostId] = useState(null);
+  const { onDeletePost } = useContext(DataDispatchContext);
   const data = useContext(DataStateContext);
+  const { currentUserData } = data;
   const postData = data.posts;
   useEffect(() => {
     setPosts(postData);
@@ -185,7 +194,7 @@ const Mainpage = ({ postId, onDeletePost }) => {
     return `${year}.${month}.${day}`;
   };
 
-  const postDeleteBtn = async (e) => {
+  const postDeleteBtn = async (e, postId) => {
     e.preventDefault();
     const isConfirmed = confirm("게시물을 삭제하시겠습니까?");
     if (isConfirmed) {
@@ -196,55 +205,107 @@ const Mainpage = ({ postId, onDeletePost }) => {
       }
     }
   };
-
+  const handleEditBtn = (postId, image, content) => {
+    console.log(`Edit button clicked for postId: ${postId}`);
+    setEditingPostId(postId);
+    setImageSrc(image || "");
+    setContentDesc(content || "");
+    setIsEditing(true);
+    setIsModalOpen(true);
+    console.log("isModalOpen after setState:", isModalOpen); // 이 로그는 이전 상태를 출력할 수 있음
+  };
+  useEffect(() => {
+    console.log("isModalOpen changed:", isModalOpen);
+  }, [isModalOpen]);
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setIsEditing(false);
+    setEditingPostId(null);
+    setImageSrc("");
+    setContentDesc("");
+  };
+  const handleUpdatePost = async (postId, updatedContent) => {
+    try {
+      await onUpdatePost(postId, { content: updatedContent });
+      setIsModalOpen(false); // 모달 닫기
+      setEditingPostId(null);
+      console.log("게시물이 성공적으로 수정되었습니다");
+    } catch (error) {
+      console.error("게시물 업데이트 중 오류 발생:", error);
+    }
+  };
   return (
     <>
       {posts
         .slice()
         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        .map((item, i) => (
-          <React.Fragment key={i}>
-            <Wrapper>
-              <Inner>
-                <Profile>
-                  <ProfileContent>
-                    <div className="profileImg"></div>
-                    <div className="profileText">
-                      <h1 className="profileName">{item?.userName}</h1>
-                      <p className="createdAt">
-                        {formatDate(item.createdAt)}{" "}
-                        <FaEarthAmericas
-                          style={{
-                            fontSize: "14px",
+        .map((item, i) => {
+          const isAuthor = currentUserData?.userId === item.userId;
+          return (
+            <React.Fragment key={i}>
+              <Wrapper>
+                <Inner>
+                  <Profile>
+                    <ProfileContent>
+                      <div className="profileImg"></div>
+                      <div className="profileText">
+                        <h1 className="profileName">{item?.userName}</h1>
+                        <p className="createdAt">
+                          {formatDate(item.createdAt)}{" "}
+                          <FaEarthAmericas
+                            style={{
+                              fontSize: "14px",
+                              marginTop: "2px",
+                            }}
+                          />
+                        </p>
+                      </div>
+                    </ProfileContent>
+                    {isAuthor && (
+                      <ControlsIcon>
+                        <EditeIcon style={{ zIndex: 999 }}>
+                          <EditeBox
+                            postId={item.id}
+                            imageSrc={item.image}
+                            contentDesc={item.content}
+                            handleEditBtn={handleEditBtn}
+                            Title={<BsThreeDots />}
+                          />
+                        </EditeIcon>
+                        <DeletIcon>
+                          <IoCloseOutline
+                            onClick={(e) => postDeleteBtn(e, item.id)}
+                          />
+                        </DeletIcon>
+                      </ControlsIcon>
+                    )}
+                  </Profile>
+                  <Contents>
+                    <div className="contentDesc">{item.content}</div>
+                    {item.image && (
+                      <ContImg src={item.image} alt="Post content image" />
+                    )}
+                  </Contents>
+                  <SocialBtnIcon postId={item.id} isLiked={isLiked} />
+                  <PostUpload />
+                </Inner>
+              </Wrapper>
+              {(i + 1) % 3 === 0 && <Mainlive />}
+            </React.Fragment>
+          );
+        })}
 
-                            marginTop: "2px",
-                          }}
-                        />
-                      </p>
-                    </div>
-                  </ProfileContent>
-                  <ControlsIcon>
-                    <EditeIcon style={{ zIndex: 999 }}>
-                      <EditeBox Title={<BsThreeDots />} />
-                    </EditeIcon>
-                    <DeletIcon>
-                      <IoCloseOutline onClick={postDeleteBtn} />
-                    </DeletIcon>
-                  </ControlsIcon>
-                </Profile>
-                <Contents>
-                  <div className="contentDesc">{item.content}</div>
-                  {item.image && (
-                    <ContImg src={item.image} alt="Post content image" />
-                  )}
-                </Contents>
-                <SocialBtnIcon postId={postId} isLiked={isLiked} />
-                <PostUpload />
-              </Inner>
-            </Wrapper>
-            {(i + 1) % 3 === 0 && <Mainlive />}
-          </React.Fragment>
-        ))}
+      {isModalOpen && (
+        <UploadModal
+          closeModal={closeModal}
+          postId={editingPostId}
+          imageSrc={imageSrc}
+          contentDesc={contentDesc}
+          isEditing={isEditing}
+          currentUserData={currentUserData}
+          handleUpdatePost={handleUpdatePost}
+        />
+      )}
     </>
   );
 };
