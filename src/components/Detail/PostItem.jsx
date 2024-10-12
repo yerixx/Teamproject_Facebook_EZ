@@ -93,6 +93,10 @@ const ControlsIcon = styled.div`
   *:hover {
     color: var(--color-facebookblue);
   }
+  @media screen and (max-width: 768px) {
+    position: absolute;
+    right: 35px;
+  }
 `;
 const EditeIcon = styled.div``;
 const DeletIcon = styled.div`
@@ -198,7 +202,7 @@ const PostItem = ({
   const handleEditBtn = () => {
     if (confirm("게시물을 수정 하시겠습니까?")) {
       setIsEditing(true);
-      setIsModalOpen(true); // 수정 모달 열기
+      setIsModalOpen(true);
     }
   };
 
@@ -254,7 +258,16 @@ const PostItem = ({
           <UploadField />
         </Inner>
       </Wrapper>
-      {isModalOpen && <UploadModal closeModal={closeModal} />}
+      {isModalOpen && (
+        <UploadModal
+          postId={postId}
+          imageSrc={imageSrc}
+          contentDesc={contentDesc}
+          createdAt={createdAt}
+          closeModal={closeModal}
+          isEditing={isEditing}
+        />
+      )}
     </>
   );
 };

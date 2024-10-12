@@ -10,16 +10,6 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase";
 
 // Styled-components
-const WrapperForm = styled.form`
-  width: 100%;
-  height: fit-content;
-  display: flex;
-  justify-content: center;
-  @media (max-width: 768px) {
-    margin: 16px 0;
-    height: 150px;
-  }
-`;
 const Wrapper = styled.div`
   position: fixed;
   top: 0;
@@ -33,41 +23,55 @@ const Wrapper = styled.div`
   z-index: 1000;
 `;
 const Inner = styled.div`
-  width: var(--inner-width-02);
-  padding: 50px 20px;
+  width: 820px;
+  padding: 30px 20px 50px;
   border-radius: 30px;
   box-shadow: var(--box-shadow-01);
   background-color: var(--color-white);
+  @media (max-width: 768px) {
+    margin: 0 20px;
+  }
 `;
 const ModalTitle = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 26px;
-  border-bottom: 1px solid var(--color-light-gray-01);
-  height: 60px;
-  position: relative;
+  height: 40px;
+  font-size: 22px;
   margin-bottom: 15px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--color-light-gray-01);
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
   .title {
     font-weight: bold;
   }
   .xmark {
     width: 26px;
-    height: 26px;
+    height: 40px;
     display: flex;
     align-items: center;
     position: absolute;
-    top: 17px;
+    top: -10px;
     right: 20px;
     cursor: pointer;
     transition: color 0.3s;
     &:hover {
       color: var(--color-facebookblue);
     }
+    @media (max-width: 768px) {
+      top: -8px;
+      font-size: 20px;
+    }
   }
 `;
 const Posting = styled.div`
   padding: 0 60px;
+  @media (max-width: 768px) {
+    padding: 0 16px;
+  }
   textarea {
     width: 100%;
     height: 100px;
@@ -114,6 +118,10 @@ const PostingBtn = styled.button`
   &:hover {
     opacity: 0.8;
   }
+  @media (max-width: 768px) {
+    font-size: 16px;
+    height: 40px;
+  }
 `;
 const InfoItem = styled.div`
   display: flex;
@@ -126,15 +134,11 @@ const InfoItem = styled.div`
     gap: 10px;
     align-items: center;
     margin-bottom: 15px;
-    .profile {
-      background: var(--color-gray-01);
+    .profileImg {
       width: 40px;
       height: 40px;
       border-radius: 50%;
       overflow: hidden;
-    }
-    .profilename {
-      color: var(--color-gray-01);
     }
   }
   .camera {
@@ -151,9 +155,18 @@ const InfoItem = styled.div`
   }
 `;
 
-const UploadModal = ({ closeModal }) => {
+const UploadModal = ({
+  closeModal,
+  postId,
+  imageSrc,
+  contentDesc,
+  onDeletePost,
+  createdAt,
+  isEditing,
+}) => {
   const { onCreatePost } = useContext(DataDispatchContext);
   const [isLoading, setIsLoading] = useState(false);
+  // const [isEditing, setIsEditing] = useState(false);
   const [uploadText, setUploadText] = useState("");
   const [uploadFile, setUploadFile] = useState(null);
 
@@ -165,7 +178,6 @@ const UploadModal = ({ closeModal }) => {
     }
     setIsLoading(true);
     let imageUrl = null;
-
     if (uploadFile) {
       try {
         imageUrl = await uploadImage(uploadFile);
@@ -175,7 +187,6 @@ const UploadModal = ({ closeModal }) => {
         return;
       }
     }
-
     try {
       // 여기에서 content에는 업로드된 텍스트를, image에는 이미지 URL을 전달
       await onCreatePost("testUserId", "TestUser", uploadText, imageUrl);
@@ -188,7 +199,6 @@ const UploadModal = ({ closeModal }) => {
       setIsLoading(false);
     }
   };
-
   const uploadImage = async (file) => {
     try {
       const storageRef = ref(storage, `images/${file.name}-${Date.now()}`);
@@ -198,7 +208,6 @@ const UploadModal = ({ closeModal }) => {
       console.error("이미지 업로드 오류:", err);
     }
   };
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file.size <= 5 * 1024 * 1024) {
@@ -212,7 +221,9 @@ const UploadModal = ({ closeModal }) => {
     <Wrapper>
       <Inner>
         <ModalTitle>
-          <div className="title">게시물 올리기</div>
+          <div className="title">
+            {isEditing ? "게시물 수정하기" : "게시물 올리기"}
+          </div>
           <div className="xmark" onClick={closeModal}>
             <FiX />
           </div>
@@ -220,17 +231,21 @@ const UploadModal = ({ closeModal }) => {
         <Posting>
           <InfoItem>
             <div className="info">
-              <div className="profile"></div>
-              <div className="profilename">김정하</div>
+              <img
+                className="profileImg"
+                src={imageSrc}
+                alt="profile Image"
+              ></img>
+              <div className="profilename">박예림</div>
             </div>
             <label htmlFor="upload-image">
               <CiCamera style={{ cursor: "pointer", fontSize: "30px" }} />
             </label>
           </InfoItem>
           <textarea
-            value={uploadText}
+            value={isEditing ? contentDesc : uploadText}
             onChange={(e) => setUploadText(e.target.value)}
-            placeholder="오늘 어떤일이 있으셨나요?"
+            placeholder={isEditing ? contentDesc : "오늘 어떤일이 있으셨나요?"}
             required
           />
           {uploadFile && (
@@ -238,7 +253,6 @@ const UploadModal = ({ closeModal }) => {
               <img src={URL.createObjectURL(uploadFile)} alt="게시물 이미지" />
             </PostingImg>
           )}
-
           <input
             id="upload-image"
             type="file"
@@ -251,6 +265,51 @@ const UploadModal = ({ closeModal }) => {
           </PostingBtn>
         </Posting>
       </Inner>
+      {/* {isEditing && (
+        <Inner>
+          <ModalTitle>
+            <div className="title">게시물 수정하기</div>
+            <div className="xmark" onClick={closeModal}>
+              <FiX />
+            </div>
+          </ModalTitle>
+          <Posting>
+            <InfoItem>
+              <div className="info">
+                <div className="profile"></div>
+                <div className="profilename">박예림</div>
+              </div>
+              <label htmlFor="upload-image">
+                <CiCamera style={{ cursor: "pointer", fontSize: "30px" }} />
+              </label>
+            </InfoItem>
+            <textarea
+              value={contentDesc}
+              onChange={(e) => setUploadText(e.target.value)}
+              placeholder={contentDesc}
+              required
+            />
+            {uploadFile && (
+              <PostingImg>
+                <img
+                  src={URL.createObjectURL(uploadFile)}
+                  alt="게시물 이미지"
+                />
+              </PostingImg>
+            )}
+            <input
+              id="upload-image"
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={handleImageChange}
+            />
+            <PostingBtn onClick={handleSubmit} disabled={isLoading}>
+              {isLoading ? "게시 중..." : "게시하기"}
+            </PostingBtn>
+          </Posting>
+        </Inner>
+      )} */}
     </Wrapper>
   );
 };

@@ -8,7 +8,6 @@ import { BsThreeDots } from "react-icons/bs";
 import { IoCloseOutline } from "react-icons/io5";
 
 import testCat from "/img/testcat.jpg";
-import testImg from "/img/testImg.png";
 
 import {
   SubTitle_16_b,
@@ -21,7 +20,7 @@ const Wrapper = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: var(--color-black);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,11 +32,11 @@ const DeskTop = styled.div`
   height: 100vh;
   display: flex;
   background: var(--color-white);
-
   @media (max-width: 768px) {
     display: none;
   }
 `;
+
 const LeftContent = styled.section`
   flex: 2;
   height: 100%;
@@ -63,6 +62,8 @@ const ControlsIcon = styled.div`
   display: flex;
   @media screen and (max-width: 768px) {
     width: 100%;
+    position: absolute;
+    top: 20px;
   }
 `;
 const EditeIcon = styled.div`
@@ -128,6 +129,10 @@ const ModalProfileImg = styled.div`
     height: 80px;
     background-color: var(--color-light-gray-02);
     border-radius: 50%;
+    @media screen and (max-width: 768px) {
+      width: 60px;
+      height: 60px;
+    }
     img {
       width: 100%;
       height: 100%;
@@ -157,6 +162,7 @@ const ModalProfileSelf = styled.div`
     }
   }
 `;
+
 const ModalDesc = styled.div`
   width: 100%;
   padding: 0 40px;
@@ -176,15 +182,15 @@ const ModalDesc = styled.div`
   }
   p {
     word-wrap: keep-all;
-    border-bottom: 1px solid var(--color-light-gray-01);
+    border-bottom: 1px solid var(--color-gray-01);
     padding-bottom: 15px;
-    font-size: var(--font-size-description-01);
     @media screen and (max-width: 1050px) {
       padding: 20px;
       font-size: 14px;
     }
   }
 `;
+
 const SocialIcon = styled.div`
   width: 90%;
   @media (max-width: 768px) {
@@ -196,6 +202,7 @@ const SocialIcon = styled.div`
     }
   }
 `;
+
 const Mobile = styled.div`
   display: none;
   @media (max-width: 768px) {
@@ -205,7 +212,7 @@ const Mobile = styled.div`
   }
 `;
 
-const ModalCont = ({ post, handleModalContClose }) => {
+const ModalCont = ({ post }) => {
   const [closeBtn, setCloseBtn] = useState(false);
   const closeButton = () => {
     setCloseBtn(true);
@@ -281,23 +288,18 @@ const ModalCont = ({ post, handleModalContClose }) => {
         </ControlsIcon>
         <ModalProfileImg>
           <div className="profileImg">
-            <img src={testCat} alt="ModalProfileImg" />
+            <img src={post.image} alt="ModalProfileImg" />
           </div>
           <ModalProfileSelf>
             <div className="profileName">박예림</div>
-            <div className="profiledesc">6시간 전</div>
+            <div className="profiledesc">{formatDate(post.createdAt)}</div>
           </ModalProfileSelf>
         </ModalProfileImg>
         <ImageContent>
-          <img src={testImg} />
+          <img src={post.image} />
         </ImageContent>
         <ModalDesc>
-          <p>
-            아침, 저녁 젤 바쁜 방학의 일요일이 끝났다 😎💪🏻 <br /> 또 다시
-            월요일이라니!!
-            <br />
-            월요팅 하세요~~
-          </p>
+          <p>{post.content}</p>
         </ModalDesc>
         <SocialIcon>
           <SocialBtnIcon />
