@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 
 import EditeBox from "../common/EditeBox.jsx";
-import SocialBtnIcon from "../common/SocialBtnIcon";
+import SocialBtnIcon from "../common/SocialBtnIcon.jsx";
 
 import { BsThreeDots } from "react-icons/bs";
 import { IoCloseOutline } from "react-icons/io5";
+import { FaEarthAmericas } from "react-icons/fa6";
 
 import testCat from "/img/testcat.jpg";
 
 import {
-  SubTitle_16_b,
+  MainTitle_18_b,
+  SubDescription_16_n,
   SubDescription_14_n,
 } from "../../styles/GlobalStyles.styles.js";
 
@@ -60,6 +62,9 @@ const RightContent = styled.section`
 `;
 const ControlsIcon = styled.div`
   display: flex;
+  position: absolute;
+  top: 0;
+  right: 10px;
   @media screen and (max-width: 768px) {
     width: 100%;
     position: absolute;
@@ -70,21 +75,20 @@ const EditeIcon = styled.div`
   position: absolute;
   top: 33px;
   right: 50px;
-  font-size: 25px;
+  font-size: 20px;
   cursor: pointer;
   @media screen and (max-width: 768px) {
     * {
       color: var(--color-white);
     }
-    .optionItem {
-      color: black;
-    }
     .optionList {
       box-shadow: none;
     }
+    .optionItem {
+      color: black;
+    }
   }
 `;
-
 const CloseIcon = styled.div`
   position: absolute;
   top: 33px;
@@ -99,24 +103,33 @@ const ArrowBtn = styled.div``;
 const Trigger = styled.div``;
 
 const ImageContent = styled.div`
-  width: 800px;
-  height: 700px;
+  width: 780px;
+  height: 580px;
   position: relative;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   @media screen and (max-width: 768px) {
     width: 100%;
     height: 390px;
     object-fit: cover;
   }
+
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s ease;
+    &:hover {
+      transform: scale(1.2);
+    }
     @media screen and (max-width: 768px) {
       width: 100%;
       height: 390px;
       object-fit: cover;
+      &:hover {
+        transform: scale(1);
+      }
     }
   }
 `;
@@ -150,27 +163,27 @@ const ModalProfileSelf = styled.div`
   gap: 5px;
   margin-left: 20px;
   .profileName {
-    ${SubTitle_16_b}
+    ${MainTitle_18_b}
     @media screen and (max-width: 768px) {
       color: var(--color-white);
     }
   }
   .profiledesc {
+    display: flex;
+    gap: 4px;
     ${SubDescription_14_n}
     @media screen and (max-width: 768px) {
       color: var(--color-white);
     }
   }
 `;
-
 const ModalDesc = styled.div`
+  ${SubDescription_16_n}
   width: 100%;
   padding: 0 40px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  font-size: var(--font-size-description-01);
-  color: var(--color-gray-01);
   @media screen and (max-width: 1050px) {
     width: 100%;
     height: 100px;
@@ -182,7 +195,6 @@ const ModalDesc = styled.div`
   }
   p {
     word-wrap: keep-all;
-    border-bottom: 1px solid var(--color-gray-01);
     padding-bottom: 15px;
     @media screen and (max-width: 1050px) {
       padding: 20px;
@@ -190,8 +202,13 @@ const ModalDesc = styled.div`
     }
   }
 `;
-
 const SocialIcon = styled.div`
+  * {
+    display: flex;
+    justify-content: space-around;
+    gap: 40px;
+    ${SubDescription_14_n}
+  }
   width: 90%;
   @media (max-width: 768px) {
     position: absolute;
@@ -202,7 +219,6 @@ const SocialIcon = styled.div`
     }
   }
 `;
-
 const Mobile = styled.div`
   display: none;
   @media (max-width: 768px) {
@@ -242,7 +258,12 @@ const ModalCont = ({ post }) => {
               <EditeBox
                 //이거 쓰면됨
                 // handleEditBtn={handleEditBtn}
-                Title={<BsThreeDots className="bsThreeDots" />}
+                Title={
+                  <BsThreeDots
+                    style={{ marginTop: "3px" }}
+                    className="bsThreeDots"
+                  />
+                }
               />
             </EditeIcon>
             <CloseIcon onClick={closeButton}>
@@ -258,7 +279,16 @@ const ModalCont = ({ post }) => {
             </div>
             <ModalProfileSelf>
               <div className="profileName">박예림</div>
-              <div className="profiledesc">{formatDate(post.createdAt)}</div>
+              <div className="profiledesc">
+                {formatDate(post.createdAt)}{" "}
+                <FaEarthAmericas
+                  style={{
+                    fontSize: "14px",
+                    color: "black",
+                    marginTop: "4px",
+                  }}
+                />
+              </div>
             </ModalProfileSelf>
           </ModalProfileImg>
           <ModalDesc>

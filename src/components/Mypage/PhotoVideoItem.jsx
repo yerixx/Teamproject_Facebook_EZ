@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import { DataStateContext } from "../../App.jsx";
 
 //font
 import {
@@ -80,8 +81,16 @@ const ContText = styled.div`
   }
 `;
 
-const PhotoVideoItem = ({ imageSrc, contentDesc, createdAt }) => {
+const PhotoVideoItem = ({
+  userId,
+  imageSrc,
+  contentDesc,
+  createdAt,
+  ModalOpen,
+  ModalClose,
+}) => {
   const isLiked = false; // 초기 좋아요 여부
+  const { currentUserData } = useContext(DataStateContext);
 
   const formatDate = (isoString) => {
     const date = new Date(isoString);
@@ -90,13 +99,14 @@ const PhotoVideoItem = ({ imageSrc, contentDesc, createdAt }) => {
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}.${month}.${day}`;
   };
-
+  const isAuthor = currentUserData?.uid === userId;
   return (
     <Inner>
       <Contents>
         <div>
           {imageSrc && (
             <ContImg
+              onClick={() => ModalOpen()}
               src={imageSrc}
               alt="contentImage"
               style={{ display: imageSrc ? "block" : "none" }}

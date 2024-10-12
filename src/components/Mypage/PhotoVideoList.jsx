@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import PhotoVideoItem from "./PhotoVideoItem";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../../firebase";
+import ModalCont from "../Modal/ModalCont";
 
 const Wrapper = styled.section`
   display: flex;
@@ -23,6 +24,7 @@ const Wrapper = styled.section`
 
 const PhotoVideoList = () => {
   const [posts, setPosts] = useState([]);
+  const [selectedPost, setSelectedPost] = useState(null); // 선택된 포스트 저장
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -34,6 +36,7 @@ const PhotoVideoList = () => {
         const querySnapshot = await getDocs(postsQuery);
         const postData = querySnapshot.docs.map((doc) => ({
           id: doc.id,
+          userId: doc.data().userId, // 게시물 작성자의 uid 추가
           ...doc.data(),
         }));
         setPosts(postData);
@@ -44,20 +47,38 @@ const PhotoVideoList = () => {
     fetchPosts();
   }, []);
 
+  const openModal = (post) => {
+    setSelectedPost(post); // 선택된 포스트 저장
+  };
+
+  const closeModal = () => {
+    setSelectedPost(null); // 모달 닫기
+  };
+
   return (
-    <Wrapper>
-      {posts
-        .filter((post) => post.image)
-        .map((post) => (
-          <PhotoVideoItem
-            key={post.id}
-            postId={post.id}
-            imageSrc={post.image}
-            contentDesc={post.content}
-            createdAt={post.createdAt}
-          />
-        ))}
-    </Wrapper>
+    <>
+      <Wrapper>
+        {posts
+          .filter((post) => post.image) // 이미지를 가진 포스트만 필터링
+          .map((post) => (
+            <PhotoVideoItem
+              key={post.id}
+              postId={post.id}
+              userId={post.userId}
+              imageSrc={post.image}
+              contentDesc={post.content}
+              createdAt={post.createdAt}
+              ModalOpen={() => openModal(post)} // 포스트 객체를 전달
+            />
+          ))}
+      </Wrapper>
+      {selectedPost && (
+        <ModalCont
+          post={selectedPost} // 선택된 포스트 전체를 전달
+          onClose={closeModal} // 모달 닫기 함수 전달
+        />
+      )}
+    </>
   );
 };
 

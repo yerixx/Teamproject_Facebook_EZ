@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import SocialBtnIcon from "../common/SocialBtnIcon.jsx";
 import PostUpload from "../common/PostUpload.jsx";
 import EditeBox from "../common/EditeBox.jsx";
 import UploadModal from "../ModalConts/UploadModal.jsx";
+import { DataStateContext } from "../../App.jsx";
 
 // react-icon
 import { BsThreeDots } from "react-icons/bs";
@@ -61,7 +62,7 @@ const ProfileContent = styled.div`
   .profileImg {
     width: 60px;
     height: 60px;
-    background: var(--color-gray-01);
+    object-fit: cover;
     border-radius: 100px;
   }
   .profileName {
@@ -163,15 +164,18 @@ const ContImg = styled.img`
     height: 200px;
   }
 `;
+const PostUploadFidle = styled.div``;
 
 const PostItem = ({
   postId,
   imageSrc,
+  createdAt,
   contentDesc,
   onDeletePost,
-  createdAt,
   handleModalContOpen,
+  userId,
 }) => {
+  const { currentUserData } = useContext(DataStateContext);
   const [isEditing, setIsEditing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -190,7 +194,7 @@ const PostItem = ({
     const isConfirmed = confirm("게시물을 삭제하시겠습니까?");
     if (isConfirmed) {
       try {
-        await onDeletePost(postId); // 삭제 함수 호출
+        await onDeletePost(postId);
       } catch (err) {
         console.error("게시물 삭제 중 오류:", err);
       }
@@ -205,19 +209,27 @@ const PostItem = ({
   };
 
   const closeModal = () => {
-    setIsModalOpen(false); // 모달 닫기
-    setIsEditing(false); // 수정 모드 해제
+    setIsModalOpen(false);
+    setIsEditing(false);
   };
 
+  const isAuthor = currentUserData?.uid === userId;
   return (
     <>
       <Wrapper>
         <Inner>
           <Profile>
             <ProfileContent>
-              <div className="profileImg"></div>
+              <img
+                className="profileImg"
+                src={currentUserData?.profileImage || "/img/defaultProfile.jpg"}
+                alt="Profile"
+              />
               <div className="profileText">
-                <h1 className="profileName">박예림</h1>
+                <h1 className="profileName">
+                  {currentUserData.userName.firstName}
+                  {currentUserData.userName.lastName}
+                </h1>
                 <p className="createdAt">
                   {formatDate(createdAt)}
                   <FaEarthAmericas
@@ -230,17 +242,19 @@ const PostItem = ({
                 </p>
               </div>
             </ProfileContent>
-            <ControlsIcon>
-              <EditeIcon style={{ zIndex: 1 }}>
-                <EditeBox
-                  handleEditBtn={handleEditBtn}
-                  Title={<BsThreeDots />}
-                />
-              </EditeIcon>
-              <DeletIcon>
-                <IoCloseOutline onClick={postDeleteBtn} />
-              </DeletIcon>
-            </ControlsIcon>
+            {isAuthor && (
+              <ControlsIcon>
+                <EditeIcon style={{ zIndex: 1 }}>
+                  <EditeBox
+                    handleEditBtn={handleEditBtn}
+                    Title={<BsThreeDots />}
+                  />
+                </EditeIcon>
+                <DeletIcon>
+                  <IoCloseOutline onClick={postDeleteBtn} />
+                </DeletIcon>
+              </ControlsIcon>
+            )}
           </Profile>
           <Contents>
             <div className="contentDesc">{contentDesc}</div>
@@ -253,11 +267,14 @@ const PostItem = ({
             )}
           </Contents>
           <SocialBtnIcon postId={postId} isLiked={isLiked} />
-          <UploadField />
+          <PostUploadFidle>
+            <PostUpload />
+          </PostUploadFidle>
         </Inner>
       </Wrapper>
       {isModalOpen && (
         <UploadModal
+          userId={userId}
           postId={postId}
           imageSrc={imageSrc}
           contentDesc={contentDesc}

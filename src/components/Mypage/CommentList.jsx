@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 // react-icon
-
 import { SlArrowDown } from "react-icons/sl";
 
 //font
@@ -18,7 +17,6 @@ const Wrapper = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* 미디어 쿼리 */
   @media (max-width: 768px) {
     max-width: 100%;
   }
@@ -26,8 +24,6 @@ const Wrapper = styled.section`
 const Inner = styled.article`
   width: 1050px;
   height: 100%;
-
-  /* 미디어 쿼리 */
   @media (max-width: 768px) {
     max-width: 100%;
     padding: 0 20px;
@@ -47,7 +43,6 @@ const CommentTop = styled.div`
       cursor: pointer;
     }
   }
-  /* 미디어 쿼리 */
   @media (max-width: 768px) {
     width: 100%;
   }

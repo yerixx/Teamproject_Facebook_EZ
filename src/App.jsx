@@ -64,8 +64,6 @@ const router = createBrowserRouter([
   },
 ]);
 
-// const Wrapper = styled.div``;
-
 const reducer = (state, action) => {
   switch (action.type) {
     case "INIT":
@@ -260,6 +258,7 @@ function App() {
       console.error("Firestore에 포스트 추가 중 오류 발생:", error);
     }
   };
+
   const onUpdatePost = async (postId, text, imageUrl) => {
     try {
       const postRef = doc(firestore, "posts", postId);
@@ -275,7 +274,6 @@ function App() {
   };
 
   const onAddUser = async (
-    userId,
     firstName,
     lastName,
     email,

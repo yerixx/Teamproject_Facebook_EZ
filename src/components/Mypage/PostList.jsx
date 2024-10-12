@@ -4,7 +4,7 @@ import PostItem from "../Mypage/PostItem";
 import ModalCont from "../Modal/ModalCont";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../../firebase";
-import { DataDispatchContext } from "../../App";
+import { DataDispatchContext, DataStateContext } from "../../App";
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,6 +19,9 @@ const PostList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [postedCont, setPostedCont] = useState(null);
   const { onDeletePost } = useContext(DataDispatchContext);
+  const { currentUserData } = useContext(DataStateContext);
+
+  console.log(currentUserData);
 
   const handleModalOpen = () => {
     try {
@@ -36,7 +39,6 @@ const PostList = () => {
     setIsContOpen(false);
     setPostedCont(null);
   };
-
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -45,25 +47,36 @@ const PostList = () => {
           orderBy("createdAt", "desc")
         );
         const querySnapshot = await getDocs(postsQuery);
+
         const postData = querySnapshot.docs.map((doc) => ({
           id: doc.id,
+          userId: doc.data().userId,
           ...doc.data(),
         }));
-        setPosts(postData); // 초기 데이터 설정
+
+        // 현재 로그인한 사용자가 작성한 게시물만 필터링
+        const userPosts = postData.filter(
+          (post) => post.userId === currentUserData?.uid
+        );
+        setPosts(userPosts); // 필터링된 게시물만 상태로 설정
       } catch (err) {
         console.error("Post 데이터를 가져오는 중 오류 발생:", err);
       }
     };
-    fetchPosts();
-  }, []);
+
+    if (currentUserData) {
+      fetchPosts();
+    }
+  }, [currentUserData]);
 
   return (
     <>
       <Wrapper>
         {posts.map((post) => (
           <PostItem
-            key={post.id}
             postId={post.id}
+            key={post.id}
+            userId={post.userId}
             imageSrc={post.image}
             createdAt={post.createdAt}
             contentDesc={post.content}
@@ -82,5 +95,4 @@ const PostList = () => {
     </>
   );
 };
-
 export default PostList;

@@ -1,13 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import { DataStateContext } from "../../App.jsx";
 
 import styled from "styled-components";
-
-//img
-import testCat from "/img/testcat.jpg";
-
-//font
 import {
   MainTitle_26_b,
   SubDescription_16_n,
@@ -15,6 +11,10 @@ import {
   SubDescription_14_n,
   Paragraph_20_n,
 } from "../../styles/GlobalStyles.styles.js";
+
+import { storage, db } from "../../firebase"; // Firebase imports
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { doc, updateDoc } from "firebase/firestore";
 
 const WrapperFrom = styled.form`
   z-index: 1;
@@ -57,8 +57,6 @@ const ProfileImgCont = styled.div`
     position: relative;
     width: 100px;
     height: 100px;
-    background: var(--color-gray-01);
-    border-radius: 100%;
     object-fit: cover;
     @media (max-width: 768px) {
       width: 90px;
@@ -215,25 +213,55 @@ const Button = styled.div`
 `;
 
 const ProfileCard = () => {
+  const { currentUserData } = useContext(DataStateContext);
+
   const [isEditing, setEditing] = useState(false);
-  const [profileImg, setProfileImg] = useState(testCat);
+  const [profileImg, setProfileImg] = useState(null);
   const [desc, setDesc] = useState("A Photographer @pylpic");
 
   const fileRef = useRef(null);
 
   const onSubmit = async (e) => {
-    e.preventDefault(); // 폼 제출 시 페이지 리로드 방지
+    e.preventDefault();
     setIsLoading(true);
-    // 실제 비동기 작업을 수행하는 부분 (예: API 호출)
     setTimeout(() => {
       setIsLoading(false);
-      setInputText(""); // 입력 필드 초기화
+      setInputText("");
     }, 1000);
   };
+
+  // 이미지 파일 Firebase Storage에 업로드
+  const uploadImage = async (file) => {
+    if (!file) return;
+    const fileRef = ref(storage, `profileImages/${file.name}-${Date.now()}`);
+    await uploadBytes(fileRef, file);
+    const downloadURL = await getDownloadURL(fileRef);
+    return downloadURL;
+  };
+
+  // 프로필 이미지 수정 처리
+  const handleImgChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const fileUrl = await uploadImage(file); // Firebase에 이미지 업로드 후 URL 받아옴
+      setProfileImg(fileUrl);
+
+      // Firestore에 프로필 이미지 업데이트
+      const userRef = doc(db, "users", currentUserData.uid); // 사용자 문서 참조
+      await updateDoc(userRef, {
+        profileImage: fileUrl,
+      });
+    }
+  };
+  const handleIconClick = () => {
+    fileRef.current.click();
+  };
+
   const profileEdite = () => {
     const confirmEdit = window.confirm("프로필을 수정 하시겠습니까?");
     if (confirmEdit) setEditing((prev) => !prev);
   };
+
   const editCencel = () => {
     const confirmCencel = window.confirm(
       "프로필 수정 작업을 취소 하시겠습니까?"
@@ -249,27 +277,22 @@ const ProfileCard = () => {
       setEditing(false);
     }
   };
-  const handleImgChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const fileUrl = URL.createObjectURL(file);
-      setProfileImg(fileUrl);
-    }
-  };
-  const handleIconClick = () => {
-    fileRef.current.click();
-  };
 
   return (
     <WrapperFrom onSubmit={onSubmit}>
       <ProfileContain>
         <ProfileImgCont>
-          <img className="profileImg" src={profileImg} alt="profile" />
+          <img
+            className="profileImg"
+            src={currentUserData.profileImage || "/img/defaultProfile.jpg"}
+            alt="Profile"
+          />
           <input
+            type="file"
+            id="fileInput"
+            name="fileInput"
             ref={fileRef}
             onChange={handleImgChange}
-            id="fileInput"
-            type="file"
             accept="image/*"
             style={{ display: "none" }}
           />
@@ -281,7 +304,10 @@ const ProfileCard = () => {
         </ProfileImgCont>
         <ProfileText>
           <div className="profileTop">
-            <h1 className="profileName">박예림</h1>
+            <h1 className="profileName">
+              {currentUserData.userName.firstName}
+              {currentUserData.userName.lastName}
+            </h1>
             <Button>
               <button>스토리추가</button>
               <button onClick={profileEdite}>프로필수정</button>

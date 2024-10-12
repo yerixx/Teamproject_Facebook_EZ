@@ -72,12 +72,10 @@ const ContChangeBtn = styled(motion.div)`
 `;
 
 const UploadInner = styled.div`
-  padding: 0 30px;
+  padding: 30px;
 `;
 
-const Detail = (props) => {
-  // const { layoutId } = props;
-
+const Mypage = () => {
   const [id, setId] = useState(0);
   const [upload, setUpload] = useState(false);
 
@@ -123,4 +121,4 @@ const Detail = (props) => {
   );
 };
 
-export default Detail;
+export default Mypage;

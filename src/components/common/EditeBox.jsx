@@ -1,15 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
-import ModalCont from "../Modal/ModalCont";
 
 const Wrapper = styled.div`
   position: relative;
   display: flex;
-  width: 160px;
-  height: 30px;
+  width: 150px;
   align-items: center;
   border-radius: 8px;
-  font-size: 16px;
   text-align: center;
   cursor: pointer;
 
@@ -31,15 +28,17 @@ const Wrapper = styled.div`
 
   .optionList {
     position: absolute;
-    top: 50px;
+    top: 40px;
+    right: 20px;
     width: 100%;
-    background: #fff;
-    box-shadow: 4px 6px 14px rgba(182, 182, 182, 0.8);
-    color: var(--color-gray-01);
-    list-style-type: none;
-    padding: 12px 16px;
-    border-radius: 8px;
     max-height: 0;
+    padding: 12px;
+    font-size: 14px;
+    /* color: var(--color-gray-01); */
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 4px 6px 14px rgba(182, 182, 182, 0.8);
+    list-style-type: none;
     opacity: 0.2;
     visibility: hidden;
     overflow: hidden;
@@ -61,13 +60,11 @@ const Wrapper = styled.div`
   }
 
   .optionItem {
-    padding: 6px 11px;
     margin-bottom: 8px;
     border-radius: 8px;
     transition: all 0.1s;
   }
 `;
-
 const EditeBox = ({ Title, desc, handleEditBtn }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
