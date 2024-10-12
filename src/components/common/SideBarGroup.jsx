@@ -2,8 +2,9 @@ import styled from "styled-components";
 import { Paragraph_20_n } from "../../styles/GlobalStyles.styles";
 import { IoClose } from "react-icons/io5";
 import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 
-const Wrapper = styled.div.withConfig({
+const Wrapper = styled(motion.div).withConfig({
   shouldForwardProp: (prop) => prop !== "isOpen",
 })`
   z-index: 3;
@@ -22,8 +23,8 @@ const Wrapper = styled.div.withConfig({
   overflow-y: auto;
   -ms-overflow-style: none; /* IE, Edge */
   scrollbar-width: none;
+  background-color: ${(props) => props.theme.ContainColor};
   @media screen and (max-width: 1050px) {
-    top: 130px;
     right: 10px;
   }
   @media screen and (max-width: 768px) {
@@ -36,6 +37,7 @@ const TopTitle = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: ${(props) => props.theme.textColor};
   h2 {
     ${Paragraph_20_n}
   }
@@ -45,12 +47,14 @@ const TopTitle = styled.div`
   }
 `;
 const Title = styled.div`
+  color: ${(props) => props.theme.textColor};
   display: flex;
   justify-content: space-between;
 `;
 
 const Group = styled.div`
   /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); */
+  color: ${(props) => props.theme.textColor};
   border-radius: var(--border-radius-30);
   display: flex;
   flex-direction: column;
@@ -76,6 +80,8 @@ const GroupContents = styled.div`
     border-radius: var(--border-radius-08);
     color: var(--color-facebookblue);
   }
+  @media screen and (max-width: 768px) {
+  }
 `;
 const GroupTitle = styled.div`
   display: flex;
@@ -93,26 +99,45 @@ const GroupTitle = styled.div`
     font-size: 14px;
     color: var(--color-gray-01);
   }
+  @media screen and (max-width: 768px) {
+    div {
+      flex-direction: column;
+      span {
+        font-size: 12px;
+      }
+      span:nth-child(2) {
+        display: none;
+      }
+    }
+  }
 `;
 /* eslint-disable react/prop-types */
 const SideBarGroup = ({ openGroup, closeModal }) => {
   const closeRef = useRef(null);
+
   const handleClickOutside = (event) => {
     if (closeRef.current && !closeRef.current.contains(event.target)) {
-      closeModal(); // 모달을 닫는 함수 호출
+      closeModal();
     }
   };
   useEffect(() => {
     // 모달이 마운트되면 클릭 이벤트 추가
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
 
     return () => {
       // 모달이 언마운트되면 클릭 이벤트 제거
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, []);
   return (
-    <Wrapper ref={closeRef}>
+    <Wrapper
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      ref={closeRef}
+      onClick={(e) => e.stopPropagation()}
+    >
       <TopTitle>
         <h2>회원님을 위한 커뮤니티</h2>
         <span>
@@ -128,7 +153,9 @@ const SideBarGroup = ({ openGroup, closeModal }) => {
           <GroupTitle>
             <h2>여행</h2>
             <div>
-              <span>동영상 크리에이터</span> ・ <span>팔로워 10만명</span>
+              <span>동영상 크리에이터</span>
+              <span>・</span>
+              <span>팔로워 10만명</span>
             </div>
           </GroupTitle>
           <span>팔로우</span>
@@ -138,7 +165,9 @@ const SideBarGroup = ({ openGroup, closeModal }) => {
           <GroupTitle>
             <h2>여행</h2>
             <div>
-              <span>동영상 크리에이터</span> ・ <span>팔로워 10만명</span>
+              <span>동영상 크리에이터</span>
+              <span>・</span>
+              <span>팔로워 10만명</span>
             </div>
           </GroupTitle>
           <span>팔로우</span>
@@ -148,7 +177,9 @@ const SideBarGroup = ({ openGroup, closeModal }) => {
           <GroupTitle>
             <h2>여행</h2>
             <div>
-              <span>동영상 크리에이터</span> ・ <span>팔로워 10만명</span>
+              <span>동영상 크리에이터</span>
+              <span>・</span>
+              <span>팔로워 10만명</span>
             </div>
           </GroupTitle>
           <span>팔로우</span>
@@ -163,7 +194,9 @@ const SideBarGroup = ({ openGroup, closeModal }) => {
           <GroupTitle>
             <h2>여행</h2>
             <div>
-              <span>동영상 크리에이터</span> ・ <span>팔로워 10만명</span>
+              <span>동영상 크리에이터</span>
+              <span>・</span>
+              <span>팔로워 10만명</span>
             </div>
           </GroupTitle>
           <span>팔로우</span>
@@ -173,7 +206,9 @@ const SideBarGroup = ({ openGroup, closeModal }) => {
           <GroupTitle>
             <h2>여행</h2>
             <div>
-              <span>동영상 크리에이터</span> ・ <span>팔로워 10만명</span>
+              <span>동영상 크리에이터</span>
+              <span>・</span>
+              <span>팔로워 10만명</span>
             </div>
           </GroupTitle>
           <span>팔로우</span>
@@ -183,7 +218,9 @@ const SideBarGroup = ({ openGroup, closeModal }) => {
           <GroupTitle>
             <h2>여행</h2>
             <div>
-              <span>동영상 크리에이터</span> ・ <span>팔로워 10만명</span>
+              <span>동영상 크리에이터</span>
+              <span>・</span>
+              <span>팔로워 10만명</span>
             </div>
           </GroupTitle>
           <span>팔로우</span>

@@ -1,5 +1,8 @@
-import styled from "styled-components";
 import { Routes, Route } from "react-router-dom";
+import styled, { ThemeProvider } from "styled-components";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Layout from "./components/common/Layout.jsx";
+import LoadingScreen from "./components/common/LoadingScreen.jsx";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -7,8 +10,7 @@ import Detail from "./pages/Detail";
 import ModalLive from "./components/Modal/ModalLive.jsx";
 import ModalCont from "./components/Modal/ModalCont.jsx";
 import GlobalStyles from "./styles/GlobalStyles.styles.js";
-
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {
@@ -19,12 +21,50 @@ import {
   getDoc,
   getDocs,
   updateDoc,
+  setDoc,
   deleteDoc,
 } from "firebase/firestore";
 import { auth, db } from "./firebase.js";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { darkTheme } from "./styles/theme.js";
+import { lightTheme } from "./styles/theme.js";
+import ProtectedRoute from "./components/common/ProtectedRoute.jsx";
 
-const Wrapper = styled.div``;
+// Page Router
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        path: "",
+        element: <Main />,
+      },
+      {
+        path: "mypage",
+        element: <Detail />,
+      },
+      {
+        path: "modallive",
+        element: <ModalLive />,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+  },
+]);
+
+// const Wrapper = styled.div``;
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -99,8 +139,34 @@ const reducer = (state, action) => {
 
 export const DataStateContext = React.createContext();
 export const DataDispatchContext = React.createContext();
+export const DarkThemeContext = React.createContext();
 
 function App() {
+  const [isDark, setIsDark] = useState(false);
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("isDark");
+    if (savedTheme) {
+      setIsDark(JSON.parse(savedTheme));
+    }
+  }, []);
+
+  // 다크 모드 상태가 변경될 때마다 로컬 스토리지에 저장
+  useEffect(() => {
+    localStorage.setItem("isDark", JSON.stringify(isDark));
+  }, [isDark]);
+
+  // Loading
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const init = async () => {
+      await auth.authStateReady(); // 인증 상태가 준비된 후 호출
+      await fetchData(); // 데이터를 불러오는 함수 호출
+      setIsLoading(false); // 데이터가 모두 준비된 후 로딩 상태 해제
+    };
+    init();
+  }, []);
+
   const initialState = {
     users: [],
     posts: [],
@@ -119,50 +185,49 @@ function App() {
 
       const users = usersSnapshot.docs.map((doc) => ({
         id: doc.id,
+        posts: [], // 기본값으로 빈 배열 설정
         ...doc.data(),
       }));
       const posts = postsSnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-
-      // 데이터를 상태에 저장
-      dispatch({ type: "INIT", data: { users, posts } });
-
-      // 목업 사용자 설정 (예: 첫 번째 사용자)
-      if (users.length > 0) {
-        const mockUser = users[0]; // 첫 번째 사용자를 현재 사용자로 설정
-        dispatch({ type: "SET_CURRENT_USER_DATA", data: mockUser });
-      }
+      const response = await fetch("/mockData/mockData.json");
+      const mockData = await response.json();
+      // 전체 데이터를 상태에 저장
+      dispatch({ type: "INIT", data: { users, posts, mockData } });
     } catch (error) {
       console.error("데이터를 불러오지 못했습니다.", error);
     }
   };
+
+  const fetchUserData = async (user) => {
+    try {
+      const userDocRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userDocRef);
+
+      if (userDoc.exists()) {
+        dispatch({ type: "SET_CURRENT_USER_DATA", data: userDoc.data() });
+      } else {
+        dispatch({ type: "SET_CURRENT_USER_DATA", data: null });
+      }
+    } catch (error) {
+      console.error("사용자 데이터 가져오기 오류:", error);
+    }
+  };
+
   useEffect(() => {
-    fetchData();
-    // 로그인 기능이 구현되지 않았으므로, Firebase Auth 리스너는 일단 생략
-    // 나중에 로그인 기능을 구현한 후 아래 코드를 사용하세요.
-    // const unsubscribe = auth.onAuthStateChanged(async (user) => {
-    //   if (user) {
-    //     // 로그인한 사용자 정보 가져오기
-    //     try {
-    //       const userDocRef = doc(db, "users", user.uid);
-    //       const userDoc = await getDoc(userDocRef);
-    //       if (userDoc.exists()) {
-    //         dispatch({ type: "SET_CURRENT_USER_DATA", data: userDoc.data() });
-    //       } else {
-    //         console.log("사용자 데이터가 없습니다.");
-    //         dispatch({ type: "SET_CURRENT_USER_DATA", data: null });
-    //       }
-    //     } catch (error) {
-    //       console.error("사용자 데이터 가져오기 오류:", error);
-    //     }
-    //   } else {
-    //     // 로그아웃 상태
-    //     dispatch({ type: "SET_CURRENT_USER_DATA", data: null });
-    //   }
-    // });
-    // return () => unsubscribe();
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        await fetchUserData(user); // 사용자 데이터 가져오기
+        setIsLoading(false); // 로딩 완료 후 false 설정
+      } else {
+        dispatch({ type: "SET_CURRENT_USER_DATA", data: null });
+        setIsLoading(false); // 로딩 완료 후 false 설정
+      }
+    });
+
+    return () => unsubscribe(); // 클린업 함수로 리스너 해제
   }, []);
 
   const onCreatePost = async (userId, userName, content, image = null) => {
@@ -213,49 +278,75 @@ function App() {
     userId,
     firstName,
     lastName,
-    emailOrPhone,
+    email,
     password,
+    point = 0,
+    won = 0,
     gender = null,
     birthdate = null,
     city = null,
-    likeCategory = null
+    likeCategory = []
   ) => {
     try {
-      const docRef = await addDoc(collection(db, "users"), {
-        userId,
-        userName: {
-          firstName,
-          lastName,
-        },
-        emailOrPhone,
-        password,
-        gender,
-        birthdate,
-        city,
-        likeCategory,
-      });
-      dispatch({
-        type: "ADD_USER",
-        newUser: {
-          id: docRef.id,
+      const user = auth.currentUser; // 현재 로그인한 사용자 가져오기
+      if (user) {
+        const userId = user.uid; // Firebase에서 가져온 사용자 UID
+
+        // Firestore에 사용자 UID를 문서 ID로 사용하여 데이터 추가
+        await setDoc(doc(db, "users", userId), {
           userId,
           userName: {
             firstName,
             lastName,
           },
-          emailOrPhone,
+          email,
           password,
+          wallet: {
+            point,
+            won,
+          },
           gender,
           birthdate,
           city,
           likeCategory,
-        },
-      });
+          profileImage: "", // 프로필 이미지 기본값 설정
+          backgroundImage: "", // 배경 이미지 기본값 설정
+          introduction: "", // 자기소개 기본값 설정
+        });
+
+        // 상태 업데이트를 위해 dispatch 호출
+        dispatch({
+          type: "ADD_USER",
+          newUser: {
+            id: userId,
+            userId,
+            userName: {
+              firstName,
+              lastName,
+            },
+            posts: [],
+            email,
+            password,
+            wallet: {
+              point,
+              won,
+            },
+            gender,
+            birthdate,
+            city,
+            likeCategory,
+            profileImage: "", // 프로필 이미지 기본값 설정
+            backgroundImage: "", // 배경 이미지 기본값 설정
+            introduction: "", // 자기소개 기본값 설정
+          },
+        });
+      } else {
+        console.error("로그인된 사용자가 없습니다.");
+      }
     } catch (error) {
       console.error("Firestore에 유저 추가 중 오류 발생:", error);
     }
   };
-
   const onToggleLike = async (postId, isLiked) => {
     // try {
     //   const postDocRef = doc(db, "posts", postId);
@@ -314,30 +405,38 @@ function App() {
 
   return (
     <>
-      <GlobalStyles />
-      <DataStateContext.Provider value={state}>
-        <DataDispatchContext.Provider
-          value={{
-            onCreatePost,
-            onUpdatePost,
-            onAddUser,
-            onCreateComment,
-            onToggleLike,
-            onDeletePost,
-          }}
-        >
-          <Wrapper>
+      <DarkThemeContext.Provider value={{ isDark, setIsDark }}>
+        <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+          <GlobalStyles />
+          <DataStateContext.Provider value={state}>
+            <DataDispatchContext.Provider
+              value={{
+                onCreatePost,
+                onUpdatePost,
+                onAddUser,
+                onCreateComment,
+                onToggleLike,
+                onDeletePost,
+              }}
+            >
+              {/* <Wrapper>
             <Routes>
               <Route path="/" element={<Main />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/mypage" element={<Detail />} />
               <Route path="/modallive" element={<ModalLive />} />
-              <Route path="/modalcont" element={<ModalCont />} />
             </Routes>
-          </Wrapper>
-        </DataDispatchContext.Provider>
-      </DataStateContext.Provider>
+          </Wrapper> */}
+              {isLoading ? (
+                <LoadingScreen />
+              ) : (
+                <RouterProvider router={router} />
+              )}
+            </DataDispatchContext.Provider>
+          </DataStateContext.Provider>
+        </ThemeProvider>
+      </DarkThemeContext.Provider>
     </>
   );
 }

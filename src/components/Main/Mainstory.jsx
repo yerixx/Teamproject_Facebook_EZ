@@ -1,33 +1,33 @@
 /* eslint-disable react/prop-types */
 
+import React, { useContext, useState } from "react"; // useState 임포트 추가
 import styled from "styled-components";
-import { FaUser } from "react-icons/fa6";
+import { FaUser, FaPlus } from "react-icons/fa6";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { FaPlus } from "react-icons/fa6";
 import { SubDescription_16_n } from "../../styles/GlobalStyles.styles";
-import { MdOutlineNavigateNext } from "react-icons/md";
-import { MdOutlineNavigateBefore } from "react-icons/md";
+import { MdOutlineNavigateNext, MdOutlineNavigateBefore } from "react-icons/md";
+import { DataStateContext } from "../../App";
 
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
-
+  margin: 20px 0;
   /* margin-top: 20px; */
   @media screen and (max-width: 1050px) {
-    margin-top: 50px;
   }
   @media screen and (max-width: 768px) {
-    margin-top: 0;
-    height: 250px;
+    margin: 0;
+    /* height: 250px; */
   }
 `;
 
 const Inner = styled.div`
-  width: 1000px;
+  /* border: 1px solid red; */
+  width: var(--inner-width-02);
   height: 360px;
   padding: 27px 30px;
   display: flex;
@@ -37,6 +37,7 @@ const Inner = styled.div`
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius-30);
   position: relative;
+  background-color: ${(props) => props.theme.ContainColor};
   @media screen and (max-width: 1050px) {
     width: 100%;
   }
@@ -49,6 +50,7 @@ const Inner = styled.div`
     margin: 0 auto;
   }
 `;
+
 const Items = styled.div`
   .slider {
     width: 100%;
@@ -68,7 +70,7 @@ const Items = styled.div`
 `;
 
 const StoryItem = styled.div`
-  border: 1px solid var(--color-light-gray-01);
+  border: 2px solid ${(props) => props.theme.cardColor};
   width: 100%;
   height: 320px;
   border-radius: 8px;
@@ -105,12 +107,14 @@ const StoryItem = styled.div`
       font-size: 30px;
       color: #fff;
     }
+    cursor: pointer; /* 커서 포인터로 변경 */
   }
   h2 {
     ${SubDescription_16_n}
     display: flex;
     justify-content: center;
     line-height: 8;
+    color: ${(props) => props.theme.textColor};
   }
   @media screen and (max-width: 768px) {
     height: 200px;
@@ -187,6 +191,7 @@ const StoryFriend = styled.div`
     height: 200px;
   }
 `;
+
 // 슬릭슬라이더 커스텀 화살표
 const NextBtn = styled.span`
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -204,13 +209,21 @@ const NextBtn = styled.span`
   font-size: 40px;
   color: #fff;
   cursor: pointer;
+  opacity: 0.4;
+  transition: all 0.3s;
+  scale: 0.8;
   svg {
     margin-left: 5px;
   }
   @media screen and (max-width: 768px) {
     display: none;
   }
+  &:hover {
+    opacity: 1;
+    scale: 1;
+  }
 `;
+
 const NextArrow = ({ onClick }) => {
   return (
     <NextBtn onClick={onClick}>
@@ -218,6 +231,7 @@ const NextArrow = ({ onClick }) => {
     </NextBtn>
   );
 };
+
 // 슬릭슬라이더 커스텀 화살표
 const PrevBtn = styled.span`
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -236,14 +250,23 @@ const PrevBtn = styled.span`
   font-size: 40px;
   color: #fff;
   cursor: pointer;
+  opacity: 0.4;
+  transition: all 0.3s;
+  scale: 0.8;
   svg {
     margin-left: 3px;
   }
   @media screen and (max-width: 768px) {
     display: none;
   }
+  &:hover {
+    opacity: 1;
+    scale: 1;
+  }
 `;
-const PrevArrow = ({ onClick }) => {
+
+const PrevArrow = ({ onClick, currentSlide }) => {
+  if (currentSlide === 0) return null;
   return (
     <PrevBtn onClick={onClick}>
       <MdOutlineNavigateBefore />
@@ -252,36 +275,54 @@ const PrevArrow = ({ onClick }) => {
 };
 
 const MainStory = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태 관리
+  const [postImage, setPostImage] = useState(null); // 모달에서 업로드된 이미지 상태
+  const data = useContext(DataStateContext);
+
+  // 모달 열기 핸들러
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // 모달 닫기 핸들러
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  // 모달 제출 핸들러
+  const handleModalSubmit = ({ text, image }) => {
+    // 필요한 경우 제출된 데이터를 처리
+    setPostImage(image);
+    setIsModalOpen(false);
+  };
+
   const settings = {
     dots: false,
-    // infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
     swipe: true,
+    swipeToSlide: true,
+    touchMove: true,
     // autoplay: true,
     autoplaySpeed: 5000,
     nextArrow: <NextArrow />, // 화살표 버튼을 커스텀해서 사용
-    prevArrow: <PrevArrow />,
+    prevArrow: <PrevArrow currentSlide={currentSlide} />,
+    beforeChange: (current, next) => setCurrentSlide(next),
     responsive: [
       {
-        breakpoint: 1050, // 1024px 이하일 때
+        breakpoint: 1050, // 1050px 이하일 때
         settings: {
-          slidesToShow: 4, // 슬라이드를 2개만 보여줌
+          slidesToShow: 4, // 슬라이드를 4개만 보여줌
           slidesToScroll: 1,
         },
       },
       {
-        breakpoint: 768, // 600px 이하일 때
+        breakpoint: 580, // 580px 이하일 때
         settings: {
-          slidesToShow: 4, // 슬라이드를 1개만 보여줌
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 580, // 600px 이하일 때
-        settings: {
-          slidesToShow: 3, // 슬라이드를 1개만 보여줌
+          slidesToShow: 3, // 슬라이드를 2개만 보여줌
           slidesToScroll: 1,
         },
       },
@@ -297,7 +338,9 @@ const MainStory = () => {
               <div>
                 <FaUser />
               </div>
-              <span>
+              <span onClick={openModal}>
+                {" "}
+                {/* 클릭 시 모달 열기 */}
                 <FaPlus />
               </span>
               <h2>스토리 만들기</h2>
@@ -368,6 +411,14 @@ const MainStory = () => {
           </Slider>
         </Items>
       </Inner>
+      {/* 모달 컴포넌트 렌더링 */}
+      {isModalOpen && (
+        <Mainmodal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          onSubmit={handleModalSubmit}
+        />
+      )}
     </Wrapper>
   );
 };

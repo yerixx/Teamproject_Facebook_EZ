@@ -6,36 +6,6 @@
       "image": "path/to/story1.jpg",
       "userImg": "path/to/story1.jpg",
       "text": "김정하"
-    },
-    {
-      "id": "2",
-      "userId": "2",
-      "image": "path/to/story2.jpg",
-      "text": "이승연"
-    },
-    {
-      "id": "3",
-      "userId": "3",
-      "image": "path/to/story2.jpg",
-      "text": "박태환"
-    },
-    {
-      "id": "4",
-      "userId": "4",
-      "image": "path/to/story2.jpg",
-      "text": "김성준"
-    },
-    {
-      "id": "5",
-      "userId": "5",
-      "image": "path/to/story2.jpg",
-      "text": "김예지"
-    },
-    {
-      "id": "6",
-      "userId": "6",
-      "image": "path/to/story2.jpg",
-      "text": "박예림"
     }
   ],
 
@@ -104,42 +74,120 @@
         "title": "Autumn Holiday 10% Sale",
         "currentViewers": 34,
         "description": "한가위를 맞이하여 의류스타일 특가 할인 혜택! 10% 추가 이벤트 놓치지 마세요!",
-        "videoUrl": "path/to/liveVideo.mp4",
+        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/teamproject-facebook-ez.appspot.com/o/LiveVideo%2F7.mp4?alt=media&token=e7c12b38-0ae6-4ead-a7c1-393dc88b5d65",
         "broadcaster": {
           "name": "미니멀데이",
           "profileImage": "path/to/profileImage.jpg"
         }
       },
-      "products": [
-        {
-          "id": 1,
-          "name": "가을 윈터 스프라이트 백 팩",
-          "originalPrice": 19900,
-          "discountPrice": 15900,
-          "discountRate": "30%",
-          "productImage": "path/to/productImage.jpg"
-        },
-        {
-          "id": 2,
-          "name": "메디슨 클래식 클러치백",
-          "originalPrice": 34000,
-          "discountPrice": 34000,
-          "discountRate": null,
-          "productImage": "path/to/productImage2.jpg"
+      "products": {
+        "id": 1,
+        "name": "가을 윈터 스프라이트 백 팩",
+        "originalPrice": 19900,
+        "discountPrice": 15900,
+        "discountRate": "30%",
+        "productImage": "path/to/productImage.jpg"
+      }
+    },
+    {
+      "liveStream": {
+        "title": "Autumn Holiday 10% Sale",
+        "currentViewers": 34,
+        "description": "한가위를 맞이하여 의류스타일 특가 할인 혜택! 10% 추가 이벤트 놓치지 마세요!",
+        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/teamproject-facebook-ez.appspot.com/o/LiveVideo%2F2.mp4?alt=media&token=558cbe73-0047-4915-bcb6-c7bc7504dbe5",
+        "broadcaster": {
+          "name": "미니멀데이",
+          "profileImage": "path/to/profileImage.jpg"
         }
-      ],
-      "comments": [
-        {
-          "id": 1,
-          "userId": 1,
-          "content": "이 옷 너무 예뻐요!"
-        },
-        {
-          "id": 2,
-          "userId": 2,
-          "content": "구매하고 싶네요!"
+      },
+      "products": {
+        "id": 1,
+        "name": "가을 윈터 스프라이트 백 팩",
+        "originalPrice": 19900,
+        "discountPrice": 15900,
+        "discountRate": "30%",
+        "productImage": "path/to/productImage.jpg"
+      }
+    },
+    {
+      "liveStream": {
+        "title": "Autumn Holiday 10% Sale",
+        "currentViewers": 34,
+        "description": "한가위를 맞이하여 의류스타일 특가 할인 혜택! 10% 추가 이벤트 놓치지 마세요!",
+        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/teamproject-facebook-ez.appspot.com/o/LiveVideo%2F3.mp4?alt=media&token=e9430afa-2abe-4411-8df6-550e7baf7682",
+        "broadcaster": {
+          "name": "미니멀데이",
+          "profileImage": "path/to/profileImage.jpg"
         }
-      ]
+      },
+      "products": {
+        "id": 1,
+        "name": "가을 윈터 스프라이트 백 팩",
+        "originalPrice": 19900,
+        "discountPrice": 15900,
+        "discountRate": "30%",
+        "productImage": "path/to/productImage.jpg"
+      }
+    },
+    {
+      "liveStream": {
+        "title": "Autumn Holiday 10% Sale",
+        "currentViewers": 34,
+        "description": "한가위를 맞이하여 의류스타일 특가 할인 혜택! 10% 추가 이벤트 놓치지 마세요!",
+        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/teamproject-facebook-ez.appspot.com/o/LiveVideo%2F4.mp4?alt=media&token=8519dd5b-becb-4909-aca7-a8fd1208cca1",
+        "broadcaster": {
+          "name": "미니멀데이",
+          "profileImage": "path/to/profileImage.jpg"
+        }
+      },
+      "products": {
+        "id": 1,
+        "name": "가을 윈터 스프라이트 백 팩",
+        "originalPrice": 19900,
+        "discountPrice": 15900,
+        "discountRate": "30%",
+        "productImage": "path/to/productImage.jpg"
+      }
+    },
+    {
+      "liveStream": {
+        "title": "Autumn Holiday 10% Sale",
+        "currentViewers": 34,
+        "description": "한가위를 맞이하여 의류스타일 특가 할인 혜택! 10% 추가 이벤트 놓치지 마세요!",
+        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/teamproject-facebook-ez.appspot.com/o/LiveVideo%2F5.mp4?alt=media&token=da541c95-a814-429c-9e8f-834f41ccfd61",
+        "broadcaster": {
+          "name": "미니멀데이",
+          "profileImage": "path/to/profileImage.jpg"
+        }
+      },
+      "products": {
+        "id": 1,
+        "name": "가을 윈터 스프라이트 백 팩",
+        "originalPrice": 19900,
+        "discountPrice": 15900,
+        "discountRate": "30%",
+        "productImage": "path/to/productImage.jpg"
+      }
+    },
+    {
+      "liveStream": {
+        "title": "Autumn Holiday 10% Sale",
+        "currentViewers": 34,
+        "description": "한가위를 맞이하여 의류스타일 특가 할인 혜택! 10% 추가 이벤트 놓치지 마세요!",
+        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/teamproject-facebook-ez.appspot.com/o/LiveVideo%2F6.mp4?alt=media&token=f4d8b557-1a30-48b8-b264-96f87d70c9a1",
+        "broadcaster": {
+          "name": "미니멀데이",
+          "profileImage": "path/to/profileImage.jpg"
+        }
+      },
+      "products": {
+        "id": 1,
+        "name": "가을 윈터 스프라이트 백 팩",
+        "originalPrice": 19900,
+        "discountPrice": 15900,
+        "discountRate": "30%",
+        "productImage": "path/to/productImage.jpg"
+      }
     }
   ]
 }

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion";
 
 import { HeaderBottom, HeaderTop } from "../components/common/Header";
 import PostUploadField from "../components/common/UploadField.jsx";
@@ -11,6 +10,7 @@ import {
   MainTitle_18_n,
   SubDescription_14_n,
 } from "../styles/GlobalStyles.styles.js";
+import { motion } from "framer-motion";
 
 const Wrapper = styled.div`
   width: 100%;
