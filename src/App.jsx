@@ -195,6 +195,19 @@ function App() {
       console.error("Firestore에 포스트 추가 중 오류 발생:", error);
     }
   };
+  const onUpdatePost = async (postId, text, imageUrl) => {
+    try {
+      const postRef = doc(firestore, "posts", postId);
+      await updateDoc(postRef, {
+        text,
+        imageUrl,
+        updatedAt: new Date().toISOString(),
+      });
+      console.log("게시물이 성공적으로 수정되었습니다");
+    } catch (error) {
+      console.error("게시물 수정 중 오류:", error);
+    }
+  };
 
   const onAddUser = async (
     userId,
@@ -306,6 +319,7 @@ function App() {
         <DataDispatchContext.Provider
           value={{
             onCreatePost,
+            onUpdatePost,
             onAddUser,
             onCreateComment,
             onToggleLike,

@@ -2,12 +2,13 @@ import React, { useState, useContext } from "react";
 import { DataDispatchContext } from "../../App.jsx";
 
 import styled from "styled-components";
-import { SubDescription_16_n } from "../../styles/GlobalStyles.styles.js";
 
 import { CiCamera } from "react-icons/ci";
 import { FiX } from "react-icons/fi";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 // Styled-components
 const Wrapper = styled.div`
@@ -90,7 +91,7 @@ const Posting = styled.div`
   }
 `;
 const PostingImg = styled.div`
-  width: 740px;
+  width: 100%;
   height: 360px;
   display: flex;
   justify-content: center;
@@ -166,7 +167,6 @@ const UploadModal = ({
 }) => {
   const { onCreatePost } = useContext(DataDispatchContext);
   const [isLoading, setIsLoading] = useState(false);
-  // const [isEditing, setIsEditing] = useState(false);
   const [uploadText, setUploadText] = useState("");
   const [uploadFile, setUploadFile] = useState(null);
 
@@ -177,7 +177,9 @@ const UploadModal = ({
       return;
     }
     setIsLoading(true);
-    let imageUrl = null;
+    let imageUrl = imageSrc; // 수정 모드일 때 기존 이미지를 기본값으로 설정
+
+    // 파일이 새로 업로드된 경우 이미지 업로드 처리
     if (uploadFile) {
       try {
         imageUrl = await uploadImage(uploadFile);
@@ -187,27 +189,63 @@ const UploadModal = ({
         return;
       }
     }
+
     try {
-      // 여기에서 content에는 업로드된 텍스트를, image에는 이미지 URL을 전달
-      await onCreatePost("testUserId", "TestUser", uploadText, imageUrl);
+      if (isEditing) {
+        // 게시물 수정
+        await onUpdatePost(postId, {
+          content: uploadText || contentDesc, // 텍스트가 없으면 기존 내용 유지
+          image: imageUrl, // 이미지 URL
+          updatedAt: new Date().toISOString(), // 수정 날짜 업데이트
+        });
+        alert("게시물이 수정되었습니다.");
+      } else {
+        // 새 게시물 작성
+        await onCreatePost({
+          userId: "testUserId",
+          userName: "TestUser",
+          content: uploadText,
+          image: imageUrl,
+          createdAt: new Date().toISOString(),
+        });
+        alert("게시물이 성공적으로 업로드되었습니다.");
+      }
+
+      // 폼 초기화
       setUploadText("");
       setUploadFile(null);
-      alert("게시물 업로드가 완료됐습니다");
+      closeModal(); // 모달 닫기
     } catch (err) {
-      console.error("게시물 업로드 중 오류:", err);
+      console.error("게시물 처리 중 오류:", err);
     } finally {
       setIsLoading(false);
     }
   };
+
   const uploadImage = async (file) => {
     try {
       const storageRef = ref(storage, `images/${file.name}-${Date.now()}`);
-      await uploadBytes(storageRef, file);
-      return await getDownloadURL(storageRef);
+      await uploadBytes(storageRef, file); // 파일 업로드
+      const downloadURL = await getDownloadURL(storageRef); // URL 가져오기
+      return downloadURL; // URL 반환
     } catch (err) {
       console.error("이미지 업로드 오류:", err);
+      throw err; // 에러 발생 시 throw
     }
   };
+
+  // onUpdatePost 함수 정의
+  const onUpdatePost = async (postId, updatedData) => {
+    try {
+      const postRef = doc(db, "posts", postId); // Firestore에서 posts 컬렉션의 문서 참조
+      await updateDoc(postRef, updatedData); // 문서 업데이트
+      console.log("게시물 수정 성공:", updatedData);
+    } catch (error) {
+      console.error("게시물 수정 중 오류:", error);
+      throw error; // 에러 발생 시 throw
+    }
+  };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file.size <= 5 * 1024 * 1024) {
@@ -243,14 +281,17 @@ const UploadModal = ({
             </label>
           </InfoItem>
           <textarea
-            value={isEditing ? contentDesc : uploadText}
+            value={isEditing ? uploadText || contentDesc : uploadText}
             onChange={(e) => setUploadText(e.target.value)}
-            placeholder={isEditing ? contentDesc : "오늘 어떤일이 있으셨나요?"}
+            placeholder="오늘 어떤 일이 있으셨나요?"
             required
           />
-          {uploadFile && (
+          {(uploadFile || imageSrc) && (
             <PostingImg>
-              <img src={URL.createObjectURL(uploadFile)} alt="게시물 이미지" />
+              <img
+                src={uploadFile ? URL.createObjectURL(uploadFile) : imageSrc}
+                alt="게시물 이미지"
+              />
             </PostingImg>
           )}
           <input
@@ -261,55 +302,10 @@ const UploadModal = ({
             onChange={handleImageChange}
           />
           <PostingBtn onClick={handleSubmit} disabled={isLoading}>
-            {isLoading ? "게시 중..." : "게시하기"}
+            {isLoading ? "게시 중..." : isEditing ? "수정하기" : "게시하기"}
           </PostingBtn>
         </Posting>
       </Inner>
-      {/* {isEditing && (
-        <Inner>
-          <ModalTitle>
-            <div className="title">게시물 수정하기</div>
-            <div className="xmark" onClick={closeModal}>
-              <FiX />
-            </div>
-          </ModalTitle>
-          <Posting>
-            <InfoItem>
-              <div className="info">
-                <div className="profile"></div>
-                <div className="profilename">박예림</div>
-              </div>
-              <label htmlFor="upload-image">
-                <CiCamera style={{ cursor: "pointer", fontSize: "30px" }} />
-              </label>
-            </InfoItem>
-            <textarea
-              value={contentDesc}
-              onChange={(e) => setUploadText(e.target.value)}
-              placeholder={contentDesc}
-              required
-            />
-            {uploadFile && (
-              <PostingImg>
-                <img
-                  src={URL.createObjectURL(uploadFile)}
-                  alt="게시물 이미지"
-                />
-              </PostingImg>
-            )}
-            <input
-              id="upload-image"
-              type="file"
-              accept="image/*"
-              style={{ display: "none" }}
-              onChange={handleImageChange}
-            />
-            <PostingBtn onClick={handleSubmit} disabled={isLoading}>
-              {isLoading ? "게시 중..." : "게시하기"}
-            </PostingBtn>
-          </Posting>
-        </Inner>
-      )} */}
     </Wrapper>
   );
 };
