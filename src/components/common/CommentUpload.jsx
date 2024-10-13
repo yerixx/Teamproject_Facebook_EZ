@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { BsArrowReturnLeft } from "react-icons/bs";
 import { FaSpinner } from "react-icons/fa";
@@ -12,7 +12,6 @@ const WrapperForm = styled.form`
 `;
 
 const CommentCont = styled.div`
-  /* border: 1px solid #000; */
   width: 100%;
   display: flex;
   align-items: center;
@@ -53,17 +52,37 @@ const CommentCont = styled.div`
       border-radius: 50px;
       cursor: pointer;
     }
+
+    .submitBtn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
   }
 `;
 
-const CommentUpload = ({ onCreateComment }) => {
+const CommentUpload = ({ postId, onCreateComment }) => {
+  console.log("onCreateComment:", onCreateComment); // 로그로 확인
+
   const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState("");
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onCreateComment(content);
-    setContent(""); // 입력창 초기화
+    console.log("Content to be submitted:", content); // 입력 값 확인
+
+    if (!content.trim()) return; // 공백 방지
+
+    try {
+      setIsLoading(true);
+      await onCreateComment(content); // postId는 CommentSection에서 이미 처리됨
+      setContent(""); // 입력창 초기화
+    } catch (error) {
+      console.error("댓글 업로드 실패:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
+
   return (
     <WrapperForm onSubmit={handleSubmit}>
       <CommentCont>

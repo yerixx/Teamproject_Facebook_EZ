@@ -243,8 +243,6 @@ const MainGroup = () => {
         Object.values(doc.data())
       );
 
-      console.log("불러온 그룹들:", groups); // 데이터 구조 확인용
-
       if (
         currentUserData.likeCategory &&
         currentUserData.likeCategory.length > 0
@@ -255,8 +253,6 @@ const MainGroup = () => {
             (category) => category === group.title
           )
         );
-
-        console.log("필터된 그룹:", filteredGroups); // 필터링 확인용
 
         // 추천 그룹이 없으면 모든 그룹 보여주기
         setRecommendedGroups(

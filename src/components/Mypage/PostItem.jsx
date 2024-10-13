@@ -21,8 +21,9 @@ import {
 
 const Wrapper = styled.section`
   border-radius: var(--border-radius-30);
-  padding-top: 50px;
+  padding-top: 20px;
   width: calc(100% - 90px);
+  min-height: 350px;
   margin: 0 auto;
   height: fit-content;
   display: flex;
@@ -37,7 +38,10 @@ const Wrapper = styled.section`
 const Inner = styled.article`
   width: var(--inner-width-02);
   height: 100%;
-  padding: 0 90px;
+  padding: 30px 90px;
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
   @media (max-width: 768px) {
     max-width: 100%;
     padding: 0 20px;
@@ -114,7 +118,8 @@ const Contents = styled.div`
     ${SubDescription_16_n};
     font-weight: normal;
     word-break: break-all;
-    margin-bottom: 30px;
+
+    min-height: 70px;
     @media (max-width: 768px) {
       ${SubDescription_14_n}
       padding:0 4px;
@@ -267,10 +272,10 @@ const PostItem = ({
               />
             )}
           </Contents>
-          <SocialBtnIcon postId={post.userId} isLiked={isLiked} />
-          <PostUploadFidle>
+          <SocialBtnIcon post={post} />
+          {/* <PostUploadFidle>
             <PostUpload />
-          </PostUploadFidle>
+          </PostUploadFidle> */}
         </Inner>
       </Wrapper>
       {isModalOpen && (

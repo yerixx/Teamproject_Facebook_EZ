@@ -289,7 +289,6 @@ function App() {
     try {
       const postRef = doc(db, "posts", postId);
       await updateDoc(postRef, updatedData);
-      console.log("게시물이 성공적으로 수정되었습니다");
     } catch (error) {
       console.error("게시물 수정 중 오류:", error);
     }
@@ -330,8 +329,6 @@ function App() {
           won,
         },
       };
-
-      console.log("Saving user data:", userDoc); // 추가된 로그
       await setDoc(doc(db, "users", userId), userDoc);
 
       dispatch({
@@ -364,25 +361,33 @@ function App() {
   };
 
   const onCreateComment = async (postId, userId, userName, content) => {
+    if (!userId || !content) {
+      console.error("userId나 content가 누락되었습니다.");
+      return;
+    }
+
     const newComment = {
-      id: Date.now().toString(), // 고유한 댓글 ID
-      userId,
-      userName,
+      id: Date.now().toString(), // 고유한 ID
+      userId: userId || "guest", // 기본값 설정
+      userName: userName || "Anonymous", // 기본값 설정
       content,
       createdAt: new Date().toISOString(),
       likes: 0,
     };
 
     try {
-      // Firestore에서 해당 포스트 문서 참조
       const postDocRef = doc(db, "posts", postId);
+      const postDoc = await getDoc(postDocRef);
 
-      // comments 배열에 새 댓글 추가
+      if (!postDoc.exists()) {
+        console.error("해당 포스트가 존재하지 않습니다:", postId);
+        return;
+      }
+
       await updateDoc(postDocRef, {
         comments: arrayUnion(newComment),
       });
 
-      // 상태 업데이트
       dispatch({
         type: "ADD_COMMENT",
         postId,

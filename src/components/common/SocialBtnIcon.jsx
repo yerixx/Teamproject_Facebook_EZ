@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
-import { DataDispatchContext } from "../../App.jsx";
-// import CommentList from "../Mypage/CommentList";
-import CommentList from "./CommentList";
+import { DataDispatchContext, DataStateContext } from "../../App.jsx";
+
 import styled from "styled-components";
 
 import {
@@ -25,6 +24,7 @@ const SocialIcon = styled.div`
   padding: 0 10px 20px;
   border-bottom: 1px solid var(--color-light-gray-01);
   color: ${(props) => props.theme.textColor};
+  /* margin-bottom: 20px; */
   .socialIcon {
     cursor: pointer;
     display: flex;
@@ -54,28 +54,23 @@ const SocialIcon = styled.div`
   }
 `;
 
-const SocialBtnIcon = ({ postId, comments }) => {
+const SocialBtnIcon = ({ post }) => {
   const { onToggleLike } = useContext(DataDispatchContext);
+  const currentUser = useContext(DataStateContext);
+  console.log(currentUser);
   const [toggle, setToggle] = useState(false);
   const [like, setLike] = useState(false);
   const [save, setSave] = useState(false);
-
-  const handleCommentToggle = () => {
-    setToggle((prev) => !prev);
-  };
+  const handleCommentToggle = () => setToggle((prev) => !prev);
   const handleLikeToggle = async (e) => {
     e.preventDefault();
     try {
-      await onToggleLike(postId, like);
+      await onToggleLike(post.id, like);
       setLike((prev) => !prev);
     } catch (err) {
       console.error("Like error", err);
     }
   };
-  const handlSaveToggle = () => {
-    setSave((prev) => !prev);
-  };
-
   const shareKakao = () => {
     confirm("게시물을 공유하시겠습니까?");
     // if (confirm) {
@@ -148,6 +143,9 @@ const SocialBtnIcon = ({ postId, comments }) => {
     //   });
     // }
   };
+  if (!post) {
+    return <p>Loading...</p>; // 데이터가 로드되지 않은 상태 처리
+  }
 
   return (
     <>
@@ -175,7 +173,7 @@ const SocialBtnIcon = ({ postId, comments }) => {
           </div>
         </div>
         <div
-          onClick={handlSaveToggle}
+          // onClick={handlSaveToggle}
           style={{
             color: !save
               ? "${(props) => props.theme.textColor}"
@@ -187,7 +185,7 @@ const SocialBtnIcon = ({ postId, comments }) => {
           <div className="socialIconText">저장하기</div>
         </div>
       </SocialIcon>
-      {toggle && <CommentSection postId={postId} />}
+      {toggle && <CommentSection post={post} currentUser={currentUser} />}
     </>
   );
 };

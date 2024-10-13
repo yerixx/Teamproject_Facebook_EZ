@@ -20,17 +20,15 @@ import { DataDispatchContext, DataStateContext } from "../../App.jsx";
 import Mainlive from "./Mainlive.jsx";
 import UploadModal from "../ModalConts/UploadModal.jsx";
 import CommentUpload from "../common/CommentUpload";
-import CommentList from "../common/CommentList";
 
 const Wrapper = styled.section`
   border-radius: var(--border-radius-30);
-  padding-top: 50px;
+  padding-top: 20px;
   width: 900px;
-  min-height: 400px;
-  /* margin: 0 auto; */
-  /* height: fit-content; */
+  min-height: 350px;
+  height: 100%;
   display: flex;
-  justify-content: center;
+
   align-items: center;
   box-shadow: var(--box-shadow-01);
   background-color: ${(props) => props.theme.ContainColor};
@@ -42,7 +40,11 @@ const Wrapper = styled.section`
 const Inner = styled.article`
   width: var(--inner-width-02);
   height: 100%;
-  padding: 0 90px;
+  padding: 30px 90px;
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+
   @media (max-width: 768px) {
     max-width: 100%;
     padding: 0 20px;
@@ -121,7 +123,8 @@ const Contents = styled.div`
     color: ${(props) => props.theme.textColor};
     font-weight: normal;
     word-break: break-all;
-    margin-bottom: 30px;
+    min-height: 70px;
+
     @media (max-width: 768px) {
       ${SubDescription_14_n}
       padding:0 4px;
@@ -160,7 +163,7 @@ const Contents = styled.div`
   }
 `;
 const ContImg = styled.img`
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
   width: 100%;
   height: 350px;
   background: var(--color-light-gray-01);
@@ -305,10 +308,7 @@ const Mainpage = ({ searchTerm }) => {
                       <ContImg src={item.image} alt="Post content" />
                     )}
                   </Contents>
-                  <SocialBtnIcon
-                    postId={item.id}
-                    comments={item.comments || []}
-                  />
+                  <SocialBtnIcon post={item} />
                   {/* <CommentUpload /> */}
                 </Inner>
               </Wrapper>

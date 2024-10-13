@@ -51,7 +51,6 @@ const Main = () => {
         // 사용자 인증 상태 체크
         await auth.onAuthStateChanged((user) => {
           if (user) {
-            console.log("사용자 인증 완료:", user);
           }
         });
 
