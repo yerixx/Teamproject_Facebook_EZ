@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import PhotoVideoItem from "./PhotoVideoItem";
+import { DataStateContext } from "../../App";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../../firebase";
 import ModalCont from "../Modal/ModalCont";
@@ -23,29 +24,33 @@ const Wrapper = styled.section`
 `;
 
 const PhotoVideoList = () => {
-  const [posts, setPosts] = useState([]);
-  const [selectedPost, setSelectedPost] = useState(null); // 선택된 포스트 저장
+  const [userPosts, setUserPosts] = useState([]);
+  const [selectedPost, setSelectedPost] = useState(null);
+  const { currentUserData } = useContext(DataStateContext);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        if (!currentUserData) return; // currentUserData가 없는 경우 실행하지 않음
         const postsQuery = query(
           collection(db, "posts"),
           orderBy("createdAt", "desc")
         );
         const querySnapshot = await getDocs(postsQuery);
-        const postData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          userId: doc.data().userId, // 게시물 작성자의 uid 추가
-          ...doc.data(),
-        }));
-        setPosts(postData);
+        const postData = querySnapshot.docs
+          .map((doc) => ({
+            id: doc.id,
+            userId: doc.data().userId,
+            ...doc.data(),
+          }))
+          .filter((post) => post.userId === currentUserData.userId); // 현재 사용자 게시물만 필터링
+        setUserPosts(postData);
       } catch (err) {
         console.error("Post 데이터를 가져오는 중 오류 발생:", err);
       }
     };
     fetchPosts();
-  }, []);
+  }, [currentUserData]);
 
   const openModal = (post) => {
     setSelectedPost(post); // 선택된 포스트 저장
@@ -58,7 +63,7 @@ const PhotoVideoList = () => {
   return (
     <>
       <Wrapper>
-        {posts
+        {userPosts
           .filter((post) => post.image) // 이미지를 가진 포스트만 필터링
           .map((post) => (
             <PhotoVideoItem

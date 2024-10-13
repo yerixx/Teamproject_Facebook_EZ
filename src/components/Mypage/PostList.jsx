@@ -29,6 +29,7 @@ const PostList = () => {
       setUserPosts(filteredPosts);
     }
   }, [posts, currentUserData]);
+
   const handleModalOpen = () => {
     try {
       setIsModalOpen(true);

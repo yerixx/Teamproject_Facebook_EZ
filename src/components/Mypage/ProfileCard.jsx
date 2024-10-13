@@ -1,7 +1,11 @@
-import React, { useRef, useState, useContext } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
-import { DataStateContext } from "../../App.jsx";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getFirestore, doc, updateDoc, getDoc } from "firebase/firestore";
+
+import defaultProfile from "/img/defaultProfile.jpg";
 
 import styled from "styled-components";
 import {
@@ -11,10 +15,6 @@ import {
   SubDescription_14_n,
   Paragraph_20_n,
 } from "../../styles/GlobalStyles.styles.js";
-
-import { storage, db } from "../../firebase"; // Firebase imports
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { doc, updateDoc } from "firebase/firestore";
 
 const WrapperFrom = styled.form`
   z-index: 1;
@@ -57,6 +57,7 @@ const ProfileImgCont = styled.div`
     position: relative;
     width: 100px;
     height: 100px;
+    border-radius: 50%;
     object-fit: cover;
     @media (max-width: 768px) {
       width: 90px;
@@ -213,53 +214,87 @@ const Button = styled.div`
 `;
 
 const ProfileCard = () => {
-  const { currentUserData } = useContext(DataStateContext);
-
   const [isEditing, setEditing] = useState(false);
-  const [profileImg, setProfileImg] = useState(null);
+  const [user, setUser] = useState(null);
+  const [profileImg, setProfileImg] = useState(defaultProfile);
   const [desc, setDesc] = useState("A Photographer @pylpic");
 
   const fileRef = useRef(null);
+  const auth = getAuth();
+  const storage = getStorage();
+  const firestore = getFirestore();
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      setInputText("");
-    }, 1000);
-  };
+  // Firebase에서 로그인한 사용자 가져오기
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user); // 사용자 정보 저장
+        fetchProfileData(user); // Firestore에서 프로필 데이터 가져오기
+      } else {
+        setUser(null);
+      }
+    });
+    return () => unsubscribe();
+  }, [auth]);
 
-  // 이미지 파일 Firebase Storage에 업로드
-  const uploadImage = async (file) => {
-    if (!file) return;
-    const fileRef = ref(storage, `profileImages/${file.name}-${Date.now()}`);
-    await uploadBytes(fileRef, file);
-    const downloadURL = await getDownloadURL(fileRef);
-    return downloadURL;
-  };
+  // Firestore에서 프로필 정보 가져오기
+  const fetchProfileData = async (user) => {
+    const userDocRef = doc(firestore, "users", user.uid);
+    const userDocSnap = await getDoc(userDocRef);
 
-  // 프로필 이미지 수정 처리
-  const handleImgChange = async (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const fileUrl = await uploadImage(file); // Firebase에 이미지 업로드 후 URL 받아옴
-      setProfileImg(fileUrl);
-
-      // Firestore에 프로필 이미지 업데이트
-      const userRef = doc(db, "users", currentUserData.uid); // 사용자 문서 참조
-      await updateDoc(userRef, {
-        profileImage: fileUrl,
-      });
+    if (userDocSnap.exists()) {
+      const data = userDocSnap.data();
+      setProfileImg(data.profileImage || defaultProfile);
+      setDesc(data.description || "A Photographer @pylpic");
     }
   };
-  const handleIconClick = () => {
-    fileRef.current.click();
+
+  // 이미지 파일 변경 처리
+  const handleImgChange = async (e) => {
+    const file = e.target.files[0];
+    if (file && user) {
+      const fileRef = ref(storage, `profileImages/${user.uid}/profileImage`);
+      try {
+        await uploadBytes(fileRef, file); // 파일을 Firebase Storage에 업로드
+        const fileURL = await getDownloadURL(fileRef); // 업로드된 파일의 URL 가져오기
+        setProfileImg(fileURL); // State 업데이트
+
+        // Firestore에 URL 저장
+        const userDocRef = doc(firestore, "users", user.uid);
+        await updateDoc(userDocRef, {
+          profileImage: fileURL,
+        });
+      } catch (error) {
+        console.error("Error uploading image: ", error);
+      }
+    }
+  };
+
+  // 프로필 설명 및 이미지 저장 처리
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (user) {
+      const userDocRef = doc(firestore, "users", user.uid);
+      try {
+        await updateDoc(userDocRef, {
+          description: desc,
+          profileImage: profileImg,
+        });
+        alert("프로필이 성공적으로 업데이트되었습니다.");
+      } catch (error) {
+        console.error("Error updating profile: ", error);
+        alert("프로필 업데이트 중 오류가 발생했습니다.");
+      }
+    }
   };
 
   const profileEdite = () => {
     const confirmEdit = window.confirm("프로필을 수정 하시겠습니까?");
     if (confirmEdit) setEditing((prev) => !prev);
+  };
+
+  const handleIconClick = () => {
+    fileRef.current.click();
   };
 
   const editCencel = () => {
@@ -277,16 +312,11 @@ const ProfileCard = () => {
       setEditing(false);
     }
   };
-
   return (
     <WrapperFrom onSubmit={onSubmit}>
       <ProfileContain>
         <ProfileImgCont>
-          <img
-            className="profileImg"
-            src={currentUserData.profileImage || "/img/defaultProfile.jpg"}
-            alt="Profile"
-          />
+          <img className="profileImg" src={profileImg} alt="Profile" />
           <input
             type="file"
             id="fileInput"
@@ -305,8 +335,9 @@ const ProfileCard = () => {
         <ProfileText>
           <div className="profileTop">
             <h1 className="profileName">
-              {currentUserData.userName.firstName}
-              {currentUserData.userName.lastName}
+              {user ? `${user.displayName || "사용자 이름"}` : "로그인 필요"}
+              {/* {currentUserData.userName.firstName}
+              {currentUserData.userName.lastName} */}
             </h1>
             <Button>
               <button>스토리추가</button>

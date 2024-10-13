@@ -72,7 +72,7 @@ const ProfileContent = styled.div`
     }
   }
   .createdAt {
-    ${SubDescription_16_n}
+    ${SubDescription_14_n}
     display: flex;
     align-items: center;
     justify-content: center;
@@ -85,6 +85,7 @@ const ProfileContent = styled.div`
 `;
 const ControlsIcon = styled.div`
   display: flex;
+  align-items: center;
   gap: 0;
   font-size: 24px;
   cursor: pointer;
