@@ -81,17 +81,17 @@
       "products": [
         {
           "id": 1,
-          "name": "글로우 립스틱 세트",
-          "originalPrice": 40000,
-          "discountPrice": 36000,
+          "name": "글로우 립 컬렉션",
+          "originalPrice": "40,000원",
+          "discountPrice": "36,000원",
           "discountRate": "10%",
           "productImage": "https://images.pexels.com/photos/28736962/pexels-photo-28736962.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
         },
         {
           "id": 2,
           "name": "샤이닝 아이섀도우 팔레트",
-          "originalPrice": 55000,
-          "discountPrice": 49500,
+          "originalPrice": "55,000원",
+          "discountPrice": "49,500원",
           "discountRate": "10%",
           "productImage": "https://images.pexels.com/photos/2639947/pexels-photo-2639947.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
         }
@@ -111,17 +111,17 @@
       "products": [
         {
           "id": 1,
-          "name": "린넨 셔츠",
-          "originalPrice": 30000,
-          "discountPrice": 27000,
+          "name": "프리미엄 린넨 셔츠",
+          "originalPrice": "30,000원",
+          "discountPrice": "27,000원",
           "discountRate": "10%",
           "productImage": "https://images.pexels.com/photos/8483487/pexels-photo-8483487.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
         },
         {
           "id": 2,
-          "name": "에코백",
-          "originalPrice": 15000,
-          "discountPrice": 13500,
+          "name": "에코 스타일 토트백",
+          "originalPrice": "15,000원",
+          "discountPrice": "13,500원",
           "discountRate": "10%",
           "productImage": "https://images.pexels.com/photos/8148587/pexels-photo-8148587.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
         }
@@ -141,17 +141,17 @@
       "products": [
         {
           "id": 3,
-          "name": "오렌지 토트백",
-          "originalPrice": 60000,
-          "discountPrice": 48000,
+          "name": "오렌지 미니 토트백",
+          "originalPrice": "60,000원",
+          "discountPrice": "48,000원",
           "discountRate": "20%",
           "productImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1ADn6t2B6-Ux2l7ob_sz7QA9X3hzQC5ifOA&s"
         },
         {
           "id": 4,
-          "name": "클러치백",
-          "originalPrice": 45000,
-          "discountPrice": 40500,
+          "name": "럭셔리 클러치백",
+          "originalPrice": "45,000원",
+          "discountPrice": "40,500원",
           "discountRate": "10%",
           "productImage": "https://www.lacremeboutique.com/cdn/shop/products/Untitleddesign_1080x.png?v=1681917641"
         }
@@ -171,17 +171,17 @@
       "products": [
         {
           "id": 5,
-          "name": "EcoCup 친환경 컵",
-          "originalPrice": 15000,
-          "discountPrice": 13500,
+          "name": "Eco 친환경 컵",
+          "originalPrice": "15,000원",
+          "discountPrice": "13,500원",
           "discountRate": "10%",
           "productImage": "https://images.pexels.com/photos/5567005/pexels-photo-5567005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
         },
         {
           "id": 6,
-          "name": "EcoCup 텀블러",
-          "originalPrice": 20000,
-          "discountPrice": 18000,
+          "name": "Eco 텀블러",
+          "originalPrice": "20,000원",
+          "discountPrice": "18,000원",
           "discountRate": "10%",
           "productImage": "https://images.pexels.com/photos/6187630/pexels-photo-6187630.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
         }
@@ -201,17 +201,17 @@
       "products": [
         {
           "id": 7,
-          "name": "믹스 견과류 세트",
-          "originalPrice": 25000,
-          "discountPrice": 22500,
+          "name": "프리미엄 믹스 견과류",
+          "originalPrice": "25,000원",
+          "discountPrice": "22,500원",
           "discountRate": "10%",
           "productImage": "https://giftinfo.co.kr/shop/item_images/zoom1/568180.jpg"
         },
         {
           "id": 8,
           "name": "피칸 세트",
-          "originalPrice": 30000,
-          "discountPrice": 27000,
+          "originalPrice": "30,000원",
+          "discountPrice": "27,000원",
           "discountRate": "10%",
           "productImage": "https://contents.lotteon.com/itemimage/20230914180805/LO/21/81/08/71/12/_2/18/10/87/11/3/LO2181087112_2181087113_1.jpg/dims/resizef/720X720"
         }
@@ -232,16 +232,16 @@
         {
           "id": 9,
           "name": "수분 가득 스킨로션",
-          "originalPrice": 40000,
-          "discountPrice": 36000,
+          "originalPrice": "40,000원",
+          "discountPrice": "36,000원",
           "discountRate": "10%",
           "productImage": "https://images.pexels.com/photos/9253769/pexels-photo-9253769.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
         },
         {
           "id": 10,
           "name": "리프팅 세럼",
-          "originalPrice": 50000,
-          "discountPrice": 45000,
+          "originalPrice": "50,000원",
+          "discountPrice": "45,000원",
           "discountRate": "10%",
           "productImage": "https://images.pexels.com/photos/6417957/pexels-photo-6417957.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
         }

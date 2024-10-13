@@ -222,15 +222,8 @@ const LiveContents = styled.div`
   }
 `;
 
-const SellItems = styled.div`
-  width: 100%;
-  padding: 0 40px;
-  @media screen and (max-width: 1050px) {
-    padding: 0 50px;
-  }
-`;
-
 const SellItem = styled.div`
+  width: 480px;
   padding-bottom: 15px;
   background-color: var(--color-light-gray-02);
   border-radius: 8px;
@@ -381,21 +374,27 @@ const ModalLive = ({ item, closeModal }) => {
     item.products && item.products.id === parseInt(id) ? item.products : null;
 
   useEffect(() => {
-    if (currentProduct) {
+    if (item) {
       const storedIds =
         JSON.parse(localStorage.getItem("earnedPointIds")) || [];
       const lastAddedTime = localStorage.getItem("lastAddedTime");
 
+      // 24시간 내에 포인트를 적립한 적이 있는지 확인
       if (
         lastAddedTime &&
         Date.now() - new Date(lastAddedTime).getTime() < 86400000
       ) {
         setPointMessage("내일 다시 포인트를 적립할 수 있어요~");
         setRemainingTime(0);
-        return;
+        return; // 24시간이 지나지 않았으면 애니메이션 실행 안함
       }
 
-      if (storedIds.includes(currentProduct.id)) {
+      // URL의 id와 일치하는 제품을 찾음
+      const currentProduct = item.products.find(
+        (product) => product.id === parseInt(id)
+      );
+
+      if (storedIds.includes(id)) {
         setPointMessage("내일 다시 포인트를 적립할 수 있어요~");
       } else {
         const startTime = Date.now();
@@ -403,28 +402,35 @@ const ModalLive = ({ item, closeModal }) => {
         setRemainingTime(7);
 
         let timer = setTimeout(() => {
-          dispatch({ type: "ADD_POINTS", value: 500 });
+          dispatch({
+            type: "ADD_POINTS",
+            value: 500,
+          });
           setPointMessage("내일 다시 포인트를 적립할 수 있어요~");
           alert("500포인트가 적립되었습니다!");
 
+          // 포인트 적립 시간 저장
           localStorage.setItem("lastAddedTime", new Date().toISOString());
-          storedIds.push(currentProduct.id);
+
+          // 적립된 ID 저장
+          storedIds.push(id);
           localStorage.setItem("earnedPointIds", JSON.stringify(storedIds));
 
           setTimeout(() => {
             setResetKey(Date.now());
             setRemainingTime(7);
-          }, 86400000);
+          }, 86400000); // 24시간 후 다시 실행
         }, 7000);
 
         return () => clearTimeout(timer);
       }
     }
-  }, [currentProduct, dispatch]);
+  }, [id, item, dispatch]);
 
   const handleButtonClick = () => {
-    // item.products는 객체이므로, item.products 자체를 랜덤으로 사용할 수 없으므로 이 로직은 필요 없음
-    navigate(`/modallive/${currentProduct.id}`);
+    const randomIndex = Math.floor(Math.random() * item.products.length);
+    const randomProductId = item.products[randomIndex].id;
+    navigate(`/modallive/${randomProductId}`);
   };
 
   return (
