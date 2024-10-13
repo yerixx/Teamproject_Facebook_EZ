@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Comment from "../common/Comment.jsx"
 
 // react-icon
 import { SlArrowDown } from "react-icons/sl";
@@ -174,7 +175,8 @@ const CommentList = ({ style }) => {
             </div>
           </div>
         </CommentTop>
-        <CommentLists>
+        <Comment/>
+        {/* <CommentLists>
           <div className="commentList">
             <div className="commentFirstImg"></div>
             <div className="commentFirstDesc">
@@ -202,7 +204,7 @@ const CommentList = ({ style }) => {
               </DescBottom>
             </div>
           </div>
-        </CommentLists>
+        </CommentLists> */}
       </Inner>
     </Wrapper>
   );
