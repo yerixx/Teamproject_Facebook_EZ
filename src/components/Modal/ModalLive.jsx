@@ -4,13 +4,13 @@ import { styled } from "styled-components";
 
 import CountdownCircle from "../common/CountdownCircle";
 import { faComments } from "@fortawesome/free-solid-svg-icons";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import fbIcon from "../../img/fbIcon.svg";
 import liveIcon from "../../img/liveIcon.svg";
 import LiveProfileImg from "../../img/LiveProfile.jpg";
 import LiveView from "../../img/Live.jpg";
 import SellItem1Img from "../../img/sellItem1.jpg";
 import SellItem2Img from "../../img/sellItem2.jpg";
+import { IoCloseOutline } from "react-icons/io5";
 
 const Commerce = styled.div`
   width: 100%;
@@ -23,7 +23,6 @@ const Commerce = styled.div`
 `;
 
 const LeftContent = styled.section`
-  /* width: 1270px; */
   flex: 2;
   height: 100%;
   display: flex;
@@ -31,14 +30,16 @@ const LeftContent = styled.section`
   align-items: center;
   position: relative;
   background-color: rgba(0, 0, 0, 0.9);
-  /* border: 1px solid #f00; */
-  .faXmark {
-    position: absolute;
-    top: 33px;
-    right: 30px;
-    color: #fff;
-    font-size: 25px;
-    cursor: pointer;
+`;
+
+const CloseIcon = styled.div`
+  position: absolute;
+  top: 33px;
+  right: 30px;
+  font-size: 25px;
+  cursor: pointer;
+  @media screen and (max-width: 768px) {
+    color: var(--color-white);
   }
 `;
 
@@ -376,15 +377,11 @@ const NoComment = styled.div`
 
 const ModalLive = ({ item, closeModal }) => {
   console.log(item);
+
   return (
     <>
       <Commerce>
         <LeftContent>
-          <FontAwesomeIcon
-            className="faXmark"
-            icon={faXmark}
-            onClick={closeModal}
-          />
           <Live>
             <video src={item.liveStream.videoUrl} autoPlay loop></video>
             <LiveStatus>
@@ -408,6 +405,12 @@ const ModalLive = ({ item, closeModal }) => {
           </Live>
         </LeftContent>
         <RightContent>
+          <CloseIcon onClick={closeModal}>
+            <IoCloseOutline
+              className="closeIcon"
+              // onClick={postDeleteBtn}
+            />
+          </CloseIcon>
           <LiveProfile>
             <div className="profileImg">
               <img src={LiveProfileImg} alt="LiveProfileImg" />
