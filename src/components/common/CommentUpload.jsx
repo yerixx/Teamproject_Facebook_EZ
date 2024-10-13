@@ -12,7 +12,7 @@ const WrapperForm = styled.form`
 `;
 
 const CommentCont = styled.div`
-  border: 1px solid #000;
+  /* border: 1px solid #000; */
   width: 100%;
   display: flex;
   align-items: center;
@@ -66,13 +66,13 @@ const CommentUpload = ({ onCreateComment }) => {
 
     const newComment = {
       profilePic: testCat, 
-      username: "Username", 
+      username: "사용자 이름", 
       content: uploadText,
       timestamp: new Date().toISOString(), 
     };
 
     await onCreateComment(newComment);
-    setUploadText(""); 
+    setUploadText(""); // 입력창 초기화
     setIsLoading(false); 
   };
 
@@ -103,3 +103,4 @@ const CommentUpload = ({ onCreateComment }) => {
 };
 
 export default CommentUpload;
+

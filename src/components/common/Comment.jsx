@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import CommentUpload from './CommentUpload';
 import { db } from '../../firebase';
-import { collection, addDoc, onSnapshot } from 'firebase/firestore';
+import { collection, addDoc, onSnapshot, deleteDoc, doc } from 'firebase/firestore';
+import App from '../../App';
 import './Comment.css';
 
 const Comment = ({ profilePic, username, initialContent, onDelete }) => {
@@ -78,7 +79,11 @@ const App1 = () => {
     const handleDeleteComment = async (id) => {
         const confirmDelete = window.confirm("댓글을 삭제하시겠습니까?");
         if (confirmDelete) {
-            await deleteDoc(doc(commentsCollectionRef, id));
+            try {
+                await deleteDoc(doc(db, "comments", id));
+            } catch (error) {
+                console.error("댓글 삭제 중 오류가 발생했습니다:", error);
+            }
         }
     };
 
