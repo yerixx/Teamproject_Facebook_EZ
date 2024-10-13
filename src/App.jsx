@@ -142,6 +142,8 @@ export const DarkThemeContext = React.createContext();
 
 function App() {
   const [isDark, setIsDark] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true); // 인증 로딩 상태
+  const [dataLoading, setDataLoading] = useState(true); // 데이터 로딩 상태
   useEffect(() => {
     const savedTheme = localStorage.getItem("isDark");
     if (savedTheme) {
@@ -177,6 +179,16 @@ function App() {
   };
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        await fetchUserData(user);
+      }
+      setAuthLoading(false); // 인증 로딩 해제
+    });
+    return () => unsubscribe();
+  }, []);
+
   const fetchData = async () => {
     try {
       const usersSnapshot = await getDocs(collection(db, "users"));
@@ -196,6 +208,7 @@ function App() {
       const mockData = await response.json();
 
       dispatch({ type: "INIT", data: { users, posts, mockData } });
+      setDataLoading(false);
     } catch (error) {
       console.error("데이터를 불러오지 못했습니다.", error);
     }
@@ -384,6 +397,10 @@ function App() {
     }
   };
 
+  if (authLoading || dataLoading) {
+    return <LoadingScreen />;
+  }
+
   return (
     <>
       <DarkThemeContext.Provider value={{ isDark, setIsDark }}>
@@ -400,15 +417,6 @@ function App() {
                 onDeletePost,
               }}
             >
-              {/* <Wrapper>
-            <Routes>
-              <Route path="/" element={<Main />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/mypage" element={<Detail />} />
-              <Route path="/modallive" element={<ModalLive />} />
-            </Routes>
-          </Wrapper> */}
               {isLoading ? (
                 <LoadingScreen />
               ) : (

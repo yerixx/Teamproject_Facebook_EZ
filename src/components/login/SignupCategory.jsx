@@ -85,8 +85,8 @@ const SignupCategory = ({ updateUserData, userData, mobileSize, progress }) => {
   const categoryItems = [
     { id: 1, src: categoryImg01, title: "반려동물" },
     { id: 2, src: categoryImg02, title: "해외축구" },
-    { id: 3, src: categoryImg03, title: "여행" },
-    { id: 4, src: categoryImg04, title: "사진" },
+    { id: 3, src: categoryImg04, title: "사진" },
+    { id: 4, src: categoryImg03, title: "여행" },
     { id: 5, src: categoryImg05, title: "자연" },
     { id: 6, src: categoryImg06, title: "맛집" },
     { id: 7, src: categoryImg07, title: "요리" },

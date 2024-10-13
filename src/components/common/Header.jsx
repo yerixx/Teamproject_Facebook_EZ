@@ -89,6 +89,15 @@ const Left = styled.div`
       background-color: ${(props) => props.theme.inputColor};
       padding-left: 50px;
       font-size: 16px;
+      &::placeholder {
+        transition: all 0.3s;
+      }
+      &:focus {
+        outline: none;
+        &::placeholder {
+          color: transparent;
+        }
+      }
     }
   }
   .mobileLogo {
@@ -260,15 +269,23 @@ export const HeaderTop = () => {
   );
 };
 
-export const HeaderBottom = () => {
+export const HeaderBottom = ({ onSearch }) => {
   const navigate = useNavigate();
   const { currentUserData } = useContext(DataStateContext);
-
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
+  const { isDark, setIsDark } = useContext(DarkThemeContext);
   const [sideBarGroupOpen, setSideBarGroupOpen] = useState(false);
   const [sideWalletOpen, setSideWalletOpen] = useState(false);
   const [issticky, setissticky] = useState(false);
   const [loading, setLoading] = useState(true);
+  const handleSearchChange = (e) => {
+    const searchTerm = e.target.value;
+    if (onSearch) {
+      onSearch(searchTerm); // 함수가 있으면 호출
+    } else {
+      console.warn("onSearch 함수가 전달되지 않았습니다.");
+    }
+  };
   // 스크롤 위치 감지 및 상태 업데이트
   useEffect(() => {
     const handleScroll = () => {
@@ -285,9 +302,11 @@ export const HeaderBottom = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  // currentUserData가 있을 때 로딩 해제
   useEffect(() => {
     if (currentUserData) {
-      setLoading(false);
+      console.log("유저 데이터 로드 완료:", currentUserData);
+      setLoading(false); // 데이터가 로드된 후 로딩 해제
     }
   }, [currentUserData]);
   const sideMenu = (e) => {
@@ -315,10 +334,6 @@ export const HeaderBottom = () => {
     setSideWalletOpen(false);
   };
 
-  const { isDark, setIsDark } = useContext(DarkThemeContext);
-  const toggleTheme = () => {
-    setIsDark((prev) => !prev);
-  };
   // LogOut
   const onLogOut = async () => {
     const confirmation = confirm("페이스북에서 로그아웃 하시겠습니까?");
@@ -327,18 +342,20 @@ export const HeaderBottom = () => {
       navigate("/login");
     }
   };
-
   if (loading) {
     return <div>Loading...</div>;
   }
-
   return (
     <HeaderSticky $sticky={issticky ? "true" : null}>
       <Left>
         <img className="mobileLogo" src={mobileLogo} alt="mobileLogo" />
         <div>
           <FaMagnifyingGlass />
-          <input type="text" placeholder="Search Facebook" />
+          <input
+            type="text"
+            placeholder="Search Facebook"
+            onChange={handleSearchChange}
+          />
         </div>
       </Left>
       <Center>
