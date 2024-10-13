@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { HeaderBottom, HeaderTop } from "../components/common/Header";
 import PostUpload from "../components/common/PostUpload";
@@ -8,6 +8,7 @@ import MainGroup from "../components/Main/MainGroup";
 import Mainpage from "../components/Main/Mainpage";
 import { auth } from "../firebase";
 import ModalCont from "../components/Modal/ModalCont";
+import { DataStateContext } from "../App";
 
 const Wrapper = styled.div`
   position: relative;
@@ -40,6 +41,8 @@ const MainSection = styled.section`
 `;
 
 const Main = () => {
+  const state = useContext(DataStateContext);
+  console.log(state);
   useEffect(() => {
     // console.log(auth.currentUser);
   }, []);

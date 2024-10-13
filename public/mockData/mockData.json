@@ -73,7 +73,7 @@
         "currentViewers": 120,
         "description": "자연에서 온 성분으로 피부에 건강을 선사하는 PureGlow입니다.",
         "liveInfo": "피부에 활력을 주는 신제품 비타민C 세럼을 소개합니다. 맑고 투명한 피부를 원하신다면 지금 확인하세요!",
-        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/teamproject-facebook-ez.appspot.com/o/LiveVideo%2F7.mp4?alt=media&token=e7c12b38-0ae6-4ead-a7c1-393dc88b5d65",
+        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/facebook-ez-ba531.appspot.com/o/LiveVideo%2F7.mp4?alt=media&token=6cf2e9bb-36fb-4b98-94c8-88d1e8bb3465",
         "name": "PureGlow",
         "profileImage": "path/to/profileImage1.jpg"
       },
@@ -92,7 +92,7 @@
         "currentViewers": 85,
         "description": "자연을 담은 패션을 선도하는 GreenStyle입니다.",
         "liveInfo": "이번 시즌 신상품인 린넨 셔츠를 만나보세요. 편안한 착용감과 세련된 디자인을 제공합니다.",
-        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/teamproject-facebook-ez.appspot.com/o/LiveVideo%2F2.mp4?alt=media&token=558cbe73-0047-4915-bcb6-c7bc7504dbe5",
+        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/facebook-ez-ba531.appspot.com/o/LiveVideo%2F2.mp4?alt=media&token=e209e6af-1527-4a05-aa9c-1a6b8cd6b81c",
         "name": "GreenStyle",
         "profileImage": "path/to/profileImage2.jpg"
       },
@@ -111,7 +111,7 @@
         "currentViewers": 150,
         "description": "독특한 컬러와 디자인으로 사랑받는 OrangeBag입니다.",
         "liveInfo": "활기찬 주황색 토트백으로 일상에 포인트를 더해보세요. 한정 수량 할인 중입니다!",
-        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/teamproject-facebook-ez.appspot.com/o/LiveVideo%2F3.mp4?alt=media&token=e9430afa-2abe-4411-8df6-550e7baf7682",
+        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/facebook-ez-ba531.appspot.com/o/LiveVideo%2F3.mp4?alt=media&token=b827b94d-ef6c-4f79-8c52-ab8e002733f5",
         "name": "OrangeBag",
         "profileImage": "path/to/profileImage3.jpg"
       },
@@ -129,8 +129,8 @@
         "title": "EcoCup으로 지구를 지키자",
         "currentViewers": 60,
         "description": "지속 가능한 생활을 지향하는 EcoCup입니다.",
-        "liveInfo": "대나무 소재로 만든 친환경 컵을 소개합니다. 자연을 사랑하는 마음을 담았습니다.",
-        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/teamproject-facebook-ez.appspot.com/o/LiveVideo%2F4.mp4?alt=media&token=8519dd5b-becb-4909-aca7-a8fd1208cca1",
+        "liveInfo": "친환경 소재로 만든 머그컵 컵을 소개합니다. 자연을 사랑하는 마음을 담았습니다.",
+        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/facebook-ez-ba531.appspot.com/o/LiveVideo%2F4.mp4?alt=media&token=2943e1df-0830-4bee-a6dd-a515e7ffc508",
         "name": "EcoCup",
         "profileImage": "path/to/profileImage4.jpg"
       },
@@ -149,7 +149,7 @@
         "currentViewers": 95,
         "description": "자연 그대로의 맛과 영양을 담은 NutriNuts입니다.",
         "liveInfo": "신선한 믹스 견과류 세트로 하루의 에너지를 충전하세요. 지금 특별 할인 중입니다.",
-        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/teamproject-facebook-ez.appspot.com/o/LiveVideo%2F5.mp4?alt=media&token=da541c95-a814-429c-9e8f-834f41ccfd61",
+        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/facebook-ez-ba531.appspot.com/o/LiveVideo%2F5.mp4?alt=media&token=3297cc72-7100-46f8-aa6c-686f2d77d03a",
         "name": "NutriNuts",
         "profileImage": "path/to/profileImage5.jpg"
       },
@@ -168,7 +168,7 @@
         "currentViewers": 110,
         "description": "피부 본연의 아름다움을 찾아주는 HydraSkin입니다.",
         "liveInfo": "건조한 피부에 수분을 채워줄 수분 가득 스킨로션을 소개합니다. 촉촉함을 느껴보세요.",
-        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/teamproject-facebook-ez.appspot.com/o/LiveVideo%2F6.mp4?alt=media&token=f4d8b557-1a30-48b8-b264-96f87d70c9a1",
+        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/facebook-ez-ba531.appspot.com/o/LiveVideo%2F8.mp4?alt=media&token=b6b0dd55-c1f0-443e-ab6c-2bb9fd1f5d91",
         "name": "HydraSkin",
         "profileImage": "path/to/profileImage6.jpg"
       },

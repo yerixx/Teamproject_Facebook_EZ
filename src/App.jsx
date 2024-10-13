@@ -191,11 +191,10 @@ function App() {
         id: doc.id,
         ...doc.data(),
       }));
+      const response = await fetch("/mockData/mockData.json");
+      const mockData = await response.json();
 
-      console.log("Fetched users:", users); // 사용자 데이터 로그
-      console.log("Fetched posts:", posts); // 포스트 데이터 로그
-
-      dispatch({ type: "INIT", data: { users, posts } });
+      dispatch({ type: "INIT", data: { users, posts, mockData } });
     } catch (error) {
       console.error("데이터를 불러오지 못했습니다.", error);
     }
