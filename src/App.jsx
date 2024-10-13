@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Detail from "./pages/Detail";
 import ModalLive from "./components/Modal/ModalLive.jsx";
+import Comment from "./components/common/Comment.jsx"
 import ModalCont from "./components/Modal/ModalCont.jsx";
 import GlobalStyles from "./styles/GlobalStyles.styles.js";
 import React, { useEffect, useReducer, useState } from "react";
@@ -344,6 +345,7 @@ function App() {
                   <Route path="/signup" element={<Signup />} />
                   <Route path="/detail" element={<Detail />} />
                   <Route path="/ModalLive" element={<ModalLive />} />
+                  <Route path="/comment" element={<Comment />} />
                 </Routes>
               </Wrapper>
             </DataDispatchContext.Provider>

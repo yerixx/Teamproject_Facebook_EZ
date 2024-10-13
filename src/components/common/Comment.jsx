@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom/client';
-import UploadField from '../common/UploadField.jsx';
+import React, { useState, useEffect } from 'react';
+import CommentUpload from './CommentUpload';
+import { db } from '../../firebase';
+import { collection, addDoc, onSnapshot } from 'firebase/firestore';
 import './Comment.css';
 
 const Comment = ({ profilePic, username, initialContent, onDelete }) => {
@@ -42,7 +43,7 @@ const Comment = ({ profilePic, username, initialContent, onDelete }) => {
                 </div>
                 <div className="actions">
                     <button 
-                        className={liked ? 'liked' : ''} // 클래스 추가
+                        className={liked ? 'liked' : ''} 
                         onClick={handleToggleLike}
                     >
                         {liked ? '좋아요 취소' : '좋아요'} {likes}
@@ -58,22 +59,32 @@ const Comment = ({ profilePic, username, initialContent, onDelete }) => {
 };
 
 const App1 = () => {
-    const [comments, setComments] = useState([
-        { id: 1, profilePic: "/img/commentProfile1.jpg", username: "김예지", content: "이것은 댓글 컴포넌트의 첫 번째 댓글입니다." },
-        { id: 2, profilePic: "/img/commentProfile2.jpg", username: "박예림", content: "파이어베이스 어떻게 연결하지?" },
-        { id: 3, profilePic: "/img/commentProfile1.jpg", username: "박예림", content: "이것은 댓글 컴포넌트의 세 번째 댓글입니다" },
-    ]);
+    const [comments, setComments] = useState([]);
+    const commentsCollectionRef = collection(db, "comments");
 
-    const handleDeleteComment = (id) => {
+    useEffect(() => {
+        const unsubscribe = onSnapshot(commentsCollectionRef, (snapshot) => {
+            const fetchedComments = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            setComments(fetchedComments);
+        });
+
+        return () => unsubscribe();
+    }, []);
+
+    const handleCreateComment = async (newComment) => {
+        await addDoc(commentsCollectionRef, newComment);
+    };
+
+    const handleDeleteComment = async (id) => {
         const confirmDelete = window.confirm("댓글을 삭제하시겠습니까?");
         if (confirmDelete) {
-            setComments((prevComments) => prevComments.filter(comment => comment.id !== id));
+            await deleteDoc(doc(commentsCollectionRef, id));
         }
     };
 
     return (
         <div className="app">
-            {/* <h2>댓글</h2> */}
+            <h2>댓글</h2>
             {comments.map(comment => (
                 <Comment 
                     key={comment.id}
@@ -83,7 +94,7 @@ const App1 = () => {
                     onDelete={() => handleDeleteComment(comment.id)}
                 />
             ))}
-
+            <CommentUpload onCreateComment={handleCreateComment} />
         </div>
     );
 };
