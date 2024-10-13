@@ -19,6 +19,8 @@ import {
 import { DataDispatchContext, DataStateContext } from "../../App.jsx";
 import Mainlive from "./Mainlive.jsx";
 import UploadModal from "../ModalConts/UploadModal.jsx";
+import CommentUpload from "../common/CommentUpload";
+import CommentList from "../common/CommentList";
 
 const Wrapper = styled.section`
   border-radius: var(--border-radius-30);
@@ -256,6 +258,7 @@ const Mainpage = ({ searchTerm }) => {
       console.error("게시물 업데이트 중 오류 발생:", error);
     }
   };
+  console.log(filteredPosts);
 
   const isSearching = searchTerm.trim().length > 0;
   return (
@@ -302,8 +305,11 @@ const Mainpage = ({ searchTerm }) => {
                       <ContImg src={item.image} alt="Post content" />
                     )}
                   </Contents>
-                  <SocialBtnIcon postId={item.id} isLiked={false} />
-                  <PostUpload />
+                  <SocialBtnIcon
+                    postId={item.id}
+                    comments={item.comments || []}
+                  />
+                  {/* <CommentUpload /> */}
                 </Inner>
               </Wrapper>
               {!isSearching && (i + 1) % 3 === 0 && <Mainlive />}

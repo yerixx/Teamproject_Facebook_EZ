@@ -53,10 +53,10 @@
 }
 
 .actions button.liked {
-  color: #007bff; /* 파란색으로 유지 */
+  color: #007bff;
   font-weight: 600;
 }
 
 .actions button:hover {
-  color: #0056b3; /* 어두운 파란색으로 변경 */
+  color: #0056b3;
 }

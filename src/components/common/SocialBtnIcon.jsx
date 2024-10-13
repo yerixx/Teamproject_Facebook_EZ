@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { DataDispatchContext } from "../../App.jsx";
-import CommentList from "../Mypage/CommentList";
+// import CommentList from "../Mypage/CommentList";
+import CommentList from "./CommentList";
 import styled from "styled-components";
 
 import {
@@ -12,6 +13,7 @@ import {
 import { FaRegHeart, FaRegComment } from "react-icons/fa";
 import { FaRegBookmark } from "react-icons/fa6";
 import { FiShare } from "react-icons/fi";
+import CommentSection from "./Comment.jsx";
 
 const SocialIcon = styled.div`
   ${MainTitle_18_n}
@@ -41,6 +43,7 @@ const SocialIcon = styled.div`
     &:hover {
       color: var(--color-facebookblue) !important;
     }
+
     .socialIconText {
       ${SubDescription_16_n}
       color: ${(props) => props.theme.textColor};
@@ -51,7 +54,7 @@ const SocialIcon = styled.div`
   }
 `;
 
-const SocialBtnIcon = ({ postId, isLiked }) => {
+const SocialBtnIcon = ({ postId, comments }) => {
   const { onToggleLike } = useContext(DataDispatchContext);
   const [toggle, setToggle] = useState(false);
   const [like, setLike] = useState(false);
@@ -184,9 +187,7 @@ const SocialBtnIcon = ({ postId, isLiked }) => {
           <div className="socialIconText">저장하기</div>
         </div>
       </SocialIcon>
-      <div style={{ display: !toggle ? "none" : "block" }}>
-        <CommentList />
-      </div>
+      {toggle && <CommentSection postId={postId} />}
     </>
   );
 };

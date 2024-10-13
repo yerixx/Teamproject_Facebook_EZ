@@ -386,7 +386,7 @@ export const HeaderBottom = ({ onSearch }) => {
               />
             </div>
             <h3>
-              {currentUserData.userName.firstName}{" "}
+              {currentUserData.userName.firstName}
               {currentUserData.userName.lastName}
             </h3>
           </ProfileWrap>

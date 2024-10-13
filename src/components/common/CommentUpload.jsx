@@ -12,23 +12,23 @@ const WrapperForm = styled.form`
 `;
 
 const CommentCont = styled.div`
-  border: 1px solid #000;
+  /* border: 1px solid #000; */
   width: 100%;
   display: flex;
   align-items: center;
   padding: 10px;
-  
+
   .commentUpLoadprofile {
     width: 100%;
     display: flex;
     align-items: center;
-    
+
     .profileImg {
       width: 60px;
       height: 60px;
       border-radius: 100px;
     }
-    
+
     .profileuploadText {
       width: 100%;
       height: 40px;
@@ -40,7 +40,7 @@ const CommentCont = styled.div`
         outline: none;
       }
     }
-    
+
     .submitBtn {
       display: flex;
       justify-content: center;
@@ -58,24 +58,12 @@ const CommentCont = styled.div`
 
 const CommentUpload = ({ onCreateComment }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [uploadText, setUploadText] = useState("");
-
-  const handleSubmit = async (e) => {
+  const [content, setContent] = useState("");
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setIsLoading(true);
-
-    const newComment = {
-      profilePic: testCat, 
-      username: "Username", 
-      content: uploadText,
-      timestamp: new Date().toISOString(), 
-    };
-
-    await onCreateComment(newComment);
-    setUploadText(""); 
-    setIsLoading(false); 
+    onCreateComment(content);
+    setContent(""); // 입력창 초기화
   };
-
   return (
     <WrapperForm onSubmit={handleSubmit}>
       <CommentCont>
@@ -83,17 +71,13 @@ const CommentUpload = ({ onCreateComment }) => {
           <img src={testCat} className="profileImg" alt="profileImg" />
           <input
             className="profileuploadText"
-            onChange={(e) => setUploadText(e.target.value)}
+            onChange={(e) => setContent(e.target.value)}
             type="text"
             placeholder="댓글을 입력하세요"
-            value={uploadText}
+            value={content}
             required
           />
-          <button
-            disabled={isLoading}
-            type="submit"
-            className="submitBtn"
-          >
+          <button disabled={isLoading} type="submit" className="submitBtn">
             {isLoading ? <FaSpinner /> : <BsArrowReturnLeft />}
           </button>
         </div>

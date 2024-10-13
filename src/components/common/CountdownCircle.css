@@ -1,8 +1,8 @@
 /* CountdownCircle.css */
 .circle {
   width: 40px;
-  height: 40px; 
-  border-radius: 50%; 
+  height: 40px;
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,27 +11,27 @@
 }
 
 .circle::before {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  border: 2px solid #fff; 
-  border-top-color: #3498db; 
-  animation: fill 7s linear forwards; 
+  border: 2px solid #fff;
+  border-top-color: #3498db;
+  animation: fill 7s linear forwards;
 }
 
 .count {
-  font-size: 1rem; 
+  font-size: 1rem;
   position: relative;
-  z-index: 1; 
+  z-index: 1;
 }
 
 @keyframes fill {
   from {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   to {
-      transform: rotate(360deg); 
+    transform: rotate(360deg);
   }
 }
