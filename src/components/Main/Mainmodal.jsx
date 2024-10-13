@@ -19,7 +19,7 @@ const Wrapper = styled.div`
 
 // 모달 내부 컨텐츠의 스타일 컴포넌트
 const Inner = styled.div`
-  width: 900px;
+  width: var(--inner-width-02);
   border-radius: 30px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;

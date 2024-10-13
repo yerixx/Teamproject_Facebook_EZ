@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 import React, { useState } from "react"; // useState 임포트 추가
 import styled from "styled-components";
 import { FaUser, FaPlus } from "react-icons/fa6";
@@ -8,7 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { SubDescription_16_n } from "../../styles/GlobalStyles.styles";
 import { MdOutlineNavigateNext, MdOutlineNavigateBefore } from "react-icons/md";
-import Mainstoryodal from "../Main/Mainstorymodal"; // 모달 컴포넌트 임포트
+import Mainstorymodal from "./Mainstorymodal"; // 모달 컴포넌트 임포트
 
 const Wrapper = styled.div`
   width: 100%;
@@ -27,7 +25,7 @@ const Wrapper = styled.div`
 
 const Inner = styled.div`
   /* border: 1px solid red; */
-  width: var(--inner-width-02);
+  width: 1000px;
   height: 360px;
   padding: 27px 30px;
   display: flex;
@@ -311,7 +309,7 @@ const MainStory = () => {
     beforeChange: (current, next) => setCurrentSlide(next),
     responsive: [
       {
-        breakpoint: 900, // 1050px 이하일 때
+        breakpoint: 1050, // 1050px 이하일 때
         settings: {
           slidesToShow: 4, // 슬라이드를 4개만 보여줌
           slidesToScroll: 1,
@@ -411,7 +409,7 @@ const MainStory = () => {
       </Inner>
       {/* 모달 컴포넌트 렌더링 */}
       {isModalOpen && (
-        <Mainstoryodal
+        <Mainstorymodal
           isOpen={isModalOpen}
           onClose={closeModal}
           onSubmit={handleModalSubmit}

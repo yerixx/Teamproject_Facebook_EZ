@@ -170,6 +170,36 @@ function App() {
     }
   };
 
+  const onCreateStory = async (userId, userName, content, image = null) => {
+    const newStory = {
+      userId,
+      userName,
+      content,
+      image: image ? [image] : [],
+      createdAt: new Date().toISOString(),
+      views: 0, // Since stories are typically viewed, not liked
+      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // 24 hours expiration
+    };
+
+    try {
+      const docRef = await addDoc(collection(db, "stories"), newStory);
+
+      // Firestore에 추가된 데이터로 상태를 업데이트
+      dispatch({
+        type: "ADD_STORY",
+        newStory: { ...newStory, id: docRef.id },
+      });
+
+      dispatch({
+        type: "UPDATE_USER_STORIES",
+        userId,
+        newStoryId: docRef.id,
+      });
+    } catch (error) {
+      console.error("Firestore에 스토리 추가 중 오류 발생:", error);
+    }
+  };
+
   const onAddUser = async (
     userId,
     firstName,
@@ -272,6 +302,7 @@ function App() {
             onCreateComment,
             onToggleLike,
             onDeletePost,
+            onCreateStory,
           }}
         >
           <Wrapper>

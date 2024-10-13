@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick-theme.css"; // 슬릭 슬라이더 테마 스
 import {
   MainTitle_18_b,
   SubDescription_12_m,
+  SubDescription_14_n,
   SubDescription_16_n,
 } from "../../styles/GlobalStyles.styles"; // 전역 스타일에서 텍스트 스타일 가져오기
 import { MdOutlineNavigateBefore, MdNavigateNext } from "react-icons/md";
@@ -18,7 +19,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
 
-  @media screen and (max-width: 1050px) {
+  @media screen and (max-width: 900px) {
     margin-top: 10px;
   }
   @media screen and (max-width: 768px) {
@@ -30,7 +31,7 @@ const Wrapper = styled.div`
 // 내부 컨텐츠를 담는 Inner 스타일 컴포넌트
 const Inner = styled.div`
   width: var(--inner-width-02);
-  height: 430px;
+  height: 400px;
   padding: 27px 30px;
   display: flex;
   flex-direction: column;
@@ -40,8 +41,9 @@ const Inner = styled.div`
   border-radius: var(--border-radius-30);
   position: relative;
 
-  @media screen and (max-width: 1050px) {
+  @media screen and (max-width: 900px) {
     width: 100%;
+    height: 80%;
   }
   @media screen and (max-width: 768px) {
     box-shadow: none;
@@ -87,8 +89,9 @@ const Livecard = styled.div`
   flex-direction: column;
   position: relative;
 
-  @media screen and (max-width: 1050px) {
+  @media screen and (max-width: 900px) {
     width: 100%;
+    height: 80%;
   }
   @media screen and (max-width: 768px) {
     width: 100%;
@@ -123,7 +126,7 @@ const Livecard = styled.div`
       margin-right: 5px;
 
       @media screen and (max-width: 768px) {
-        font-size: 14px;
+        ${SubDescription_14_n}
       }
     }
 
@@ -133,8 +136,11 @@ const Livecard = styled.div`
 
       .viewers {
         ${SubDescription_16_n}
+        @media screen and (max-width: 900px) {
+          ${SubDescription_14_n}
+        }
         @media screen and (max-width: 768px) {
-          font-size: 14px;
+          ${SubDescription_12_m}
         }
       }
 
@@ -142,8 +148,11 @@ const Livecard = styled.div`
         ${SubDescription_16_n}
         position: absolute;
         right: 10px;
+        @media screen and (max-width: 900px) {
+          ${SubDescription_12_m}
+        }
         @media screen and (max-width: 768px) {
-          font-size: 14px;
+          ${SubDescription_12_m}
         }
       }
     }
@@ -161,8 +170,10 @@ const Livecard = styled.div`
     position: absolute;
     bottom: 0px;
     width: 100%;
+    @media screen and (max-width: 900px) {
+      height: 32%;
+    }
     @media screen and (max-width: 768px) {
-      bottom: 38px;
     }
     .info {
       flex-grow: 1;
@@ -175,7 +186,9 @@ const Livecard = styled.div`
         display: flex;
         align-items: center;
         gap: 5px;
-
+        @media screen and (max-width: 900px) {
+          ${SubDescription_12_m}
+        }
         @media screen and (max-width: 768px) {
           ${SubDescription_12_m}
         }
@@ -183,25 +196,29 @@ const Livecard = styled.div`
 
       .title {
         ${SubDescription_16_n}
-
-        @media (max-width: 768px) {
-          font-size: 14px;
-
-          @media screen and (max-width: 768px) {
-            ${SubDescription_12_m}
-          }
+        @media screen and (max-width: 900px) {
+          ${SubDescription_14_n}
+        }
+        @media screen and (max-width: 768px) {
+          ${SubDescription_12_m}
         }
       }
 
       .item {
         display: flex;
         justify-content: space-between;
+        @media screen and (max-width: 900px) {
+          ${SubDescription_14_n}
+        }
 
         .price {
           ${SubDescription_16_n}
           display: flex;
           gap: 3px;
 
+          @media screen and (max-width: 900px) {
+            ${SubDescription_12_m}
+          }
           @media screen and (max-width: 768px) {
             ${SubDescription_12_m}
           }
@@ -219,7 +236,9 @@ const Livecard = styled.div`
           background: var(--color-gray-01);
           color: var(--color-white);
           cursor: pointer;
-
+          @media screen and (max-width: 900px) {
+            padding: 3px 3px;
+          }
           @media screen and (max-width: 768px) {
             ${SubDescription_12_m}
           }
@@ -329,7 +348,7 @@ const Mainlive = () => {
     prevArrow: <PrevArrow />, // 커스텀 이전 화살표 컴포넌트
     responsive: [
       {
-        breakpoint: 1050, // 화면 너비가 1050px 이하일 때
+        breakpoint: 900, // 화면 너비가 1050px 이하일 때
         settings: {
           slidesToShow: 4, // 슬라이드 4개 표시
           slidesToScroll: 1,
@@ -358,7 +377,6 @@ const Mainlive = () => {
         <Items>
           <div className="livetext">라이브 커머스</div> {/* 섹션 제목 */}
           <Slider {...settings}>
-            {" "}
             {[...Array(8)].map(
               (
                 index,
