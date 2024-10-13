@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { styled } from "styled-components";
+import { DataDispatchContext } from "../../App";
 
 import CountdownCircle from "../common/CountdownCircle";
 import { faComments } from "@fortawesome/free-solid-svg-icons";
 import fbIcon from "../../img/fbIcon.svg";
 import liveIcon from "../../img/liveIcon.svg";
-import LiveProfileImg from "../../img/LiveProfile.jpg";
 import LiveView from "../../img/Live.jpg";
 import SellItem1Img from "../../img/sellItem1.jpg";
 import SellItem2Img from "../../img/sellItem2.jpg";
@@ -55,6 +56,7 @@ const Live = styled.div`
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
+  cursor: pointer;
   video {
     width: 100%;
     height: 100%;
@@ -116,18 +118,11 @@ const LivePoint = styled.div`
     }
   }
   .pointDS {
+    text-align: end;
+    width: 230px;
     color: var(--color-white);
   }
-  /* .pointTime {
-    width: 30px;
-    height: 30px;
-    color: var(--color-white);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #fff;
-    border-radius: 50%;
-  } */
+
   @media screen and (max-width: 1050px) {
     width: 400px;
     height: 70px;
@@ -163,18 +158,18 @@ const RightContent = styled.section`
 const LiveProfile = styled.div`
   width: 100%;
   padding: 0 40px;
-  /* border: 1px solid #f00; */
   display: flex;
   .profileImg {
+    width: 80px;
+    height: 80px;
     background-color: var(--color-light-gray-02);
     border-radius: 50%;
     img {
       width: 80px;
+      height: 80px;
+      object-fit: cover;
       border-radius: 50%;
     }
-  }
-  @media screen and (max-width: 1050px) {
-    padding: 0 50px;
   }
 `;
 
@@ -194,7 +189,7 @@ const LiveProfileSelf = styled.div`
     font-weight: 400;
     color: var(--color-gray-01);
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* 표시할 줄 수 */
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -212,12 +207,11 @@ const LiveContents = styled.div`
   h3 {
     border-bottom: 1px solid var(--color-light-gray-01);
     padding-bottom: 15px;
-    /* padding: 15px 0; */
     font-size: var(--font-size-description-01);
   }
   p {
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* 표시할 줄 수 */
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -230,7 +224,6 @@ const LiveContents = styled.div`
 
 const SellItems = styled.div`
   width: 100%;
-  /* border: 1px solid #f00; */
   padding: 0 40px;
   @media screen and (max-width: 1050px) {
     padding: 0 50px;
@@ -283,6 +276,7 @@ const SellItemInfo = styled.div`
 const SellItemImg = styled.div`
   width: 70px;
   height: 70px;
+  object-fit: cover;
   cursor: pointer;
   @media screen and (max-width: 1050px) {
     background-color: none;
@@ -293,7 +287,7 @@ const SellItemDesc = styled.div`
   p {
     color: var(--color-gray-01);
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* 표시할 줄 수 */
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -312,7 +306,6 @@ const SellItemDesc = styled.div`
 
 const Comment = styled.div`
   width: 100%;
-  /* border: 1px solid #f00; */
   padding: 0 40px;
   h3 {
     display: flex;
@@ -337,7 +330,6 @@ const Comment = styled.div`
     margin-bottom: 10px;
   }
   @media screen and (max-width: 1050px) {
-    /* border: 1px solid #f00; */
     padding: 0 50px;
     h3,
     span {
@@ -359,7 +351,6 @@ const NoComment = styled.div`
   padding: 20px 0;
   font-size: 14px;
   color: var(--color-gray-01);
-  /* border: 1px solid #f00; */
   .commentIcon {
     margin-bottom: 10px;
     .faComments {
@@ -376,7 +367,65 @@ const NoComment = styled.div`
 `;
 
 const ModalLive = ({ item, closeModal }) => {
-  console.log(item);
+  const { id } = useParams(); // URL에서 id 파라미터 받아오기
+  const { dispatch } = useContext(DataDispatchContext);
+  const [pointMessage, setPointMessage] = useState(
+    "7초 후에 500 포인트가 적립됩니다."
+  );
+  const [resetKey, setResetKey] = useState(null); // 카운트다운 리셋을 위한 키
+  const [remainingTime, setRemainingTime] = useState(null); // 남은 시간을 저장할 상태
+  const navigate = useNavigate();
+
+  // 현재 id와 일치하는 제품 찾기
+  const currentProduct =
+    item.products && item.products.id === parseInt(id) ? item.products : null;
+
+  useEffect(() => {
+    if (currentProduct) {
+      const storedIds =
+        JSON.parse(localStorage.getItem("earnedPointIds")) || [];
+      const lastAddedTime = localStorage.getItem("lastAddedTime");
+
+      if (
+        lastAddedTime &&
+        Date.now() - new Date(lastAddedTime).getTime() < 86400000
+      ) {
+        setPointMessage("내일 다시 포인트를 적립할 수 있어요~");
+        setRemainingTime(0);
+        return;
+      }
+
+      if (storedIds.includes(currentProduct.id)) {
+        setPointMessage("내일 다시 포인트를 적립할 수 있어요~");
+      } else {
+        const startTime = Date.now();
+        setResetKey(startTime);
+        setRemainingTime(7);
+
+        let timer = setTimeout(() => {
+          dispatch({ type: "ADD_POINTS", value: 500 });
+          setPointMessage("내일 다시 포인트를 적립할 수 있어요~");
+          alert("500포인트가 적립되었습니다!");
+
+          localStorage.setItem("lastAddedTime", new Date().toISOString());
+          storedIds.push(currentProduct.id);
+          localStorage.setItem("earnedPointIds", JSON.stringify(storedIds));
+
+          setTimeout(() => {
+            setResetKey(Date.now());
+            setRemainingTime(7);
+          }, 86400000);
+        }, 7000);
+
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [currentProduct, dispatch]);
+
+  const handleButtonClick = () => {
+    // item.products는 객체이므로, item.products 자체를 랜덤으로 사용할 수 없으므로 이 로직은 필요 없음
+    navigate(`/modallive/${currentProduct.id}`);
+  };
 
   return (
     <>
@@ -391,29 +440,31 @@ const ModalLive = ({ item, closeModal }) => {
               <div className="liveLogo">
                 <img src={liveIcon} />
               </div>
-              <div className="liveViewer">2,023명 시청 중</div>
-              {/* <img src={LiveView} alt="Live" width="560px" height="860px" /> */}
+              <div className="liveViewer">
+                {item.liveStream.currentViewers}명 시청 중
+              </div>
             </LiveStatus>
             <LivePoint>
-              <button className="point">포인트 더 모으기</button>
-              <div className="pointDS">7초 후에 500 포인트가 적립됩니다.</div>
-              {/* <div className='pointTime'>7</div> */}
+              <button onClick={handleButtonClick} className="point">
+                포인트 더 모으기
+              </button>
+              <div className="pointDS">{pointMessage}</div>
               <div className="countdown">
-                <CountdownCircle />
+                <CountdownCircle
+                  resetKey={resetKey}
+                  remainingTime={remainingTime}
+                />
               </div>
             </LivePoint>
           </Live>
         </LeftContent>
         <RightContent>
           <CloseIcon onClick={closeModal}>
-            <IoCloseOutline
-              className="closeIcon"
-              // onClick={postDeleteBtn}
-            />
+            <IoCloseOutline className="closeIcon" />
           </CloseIcon>
           <LiveProfile>
             <div className="profileImg">
-              <img src={LiveProfileImg} alt="LiveProfileImg" />
+              <img src={item?.liveStream?.profileImage} alt="LiveProfileImg" />
             </div>
             <LiveProfileSelf>
               <div className="profileName">{item?.liveStream?.name}</div>
@@ -424,45 +475,31 @@ const ModalLive = ({ item, closeModal }) => {
             <h3>라이브 안내</h3>
             <p>{item?.liveStream?.liveInfo}</p>
           </LiveContents>
-          <SellItems>
-            <SellItem>
-              <h3>판매중인 상품</h3>
-              <SellInfos>
-                <SellItemInfo>
+          <SellItem>
+            <h3>판매중인 상품</h3>
+            <SellInfos>
+              {item?.products?.map((product, index) => (
+                <SellItemInfo key={product?.id || index}>
                   <SellItemImg>
                     <div className="sellItemImg"></div>
                     <img
-                      src={SellItem1Img}
-                      alt="SellItem1Img"
+                      src={product?.productImage}
+                      alt="productImage"
                       height="70px"
                       width="70px"
                     />
                   </SellItemImg>
                   <SellItemDesc>
-                    <p>★5%추가할인★스프라이트 백트임 긴팔니트</p>
+                    <p>{product?.name}</p>
                     <b>
-                      <span>30%</span>19,900원
+                      <span>{product?.discountRate}</span>
+                      {product?.discountPrice}
                     </b>
                   </SellItemDesc>
                 </SellItemInfo>
-                <SellItemInfo>
-                  <SellItemImg>
-                    <div className="sellItemImg"></div>
-                    <img
-                      src={SellItem2Img}
-                      alt="SellItem2Img"
-                      height="70px"
-                      width="70px"
-                    />
-                  </SellItemImg>
-                  <SellItemDesc>
-                    <p>메디슨 클래식 플랩 레더백</p>
-                    <b>34,000원</b>
-                  </SellItemDesc>
-                </SellItemInfo>
-              </SellInfos>
-            </SellItem>
-          </SellItems>
+              ))}
+            </SellInfos>
+          </SellItem>
           <Comment>
             <h3>댓글</h3>
             <span>

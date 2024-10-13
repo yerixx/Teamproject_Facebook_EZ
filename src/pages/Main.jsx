@@ -60,11 +60,8 @@ const Main = () => {
         <PostUploadField>
           <PostUpload />
         </PostUploadField>
-        {/* <PostUploadField /> */}
         <MainGroup />
         <Mainpage />
-        {/* <ModalCont /> */}
-        {/* <Mainlive /> */}
       </MainSection>
     </Wrapper>
   );

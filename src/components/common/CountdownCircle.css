@@ -8,11 +8,10 @@
   align-items: center;
   position: relative;
   color: #fff;
-
 }
 
 .circle::before {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 100%;
@@ -30,9 +29,9 @@
 
 @keyframes fill {
   from {
-      transform: rotate(0deg); /* 시작 각도 0도 */
+    transform: rotate(0deg); /* 시작 각도 0도 */
   }
   to {
-      transform: rotate(360deg); /* 최종 각도 360도 */
+    transform: rotate(360deg); /* 최종 각도 360도 */
   }
 }

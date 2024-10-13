@@ -58,6 +58,7 @@ const Inner = styled.div`
 `;
 
 const Items = styled.div`
+  cursor: pointer;
   .slider {
     width: 100%;
     height: 100%;

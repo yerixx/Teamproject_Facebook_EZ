@@ -29,6 +29,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { darkTheme } from "./styles/theme.js";
 import { lightTheme } from "./styles/theme.js";
 import ProtectedRoute from "./components/common/ProtectedRoute.jsx";
+import { setLastAddedTime, canAddPoints } from "./utils/util.js";
 
 // Page Router
 const router = createBrowserRouter([
@@ -49,7 +50,7 @@ const router = createBrowserRouter([
         element: <Detail />,
       },
       {
-        path: "modallive",
+        path: "modallive/:id",
         element: <ModalLive />,
       },
     ],
@@ -121,13 +122,31 @@ const reducer = (state, action) => {
       );
       return { ...state, users: updatedUsers };
     }
-
     case "DELETE_POST": {
       const updatedPosts = state.posts.filter(
         (post) => post.id !== action.targetId
       );
       return { ...state, posts: updatedPosts };
     }
+    //라이브 커머스 포인트
+    case "INIT_POINTS": {
+      const storedPoints = localStorage.getItem("points");
+      const initialPoints = storedPoints ? parseInt(storedPoints) : 0;
+      return { ...state, points: initialPoints };
+    }
+    case "ADD_POINTS": {
+      // utils.js의 canAddPoints 사용하여 포인트 지급 가능 여부 확인
+      if (!canAddPoints(action.page)) {
+        return state; // 포인트 지급이 불가능하면 그대로 반환
+      } // 포인트 추가 및 시간 업데이트
+      const updatedPoints = state.points + action.value;
+      localStorage.setItem("points", updatedPoints);
+      // 마지막 포인트 추가 시간을 기록
+      setLastAddedTime(action.page);
+
+      return { ...state, points: updatedPoints };
+    }
+
     case "SET_CURRENT_USER_DATA":
       return { ...state, currentUserData: action.data };
     default:
@@ -173,8 +192,25 @@ function App() {
     liveCommerce: [],
     likeCategory: [],
     currentUserData: null,
+    points: 0,
   };
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  //라이브 포인트
+  useEffect(() => {
+    dispatch({ type: "INIT_POINTS" });
+  }, []);
+  // 7초마다 포인트 지급 시도 (페이지 이름을 전달)
+  useEffect(() => {
+    const pageName = window.location.pathname; // 현재 페이지 경로 가져오기
+    const interval = setInterval(() => {
+      if (canAddPoints(pageName)) {
+        dispatch({ type: "ADD_POINTS", value: 500, page: pageName });
+      }
+    }, 7000);
+
+    return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 해제
+  }, []);
 
   const fetchData = async () => {
     try {
@@ -397,17 +433,10 @@ function App() {
                 onCreateComment,
                 onToggleLike,
                 onDeletePost,
+                ...state,
+                dispatch,
               }}
             >
-              {/* <Wrapper>
-            <Routes>
-              <Route path="/" element={<Main />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/mypage" element={<Detail />} />
-              <Route path="/modallive" element={<ModalLive />} />
-            </Routes>
-          </Wrapper> */}
               {isLoading ? (
                 <LoadingScreen />
               ) : (
