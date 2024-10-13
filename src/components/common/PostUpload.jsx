@@ -318,7 +318,7 @@ const Mainupload = ({ placeholder }) => {
         <div className="commentUpLoadprofile">
           <img
             className="profileImg"
-            src={currentUserData.profileImage || "/img/defaultProfile.jpg"}
+            src={currentUserData?.profileImage || "/img/defaultProfile.jpg"}
             alt="Profile"
           />
           <input

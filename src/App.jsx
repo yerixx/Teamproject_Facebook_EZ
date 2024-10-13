@@ -183,17 +183,19 @@ function App() {
 
       const users = usersSnapshot.docs.map((doc) => ({
         id: doc.id,
-        posts: [], // 기본값으로 빈 배열 설정
+        posts: [],
         ...doc.data(),
       }));
+
       const posts = postsSnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      const response = await fetch("/mockData/mockData.json");
-      const mockData = await response.json();
-      // 전체 데이터를 상태에 저장
-      dispatch({ type: "INIT", data: { users, posts, mockData } });
+
+      console.log("Fetched users:", users); // 사용자 데이터 로그
+      console.log("Fetched posts:", posts); // 포스트 데이터 로그
+
+      dispatch({ type: "INIT", data: { users, posts } });
     } catch (error) {
       console.error("데이터를 불러오지 못했습니다.", error);
     }
@@ -205,7 +207,14 @@ function App() {
       const userDoc = await getDoc(userDocRef);
 
       if (userDoc.exists()) {
-        dispatch({ type: "SET_CURRENT_USER_DATA", data: userDoc.data() });
+        const data = userDoc.data();
+        dispatch({
+          type: "SET_CURRENT_USER_DATA",
+          data: {
+            ...data,
+            profileImage: data.profileImage || "", // 기본값 설정
+          },
+        });
       } else {
         dispatch({ type: "SET_CURRENT_USER_DATA", data: null });
       }
@@ -270,73 +279,51 @@ function App() {
   };
 
   const onAddUser = async (
+    userId,
     firstName,
     lastName,
     email,
-    password,
     point = 0,
     won = 0,
     gender = null,
     birthdate = null,
     city = null,
-    likeCategory = []
+    likeCategory = [],
+    profileImage = "",
+    backgroundImage = "",
+    introduction = ""
   ) => {
     try {
-      const user = auth.currentUser; // 현재 로그인한 사용자 가져오기
-      if (user) {
-        const userId = user.uid; // Firebase에서 가져온 사용자 UID
+      const userDoc = {
+        userId,
+        userName: {
+          firstName,
+          lastName,
+        },
+        email,
+        gender,
+        birthdate,
+        city,
+        likeCategory,
+        profileImage,
+        backgroundImage,
+        introduction,
+        wallet: {
+          point,
+          won,
+        },
+      };
 
-        // Firestore에 사용자 UID를 문서 ID로 사용하여 데이터 추가
-        await setDoc(doc(db, "users", userId), {
-          userId,
-          userName: {
-            firstName,
-            lastName,
-          },
-          email,
-          password,
-          wallet: {
-            point,
-            won,
-          },
-          gender,
-          birthdate,
-          city,
-          likeCategory,
-          profileImage: "", // 프로필 이미지 기본값 설정
-          backgroundImage: "", // 배경 이미지 기본값 설정
-          introduction: "", // 자기소개 기본값 설정
-        });
+      console.log("Saving user data:", userDoc); // 추가된 로그
+      await setDoc(doc(db, "users", userId), userDoc);
 
-        // 상태 업데이트를 위해 dispatch 호출
-        dispatch({
-          type: "ADD_USER",
-          newUser: {
-            id: userId,
-            userId,
-            userName: {
-              firstName,
-              lastName,
-            },
-            posts: [],
-            email,
-            password,
-            wallet: {
-              point,
-              won,
-            },
-            gender,
-            birthdate,
-            city,
-            likeCategory,
-            profileImage: "", // 프로필 이미지 기본값 설정
-            backgroundImage: "", // 배경 이미지 기본값 설정
-            introduction: "", // 자기소개 기본값 설정
-          },
-        });
-      } else {
-        console.error("로그인된 사용자가 없습니다.");
-      }
+      dispatch({
+        type: "ADD_USER",
+        newUser: {
+          ...userDoc,
+          posts: [],
+        },
+      });
     } catch (error) {
       console.error("Firestore에 유저 추가 중 오류 발생:", error);
     }

@@ -15,12 +15,12 @@ import { getFirestore } from "firebase/firestore";
 //   appId: "1:395519394088:web:ed11d29baa450319ad901d",
 // };
 const firebaseConfig = {
-  apiKey: "AIzaSyBYeuo-EPq744pRHWJNMV3wZeCI-GwquSQ",
-  authDomain: "teamproject-facebook-ez.firebaseapp.com",
-  projectId: "teamproject-facebook-ez",
-  storageBucket: "teamproject-facebook-ez.appspot.com",
-  messagingSenderId: "970648790828",
-  appId: "1:970648790828:web:548d0376041d6c32c42e89",
+  apiKey: "AIzaSyDIrRWIuOWl9Sx7en8ZagOK6HUOw9DJNaQ",
+  authDomain: "facebook-ez-ba531.firebaseapp.com",
+  projectId: "facebook-ez-ba531",
+  storageBucket: "facebook-ez-ba531.appspot.com",
+  messagingSenderId: "142488866969",
+  appId: "1:142488866969:web:7020e0185bbd17ec676808",
 };
 
 // Initialize Firebase

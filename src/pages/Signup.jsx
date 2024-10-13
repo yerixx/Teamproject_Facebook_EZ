@@ -69,7 +69,6 @@ const Signup = () => {
   // 회원가입 완료 시 호출되는 함수
   const handleSignup = async (data) => {
     try {
-      // Firebase Authentication을 통해 사용자 등록
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         data.email,
@@ -77,29 +76,25 @@ const Signup = () => {
       );
       const user = userCredential.user;
 
-      // 이메일 인증 링크 전송
       await sendEmailVerification(user);
       alert("인증 이메일이 전송되었습니다. 이메일을 확인해주세요.");
 
-      // Firestore에 유저 정보 저장
       await onAddUser(
         user.uid,
         data.firstName,
         data.lastName,
         data.email,
-        data.password1,
-        userData.point,
-        userData.won,
-        userData.gender,
-        userData.birthdate,
-        userData.city,
-        userData.likeCategory,
-        userData.profileImage,
-        userData.backgroundImage,
-        userData.introduction
+        0, // 기본값
+        0, // 기본값
+        data.gender, // 사용자가 입력한 데이터
+        data.birthdate, // 사용자가 입력한 데이터
+        data.city, // 사용자가 입력한 데이터
+        data.likeCategory || [], // 사용자가 입력한 데이터
+        data.profileImage || "", // 기본값
+        data.backgroundImage || "", // 기본값
+        data.introduction || "" // 기본값
       );
 
-      // 회원가입 완료 후 페이지 이동
       navigate("/login");
     } catch (error) {
       console.error("회원가입 중 오류 발생:", error);
@@ -110,6 +105,7 @@ const Signup = () => {
       }
     }
   };
+
   return (
     <Wrapper
       style={{
