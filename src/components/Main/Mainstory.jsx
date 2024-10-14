@@ -108,7 +108,7 @@ const Items = styled.div`
 `;
 
 const StoryItem = styled.div`
-  border: 1px solid var(--color-light-gray-01);
+  border: 2px solid ${(props) => props.theme.cardColor};
   width: 100%;
   height: 320px;
   border-radius: 8px;
@@ -245,6 +245,9 @@ const NextBtn = styled.span`
   transition: all 0.3s;
   scale: 0.8;
   cursor: pointer;
+  opacity: 0.4;
+  transition: all 0.3s;
+  scale: 0.8;
   svg {
     margin-left: 5px;
   }
@@ -284,6 +287,9 @@ const PrevBtn = styled.span`
   transition: all 0.3s;
   scale: 0.8;
   cursor: pointer;
+  opacity: 0.4;
+  transition: all 0.3s;
+  scale: 0.8;
   svg {
     margin-left: 3px;
   }

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FormTitle } from "./login-components";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -36,24 +37,26 @@ const GoBackBtn = styled.button`
   }
 `;
 
-const MobileHeader = ({ title }) => {
+const MobileHeader = () => {
   return (
     <Wrapper>
-      <GoBackBtn>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.75 19.5 8.25 12l7.5-7.5"
-          />
-        </svg>
-      </GoBackBtn>
-      <FormTitle>{title}</FormTitle>
+      <Link to={"/login"}>
+        <GoBackBtn>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.75 19.5 8.25 12l7.5-7.5"
+            />
+          </svg>
+        </GoBackBtn>
+      </Link>
+      <FormTitle>Facebook에 가입하기</FormTitle>
     </Wrapper>
   );
 };

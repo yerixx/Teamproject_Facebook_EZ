@@ -1,5 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {
+  createSearchParams,
+  Link,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import styled from "styled-components";
 import { SubDescription_14_n } from "../../styles/GlobalStyles.styles";
 import { Button } from "./login-components";
@@ -36,9 +41,21 @@ const Wrapper = styled.div`
 `;
 
 const MobileButtonWrapper = ({ skipBtn }) => {
+  const navigate = useNavigate();
+  const handleSignupNextStep = () => {
+    navigate({
+      pathname: "/signup",
+      search: `?${createSearchParams({
+        progress: 2,
+      })}`,
+    });
+  };
+
   return (
     <Wrapper>
-      <Button className="mobileNextButton">다음</Button>
+      <Button onClick={handleSignupNextStep} className="mobileNextButton">
+        다음
+      </Button>
       {skipBtn ? <Button>건너뛰기</Button> : null}
       <Link to={"/login"}>
         <span>이미 계정이 있습니다</span>

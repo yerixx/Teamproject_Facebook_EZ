@@ -1,68 +1,99 @@
-import React from "react";
-// import { MainHeader01Style } from "../styles/GlobalStyles.styles";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { HeaderBottom, HeaderTop } from "../components/common/Header";
-// import LeftSideBar from "../components/common/LeftSideBar";
-import ModalCont from "../components/Modal/ModalCont";
-// import { useContext } from "react";
-// import { DataDispatchContext, DataStateContext } from "../App";
-import MainPage from "../components/Main/Mainpage";
+import PostUpload from "../components/common/PostUpload";
 import Mainstory from "../components/Main/Mainstory";
 import Mainlive from "../components/Main/Mainlive";
 import MainGroup from "../components/Main/MainGroup";
-import PostUploadField from "../components/common/PostUploadField";
-// import Mainbutton from "../components/Main/Mainbutton";
+import Mainpage from "../components/Main/Mainpage";
+import { auth } from "../firebase";
+import ModalCont from "../components/Modal/ModalCont";
+import { DataStateContext } from "../App";
+import LoadingScreen from "../components/common/LoadingScreen";
 
 const Wrapper = styled.div`
+  position: relative;
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
+const PostUploadField = styled.div`
+  background-color: ${(props) => props.theme.ContainColor};
+  box-shadow: var(--box-shadow-01);
+  margin-top: 30px;
+  padding: 20px 0;
+  border-radius: var(--border-radius-30);
+`;
 const MainSection = styled.section`
-  width: var(--inner-width-02);
+  margin-bottom: 20px;
+  width: 1050px;
   padding: 0 90px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 30px;
-  /* padding: 28px 20px; */
-  position: absolute;
   top: 140px;
   @media screen and (max-width: 768px) {
-    top: 80px;
+    top: 70px;
   }
 `;
 
-// const Maintest = styled.div`
-//   width: 1000px;
-//   border: 1px solid #f00;
-// `;
-
 const Main = () => {
-  // const { onCreatePost } = useContext(DataDispatchContext);
-  // const { posts } = useContext(DataStateContext);
-  // const create = () => {
-  //   onCreatePost("1", "sldkjf");
-  // };
+  const { currentUserData } = useContext(DataStateContext);
+  const [loading, setLoading] = useState(true); // 로딩 상태 관리
+  const [searchTerm, setSearchTerm] = useState("");
+  useEffect(() => {
+    const initialize = async () => {
+      try {
+        // 사용자 인증 상태 체크
+        await auth.onAuthStateChanged((user) => {
+          if (user) {
+          }
+        });
+
+        // 필요한 데이터가 로드될 때까지 대기
+        if (currentUserData) {
+          console.log("유저 데이터:", currentUserData);
+        }
+
+        // 모든 데이터가 준비되면 로딩 상태 해제
+        setLoading(false);
+      } catch (error) {
+        console.error("초기화 중 오류가 발생했습니다.", error);
+      }
+    };
+
+    initialize();
+  }, [currentUserData]);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
+  const isSearching = searchTerm.trim().length > 0;
+
   return (
     <Wrapper>
       <HeaderTop />
-      <HeaderBottom />
-      {/* <SideBarWallet /> */}
-      {/* <SideBarGroup /> */}
-      {/* <SideBarMenu /> */}
+      <HeaderBottom onSearch={(term) => setSearchTerm(term)} />
       <MainSection>
-        <Mainstory />
-        {/* <PostUploadField /> */}
-        <MainGroup />
-        <MainPage />
-        {/* <Maintest>
-          <button onClick={create}>생성</button>
-          {posts.map((item, i) => (
-            <div key={i}>{item.content}</div>
-          ))}
-        </Maintest> */}
-        <Mainlive />
+        {isSearching ? (
+          // 검색 중일 때 Mainpage만 보여줌
+          <Mainpage searchTerm={searchTerm} />
+        ) : (
+          // 검색어가 없을 때 전체 섹션 표시
+          <>
+            <Mainstory />
+            <PostUploadField>
+              <PostUpload />
+            </PostUploadField>
+            <MainGroup />
+            <Mainpage searchTerm={searchTerm} />
+          </>
+        )}
       </MainSection>
     </Wrapper>
   );

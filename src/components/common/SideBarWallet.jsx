@@ -4,8 +4,9 @@ import { SubTitle_16_b } from "../../styles/GlobalStyles.styles";
 import { IoClose } from "react-icons/io5";
 import { useContext, useEffect, useRef } from "react";
 import { DataStateContext } from "../../App";
+import { motion } from "framer-motion";
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   z-index: 3;
   position: absolute;
   top: 100px;
@@ -14,7 +15,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background: #fff;
+  background: ${(props) => props.theme.ContainColor};
   padding: 28px 20px;
   border-radius: var(--border-radius-30);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
@@ -23,7 +24,6 @@ const Wrapper = styled.div`
   -ms-overflow-style: none; /* IE, Edge */
   scrollbar-width: none;
   @media screen and (max-width: 1050px) {
-    top: 130px;
     right: 10px;
   }
   @media screen and (max-width: 768px) {
@@ -32,6 +32,7 @@ const Wrapper = styled.div`
   }
 `;
 const Title = styled.div`
+  color: ${(props) => props.theme.textColor};
   display: flex;
   justify-content: space-between;
   span {
@@ -48,6 +49,7 @@ const Box = styled.div`
   }
 `;
 const WalletItem = styled.div`
+  color: ${(props) => props.theme.textColor};
   display: flex;
   align-items: center;
   gap: 15px;
@@ -70,7 +72,7 @@ const WalletItem = styled.div`
 
 const RecentProductItem = styled.div`
   padding: 0 10px;
-  background: var(--color-light-gray-02);
+  background: ${(props) => props.theme.cardColor};
   width: 347px;
   height: 90px;
   border-radius: 10px;
@@ -106,6 +108,7 @@ const ProductItemInfo = styled.div`
   flex-direction: column;
   h4 {
     ${SubTitle_16_b}
+    color: ${(props) => props.theme.textColor};
   }
   div {
     font-weight: bold;
@@ -115,7 +118,7 @@ const ProductItemInfo = styled.div`
       color: red;
     }
     span:nth-child(2) {
-      color: var(--color-gray-01);
+      color: ${(props) => props.theme.subTextColor};
     }
   }
 `;
@@ -131,15 +134,22 @@ const SideBarWallet = ({ onClick, closeModal }) => {
   };
   useEffect(() => {
     // 모달이 마운트되면 클릭 이벤트 추가
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
 
     return () => {
       // 모달이 언마운트되면 클릭 이벤트 제거
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, []);
   return (
-    <Wrapper ref={closeRef}>
+    <Wrapper
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      ref={closeRef}
+      onClick={(e) => e.stopPropagation()}
+    >
       <Title>
         <h3>Wallett +</h3>
         <span>
@@ -153,7 +163,7 @@ const SideBarWallet = ({ onClick, closeModal }) => {
         </WalletItem>
         <WalletItem>
           <img />
-          <span>{currentUser.wallet.wan} 원</span>
+          <span>{currentUser.wallet.won} 원</span>
         </WalletItem>
         <WalletItem>
           <div>+</div>

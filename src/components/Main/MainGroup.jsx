@@ -6,11 +6,15 @@ import {
 import Slider from "react-slick";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { MdOutlineNavigateBefore } from "react-icons/md";
-
+import { DataStateContext } from "../../App";
+import { useContext, useEffect, useState } from "react";
+import { getDocs, collection } from "firebase/firestore";
+import { db } from "../../firebase";
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+
   margin-top: 20px;
   @media screen and (max-width: 768px) {
     margin-top: 0;
@@ -29,6 +33,9 @@ const Inner = styled.div`
   border-radius: var(--border-radius-30);
   position: relative;
   background-color: ${(props) => props.theme.ContainColor};
+  @media screen and (max-width: 1050px) {
+    width: 100%;
+  }
   @media screen and (max-width: 768px) {
     border-radius: var(--border-radius-08);
     padding: 20px 15px;
@@ -73,14 +80,21 @@ const Items = styled.div`
 const Item = styled.div`
   width: 100%;
   height: 320px;
-  background: #ccc;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   overflow: hidden;
   position: relative;
-  div {
+  .ctegoryImg {
+    height: 220px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  .info {
     background: ${(props) => props.theme.cardColor};
     padding: 10px 20px;
     height: 130px;
@@ -144,6 +158,7 @@ const NextBtn = styled.span`
   font-size: 40px;
   color: #fff;
   cursor: pointer;
+  opacity: 0.4;
   transition: all 0.3s;
   scale: 0.8;
   svg {
@@ -182,6 +197,7 @@ const PrevBtn = styled.span`
   font-size: 40px;
   color: #fff;
   cursor: pointer;
+  opacity: 0.4;
   scale: 0.8;
   transition: all 0.3s;
   svg {
@@ -204,6 +220,45 @@ const PrevArrow = ({ onClick }) => {
 };
 
 const MainGroup = () => {
+  const { currentUserData } = useContext(DataStateContext);
+  const [recommendedGroups, setRecommendedGroups] = useState([]);
+
+  useEffect(() => {
+    if (currentUserData) {
+      fetchGroups();
+    }
+  }, [currentUserData]);
+
+  const fetchGroups = async () => {
+    try {
+      const groupsSnapshot = await getDocs(collection(db, "category"));
+      const groups = groupsSnapshot.docs.flatMap((doc) =>
+        Object.values(doc.data())
+      );
+
+      if (
+        currentUserData.likeCategory &&
+        currentUserData.likeCategory.length > 0
+      ) {
+        // 사용자의 likeCategory 배열과 그룹 제목을 매칭해 필터링
+        const filteredGroups = groups.filter((group) =>
+          currentUserData.likeCategory.some(
+            (category) => category === group.title
+          )
+        );
+
+        // 추천 그룹이 없으면 모든 그룹 보여주기
+        setRecommendedGroups(
+          filteredGroups.length > 0 ? filteredGroups : groups
+        );
+      } else {
+        // likeCategory가 없으면 전체 그룹을 보여줌
+        setRecommendedGroups(groups);
+      }
+    } catch (error) {
+      console.error("그룹 데이터를 불러오지 못했습니다.", error);
+    }
+  };
   const settings = {
     dots: false,
     infinite: true,
@@ -253,13 +308,14 @@ const MainGroup = () => {
         </Title>
         <Items>
           <Slider className="slider" {...settings}>
-            {groups.map((group, index) => (
-              <Item key={index}>
-                {" "}
-                {/* 각 아이템에 고유 키 추가 */}
-                <div>
-                  <h3>{group.title}</h3> {/* h3의 내용 */}
-                  <h4>멤버 {group.members}</h4> {/* h4의 내용 */}
+            {recommendedGroups.map((group) => (
+              <Item key={group.id}>
+                <div className="ctegoryImg">
+                  <img src={group.img} alt="" />
+                </div>
+                <div className="info">
+                  <h3>{group.title}</h3>
+                  <h4>멤버 {group.member}명</h4>
                   <span>그룹 가입</span>
                 </div>
               </Item>

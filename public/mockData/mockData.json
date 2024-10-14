@@ -6,39 +6,8 @@
       "image": "path/to/story1.jpg",
       "userImg": "path/to/story1.jpg",
       "text": "김정하"
-    },
-    {
-      "id": "2",
-      "userId": "2",
-      "image": "path/to/story2.jpg",
-      "text": "이승연"
-    },
-    {
-      "id": "3",
-      "userId": "3",
-      "image": "path/to/story2.jpg",
-      "text": "박태환"
-    },
-    {
-      "id": "4",
-      "userId": "4",
-      "image": "path/to/story2.jpg",
-      "text": "김성준"
-    },
-    {
-      "id": "5",
-      "userId": "5",
-      "image": "path/to/story2.jpg",
-      "text": "김예지"
-    },
-    {
-      "id": "6",
-      "userId": "6",
-      "image": "path/to/story2.jpg",
-      "text": "박예림"
     }
   ],
-
   "groups": [
     {
       "id": "1",
@@ -63,83 +32,154 @@
     {
       "id": "4",
       "name": "사진을 좋아하는 사람들",
-      "image": "path/to/group3.jpg",
+      "image": "path/to/group4.jpg",
       "members": 15450
     },
     {
       "id": "5",
       "name": "자연은 아름답다",
-      "image": "path/to/group3.jpg",
+      "image": "path/to/group5.jpg",
       "members": 15450
     },
     {
       "id": "6",
       "name": "쉽게하는 쿠킹클래스",
-      "image": "path/to/group3.jpg",
+      "image": "path/to/group6.jpg",
       "members": 15450
     },
     {
       "id": "7",
       "name": "예능.ZIF",
-      "image": "path/to/group3.jpg",
+      "image": "path/to/group7.jpg",
       "members": 15450
     },
     {
       "id": "8",
       "name": "영화를 사랑하는 모음",
-      "image": "path/to/group3.jpg",
+      "image": "path/to/group8.jpg",
       "members": 15450
     },
     {
       "id": "9",
       "name": "전국 맛집 어디어디 있을까",
-      "image": "path/to/group3.jpg",
+      "image": "path/to/group9.jpg",
       "members": 15450
     }
   ],
-
   "liveCommerce": [
     {
       "liveStream": {
-        "title": "Autumn Holiday 10% Sale",
-        "currentViewers": 34,
-        "description": "한가위를 맞이하여 의류스타일 특가 할인 혜택! 10% 추가 이벤트 놓치지 마세요!",
-        "videoUrl": "path/to/liveVideo.mp4",
-        "broadcaster": {
-          "name": "미니멀데이",
-          "profileImage": "path/to/profileImage.jpg"
-        }
+        "title": "PureGlow 화장품 특별 프로모션",
+        "currentViewers": 120,
+        "description": "자연에서 온 성분으로 피부에 건강을 선사하는 PureGlow입니다.",
+        "liveInfo": "피부에 활력을 주는 신제품 비타민C 세럼을 소개합니다. 맑고 투명한 피부를 원하신다면 지금 확인하세요!",
+        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/facebook-ez-ba531.appspot.com/o/LiveVideo%2F7.mp4?alt=media&token=6cf2e9bb-36fb-4b98-94c8-88d1e8bb3465",
+        "name": "PureGlow",
+        "profileImage": "path/to/profileImage1.jpg"
       },
-      "products": [
-        {
-          "id": 1,
-          "name": "가을 윈터 스프라이트 백 팩",
-          "originalPrice": 19900,
-          "discountPrice": 15900,
-          "discountRate": "30%",
-          "productImage": "path/to/productImage.jpg"
-        },
-        {
-          "id": 2,
-          "name": "메디슨 클래식 클러치백",
-          "originalPrice": 34000,
-          "discountPrice": 34000,
-          "discountRate": null,
-          "productImage": "path/to/productImage2.jpg"
-        }
-      ],
-      "comments": [
-        {
-          "id": 1,
-          "userId": 1,
-          "content": "이 옷 너무 예뻐요!"
-        },
-        {
-          "id": 2,
-          "userId": 2,
-          "content": "구매하고 싶네요!"
-        }
-      ]
+      "products": {
+        "id": 1,
+        "name": "PureGlow 색조 화장 세트ㅋ",
+        "originalPrice": 50000,
+        "discountPrice": 45000,
+        "discountRate": "10%",
+        "productImage": "path/to/productImage1.jpg"
+      }
+    },
+    {
+      "liveStream": {
+        "title": "GreenStyle 신상 공개!",
+        "currentViewers": 85,
+        "description": "자연을 담은 패션을 선도하는 GreenStyle입니다.",
+        "liveInfo": "이번 시즌 신상품인 린넨 셔츠를 만나보세요. 편안한 착용감과 세련된 디자인을 제공합니다.",
+        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/facebook-ez-ba531.appspot.com/o/LiveVideo%2F2.mp4?alt=media&token=e209e6af-1527-4a05-aa9c-1a6b8cd6b81c",
+        "name": "GreenStyle",
+        "profileImage": "path/to/profileImage2.jpg"
+      },
+      "products": {
+        "id": 2,
+        "name": "GreenStyle 린넨 셔츠",
+        "originalPrice": 30000,
+        "discountPrice": 27000,
+        "discountRate": "10%",
+        "productImage": "path/to/productImage2.jpg"
+      }
+    },
+    {
+      "liveStream": {
+        "title": "OrangeBag 한정 할인",
+        "currentViewers": 150,
+        "description": "독특한 컬러와 디자인으로 사랑받는 OrangeBag입니다.",
+        "liveInfo": "활기찬 주황색 토트백으로 일상에 포인트를 더해보세요. 한정 수량 할인 중입니다!",
+        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/facebook-ez-ba531.appspot.com/o/LiveVideo%2F3.mp4?alt=media&token=b827b94d-ef6c-4f79-8c52-ab8e002733f5",
+        "name": "OrangeBag",
+        "profileImage": "path/to/profileImage3.jpg"
+      },
+      "products": {
+        "id": 3,
+        "name": "OrangeBag 토트백",
+        "originalPrice": 60000,
+        "discountPrice": 48000,
+        "discountRate": "20%",
+        "productImage": "path/to/productImage3.jpg"
+      }
+    },
+    {
+      "liveStream": {
+        "title": "EcoCup으로 지구를 지키자",
+        "currentViewers": 60,
+        "description": "지속 가능한 생활을 지향하는 EcoCup입니다.",
+        "liveInfo": "친환경 소재로 만든 머그컵 컵을 소개합니다. 자연을 사랑하는 마음을 담았습니다.",
+        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/facebook-ez-ba531.appspot.com/o/LiveVideo%2F4.mp4?alt=media&token=2943e1df-0830-4bee-a6dd-a515e7ffc508",
+        "name": "EcoCup",
+        "profileImage": "path/to/profileImage4.jpg"
+      },
+      "products": {
+        "id": 4,
+        "name": "EcoCup 친환경 컵",
+        "originalPrice": 15000,
+        "discountPrice": 13500,
+        "discountRate": "10%",
+        "productImage": "path/to/productImage4.jpg"
+      }
+    },
+    {
+      "liveStream": {
+        "title": "NutriNuts 건강한 견과류",
+        "currentViewers": 95,
+        "description": "자연 그대로의 맛과 영양을 담은 NutriNuts입니다.",
+        "liveInfo": "신선한 믹스 견과류 세트로 하루의 에너지를 충전하세요. 지금 특별 할인 중입니다.",
+        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/facebook-ez-ba531.appspot.com/o/LiveVideo%2F5.mp4?alt=media&token=3297cc72-7100-46f8-aa6c-686f2d77d03a",
+        "name": "NutriNuts",
+        "profileImage": "path/to/profileImage5.jpg"
+      },
+      "products": {
+        "id": 5,
+        "name": "NutriNuts 믹스 견과류 세트",
+        "originalPrice": 25000,
+        "discountPrice": 22500,
+        "discountRate": "10%",
+        "productImage": "path/to/productImage5.jpg"
+      }
+    },
+    {
+      "liveStream": {
+        "title": "HydraSkin 스킨로션 할인 이벤트",
+        "currentViewers": 110,
+        "description": "피부 본연의 아름다움을 찾아주는 HydraSkin입니다.",
+        "liveInfo": "건조한 피부에 수분을 채워줄 수분 가득 스킨로션을 소개합니다. 촉촉함을 느껴보세요.",
+        "videoUrl": "https://firebasestorage.googleapis.com/v0/b/facebook-ez-ba531.appspot.com/o/LiveVideo%2F8.mp4?alt=media&token=b6b0dd55-c1f0-443e-ab6c-2bb9fd1f5d91",
+        "name": "HydraSkin",
+        "profileImage": "path/to/profileImage6.jpg"
+      },
+      "products": {
+        "id": 6,
+        "name": "HydraSkin 수분 가득 스킨로션",
+        "originalPrice": 40000,
+        "discountPrice": 36000,
+        "discountRate": "10%",
+        "productImage": "path/to/productImage6.jpg"
+      }
     }
   ]
 }
