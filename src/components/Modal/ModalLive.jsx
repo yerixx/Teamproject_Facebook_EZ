@@ -58,9 +58,6 @@ const Live = styled.div`
   background-image: url(${LiveView});
   background-repeat: no-repeat;
   background-position: top center;
-  video {
-    display: none;
-  }
   background-size: cover;
   cursor: pointer;
   video {
@@ -616,13 +613,14 @@ const ModalLive = ({ item, closeModal }) => {
     const randomProductId = item.products[randomIndex].id;
     navigate(`/modallive/${randomProductId}`);
   };
+  console.log(item);
 
   return (
     <>
       <Commerce>
         <LeftContent>
           <Live>
-            <video src={item.liveStream.videoUrl} autoPlay loop></video>
+            <video src={item?.liveStream?.videoUrl} autoPlay loop></video>
             <LiveStatus>
               <div className="fbLogo">
                 <img src={fbIcon} />
@@ -745,7 +743,7 @@ const ModalLive = ({ item, closeModal }) => {
         </RightContent>
         <LiveProfilemb>
           <div className="profileImgmb">
-            <img src={LiveProfileImg} alt="LiveProfileImgmb" />
+            <img src={LiveProfilemb} alt="LiveProfileImgmb" />
           </div>
           <LiveProfileSelfmb>
             <div className="profileNamemb">
