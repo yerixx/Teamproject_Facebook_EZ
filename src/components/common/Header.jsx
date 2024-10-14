@@ -41,9 +41,9 @@ const Header = styled.div`
 const HeaderSticky = styled.div`
   background-color: ${(props) => props.theme.bgColor};
   z-index: 100;
-  padding: 0 15px;
+  padding: 0 30px;
   width: 100%;
-  height: 88px;
+  height: 75px;
   display: flex;
   align-items: center;
   top: 0;
@@ -119,15 +119,16 @@ const Center = styled.div`
   height: 100%;
   div {
     cursor: pointer;
-    width: 80px;
-    height: 100%;
+    width: 140px;
+    height: 101%;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: 2.5px solid var(--color-facebookblue);
+    border-bottom: 5px solid var(--color-facebookblue);
+    border-radius: 2px;
     svg {
       color: ${(props) => props.theme.textColor};
-      font-size: 24px;
+      font-size: 28px;
     }
   }
   @media screen and (max-width: 1050px) {

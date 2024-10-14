@@ -24,14 +24,13 @@ const WrapperFrom = styled.form`
   height: 261px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   gap: 60px;
   align-items: center;
   position: relative;
-  padding: 0 90px;
+  padding: 60px 60px;
   background: var(--color-white);
   border-radius: 30px 30px 0 0;
-
+  box-shadow: inset 0px -3px 8px rgba(85, 85, 85, 0.1);
   @media (max-width: 768px) {
     top: -30px;
     max-width: 100%;

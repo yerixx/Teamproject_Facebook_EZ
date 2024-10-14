@@ -15,6 +15,7 @@ const Inner = styled.article`
   width: 260px;
   height: 350px;
   cursor: pointer;
+  margin-bottom: 10px;
   /* 미디어 쿼리 */
   @media (max-width: 768px) {
     display: flex;

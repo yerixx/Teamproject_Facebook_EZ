@@ -8,11 +8,11 @@ const Wrapper = styled.section`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  width: 1050px;
+  width: 100%;
   height: 100%;
-  padding: 90px 90px;
+  padding: 40px 40px;
   margin: 0 auto;
-  gap: 40px;
+  gap: 20px;
   /* 미디어 쿼리 */
   @media (max-width: 768px) {
     width: 100%;

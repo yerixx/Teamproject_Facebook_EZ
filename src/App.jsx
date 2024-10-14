@@ -344,6 +344,7 @@ function App() {
                   <Route path="/signup" element={<Signup />} />
                   <Route path="/detail" element={<Detail />} />
                   <Route path="/ModalLive" element={<ModalLive />} />
+                  <Route path="/ModalCont" element={<ModalCont />} />
                 </Routes>
               </Wrapper>
             </DataDispatchContext.Provider>

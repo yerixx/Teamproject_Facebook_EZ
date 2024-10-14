@@ -1,20 +1,8 @@
-<<<<<<< HEAD
 import { useRef, useEffect, useState } from "react";
-import {
-  delay,
-  motion,
-  useMotionValue,
-  useTransform,
-  useScroll,
-  AnimatePresence,
-} from "framer-motion";
 import { createGlobalStyle, styled } from "styled-components";
 import reset from "styled-reset";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { CgClose } from "react-icons/cg";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 const GlobalStyles = createGlobalStyle`
   ${reset};
@@ -39,9 +27,6 @@ const GlobalStyles = createGlobalStyle`
     color: inherit;
   }
 `;
-=======
-import styled from "styled-components";
->>>>>>> Signup
 
 const ContSlide = styled.div`
   flex: 2;
@@ -99,7 +84,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const ContentsImg = styled.div`
+const ContImg = styled.div`
   width: 100%;
   height: 100%;
   background: url("https://www.next-t.co.kr/public/uploads/7b7f7e2138e29e598cd0cdf2c85ea08d.jpg")
@@ -118,21 +103,12 @@ const Button = styled.div`
 `;
 
 const ContentsSec = () => {
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    nextArrow: <FaAngleRight />,
-    prevArrow: <FaAngleLeft />,
-  };
-
   return (
     <ContSlide>
       <Wrapper>
-        <Slider {...sliderSettings}></Slider>
-
+        <div className="contImg">
+          <ContImg />
+        </div>
         <div className="closeBtn">
           <CgClose />
         </div>

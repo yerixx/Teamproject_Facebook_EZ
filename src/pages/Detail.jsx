@@ -38,7 +38,7 @@ const ContChangeBtn = styled(motion.div)`
   display: flex;
   justify-content: center;
   width: 100%;
-  padding: 20px 0;
+  padding: 55px 0 20px;
   position: relative;
   border-bottom: 1px solid var(--color-light-gray-01);
   @media (max-width: 768px) {

@@ -27,7 +27,7 @@ const CommentCont = styled.div`
   width: var(--inner-width-02);
   display: flex;
   align-items: center;
-  padding: 70px 60px;
+  padding: 30px 10px;
   @media (max-width: 768px) {
     margin: 0 10px;
     padding: 0;

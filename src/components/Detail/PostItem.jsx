@@ -18,7 +18,7 @@ import {
 
 const Wrapper = styled.section`
   border-radius: var(--border-radius-30);
-  padding-top: 50px;
+  padding-top: 30px;
   width: calc(100% - 90px);
   margin: 0 auto;
   height: fit-content;
@@ -33,7 +33,7 @@ const Wrapper = styled.section`
 const Inner = styled.article`
   width: var(--inner-width-02);
   height: 100%;
-  padding: 0 90px;
+  padding: 0 74px;
   @media (max-width: 768px) {
     max-width: 100%;
     padding: 0 20px;
@@ -90,7 +90,7 @@ const ControlsIcon = styled.div`
 `;
 const Contents = styled.div`
   position: relative;
-  padding: 30px 0 0;
+  padding: 30px 80px 30px;
   .contentDesc {
     ${SubDescription_16_n};
     font-weight: normal;
