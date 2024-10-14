@@ -7,6 +7,7 @@ import { db } from "../../firebase";
 import { DataDispatchContext, DataStateContext } from "../../App";
 
 const Wrapper = styled.div`
+  height: 100vh;
   display: flex;
   flex-direction: column;
   gap: 60px;

@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import SocialBtnIcon from "../common/SocialBtnIcon.jsx";
-import PostUpload from "../common/PostUpload.jsx";
-import EditeBox from "../common/EditeBox.jsx";
+
+import defaultProfile from "/img/defaultProfile.jpg";
 
 // react-icon
-import { BsThreeDots } from "react-icons/bs";
 import { IoCloseOutline } from "react-icons/io5";
 import { FaEarthAmericas } from "react-icons/fa6";
 
@@ -21,16 +20,16 @@ import Mainlive from "./Mainlive.jsx";
 import UploadModal from "../ModalConts/UploadModal.jsx";
 
 const Wrapper = styled.section`
-  border-radius: var(--border-radius-30);
-  padding-top: 50px;
-  width: 900px;
-  /* margin: 0 auto; */
-  /* height: fit-content; */
   display: flex;
-  justify-content: center;
   align-items: center;
-  box-shadow: var(--box-shadow-01);
+  justify-content: center;
+  width: 100%;
+  height: fit-content;
+  margin: 0 auto;
+  padding-top: 20px;
+  border-radius: var(--border-radius-30);
   background-color: ${(props) => props.theme.ContainColor};
+  box-shadow: var(--box-shadow-01);
   @media (max-width: 768px) {
     width: 90%;
     padding-top: 20px;
@@ -39,7 +38,10 @@ const Wrapper = styled.section`
 const Inner = styled.article`
   width: var(--inner-width-02);
   height: 100%;
-  padding: 0 90px;
+  padding: 20px 36px 30px;
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
   @media (max-width: 768px) {
     max-width: 100%;
     padding: 0 20px;
@@ -64,23 +66,27 @@ const ProfileContent = styled.div`
   .profileImg {
     width: 60px;
     height: 60px;
-    background: var(--color-gray-01);
+    border-radius: 50%;
+    object-fit: cover;
     border-radius: 100px;
   }
   .profileName {
-    color: ${(props) => props.theme.textColor};
     ${MainTitle_22_b}
+    color: ${(props) => props.theme.textColor};
     @media (max-width: 768px) {
       ${SubTitle_16_b}
     }
   }
   .createdAt {
-    color: ${(props) => props.theme.subTextColor};
-    ${SubDescription_16_n}
+    ${SubDescription_14_n}
+    color: ${(props) => props.theme.textColor};
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 4px;
+    * {
+      color: ${(props) => props.theme.textColor};
+    }
     @media (max-width: 768px) {
       ${SubDescription_14_n}
     }
@@ -88,18 +94,16 @@ const ProfileContent = styled.div`
 `;
 const ControlsIcon = styled.div`
   display: flex;
+  align-items: center;
   gap: 0;
   font-size: 24px;
-
   cursor: pointer;
   transition: opacity 0.5s;
   *:hover {
     color: var(--color-facebookblue);
   }
 `;
-const EditeIcon = styled.div`
-  color: ${(props) => props.theme.textColor};
-`;
+
 const DeletIcon = styled.div`
   color: ${(props) => props.theme.textColor};
   @media (max-width: 768px) {
@@ -108,7 +112,7 @@ const DeletIcon = styled.div`
 `;
 const Contents = styled.div`
   position: relative;
-  padding: 30px 0;
+  padding: 30px 0 16px;
   @media (max-width: 768px) {
     padding: 0;
     max-width: 100%;
@@ -118,7 +122,7 @@ const Contents = styled.div`
     color: ${(props) => props.theme.textColor};
     font-weight: normal;
     word-break: break-all;
-    margin-bottom: 30px;
+    min-height: 50px;
     @media (max-width: 768px) {
       ${SubDescription_14_n}
       padding:0 4px;
@@ -157,7 +161,6 @@ const Contents = styled.div`
   }
 `;
 const ContImg = styled.img`
-  margin-bottom: 30px;
   width: 100%;
   height: 350px;
   background: var(--color-light-gray-01);
@@ -169,7 +172,8 @@ const ContImg = styled.img`
   }
 `;
 
-const Mainpage = ({ postId }) => {
+const Mainpage = ({ searchTerm }) => {
+  const [profileImg, setProfileImg] = useState(defaultProfile);
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태
   const [isEditing, setIsEditing] = useState(false); // 편집 모드 여부
   const [imageSrc, setImageSrc] = useState(""); // 편집할 이미지 소스
@@ -181,10 +185,31 @@ const Mainpage = ({ postId }) => {
   const { onDeletePost } = useContext(DataDispatchContext);
   const data = useContext(DataStateContext);
   const { currentUserData } = data;
-  const postData = data.posts;
+  const postData = data.posts || [];
+  const lastPostRef = useRef(null);
+
   useEffect(() => {
-    setPosts(postData);
+    const sortedPosts = [...postData].sort((a, b) => {
+      const dateA = new Date(a.createdAt);
+      const dateB = new Date(b.createdAt);
+      return dateB - dateA; // 최신순 정렬
+    });
+    setPosts(sortedPosts);
   }, [postData]);
+
+  const normalizeString = (str) => str.replace(/\s+/g, "").toLowerCase();
+
+  const filteredPosts = posts.filter(
+    (post) =>
+      normalizeString(post.content).includes(normalizeString(searchTerm)) ||
+      normalizeString(post.userName).includes(normalizeString(searchTerm))
+  );
+
+  useEffect(() => {
+    if (filteredPosts.length === 1 && lastPostRef.current) {
+      lastPostRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+    }
+  }, [filteredPosts]);
 
   const formatDate = (isoString) => {
     const date = new Date(isoString);
@@ -199,7 +224,7 @@ const Mainpage = ({ postId }) => {
     const isConfirmed = confirm("게시물을 삭제하시겠습니까?");
     if (isConfirmed) {
       try {
-        await onDeletePost(postId); // 삭제 함수 호출
+        await onDeletePost(postId);
       } catch (err) {
         console.error("게시물 삭제 중 오류:", err);
       }
@@ -234,12 +259,13 @@ const Mainpage = ({ postId }) => {
       console.error("게시물 업데이트 중 오류 발생:", error);
     }
   };
+  // console.log(filteredPosts);
+
+  const isSearching = searchTerm.trim().length > 0;
   return (
     <>
-      {posts
-        .slice()
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        .map((item, i) => {
+      {filteredPosts.length > 0 ? (
+        filteredPosts.map((item, i) => {
           const isAuthor = currentUserData?.userId === item.userId;
           return (
             <React.Fragment key={i}>
@@ -247,14 +273,19 @@ const Mainpage = ({ postId }) => {
                 <Inner>
                   <Profile>
                     <ProfileContent>
-                      <div className="profileImg"></div>
+                      <img
+                        className="profileImg"
+                        src={profileImg}
+                        alt="Profile"
+                      />
                       <div className="profileText">
-                        <h1 className="profileName">{item?.userName}</h1>
+                        <h1 className="profileName">{item.userName}</h1>
                         <p className="createdAt">
-                          {formatDate(item.createdAt)}{" "}
+                          {formatDate(item.createdAt)}
                           <FaEarthAmericas
                             style={{
                               fontSize: "14px",
+                              color: "black",
                               marginTop: "2px",
                             }}
                           />
@@ -263,15 +294,6 @@ const Mainpage = ({ postId }) => {
                     </ProfileContent>
                     {isAuthor && (
                       <ControlsIcon>
-                        <EditeIcon style={{ zIndex: 999 }}>
-                          <EditeBox
-                            postId={item.id}
-                            imageSrc={item.image}
-                            contentDesc={item.content}
-                            handleEditBtn={handleEditBtn}
-                            Title={<BsThreeDots />}
-                          />
-                        </EditeIcon>
                         <DeletIcon>
                           <IoCloseOutline
                             onClick={(e) => postDeleteBtn(e, item.id)}
@@ -283,17 +305,19 @@ const Mainpage = ({ postId }) => {
                   <Contents>
                     <div className="contentDesc">{item.content}</div>
                     {item.image && (
-                      <ContImg src={item.image} alt="Post content image" />
+                      <ContImg src={item.image} alt="Post content" />
                     )}
                   </Contents>
-                  <SocialBtnIcon postId={item.id} isLiked={isLiked} />
-                  <PostUpload />
+                  <SocialBtnIcon post={item} />
                 </Inner>
               </Wrapper>
-              {(i + 1) % 3 === 0 && <Mainlive />}
+              {!isSearching && (i + 1) % 3 === 0 && <Mainlive />}
             </React.Fragment>
           );
-        })}
+        })
+      ) : (
+        <p>검색된 게시물이 없습니다.</p>
+      )}
 
       {isModalOpen && (
         <UploadModal
@@ -303,7 +327,6 @@ const Mainpage = ({ postId }) => {
           contentDesc={contentDesc}
           isEditing={isEditing}
           currentUserData={currentUserData}
-          handleUpdatePost={handleUpdatePost}
         />
       )}
     </>

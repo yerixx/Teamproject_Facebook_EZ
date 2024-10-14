@@ -29,7 +29,7 @@ const WrapperFrom = styled.form`
   align-items: center;
   position: relative;
   padding: 0 90px;
-  background: var(--color-white);
+  background: ${(props) => props.theme.bgColor};
   border-radius: 30px 30px 0 0;
 
   @media (max-width: 768px) {
@@ -103,6 +103,7 @@ const ProfileText = styled.div`
     }
     .profileName {
       ${MainTitle_26_b}
+      color: ${(props) => props.theme.textColor};
       @media (max-width: 768px) {
         ${Paragraph_20_n}
         font-weight:700;
@@ -187,13 +188,12 @@ const Button = styled.div`
     cursor: pointer;
     transition: all 0.3s;
     &:nth-child(1) {
-      background: var(--color-facebookblue);
-      color: var(--color-white);
+      background: ${(props) => props.theme.cardBtnColorA};
+      color: ${(props) => props.theme.bgColor};
     }
-    /* &:nth-child(1), */
     &:nth-child(2) {
-      background: var(--color-light-gray-01);
-      color: var(--color-gray-01);
+      background: ${(props) => props.theme.cardBtnColorB};
+      color: ${(props) => props.theme.bgColor};
     }
     &:hover {
       background: var(--color-facebookblue);

@@ -40,7 +40,6 @@ const Signup = () => {
 
   // responsive
   const navigate = useNavigate();
-
   const [mobileSize, setMobileSize] = useState(false);
   const [searchParams] = useSearchParams();
   const progress = searchParams.get("progress") || "1"; // 기본값 "1"
@@ -106,6 +105,10 @@ const Signup = () => {
     }
   };
 
+  const goLogin = () => {
+    confirm("로그인 페이지로 돌아가시겠습니까?");
+    navigate("/");
+  };
   return (
     <Wrapper
       style={{
@@ -126,7 +129,7 @@ const Signup = () => {
       <Inner>
         {mobileSize ? null : (
           <Logo>
-            <img src={letterLogoImg} alt="Logo" />
+            <img onClick={goLogin} src={letterLogoImg} alt="Logo" />
           </Logo>
         )}
 

@@ -165,7 +165,7 @@ const SideBarWallet = ({ onClick, closeModal }) => {
           <img />
           <span>{currentUser.wallet.won} 원</span>
         </WalletItem>
-        <WalletItem>
+        <WalletItem onClick={() => alert("서비스 준비중 입니다")}>
           <div>+</div>
           <span>지갑 추가</span>
         </WalletItem>

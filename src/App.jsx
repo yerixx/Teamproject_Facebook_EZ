@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Detail from "./pages/Mypage.jsx";
 import ModalLive from "./components/Modal/ModalLive.jsx";
+import Comment from "./components/common/Comment.jsx";
 import ModalCont from "./components/Modal/ModalCont.jsx";
 import GlobalStyles from "./styles/GlobalStyles.styles.js";
 import React, { useEffect, useReducer, useState } from "react";
@@ -25,7 +26,6 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { auth, db } from "./firebase.js";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { darkTheme } from "./styles/theme.js";
 import { lightTheme } from "./styles/theme.js";
 import ProtectedRoute from "./components/common/ProtectedRoute.jsx";
@@ -52,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "modallive/:id",
         element: <ModalLive />,
+      },
+      {
+        path: "comment",
+        element: <Comment />,
       },
     ],
   },
@@ -160,6 +164,8 @@ export const DarkThemeContext = React.createContext();
 
 function App() {
   const [isDark, setIsDark] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true); // 인증 로딩 상태
+  const [dataLoading, setDataLoading] = useState(true); // 데이터 로딩 상태
   useEffect(() => {
     const savedTheme = localStorage.getItem("isDark");
     if (savedTheme) {
@@ -212,6 +218,16 @@ function App() {
     return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 해제
   }, []);
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        await fetchUserData(user);
+      }
+      setAuthLoading(false); // 인증 로딩 해제
+    });
+    return () => unsubscribe();
+  }, []);
+
   const fetchData = async () => {
     try {
       const usersSnapshot = await getDocs(collection(db, "users"));
@@ -231,6 +247,7 @@ function App() {
       const mockData = await response.json();
 
       dispatch({ type: "INIT", data: { users, posts, mockData } });
+      setDataLoading(false);
     } catch (error) {
       console.error("데이터를 불러오지 못했습니다.", error);
     }
@@ -307,7 +324,6 @@ function App() {
     try {
       const postRef = doc(db, "posts", postId);
       await updateDoc(postRef, updatedData);
-      console.log("게시물이 성공적으로 수정되었습니다");
     } catch (error) {
       console.error("게시물 수정 중 오류:", error);
     }
@@ -348,8 +364,6 @@ function App() {
           won,
         },
       };
-
-      console.log("Saving user data:", userDoc); // 추가된 로그
       await setDoc(doc(db, "users", userId), userDoc);
 
       dispatch({
@@ -382,31 +396,69 @@ function App() {
   };
 
   const onCreateComment = async (postId, userId, userName, content) => {
-    const newComment = {
-      id: Date.now().toString(), // 고유한 댓글 ID
-      userId: userId, // 댓글 작성자 ID
-      userName: userName, // 댓글 작성자 이름
-      content: content, // 댓글 내용
-      createdAt: new Date().toISOString(), // 댓글 작성 시간
-      likes: 0, // 좋아요 기본값
-    };
-    try {
-      // Firestore에서 해당 포스트 문서 참조
-      const postDocRef = doc(db, "posts", postId);
+    if (!userId || !content) {
+      console.error("userId나 content가 누락되었습니다.");
+      return;
+    }
 
-      // Firestore의 해당 포스트에 댓글 추가 (comments 필드에 array로 저장)
+    const newComment = {
+      id: Date.now().toString(), // 고유한 ID
+      userId: userId || "guest", // 기본값 설정
+      userName: userName || "Anonymous", // 기본값 설정
+      content,
+      createdAt: new Date().toISOString(),
+      likes: 0,
+    };
+
+    try {
+      const postDocRef = doc(db, "posts", postId);
+      const postDoc = await getDoc(postDocRef);
+
+      if (!postDoc.exists()) {
+        console.error("해당 포스트가 존재하지 않습니다:", postId);
+        return;
+      }
+
       await updateDoc(postDocRef, {
         comments: arrayUnion(newComment),
       });
 
-      // 상태 업데이트 (옵션)
       dispatch({
         type: "ADD_COMMENT",
-        postId: postId, // 댓글이 달릴 포스트 ID
-        newComment: newComment,
+        postId,
+        newComment,
       });
     } catch (error) {
       console.error("댓글 추가 중 오류 발생:", error);
+    }
+  };
+
+  const onDeleteComment = async (postId, commentId) => {
+    try {
+      // Firestore에서 해당 포스트 참조
+      const postDocRef = doc(db, "posts", postId);
+      const postDoc = await getDoc(postDocRef);
+
+      if (postDoc.exists()) {
+        const postData = postDoc.data();
+
+        // 해당 댓글을 제외한 새로운 댓글 배열 생성
+        const updatedComments = postData.comments.filter(
+          (comment) => comment.id !== commentId
+        );
+
+        // Firestore에 업데이트된 댓글 배열 저장
+        await updateDoc(postDocRef, { comments: updatedComments });
+
+        // 상태 업데이트
+        dispatch({
+          type: "DELETE_COMMENT",
+          postId,
+          commentId,
+        });
+      }
+    } catch (error) {
+      console.error("댓글 삭제 중 오류 발생:", error);
     }
   };
 
@@ -418,6 +470,10 @@ function App() {
       console.error("Firestore에서 포스트 삭제 중 오류 발생:", error);
     }
   };
+
+  if (authLoading || dataLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <>

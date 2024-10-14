@@ -9,8 +9,6 @@ import { faComments } from "@fortawesome/free-solid-svg-icons";
 import fbIcon from "../../img/fbIcon.svg";
 import liveIcon from "../../img/liveIcon.svg";
 import LiveView from "../../img/Live.jpg";
-import SellItem1Img from "../../img/sellItem1.jpg";
-import SellItem2Img from "../../img/sellItem2.jpg";
 import { IoCloseOutline } from "react-icons/io5";
 
 const Commerce = styled.div`

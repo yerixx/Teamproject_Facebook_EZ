@@ -11,6 +11,7 @@ import {
 // Common
 export const Logo = styled.div`
   height: 30px;
+  cursor: pointer;
   img {
     width: 100%;
     height: 100%;

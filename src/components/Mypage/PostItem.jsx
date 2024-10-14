@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import SocialBtnIcon from "../common/SocialBtnIcon.jsx";
-import PostUpload from "../common/PostUpload.jsx";
 import EditeBox from "../common/EditeBox.jsx";
 import UploadModal from "../ModalConts/UploadModal.jsx";
 import { DataStateContext } from "../../App.jsx";
@@ -20,14 +19,15 @@ import {
 } from "../../styles/GlobalStyles.styles.js";
 
 const Wrapper = styled.section`
-  border-radius: var(--border-radius-30);
-  padding-top: 50px;
-  width: calc(100% - 90px);
-  margin: 0 auto;
-  height: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 90%;
+  height: fit-content;
+  margin: 0 auto;
+  padding-top: 20px;
+  border-radius: var(--border-radius-30);
+  background-color: ${(props) => props.theme.ContainColor};
   box-shadow: var(--box-shadow-01);
   @media (max-width: 768px) {
     width: 90%;
@@ -37,9 +37,12 @@ const Wrapper = styled.section`
 const Inner = styled.article`
   width: var(--inner-width-02);
   height: 100%;
-  padding: 0 90px;
+  padding: 20px 36px 30px;
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
   @media (max-width: 768px) {
-    max-width: 100%;
+    max-width: 90%;
     padding: 0 20px;
   }
 `;
@@ -67,17 +70,22 @@ const ProfileContent = styled.div`
   }
   .profileName {
     ${MainTitle_22_b}
+    color: ${(props) => props.theme.textColor};
     @media (max-width: 768px) {
       ${SubTitle_16_b}
     }
   }
   .createdAt {
     ${SubDescription_14_n}
+    color: ${(props) => props.theme.textColor};
+
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 4px;
-    color: var(--color-gray-01);
+    * {
+      color: ${(props) => props.theme.textColor};
+    }
     @media (max-width: 768px) {
       ${SubDescription_14_n}
     }
@@ -90,6 +98,9 @@ const ControlsIcon = styled.div`
   font-size: 24px;
   cursor: pointer;
   transition: opacity 0.5s;
+  * {
+    color: ${(props) => props.theme.textColor};
+  }
   *:hover {
     color: var(--color-facebookblue);
   }
@@ -100,22 +111,26 @@ const ControlsIcon = styled.div`
 `;
 const EditeIcon = styled.div``;
 const DeletIcon = styled.div`
+  color: ${(props) => props.theme.textColor};
+
   @media (max-width: 768px) {
     font-size: 24px;
   }
 `;
 const Contents = styled.div`
   position: relative;
-  padding: 30px 0;
+  padding: 30px 0 16px;
   @media (max-width: 768px) {
     padding: 0;
     max-width: 100%;
   }
   .contentDesc {
     ${SubDescription_16_n};
+    color: ${(props) => props.theme.textColor};
+
     font-weight: normal;
     word-break: break-all;
-    margin-bottom: 30px;
+    min-height: 50px;
     @media (max-width: 768px) {
       ${SubDescription_14_n}
       padding:0 4px;
@@ -167,12 +182,7 @@ const ContImg = styled.img`
 `;
 const PostUploadFidle = styled.div``;
 
-const PostItem = ({
-  post,
-  onDeletePost,
-  handleModalContOpen,
-  handleModalOpen,
-}) => {
+const PostItem = ({ post, onDeletePost, handleModalContOpen }) => {
   const { currentUserData } = useContext(DataStateContext);
   const [isEditing, setIsEditing] = useState(false);
   const [editingPostId, setEditingPostId] = useState(null);
@@ -268,10 +278,7 @@ const PostItem = ({
               />
             )}
           </Contents>
-          <SocialBtnIcon postId={post.userId} isLiked={isLiked} />
-          <PostUploadFidle>
-            <PostUpload />
-          </PostUploadFidle>
+          <SocialBtnIcon post={post} />
         </Inner>
       </Wrapper>
       {isModalOpen && (

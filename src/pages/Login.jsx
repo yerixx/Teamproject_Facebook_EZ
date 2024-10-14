@@ -12,8 +12,10 @@ import {
   Logo,
   FormContainer,
 } from "../components/login/login-components";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   // responsive
   const [mobileSize, setMobileSize] = useState(false);
 
@@ -30,11 +32,19 @@ const Login = () => {
     };
   }, []);
 
+  const goLogin = () => {
+    navigate("/login");
+  };
+
   return (
     <Wrapper>
       <Inner>
         <Logo>
-          <img src={mobileSize ? circleLogoImg : letterLogoImg} alt="Logo" />
+          <img
+            onClick={goLogin}
+            src={mobileSize ? circleLogoImg : letterLogoImg}
+            alt="Logo"
+          />
         </Logo>
         <FormContainer
           style={{ gap: `30px`, padding: mobileSize ? 0 : `60px` }}
