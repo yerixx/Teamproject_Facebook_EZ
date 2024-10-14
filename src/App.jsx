@@ -359,32 +359,25 @@ function App() {
       createdAt: new Date().toISOString(), // 댓글 작성 시간
       likes: 0, // 좋아요 기본값
     };
-
-    try {
-      // 해당 포스트의 하위 컬렉션에 댓글 추가
-      await addDoc(collection(db, "posts", postId, "comments"), newComment);
-  } catch (error) {
-      console.error("댓글 추가 중 오류 발생:", error);
-  }
   
-    // try {
-    //   // Firestore에서 해당 포스트 문서 참조
-    //   const postDocRef = doc(db, "posts", postId);
+    try {
+      // Firestore에서 해당 포스트 문서 참조
+      const postDocRef = doc(db, "posts", postId);
 
-    //   // Firestore의 해당 포스트에 댓글 추가 (comments 필드에 array로 저장)
-    //   await updateDoc(postDocRef, {
-    //     comments: arrayUnion(newComment),
-    //   });
+      // Firestore의 해당 포스트에 댓글 추가 (comments 필드에 array로 저장)
+      await updateDoc(postDocRef, {
+        comments: arrayUnion(newComment),
+      });
 
-    //   // 상태 업데이트 (옵션)
-    //   dispatch({
-    //     type: "ADD_COMMENT",
-    //     postId: postId, // 댓글이 달릴 포스트 ID
-    //     newComment: newComment,
-    //   });
-    // } catch (error) {
-    //   console.error("댓글 추가 중 오류 발생:", error);
-    // }
+      // 상태 업데이트 (옵션)
+      dispatch({
+        type: "ADD_COMMENT",
+        postId: postId, // 댓글이 달릴 포스트 ID
+        newComment: newComment,
+      });
+    } catch (error) {
+      console.error("댓글 추가 중 오류 발생:", error);
+    }
   };
 
   const onDeletePost = async (postId) => {

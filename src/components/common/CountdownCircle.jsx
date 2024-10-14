@@ -7,7 +7,6 @@ const CountdownCircle = () => {
     const [isAnimating, setIsAnimating] = useState(false);
 
     useEffect(() => {
-        // 애니메이션 시작
         setIsAnimating(true);
 
         const interval = setInterval(() => {

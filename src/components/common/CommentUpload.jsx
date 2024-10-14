@@ -72,7 +72,7 @@ const CommentUpload = ({ onCreateComment }) => {
     };
 
     await onCreateComment(newComment);
-    setUploadText(""); // 입력창 초기화
+    setUploadText("");
     setIsLoading(false); 
   };
 
