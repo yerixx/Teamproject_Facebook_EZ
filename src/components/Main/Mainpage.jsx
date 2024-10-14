@@ -19,9 +19,6 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 20px;
-  @media screen and (max-width: 900px) {
-    width: 100%;
-  }
   @media screen and (max-width: 768px) {
     width: 100%;
   }
@@ -35,11 +32,6 @@ const Inner = styled.div`
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius-30);
   position: relative;
-  @media screen and (max-width: 900px) {
-    width: 100%;
-    height: auto;
-    gap: 5px;
-  }
   @media screen and (max-width: 768px) {
     margin: 0 auto;
     width: 90vw;
@@ -59,11 +51,6 @@ const Items = styled.div`
     display: flex;
     gap: 10px;
     ${MainTitle_24_m}
-  }
-  @media screen and (max-width: 900px) {
-    .icon {
-      ${MainTitle_24_m}
-    }
   }
 `;
 
@@ -149,7 +136,6 @@ const SocialBtnIcon = styled.div`
       color: var(--color-facebookblue);
     }
   }
-
   @media screen and (max-width: 768px) {
     height: 100%;
     .socialIcon {
@@ -190,9 +176,6 @@ const MainPost = () => {
             adipisci distinctio.
           </PostText>
           <ImgItem>
-            <div className="postImg">
-              <img src="../public/img/imgtest.jpg" alt="img" />
-            </div>
             <div className="postImg">
               <img src="../public/img/imgtest.jpg" alt="img" />
             </div>

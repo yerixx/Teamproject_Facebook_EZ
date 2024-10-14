@@ -1,11 +1,19 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { FiX } from "react-icons/fi"; // 닫기 아이콘
-import { CiCamera } from "react-icons/ci"; // 카메라 아이콘
+import React, { useState, useContext } from "react"; // React와 useState, useContext 훅을 임포트
+import styled from "styled-components"; // styled-components를 사용하여 스타일 컴포넌트 작성
+import { FiX } from "react-icons/fi"; // 닫기 아이콘을 위한 FiX 아이콘 임포트
+import { CiCamera } from "react-icons/ci"; // 카메라 아이콘을 위한 CiCamera 아이콘 임포트
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Firebase Storage 관련 함수 임포트
+import { collection, addDoc, Timestamp } from "firebase/firestore"; // Firestore 관련 함수 임포트
+import { DataDispatchContext } from "../../App"; // 데이터 디스패치 컨텍스트 임포트
+import { storage, db } from "../../firebase"; // Firebase 스토리지와 데이터베이스 임포트
+import {
+  SubDescription_12_m,
+  SubDescription_14_n,
+} from "../../styles/GlobalStyles.styles";
 
 // 전체 모달을 감싸는 스타일 컴포넌트
-const Wrapper = styled.div`
-  position: fixed; /* 화면에 고정 */
+const WrapperForm = styled.form`
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -17,29 +25,28 @@ const Wrapper = styled.div`
   z-index: 1000;
 `;
 
-// 모달 내부 컨텐츠의 스타일 컴포넌트
+// 모달 내부 콘텐츠의 스타일 컴포넌트
 const Inner = styled.div`
-  width: 900px;
+  width: 400px;
   border-radius: 30px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   padding: 20px;
-
-  /* 모달의 타이틀 섹션 */
-  .maodaltile {
+  @media screen and (max-width: 768px) {
+    width: 70%;
+  }
+  .modaltitle {
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 26px;
-    border-bottom: 1px solid var(--color-light-gray-01);
+    border-bottom: 1px solid #d3d3d3;
     height: 60px;
     position: relative;
     margin-bottom: 15px;
-    /* 스토리 올리기 제목 */
     .title {
       font-weight: bold;
     }
-    /* 닫는 버튼 */
     .xmark {
       width: 26px;
       height: 26px;
@@ -66,62 +73,74 @@ const Inner = styled.div`
       gap: 10px;
       align-items: center;
       margin-bottom: 15px;
-
-      .profile {
-        background: var(--color-gray-01);
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        overflow: hidden;
-      }
-
-      .profilename {
-        color: var(--color-gray-01);
-      }
     }
-    /* 이미지 올리는 아이콘 */
     .camera {
       font-size: 30px;
       cursor: pointer;
     }
   }
 
-  /* 게시물 작성 섹션 */
-  .posting {
+  .storyupload {
     padding: 0 60px;
-
-    .posttext {
-      display: flex;
-      margin: 20px 0;
-    }
-
-    .postimg {
+    .storyimage {
+      width: 100%;
+      max-width: 650px;
+      height: 600px;
       display: flex;
       justify-content: center;
       margin-bottom: 20px;
 
       img {
-        width: 90%;
+        width: 100%;
+        height: 60%;
         border-radius: 8px;
       }
     }
 
-    form {
+    div {
       display: flex;
       flex-direction: column;
       align-items: center;
-      /* 입력 텍스트칸 */
-      textarea {
+      .camera {
+        padding: 4px 10px;
+        border: 1px solid #d3d3d3;
+        width: 100%;
+        height: 360px;
+        font-size: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        &:hover {
+          color: var(--color-facebookblue);
+        }
+
+        .camera_icon {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          .text {
+            font-size: 20px;
+          }
+        }
+      }
+      .storytext {
         width: 100%;
         height: 100px;
         border-radius: 8px;
         padding: 10px;
-        font-size: 16px;
+        ${SubDescription_14_n}
         border: 1px solid #ccc;
-        resize: vertical; /* 세로 방향으로 크기 조절 가능 */
+        resize: vertical;
         margin-bottom: 20px;
+        @media screen and (max-width: 768px) {
+          border: 1px solid red;
+          ${SubDescription_12_m}
+        }
       }
-      /* 제출 버튼 */
       button {
         background: var(--color-facebookblue);
         width: 100%;
@@ -130,93 +149,122 @@ const Inner = styled.div`
         border: none;
         font-size: 26px;
         font-weight: bold;
-        color: var(--color-white);
+        color: #fff;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        &:disabled {
+          background: #ccc;
+          cursor: not-allowed;
+        }
       }
     }
   }
 `;
 
 // Mainstorymodal 컴포넌트 정의
-const Mainstorymodal = ({ onClose, onSubmit }) => {
-  // 상태 관리: 게시물 텍스트
-  const [postText, setPostText] = useState("");
-  // 상태 관리: 게시물 이미지
-  const [postImage, setPostImage] = useState(null); // const로 유지
-  // 상태 관리: 모달 열림 상태 (현재는 사용되지 않음)
-  const [setIsModalOpen] = useState(false);
+const Mainstorymodal = ({ onClose }) => {
+  const [storyText, setStoryText] = useState(""); // 게시물 텍스트 상태
+  const [storyImage, setStoryImage] = useState(null); // 게시물 이미지 상태
+  const [uploading, setUploading] = useState(false); // 업로드 상태
+  const [error, setError] = useState(null); // 에러 메시지 상태
+  const { onCreateStory } = useContext(DataDispatchContext); // 데이터 디스패치 컨텍스트에서 함수 가져오기
 
-  // 이미지 파일이 선택되었을 때 처리하는 함수
+  // 이미지 파일 처리
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      // 선택한 이미지 파일을 URL로 변환하여 상태에 저장
-      setPostImage(URL.createObjectURL(file));
+    const file = e.target.files[0]; // 선택된 파일
+    if (file) setStoryImage(file); // 파일이 존재하면 상태 업데이트
+  };
+
+  // 폼 제출 처리
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // 기본 폼 제출 방지
+    setUploading(true); // 업로드 시작
+    setError(null); // 에러 초기화
+
+    try {
+      let imageUrl = ""; // 이미지 URL 초기화
+      if (storyImage) {
+        // 이미지가 존재하는 경우
+        const storageRef = ref(
+          storage,
+          `images/${storyImage.name}-${Date.now()}` // Firebase Storage 참조 생성
+        );
+        const snapshot = await uploadBytes(storageRef, storyImage); // 이미지 업로드
+        imageUrl = await getDownloadURL(snapshot.ref); // 다운로드 URL 가져오기
+      }
+
+      // Firestore에 스토리 추가
+      await addDoc(collection(db, "story"), {
+        text: storyText,
+        imageUrl,
+        createdAt: Timestamp.fromDate(new Date()), // 현재 시간으로 생성
+      });
+
+      await onCreateStory("testUserId", "TestUser", storyText, imageUrl); // 스토리 생성 후 처리
+      setStoryText(""); // 텍스트 초기화
+      setStoryImage(null); // 이미지 초기화
+      onClose(); // 모달 닫기
+      alert("스토리가 성공적으로 업로드되었습니다!"); // 성공 메시지
+    } catch (err) {
+      console.error("오류 발생:", err); // 오류 로그 출력
+      setError("스토리 업로드에 실패했습니다."); // 에러 상태 업데이트
+      alert("스토리 업로드에 실패했습니다."); // 실패 메시지
+    } finally {
+      setUploading(false); // 업로드 상태 종료
     }
   };
 
-  // 폼 제출 시 호출되는 함수
-  const handleSubmit = (e) => {
-    e.preventDefault(); // 기본 폼 제출 동작 방지
-    // 게시물 데이터를 부모 컴포넌트로 전달
-    onSubmit({ text: postText, image: postImage });
-  };
-
-  // 모달 닫기 버튼 클릭 시 호출되는 함수
-  const handleCloseModal = () => {
-    onClose(); // 부모 컴포넌트의 onClose 함수 호출
-    setIsModalOpen(); // 모달 상태 업데이트 (현재는 사용되지 않음)
-  };
-
   return (
-    <Wrapper>
+    <WrapperForm onSubmit={handleSubmit}>
+      {/* 폼 제출 시 handleSubmit 호출 */}
       <Inner>
-        <div className="maodaltile">
-          <div className="title">스토리 올리기</div>
-          <div className="xmark" onClick={handleCloseModal}>
+        <div className="modaltitle">
+          {/* 모달 제목 영역 */}
+          <div className="title">스토리 올리기</div> {/* 제목 */}
+          <div className="xmark" onClick={onClose}>
             <FiX />
           </div>
         </div>
-        <div className="infoitem">
-          <div className="info">
-            <div className="profile"></div>
-            <div className="profilename">김정하</div>
-          </div>
-          <div className="camera">
-            <label htmlFor="modal-camera-input">
-              <CiCamera />
-            </label>
-            <input
-              id="modal-camera-input"
-              type="file"
-              accept="image/*"
-              style={{ display: "none" }} // 실제 파일 입력은 숨김
-              onChange={handleImageChange} // 파일 선택 시 핸들러 호출
-            />
-          </div>
-        </div>
-        <div className="posting">
-          <form onSubmit={handleSubmit}>
-            <textarea
-              value={postText}
-              onChange={(e) => setPostText(e.target.value)}
-              placeholder="스토리를 입력하세요."
-              required
-            />
-            {postImage && (
-              <div className="postimg">
-                <img src={postImage} alt="스토리 이미지" />
+        <div className="storyupload">
+          {/* 스토리 업로드 섹션 */}
+          <div>
+            {!storyImage && ( // 이미지가 없을 경우
+              <div className="camera">
+                <label htmlFor="modal-camera-input" className="camera_icon">
+                  <CiCamera />
+                  <div className="text">스토리 업로드하기</div>
+                </label>
+                <input
+                  id="modal-camera-input"
+                  type="file"
+                  accept="image/*"
+                  style={{ display: "none" }} // 숨기기
+                  onChange={handleImageChange} // 파일 선택 시 처리
+                />
               </div>
             )}
-            <button type="submit">게시하기</button>
-          </form>
+            {storyImage && ( // 이미지가 있을 경우
+              <div className="storyimage">
+                <img
+                  src={URL.createObjectURL(storyImage)} // 선택한 이미지 미리보기
+                  alt="스토리 이미지"
+                />
+              </div>
+            )}
+            {error && <p style={{ color: "red" }}>{error}</p>}
+            {/* 에러 메시지 표시 */}
+            <button type="submit" disabled={uploading}>
+              {/* 제출 버튼 */}
+              {uploading ? "업로드 중..." : "스토리 게시하기"}
+              {/* 상태에 따라 버튼 텍스트 변경 */}
+            </button>
+          </div>
         </div>
       </Inner>
-    </Wrapper>
+    </WrapperForm>
   );
 };
 
-export default Mainstorymodal;
+export default Mainstorymodal; // 컴포넌트 내보내기

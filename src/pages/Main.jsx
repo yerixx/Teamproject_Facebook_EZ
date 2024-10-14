@@ -7,7 +7,6 @@ import ModalCont from "../components/Modal/ModalCont";
 // import { useContext } from "react";
 // import { DataDispatchContext, DataStateContext } from "../App";
 import MainPage from "../components/Main/Mainpage";
-import Mainupload from "../components/Main/Mainupload";
 import Mainstory from "../components/Main/Mainstory";
 import Mainlive from "../components/Main/Mainlive";
 import MainGroup from "../components/Main/MainGroup";
@@ -54,7 +53,6 @@ const Main = () => {
       {/* <SideBarMenu /> */}
       <MainSection>
         <Mainstory />
-        <Mainupload />
         {/* <PostUploadField /> */}
         <MainGroup />
         <MainPage />

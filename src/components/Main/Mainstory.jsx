@@ -6,7 +6,55 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { SubDescription_16_n } from "../../styles/GlobalStyles.styles";
 import { MdOutlineNavigateNext, MdOutlineNavigateBefore } from "react-icons/md";
-import Mainstorymodal from "./Mainstorymodal"; // 모달 컴포넌트 임포트
+import Mainstorymodal from "../Main/Mainstorymodal";
+
+const mockData = [
+  {
+    id: 1,
+    name: "김정하",
+    imgSrc: "/img/test.jpg",
+  },
+  {
+    id: 2,
+    name: "박예림",
+    imgSrc: "/img/test.jpg",
+  },
+  {
+    id: 3,
+    name: "김예지",
+    imgSrc: "/img/test.jpg",
+  },
+  {
+    id: 4,
+    name: "박태환",
+    imgSrc: "/img/test.jpg",
+  },
+  {
+    id: 5,
+    name: "지성준",
+    imgSrc: "/img/test.jpg",
+  },
+  {
+    id: 5,
+    name: "이승연",
+    imgSrc: "/img/test.jpg",
+  },
+  {
+    id: 5,
+    name: "홍길동",
+    imgSrc: "/img/test.jpg",
+  },
+  {
+    id: 5,
+    name: "홍길동1",
+    imgSrc: "/img/test.jpg",
+  },
+  {
+    id: 5,
+    name: "홍길동2",
+    imgSrc: "/img/test.jpg",
+  },
+];
 
 const Wrapper = styled.div`
   width: 100%;
@@ -14,18 +62,13 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   margin: 20px 0;
-  /* margin-top: 20px; */
-  @media screen and (max-width: 1050px) {
-  }
   @media screen and (max-width: 768px) {
     margin: 0;
-    /* height: 250px; */
   }
 `;
 
 const Inner = styled.div`
-  /* border: 1px solid red; */
-  width: 1000px;
+  width: var(--inner-width-02);
   height: 360px;
   padding: 27px 30px;
   display: flex;
@@ -35,9 +78,7 @@ const Inner = styled.div`
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius-30);
   position: relative;
-  @media screen and (max-width: 1050px) {
-    width: 100%;
-  }
+  background-color: ${(props) => props.theme.ContainColor};
   @media screen and (max-width: 768px) {
     box-shadow: none;
     padding: 0;
@@ -111,6 +152,7 @@ const StoryItem = styled.div`
     display: flex;
     justify-content: center;
     line-height: 8;
+    color: ${(props) => props.theme.textColor};
   }
   @media screen and (max-width: 768px) {
     height: 200px;
@@ -148,7 +190,6 @@ const StoryFriend = styled.div`
   }
   .storyInfo {
     width: 100%;
-
     .story {
       width: 44px;
       height: 44px;
@@ -156,12 +197,10 @@ const StoryFriend = styled.div`
       top: 8px;
       left: 8px;
       border-radius: 50%;
-      border: 3px solid #1877f2; /* var(--color-facebookblue) 대체 */
+      border: 3px solid var(--color-facebookblue);
       display: flex;
       justify-content: center;
       align-items: center;
-      /* background: #fff; */
-
       .storyProfile {
         width: 100%;
         height: 100%;
@@ -196,7 +235,6 @@ const NextBtn = styled.span`
   height: 50px;
   border-radius: 50%;
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   position: absolute;
   top: 50%;
@@ -204,10 +242,9 @@ const NextBtn = styled.span`
   transform: translateY(-50%);
   font-size: 40px;
   color: #fff;
-  cursor: pointer;
-  opacity: 0.4;
   transition: all 0.3s;
   scale: 0.8;
+  cursor: pointer;
   svg {
     margin-left: 5px;
   }
@@ -236,7 +273,6 @@ const PrevBtn = styled.span`
   height: 50px;
   border-radius: 50%;
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   z-index: 1;
   position: absolute;
@@ -245,10 +281,9 @@ const PrevBtn = styled.span`
   transform: translateY(-50%);
   font-size: 40px;
   color: #fff;
-  cursor: pointer;
-  opacity: 0.4;
   transition: all 0.3s;
   scale: 0.8;
+  cursor: pointer;
   svg {
     margin-left: 3px;
   }
@@ -271,55 +306,55 @@ const PrevArrow = ({ onClick, currentSlide }) => {
 };
 
 const MainStory = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0); // 현재 슬라이드 상태
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태 관리
-  const [postImage, setPostImage] = useState(null); // 모달에서 업로드된 이미지 상태
+  const [setPostImage] = useState(null); // 모달에서 업로드된 이미지 상태
 
   // 모달 열기 핸들러
   const openModal = () => {
-    setIsModalOpen(true);
+    setIsModalOpen(true); // 모달을 열기 위해 상태를 true로 설정
   };
 
   // 모달 닫기 핸들러
   const closeModal = () => {
-    setIsModalOpen(false);
+    setIsModalOpen(false); // 모달을 닫기 위해 상태를 false로 설정
   };
 
   // 모달 제출 핸들러
   const handleModalSubmit = ({ text, image }) => {
-    // 필요한 경우 제출된 데이터를 처리
-    console.log("모달 제출 데이터:", text, image);
-    setPostImage(image);
-    setIsModalOpen(false);
+    // 제출된 데이터 처리
+    console.log("모달 제출 데이터:", text, image); // 콘솔에 제출 데이터 출력
+    setPostImage(image); // 제출된 이미지를 상태에 저장
+    setIsModalOpen(false); // 모달을 닫음
   };
 
+  // 슬릭 슬라이더 설정
   const settings = {
     dots: false,
     infinite: false,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-    swipe: true,
-    swipeToSlide: true,
-    touchMove: true,
-    // autoplay: true,
+    speed: 500, // 슬라이드 전환 속도
+    slidesToShow: 5, // 보여줄 슬라이드 개수
+    slidesToScroll: 1, // 스크롤할 슬라이드 개수
+    swipe: true, // 스와이프 가능 여부
+    swipeToSlide: true, // 스와이프 시 한 개 슬라이드 이동 여부
+    touchMove: true, // 터치 이동 가능 여부
     autoplaySpeed: 5000,
-    nextArrow: <NextArrow />, // 화살표 버튼을 커스텀해서 사용
+    nextArrow: <NextArrow />,
     prevArrow: <PrevArrow currentSlide={currentSlide} />,
-    beforeChange: (current, next) => setCurrentSlide(next),
+    beforeChange: (next) => setCurrentSlide(next), // 슬라이드 변경 전 현재 슬라이드 업데이트
     responsive: [
       {
-        breakpoint: 1050, // 1050px 이하일 때
+        breakpoint: 900, // 900px 이하일 때 설정
         settings: {
           slidesToShow: 4, // 슬라이드를 4개만 보여줌
-          slidesToScroll: 1,
+          slidesToScroll: 1, // 스크롤할 슬라이드 개수
         },
       },
       {
-        breakpoint: 580, // 580px 이하일 때
+        breakpoint: 580, // 580px 이하일 때 설정
         settings: {
-          slidesToShow: 3, // 슬라이드를 2개만 보여줌
-          slidesToScroll: 1,
+          slidesToShow: 3, // 슬라이드를 3개만 보여줌
+          slidesToScroll: 1, // 스크롤할 슬라이드 개수
         },
       },
     ],
@@ -335,88 +370,39 @@ const MainStory = () => {
                 <FaUser />
               </div>
               <span onClick={openModal}>
-                {" "}
-                {/* 클릭 시 모달 열기 */}
                 <FaPlus />
               </span>
               <h2>스토리 만들기</h2>
             </StoryItem>
-            <StoryFriend>
-              <img src="/img/test.jpg" alt="testimg" />
-              <div className="storyInfo">
-                <div className="story">
-                  <div className="storyProfile"></div>
-                </div>
-                <div className="storyName">김정하</div>
-              </div>
-            </StoryFriend>
-            <StoryFriend>
-              <img src="/img/test.jpg" alt="testimg" />
-              <div className="storyInfo">
-                <div className="story">
-                  <div className="storyProfile"></div>
-                </div>
-                <div className="storyName">김정하</div>
-              </div>
-            </StoryFriend>
-            <StoryFriend>
-              <img src="/img/test.jpg" alt="testimg" />
-              <div className="storyInfo">
-                <div className="story">
-                  <div className="storyProfile"></div>
-                </div>
-                <div className="storyName">김정하</div>
-              </div>
-            </StoryFriend>
-            <StoryFriend>
-              <img src="/img/test.jpg" alt="testimg" />
-              <div className="storyInfo">
-                <div className="story">
-                  <div className="storyProfile"></div>
-                </div>
-                <div className="storyName">김정하</div>
-              </div>
-            </StoryFriend>
-            <StoryFriend>
-              <img src="/img/test.jpg" alt="testimg" />
-              <div className="storyInfo">
-                <div className="story">
-                  <div className="storyProfile"></div>
-                </div>
-                <div className="storyName">김정하</div>
-              </div>
-            </StoryFriend>
-            <StoryFriend>
-              <img src="/img/test.jpg" alt="testimg" />
-              <div className="storyInfo">
-                <div className="story">
-                  <div className="storyProfile"></div>
-                </div>
-                <div className="storyName">김정하</div>
-              </div>
-            </StoryFriend>
-            <StoryFriend>
-              <img src="/img/test.jpg" alt="testimg" />
-              <div className="storyInfo">
-                <div className="story">
-                  <div className="storyProfile"></div>
-                </div>
-                <div className="storyName">김정하</div>
-              </div>
-            </StoryFriend>
+            {mockData.map(
+              (
+                friend // 친구 데이터 배열을 맵으로 순회
+              ) => (
+                <StoryFriend key={friend.id}>
+                  {/* 각 친구 아이템 */}
+                  <img src={friend.imgSrc} alt="img" /> {/* 친구 이미지 */}
+                  <div className="storyInfo">
+                    <div className="story">
+                      <div className="storyProfile"></div> {/* 스토리 프로필 */}
+                    </div>
+                    <div className="storyName">{friend.name}</div>{" "}
+                  </div>
+                </StoryFriend>
+              )
+            )}
           </Slider>
         </Items>
       </Inner>
       {/* 모달 컴포넌트 렌더링 */}
       {isModalOpen && (
         <Mainstorymodal
-          isOpen={isModalOpen}
-          onClose={closeModal}
-          onSubmit={handleModalSubmit}
+          isOpen={isModalOpen} // 모달 열림 상태
+          onClose={closeModal} // 모달 닫기 핸들러
+          onSubmit={handleModalSubmit} // 모달 제출 핸들러
         />
       )}
     </Wrapper>
   );
 };
 
-export default MainStory;
+export default MainStory; // MainStory 컴포넌트 내보내기

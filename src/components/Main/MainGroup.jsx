@@ -3,7 +3,6 @@ import {
   MainTitle_18_n,
   MainTitle_22_b,
 } from "../../styles/GlobalStyles.styles";
-import { IoClose } from "react-icons/io5";
 import Slider from "react-slick";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { MdOutlineNavigateBefore } from "react-icons/md";
@@ -12,10 +11,7 @@ const Wrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-
   margin-top: 20px;
-  @media screen and (max-width: 1050px) {
-  }
   @media screen and (max-width: 768px) {
     margin-top: 0;
   }
@@ -33,9 +29,6 @@ const Inner = styled.div`
   border-radius: var(--border-radius-30);
   position: relative;
   background-color: ${(props) => props.theme.ContainColor};
-  @media screen and (max-width: 1050px) {
-    width: 100%;
-  }
   @media screen and (max-width: 768px) {
     border-radius: var(--border-radius-08);
     padding: 20px 15px;
@@ -80,7 +73,7 @@ const Items = styled.div`
 const Item = styled.div`
   width: 100%;
   height: 320px;
-  background: #444;
+  background: #ccc;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
@@ -119,11 +112,8 @@ const Item = styled.div`
       border-radius: 8px;
     }
   }
-  @media screen and (max-width: 1050px) {
-  }
   @media screen and (max-width: 768px) {
     height: 250px;
-
     div {
       height: 110px;
       h3 {
@@ -146,7 +136,6 @@ const NextBtn = styled.span`
   height: 50px;
   border-radius: 50%;
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   position: absolute;
   top: 50%;
@@ -155,7 +144,6 @@ const NextBtn = styled.span`
   font-size: 40px;
   color: #fff;
   cursor: pointer;
-  opacity: 0.4;
   transition: all 0.3s;
   scale: 0.8;
   svg {
@@ -194,7 +182,6 @@ const PrevBtn = styled.span`
   font-size: 40px;
   color: #fff;
   cursor: pointer;
-  opacity: 0.4;
   scale: 0.8;
   transition: all 0.3s;
   svg {
@@ -248,6 +235,15 @@ const MainGroup = () => {
     ],
   };
 
+  const groups = [
+    { title: "함께하는 세계여행", members: "4.4천명" },
+    { title: "반려동물", members: "2.4천명" },
+    { title: "운동", members: "3.2천명" },
+    { title: "1", members: "3.2천명" },
+    { title: "2", members: "3.2천명" },
+    { title: "운동", members: "3.2천명" },
+  ];
+
   return (
     <Wrapper>
       <Inner>
@@ -257,54 +253,17 @@ const MainGroup = () => {
         </Title>
         <Items>
           <Slider className="slider" {...settings}>
-            <Item>
-              {/* <IoClose /> */}
-              <div>
-                <h3>함께하는 세계여행</h3>
-                <h4>멤버 4.4천명</h4>
-                <span>그룹 가입</span>
-              </div>
-            </Item>
-            <Item>
-              {/* <IoClose /> */}
-              <div>
-                <h3>반려동물</h3>
-                <h4>멤버 2.4천명</h4>
-                <span>그룹 가입</span>
-              </div>
-            </Item>
-            <Item>
-              {/* <IoClose /> */}
-              <div>
-                <h3>운동</h3>
-                <h4>멤버 3.2천명</h4>
-                <span>그룹 가입</span>
-              </div>
-            </Item>
-            <Item>
-              {/* <IoClose /> */}
-              <div>
-                <h3>1</h3>
-                <h4>멤버 3.2천명</h4>
-                <span>그룹 가입</span>
-              </div>
-            </Item>
-            <Item>
-              {/* <IoClose /> */}
-              <div>
-                <h3>2</h3>
-                <h4>멤버 3.2천명</h4>
-                <span>그룹 가입</span>
-              </div>
-            </Item>
-            <Item>
-              {/* <IoClose /> */}
-              <div>
-                <h3>운동</h3>
-                <h4>멤버 3.2천명</h4>
-                <span>그룹 가입</span>
-              </div>
-            </Item>
+            {groups.map((group, index) => (
+              <Item key={index}>
+                {" "}
+                {/* 각 아이템에 고유 키 추가 */}
+                <div>
+                  <h3>{group.title}</h3> {/* h3의 내용 */}
+                  <h4>멤버 {group.members}</h4> {/* h4의 내용 */}
+                  <span>그룹 가입</span>
+                </div>
+              </Item>
+            ))}
           </Slider>
         </Items>
       </Inner>
@@ -312,4 +271,4 @@ const MainGroup = () => {
   );
 };
 
-export default MainGroup;
+export default MainGroup; // MainGroup 컴포넌트 내보내기

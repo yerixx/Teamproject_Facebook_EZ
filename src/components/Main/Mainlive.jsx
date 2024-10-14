@@ -41,10 +41,6 @@ const Inner = styled.div`
   border-radius: var(--border-radius-30);
   position: relative;
 
-  @media screen and (max-width: 900px) {
-    width: 100%;
-    height: 80%;
-  }
   @media screen and (max-width: 768px) {
     box-shadow: none;
     padding: 0;
@@ -88,11 +84,6 @@ const Livecard = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-
-  @media screen and (max-width: 900px) {
-    width: 100%;
-    height: 80%;
-  }
   @media screen and (max-width: 768px) {
     width: 100%;
     height: 52vh;
@@ -133,12 +124,8 @@ const Livecard = styled.div`
     .item {
       display: flex;
       gap: 40px;
-
       .viewers {
         ${SubDescription_16_n}
-        @media screen and (max-width: 900px) {
-          ${SubDescription_14_n}
-        }
         @media screen and (max-width: 768px) {
           ${SubDescription_12_m}
         }
@@ -148,9 +135,6 @@ const Livecard = styled.div`
         ${SubDescription_16_n}
         position: absolute;
         right: 10px;
-        @media screen and (max-width: 900px) {
-          ${SubDescription_12_m}
-        }
         @media screen and (max-width: 768px) {
           ${SubDescription_12_m}
         }
@@ -170,9 +154,6 @@ const Livecard = styled.div`
     position: absolute;
     bottom: 0px;
     width: 100%;
-    @media screen and (max-width: 900px) {
-      height: 32%;
-    }
     @media screen and (max-width: 768px) {
     }
     .info {
@@ -186,9 +167,6 @@ const Livecard = styled.div`
         display: flex;
         align-items: center;
         gap: 5px;
-        @media screen and (max-width: 900px) {
-          ${SubDescription_12_m}
-        }
         @media screen and (max-width: 768px) {
           ${SubDescription_12_m}
         }
@@ -196,9 +174,6 @@ const Livecard = styled.div`
 
       .title {
         ${SubDescription_16_n}
-        @media screen and (max-width: 900px) {
-          ${SubDescription_14_n}
-        }
         @media screen and (max-width: 768px) {
           ${SubDescription_12_m}
         }
@@ -207,18 +182,10 @@ const Livecard = styled.div`
       .item {
         display: flex;
         justify-content: space-between;
-        @media screen and (max-width: 900px) {
-          ${SubDescription_14_n}
-        }
-
         .price {
           ${SubDescription_16_n}
           display: flex;
           gap: 3px;
-
-          @media screen and (max-width: 900px) {
-            ${SubDescription_12_m}
-          }
           @media screen and (max-width: 768px) {
             ${SubDescription_12_m}
           }
@@ -236,9 +203,6 @@ const Livecard = styled.div`
           background: var(--color-gray-01);
           color: var(--color-white);
           cursor: pointer;
-          @media screen and (max-width: 900px) {
-            padding: 3px 3px;
-          }
           @media screen and (max-width: 768px) {
             ${SubDescription_12_m}
           }
@@ -246,26 +210,21 @@ const Livecard = styled.div`
       }
     }
   }
-
   @media screen and (max-width: 768px) {
     height: 200px;
-
     div {
       svg {
         font-size: 100px;
       }
     }
-
     span {
       border: 3px solid #fff;
       width: 34px;
       height: 34px;
-
       svg {
         font-size: 16px;
       }
     }
-
     h2 {
       line-height: 5;
     }
@@ -315,27 +274,6 @@ const PrevArrow = (props) => {
 
 // 메인 라이브 컴포넌트
 const Mainlive = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태 관리
-  const [postImage, setPostImage] = useState(null); // 모달에서 업로드된 이미지 상태 관리
-
-  // 모달 열기 핸들러
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  // 모달 닫기 핸들러
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  // 모달 제출 핸들러
-  const handleModalSubmit = ({ text, image }) => {
-    // 필요한 경우 제출된 데이터를 처리
-    console.log("모달 제출 데이터:", text, image);
-    setPostImage(image); // 업로드된 이미지 상태 업데이트
-    setIsModalOpen(false); // 모달 닫기
-  };
-
   // 슬릭 슬라이더 설정 객체
   const settings = {
     dots: false, // 하단 점 표시 여부
@@ -414,13 +352,6 @@ const Mainlive = () => {
           </Slider>
         </Items>
       </Inner>
-      {isModalOpen && (
-        <Mainstorymodal
-          isOpen={isModalOpen} // 모달 열림 상태 전달
-          onClose={closeModal} // 모달 닫기 핸들러 전달
-          onSubmit={handleModalSubmit} // 모달 제출 핸들러 전달
-        />
-      )}
     </Wrapper>
   );
 };
