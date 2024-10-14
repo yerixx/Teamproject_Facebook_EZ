@@ -710,7 +710,7 @@ const ModalLive = () => {
             {/* <CommentWrite><PostUploadField/></CommentWrite> */}
           </Comment>
         </RightContent>
-        {/* <LiveProfilemb>
+        <LiveProfilemb>
             <div className='profileImgmb'>
             <img src={LiveProfileImg} alt="LiveProfileImgmb" />
             </div>
@@ -718,10 +718,12 @@ const ModalLive = () => {
               <div className='profileNamemb'><h4>미니멀데이</h4></div>
               <div className='profiledescmb'>가을옷 보러오세요~~</div>
             </LiveProfileSelfmb>
-        </LiveProfilemb> */}
+        </LiveProfilemb>
       </Commerce>
     </>
   )
 }
 
 export default ModalLive;
+
+

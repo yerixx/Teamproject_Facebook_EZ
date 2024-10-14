@@ -31,9 +31,8 @@ const Wrapper = styled.div`
     position: absolute;
     top: 40px;
     right: 20px;
-    width: 100%;
-    max-height: 0;
-    padding: 12px;
+    width: fit-content;
+    padding: 12px 38px;
     font-size: 14px;
     background: #fff;
     border-radius: 8px;

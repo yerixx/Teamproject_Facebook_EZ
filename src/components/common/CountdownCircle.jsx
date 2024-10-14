@@ -1,6 +1,6 @@
 // CountdownCircle.js
 import React, { useEffect, useState } from "react";
-import "./CountdownCircle.css";
+import "./CountdownCircle.css"; // CSS 파일 import
 
 const CountdownCircle = () => {
   const [count, setCount] = useState(7);

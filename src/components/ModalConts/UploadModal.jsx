@@ -244,17 +244,6 @@ const UploadModal = ({
       alert("업로드할 수 있는 파일의 최대 크기는 5MB입니다");
     }
   };
-  // onUpdatePost 함수 정의
-  // const onUpdatePost = async (postId, updatedData) => {
-  //   try {
-  //     const postRef = doc(db, "posts", postId); // Firestore에서 posts 컬렉션의 문서 참조
-  //     await updateDoc(postRef, updatedData); // 문서 업데이트
-  //     console.log("게시물 수정 성공:", updatedData);
-  //   } catch (error) {
-  //     console.error("게시물 수정 중 오류:", error);
-  //     throw error; // 에러 발생 시 throw
-  //   }
-  // };
 
   return (
     <Wrapper>
