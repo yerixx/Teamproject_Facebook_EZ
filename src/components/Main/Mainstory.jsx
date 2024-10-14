@@ -12,12 +12,12 @@ const mockData = [
   {
     id: 1,
     name: "김정하",
-    imgSrc: "/img/test.jpg",
+    imgSrc: "/img/test2.jpg",
   },
   {
     id: 2,
     name: "박예림",
-    imgSrc: "/img/test.jpg",
+    imgSrc: "/img/test1.jpg",
   },
   {
     id: 3,
@@ -27,32 +27,32 @@ const mockData = [
   {
     id: 4,
     name: "박태환",
-    imgSrc: "/img/test.jpg",
+    imgSrc: "/img/test3.jpg",
   },
   {
     id: 5,
     name: "지성준",
-    imgSrc: "/img/test.jpg",
+    imgSrc: "/img/test4.jpg",
   },
   {
-    id: 5,
+    id: 6,
     name: "이승연",
-    imgSrc: "/img/test.jpg",
+    imgSrc: "/img/test5.jpg",
   },
   {
-    id: 5,
-    name: "홍길동",
-    imgSrc: "/img/test.jpg",
+    id: 7,
+    name: "한지훈",
+    imgSrc: "/img/test6.jpg",
   },
   {
-    id: 5,
-    name: "홍길동1",
-    imgSrc: "/img/test.jpg",
+    id: 8,
+    name: "원 빈",
+    imgSrc: "/img/test7.jpg",
   },
   {
-    id: 5,
-    name: "홍길동2",
-    imgSrc: "/img/test.jpg",
+    id: 9,
+    name: "피넛",
+    imgSrc: "/img/test8.jpg",
   },
 ];
 
@@ -385,8 +385,12 @@ const MainStory = () => {
                 friend // 친구 데이터 배열을 맵으로 순회
               ) => (
                 <StoryFriend key={friend.id}>
-                  {/* 각 친구 아이템 */}
-                  <img src={friend.imgSrc} alt="img" /> {/* 친구 이미지 */}
+
+                  <img
+            className="profileImg"
+            src={currentUserData?.profileImage || "/img/defaultProfile.jpg"}
+            alt="Profile"
+          />
                   <div className="storyInfo">
                     <div className="story">
                       <div className="storyProfile"></div> {/* 스토리 프로필 */}

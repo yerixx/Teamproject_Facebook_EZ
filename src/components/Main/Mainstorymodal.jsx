@@ -82,18 +82,26 @@ const Inner = styled.div`
 
   .storyupload {
     padding: 0 60px;
-    .storyimage {
+    .storyimage, .storyvideo {
       width: 100%;
       max-width: 650px;
       height: 600px;
       display: flex;
       justify-content: center;
       margin-bottom: 20px;
-
-      img {
+      img, video {
         width: 100%;
         height: 60%;
         border-radius: 8px;
+      }
+    }
+
+    .storyvideo {
+      /* 비디오 전용 추가 스타일 */
+      video {
+        border: 2px solid #d3d3d3;
+        border-radius: 8px;
+        /* 추가적인 스타일을 원하시면 여기에 작성 */
       }
     }
 
@@ -165,8 +173,9 @@ const Inner = styled.div`
 
 // Mainstorymodal 컴포넌트 정의
 const Mainstorymodal = ({ onClose }) => {
-  const [storyText, setStoryText] = useState(""); // 게시물 텍스트 상태
-  const [storyImage, setStoryImage] = useState(null); // 게시물 이미지 상태
+  const [storyText, setStoryText] = useState(""); // 스토리 텍스트 상태
+  const [storyImage, setStoryImage] = useState(null); // 이미지 파일 상태
+  const [storyVideo, setStoryVideo] = useState(null); // 비디오 파일 상태
   const [uploading, setUploading] = useState(false); // 업로드 상태
   const [error, setError] = useState(null); // 에러 메시지 상태
   const { onCreateStory } = useContext(DataDispatchContext); // 데이터 디스패치 컨텍스트에서 함수 가져오기
@@ -177,6 +186,12 @@ const Mainstorymodal = ({ onClose }) => {
     if (file) setStoryImage(file); // 파일이 존재하면 상태 업데이트
   };
 
+  // 비디오 파일 처리
+  const handleVideoChange = (e) => {
+    const file = e.target.files[0]; // 선택된 파일
+    if (file) setStoryVideo(file); // 파일이 존재하면 상태 업데이트
+  };
+
   // 폼 제출 처리
   const handleSubmit = async (e) => {
     e.preventDefault(); // 기본 폼 제출 방지
@@ -185,32 +200,46 @@ const Mainstorymodal = ({ onClose }) => {
 
     try {
       let imageUrl = ""; // 이미지 URL 초기화
+      let videoUrl = ""; // 비디오 URL 초기화
+
+      // 이미지 업로드 처리
       if (storyImage) {
-        // 이미지가 존재하는 경우
-        const storageRef = ref(
+        const imageRef = ref(
           storage,
-          `images/${storyImage.name}-${Date.now()}` // Firebase Storage 참조 생성
+          `images/${storyImage.name}-${Date.now()}`
         );
-        const snapshot = await uploadBytes(storageRef, storyImage); // 이미지 업로드
-        imageUrl = await getDownloadURL(snapshot.ref); // 다운로드 URL 가져오기
+        const imageSnapshot = await uploadBytes(imageRef, storyImage);
+        imageUrl = await getDownloadURL(imageSnapshot.ref);
+      }
+
+      // 비디오 업로드 처리
+      if (storyVideo) {
+        const videoRef = ref(
+          storage,
+          `videos/${storyVideo.name}-${Date.now()}`
+        );
+        const videoSnapshot = await uploadBytes(videoRef, storyVideo);
+        videoUrl = await getDownloadURL(videoSnapshot.ref);
       }
 
       // Firestore에 스토리 추가
       await addDoc(collection(db, "story"), {
         text: storyText,
         imageUrl,
-        createdAt: Timestamp.fromDate(new Date()), // 현재 시간으로 생성
+        videoUrl,
+        createdAt: Timestamp.fromDate(new Date()),
       });
 
-      await onCreateStory("testUserId", "TestUser", storyText, imageUrl); // 스토리 생성 후 처리
+      await onCreateStory("testUserId", "TestUser", storyText, imageUrl, videoUrl); // 스토리 생성 후 처리
       setStoryText(""); // 텍스트 초기화
       setStoryImage(null); // 이미지 초기화
+      setStoryVideo(null); // 비디오 초기화
       onClose(); // 모달 닫기
       alert("스토리가 성공적으로 업로드되었습니다!"); // 성공 메시지
     } catch (err) {
-      console.error("오류 발생:", err); // 오류 로그 출력
+      console.error("오류 발생:", err);
       setError("스토리 업로드에 실패했습니다."); // 에러 상태 업데이트
-      alert("스토리 업로드에 실패했습니다."); // 실패 메시지
+      alert("스토리 업로드에 실패했습니다.");
     } finally {
       setUploading(false); // 업로드 상태 종료
     }
@@ -218,19 +247,16 @@ const Mainstorymodal = ({ onClose }) => {
 
   return (
     <WrapperForm onSubmit={handleSubmit}>
-      {/* 폼 제출 시 handleSubmit 호출 */}
       <Inner>
         <div className="modaltitle">
-          {/* 모달 제목 영역 */}
-          <div className="title">스토리 올리기</div> {/* 제목 */}
+          <div className="title">스토리 올리기</div>
           <div className="xmark" onClick={onClose}>
             <FiX />
           </div>
         </div>
         <div className="storyupload">
-          {/* 스토리 업로드 섹션 */}
           <div>
-            {!storyImage && ( // 이미지가 없을 경우
+            {!storyImage && !storyVideo && (
               <div className="camera">
                 <label htmlFor="modal-camera-input" className="camera_icon">
                   <CiCamera />
@@ -239,13 +265,17 @@ const Mainstorymodal = ({ onClose }) => {
                 <input
                   id="modal-camera-input"
                   type="file"
-                  accept="image/*"
-                  style={{ display: "none" }} // 숨기기
-                  onChange={handleImageChange} // 파일 선택 시 처리
+                  accept="image/*, video/*"
+                  style={{ display: "none" }}
+                  onChange={(e) =>
+                    e.target.files[0].type.startsWith("image/")
+                      ? handleImageChange(e)
+                      : handleVideoChange(e)
+                  } // 파일 유형에 따라 처리
                 />
               </div>
             )}
-            {storyImage && ( // 이미지가 있을 경우
+            {storyImage && (
               <div className="storyimage">
                 <img
                   src={URL.createObjectURL(storyImage)} // 선택한 이미지 미리보기
@@ -253,12 +283,19 @@ const Mainstorymodal = ({ onClose }) => {
                 />
               </div>
             )}
+            {storyVideo && (
+              <div className="storyvideo">
+                <video controls>
+                  <source
+                    src={URL.createObjectURL(storyVideo)} // 선택한 비디오 미리보기
+                    type={storyVideo.type}
+                  />
+                </video>
+              </div>
+            )}
             {error && <p style={{ color: "red" }}>{error}</p>}
-            {/* 에러 메시지 표시 */}
             <button type="submit" disabled={uploading}>
-              {/* 제출 버튼 */}
               {uploading ? "업로드 중..." : "스토리 게시하기"}
-              {/* 상태에 따라 버튼 텍스트 변경 */}
             </button>
           </div>
         </div>
