@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
-import { FaStar } from "react-icons/fa";
+import { IoEyeSharp } from "react-icons/io5";
 import Slider from "react-slick"; // 슬릭 슬라이더 import
 import {
   MainTitle_18_b,
@@ -27,15 +27,13 @@ const Wrapper = styled.div`
 
 // 내부 컨텐츠를 담는 Inner 스타일 컴포넌트
 const Inner = styled.div`
-  margin: 20px 0;
-  /* border: 1px solid red; */
+  /* border: 1px solid #f00; */
   width: var(--inner-width-02);
-  height: 430px;
-  padding: 27px 30px;
+  height: 480px;
+  padding: 27px 70px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius-30);
   position: relative;
@@ -59,6 +57,7 @@ const Inner = styled.div`
 
 // 슬라이더 내의 아이템들을 감싸는 Items 스타일 컴포넌트
 const Items = styled.div`
+  cursor: pointer;
   .slider {
     width: 100%;
     height: 100%;
@@ -105,7 +104,7 @@ const Livecard = styled.div`
     display: flex;
     align-items: center;
     padding-left: 10px;
-    gap: 10px;
+    gap: 2px;
     background: rgba(0, 0, 0, 0.5);
     color: var(--color-white);
     position: absolute;
@@ -115,8 +114,7 @@ const Livecard = styled.div`
     top: 0;
     .liveBage {
       background: #ed413f;
-      ${SubDescription_16_n}
-      padding: 0 5px;
+      padding: 2px 7px;
       border-radius: 3px;
       margin-right: 5px;
       font-size: 12px;
@@ -124,20 +122,25 @@ const Livecard = styled.div`
 
     .item {
       display: flex;
-      gap: 40px;
+      gap: 10px;
       .viewers {
-        ${SubDescription_16_n}
+        display: flex;
+        align-items: center;
+        /* padding-left: 40px; */
+        gap: 4px;
+        ${SubDescription_14_n}
         @media screen and (max-width: 768px) {
-          ${SubDescription_12_m}
+          ${SubDescription_14_n}
         }
       }
 
       .point {
-        ${SubDescription_16_n}
+        ${SubDescription_14_n}
+        font-weight:bold;
         position: absolute;
         right: 10px;
         @media screen and (max-width: 768px) {
-          ${SubDescription_12_m}
+          ${SubDescription_14_n}
         }
       }
     }
@@ -160,25 +163,30 @@ const Livecard = styled.div`
       padding-left: 10px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      /* gap: 10px; */
 
       .subtitle {
-        ${SubDescription_16_n}
+        ${SubDescription_14_n}
+
         display: flex;
         align-items: center;
       }
 
       .title {
-        ${SubDescription_16_n}
+        ${SubDescription_14_n}
+        font-weight:bold;
       }
 
       .item {
         display: flex;
         justify-content: space-between;
         .price {
-          ${SubDescription_16_n}
+          padding-top: 4px;
+          ${SubDescription_14_n}
+          font-weight:bold;
+
           display: flex;
-          gap: 3px;
+          gap: 5px;
           span {
             color: red;
           }
@@ -187,12 +195,17 @@ const Livecard = styled.div`
         button {
           width: auto;
           ${SubDescription_12_m}
+
           border: none;
           border-radius: 8px;
-          padding: 2px 7px;
+          padding: 6px 7px;
           background: var(--color-gray-01);
           color: var(--color-white);
           cursor: pointer;
+          transition: all 0.3s;
+          &:hover {
+            opacity: 0.8;
+          }
           @media screen and (max-width: 768px) {
             display: none;
           }
@@ -233,11 +246,10 @@ const NextBtn = styled.span`
   height: 50px;
   border-radius: 50%;
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   position: absolute;
   top: 50%;
-  right: 10px;
+  right: -30px;
   transform: translateY(-50%);
   font-size: 40px;
   color: #fff;
@@ -273,12 +285,11 @@ const PrevBtn = styled.span`
   height: 50px;
   border-radius: 50%;
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   z-index: 1;
   position: absolute;
   top: 50%;
-  left: 10px;
+  left: -30px;
   transform: translateY(-50%);
   font-size: 40px;
   color: #fff;
@@ -407,22 +418,23 @@ const Mainlive = () => {
                     <div className="liveheader">
                       <div className="liveBage">LIVE</div>
                       <div className="item">
-                        <div className="viewers">9,452 시청</div>
+                        <div className="viewers">
+                          <IoEyeSharp />
+                          {item?.liveStream?.currentViewers}
+                        </div>
                         <div className="point">+500P</div>
                       </div>
                     </div>
                     <div className="liveinfo">
                       <div className="info">
                         <span className="subtitle">
-                          {/* <FaStar />
-                        5% 추가할인
-                        <FaStar /> */}
+                          {item?.liveStream?.name}
                         </span>
-                        <span className="title">{item?.products?.name}</span>
+                        <span className="title">{item?.products[0]?.name}</span>
                         <div className="item">
                           <span className="price">
-                            <span>30%</span>
-                            {item.formattedPrice}
+                            <span>{item?.products[0]?.discountRate}</span>
+                            {item?.products[0]?.discountPrice}
                           </span>
                           <button>라이브 보기</button>
                         </div>
