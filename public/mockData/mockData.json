@@ -69,117 +69,183 @@
   "liveCommerce": [
     {
       "liveStream": {
-        "title": "PureGlow 화장품 특별 프로모션",
+        "id": 1,
+        "title": "PureGlow 색조 화장품 대박 세일",
         "currentViewers": 120,
-        "description": "자연에서 온 성분으로 피부에 건강을 선사하는 PureGlow입니다.",
-        "liveInfo": "피부에 활력을 주는 신제품 비타민C 세럼을 소개합니다. 맑고 투명한 피부를 원하신다면 지금 확인하세요!",
+        "description": "매력적인 색상으로 얼굴에 생기를 더하는 PureGlow의 색조 화장품 컬렉션입니다.",
+        "liveInfo": "트렌디한 립스틱과 아이섀도우 팔레트로 완벽한 메이크업을 완성해보세요! 지금 특별 할인가로 만나보실 수 있습니다.",
         "videoUrl": "https://firebasestorage.googleapis.com/v0/b/facebook-ez-ba531.appspot.com/o/LiveVideo%2F7.mp4?alt=media&token=6cf2e9bb-36fb-4b98-94c8-88d1e8bb3465",
         "name": "PureGlow",
-        "profileImage": "path/to/profileImage1.jpg"
+        "profileImage": "https://images.pexels.com/photos/19348312/pexels-photo-19348312.jpeg?auto=compress&cs=tinysrgb&w=600"
       },
-      "products": {
-        "id": 1,
-        "name": "PureGlow 색조 화장 세트ㅋ",
-        "originalPrice": 50000,
-        "discountPrice": 45000,
-        "discountRate": "10%",
-        "productImage": "path/to/productImage1.jpg"
-      }
+      "products": [
+        {
+          "id": 1,
+          "name": "글로우 립 컬렉션",
+          "originalPrice": "40,000원",
+          "discountPrice": "36,000원",
+          "discountRate": "10%",
+          "productImage": "https://images.pexels.com/photos/28736962/pexels-photo-28736962.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+        },
+        {
+          "id": 2,
+          "name": "샤이닝 아이섀도우 팔레트",
+          "originalPrice": "55,000원",
+          "discountPrice": "49,500원",
+          "discountRate": "10%",
+          "productImage": "https://images.pexels.com/photos/2639947/pexels-photo-2639947.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+        }
+      ]
     },
     {
       "liveStream": {
+        "id": 2,
         "title": "GreenStyle 신상 공개!",
         "currentViewers": 85,
-        "description": "자연을 담은 패션을 선도하는 GreenStyle입니다.",
+        "description": "패션을 선도하는 GreenStyle입니다.",
         "liveInfo": "이번 시즌 신상품인 린넨 셔츠를 만나보세요. 편안한 착용감과 세련된 디자인을 제공합니다.",
         "videoUrl": "https://firebasestorage.googleapis.com/v0/b/facebook-ez-ba531.appspot.com/o/LiveVideo%2F2.mp4?alt=media&token=e209e6af-1527-4a05-aa9c-1a6b8cd6b81c",
         "name": "GreenStyle",
-        "profileImage": "path/to/profileImage2.jpg"
+        "profileImage": "https://images.pexels.com/photos/28888547/pexels-photo-28888547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
       },
-      "products": {
-        "id": 2,
-        "name": "GreenStyle 린넨 셔츠",
-        "originalPrice": 30000,
-        "discountPrice": 27000,
-        "discountRate": "10%",
-        "productImage": "path/to/productImage2.jpg"
-      }
+      "products": [
+        {
+          "id": 1,
+          "name": "프리미엄 린넨 셔츠",
+          "originalPrice": "30,000원",
+          "discountPrice": "27,000원",
+          "discountRate": "10%",
+          "productImage": "https://images.pexels.com/photos/8483487/pexels-photo-8483487.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+        },
+        {
+          "id": 2,
+          "name": "에코 스타일 토트백",
+          "originalPrice": "15,000원",
+          "discountPrice": "13,500원",
+          "discountRate": "10%",
+          "productImage": "https://images.pexels.com/photos/8148587/pexels-photo-8148587.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+        }
+      ]
     },
     {
       "liveStream": {
+        "id": 3,
         "title": "OrangeBag 한정 할인",
         "currentViewers": 150,
         "description": "독특한 컬러와 디자인으로 사랑받는 OrangeBag입니다.",
         "liveInfo": "활기찬 주황색 토트백으로 일상에 포인트를 더해보세요. 한정 수량 할인 중입니다!",
         "videoUrl": "https://firebasestorage.googleapis.com/v0/b/facebook-ez-ba531.appspot.com/o/LiveVideo%2F3.mp4?alt=media&token=b827b94d-ef6c-4f79-8c52-ab8e002733f5",
         "name": "OrangeBag",
-        "profileImage": "path/to/profileImage3.jpg"
+        "profileImage": "https://images.pexels.com/photos/2090785/pexels-photo-2090785.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
       },
-      "products": {
-        "id": 3,
-        "name": "OrangeBag 토트백",
-        "originalPrice": 60000,
-        "discountPrice": 48000,
-        "discountRate": "20%",
-        "productImage": "path/to/productImage3.jpg"
-      }
+      "products": [
+        {
+          "id": 3,
+          "name": "오렌지 미니 토트백",
+          "originalPrice": "60,000원",
+          "discountPrice": "48,000원",
+          "discountRate": "20%",
+          "productImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1ADn6t2B6-Ux2l7ob_sz7QA9X3hzQC5ifOA&s"
+        },
+        {
+          "id": 4,
+          "name": "럭셔리 클러치백",
+          "originalPrice": "45,000원",
+          "discountPrice": "40,500원",
+          "discountRate": "10%",
+          "productImage": "https://www.lacremeboutique.com/cdn/shop/products/Untitleddesign_1080x.png?v=1681917641"
+        }
+      ]
     },
     {
       "liveStream": {
+        "id": 4,
         "title": "EcoCup으로 지구를 지키자",
         "currentViewers": 60,
         "description": "지속 가능한 생활을 지향하는 EcoCup입니다.",
-        "liveInfo": "친환경 소재로 만든 머그컵 컵을 소개합니다. 자연을 사랑하는 마음을 담았습니다.",
+        "liveInfo": "친환경 소재로 만든 머그컵을 소개합니다. 자연을 사랑하는 마음을 담았습니다.",
         "videoUrl": "https://firebasestorage.googleapis.com/v0/b/facebook-ez-ba531.appspot.com/o/LiveVideo%2F4.mp4?alt=media&token=2943e1df-0830-4bee-a6dd-a515e7ffc508",
         "name": "EcoCup",
-        "profileImage": "path/to/profileImage4.jpg"
+        "profileImage": "https://images.pexels.com/photos/5244514/pexels-photo-5244514.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
       },
-      "products": {
-        "id": 4,
-        "name": "EcoCup 친환경 컵",
-        "originalPrice": 15000,
-        "discountPrice": 13500,
-        "discountRate": "10%",
-        "productImage": "path/to/productImage4.jpg"
-      }
+      "products": [
+        {
+          "id": 5,
+          "name": "Eco 친환경 컵",
+          "originalPrice": "15,000원",
+          "discountPrice": "13,500원",
+          "discountRate": "10%",
+          "productImage": "https://images.pexels.com/photos/5567005/pexels-photo-5567005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+        },
+        {
+          "id": 6,
+          "name": "Eco 텀블러",
+          "originalPrice": "20,000원",
+          "discountPrice": "18,000원",
+          "discountRate": "10%",
+          "productImage": "https://images.pexels.com/photos/6187630/pexels-photo-6187630.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+        }
+      ]
     },
     {
       "liveStream": {
+        "id": 5,
         "title": "NutriNuts 건강한 견과류",
         "currentViewers": 95,
         "description": "자연 그대로의 맛과 영양을 담은 NutriNuts입니다.",
         "liveInfo": "신선한 믹스 견과류 세트로 하루의 에너지를 충전하세요. 지금 특별 할인 중입니다.",
         "videoUrl": "https://firebasestorage.googleapis.com/v0/b/facebook-ez-ba531.appspot.com/o/LiveVideo%2F5.mp4?alt=media&token=3297cc72-7100-46f8-aa6c-686f2d77d03a",
         "name": "NutriNuts",
-        "profileImage": "path/to/profileImage5.jpg"
+        "profileImage": "https://images.pexels.com/photos/8852029/pexels-photo-8852029.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
       },
-      "products": {
-        "id": 5,
-        "name": "NutriNuts 믹스 견과류 세트",
-        "originalPrice": 25000,
-        "discountPrice": 22500,
-        "discountRate": "10%",
-        "productImage": "path/to/productImage5.jpg"
-      }
+      "products": [
+        {
+          "id": 7,
+          "name": "프리미엄 믹스 견과류",
+          "originalPrice": "25,000원",
+          "discountPrice": "22,500원",
+          "discountRate": "10%",
+          "productImage": "https://giftinfo.co.kr/shop/item_images/zoom1/568180.jpg"
+        },
+        {
+          "id": 8,
+          "name": "피칸 세트",
+          "originalPrice": "30,000원",
+          "discountPrice": "27,000원",
+          "discountRate": "10%",
+          "productImage": "https://contents.lotteon.com/itemimage/20230914180805/LO/21/81/08/71/12/_2/18/10/87/11/3/LO2181087112_2181087113_1.jpg/dims/resizef/720X720"
+        }
+      ]
     },
     {
       "liveStream": {
+        "id": 6,
         "title": "HydraSkin 스킨로션 할인 이벤트",
         "currentViewers": 110,
         "description": "피부 본연의 아름다움을 찾아주는 HydraSkin입니다.",
         "liveInfo": "건조한 피부에 수분을 채워줄 수분 가득 스킨로션을 소개합니다. 촉촉함을 느껴보세요.",
         "videoUrl": "https://firebasestorage.googleapis.com/v0/b/facebook-ez-ba531.appspot.com/o/LiveVideo%2F8.mp4?alt=media&token=b6b0dd55-c1f0-443e-ab6c-2bb9fd1f5d91",
         "name": "HydraSkin",
-        "profileImage": "path/to/profileImage6.jpg"
+        "profileImage": "https://images.pexels.com/photos/5468630/pexels-photo-5468630.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
       },
-      "products": {
-        "id": 6,
-        "name": "HydraSkin 수분 가득 스킨로션",
-        "originalPrice": 40000,
-        "discountPrice": 36000,
-        "discountRate": "10%",
-        "productImage": "path/to/productImage6.jpg"
-      }
+      "products": [
+        {
+          "id": 9,
+          "name": "수분 가득 스킨로션",
+          "originalPrice": "40,000원",
+          "discountPrice": "36,000원",
+          "discountRate": "10%",
+          "productImage": "https://images.pexels.com/photos/9253769/pexels-photo-9253769.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+        },
+        {
+          "id": 10,
+          "name": "리프팅 세럼",
+          "originalPrice": "50,000원",
+          "discountPrice": "45,000원",
+          "discountRate": "10%",
+          "productImage": "https://images.pexels.com/photos/6417957/pexels-photo-6417957.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+        }
+      ]
     }
   ]
 }
