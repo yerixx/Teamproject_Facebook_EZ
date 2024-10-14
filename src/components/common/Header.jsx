@@ -309,7 +309,7 @@ export const HeaderBottom = ({ onSearch }) => {
   // currentUserData가 있을 때 로딩 해제
   useEffect(() => {
     if (currentUserData) {
-      console.log("유저 데이터 로드 완료:", currentUserData);
+      // console.log("유저 데이터 로드 완료:", currentUserData);
       setLoading(false); // 데이터가 로드된 후 로딩 해제
     }
   }, [currentUserData]);

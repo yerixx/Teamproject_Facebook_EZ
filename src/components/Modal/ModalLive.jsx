@@ -453,12 +453,14 @@ const ModalLive = ({ item, closeModal }) => {
                 포인트 더 모으기
               </button>
               <div className="pointDS">{pointMessage}</div>
-              <div className="countdown">
-                <CountdownCircle
-                  resetKey={resetKey}
-                  remainingTime={remainingTime}
-                />
-              </div>
+              {remainingTime !== 0 && (
+                <div className="countdown">
+                  <CountdownCircle
+                    resetKey={resetKey}
+                    remainingTime={remainingTime}
+                  />
+                </div>
+              )}
             </LivePoint>
           </Live>
         </LeftContent>

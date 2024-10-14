@@ -29,6 +29,6 @@ export const lightTheme = {
   iconColor: "#000",
   iconColorB: "#000",
   cardBtnColorA: "var(--color-facebookblue)",
-  cardBtnColorB: "var(--color-gray-01",
+  cardBtnColorB: "var(--color-light-gray-01)",
   boxShadow: "rgba(182, 182, 182, 0.8)",
 };

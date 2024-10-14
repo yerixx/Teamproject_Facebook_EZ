@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import { DataDispatchContext, DataStateContext } from "../../App.jsx";
 
 import styled from "styled-components";
-import { SubDescription_16_n } from "../../styles/GlobalStyles.styles.js";
 
 import { BsArrowReturnLeft } from "react-icons/bs";
 import { FaSpinner } from "react-icons/fa";
@@ -10,6 +9,12 @@ import { CiEdit, CiCamera } from "react-icons/ci";
 import { FiX } from "react-icons/fi";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase.js";
+
+import {
+  SubDescription_16_n,
+  SubDescription_14_n,
+} from "../../styles/GlobalStyles.styles.js";
+
 // Styled-components
 const WrapperForm = styled.form`
   width: 100%;
@@ -30,6 +35,10 @@ const CommentCont = styled.div`
   @media (max-width: 768px) {
     width: 100%;
     padding: 0;
+    padding-top: 10px;
+    &::placeholder {
+      ${SubDescription_14_n}
+    }
   }
   .commentUpLoadprofile {
     width: 100%;
@@ -56,7 +65,7 @@ const CommentCont = styled.div`
       padding: 0 30px;
       background: ${(props) => props.theme.cardColor};
       border: 1px solid ${(props) => props.theme.cardColor};
-      color: ${(props) => props.theme.inputTextColor};
+      color: ${(props) => props.theme.iconColorB};
       border-radius: 50px;
       &:focus {
         outline: none;
@@ -65,6 +74,9 @@ const CommentCont = styled.div`
         margin: 0 10px;
         padding: 0 20px;
         height: 44px;
+        &::placeholder {
+          font-size: 13px;
+        }
       }
     }
     .ciEdit,
@@ -161,9 +173,8 @@ const Posting = styled.div`
     margin-bottom: 20px;
     resize: none;
     border: 1px solid ${(props) => props.theme.textareaColor};
-    color: ${(props) => props.theme.textColor};
+    color: ${(props) => props.theme.iconColorB};
     background: ${(props) => props.theme.textareaColor};
-
     @media (max-width: 768px) {
       font-size: 12px;
     }
@@ -238,7 +249,7 @@ const InfoItem = styled.div`
   }
 `;
 
-const PostUpload = ({ placeholder, style }) => {
+const PostUpload = ({ placeholder }) => {
   const { onCreatePost } = useContext(DataDispatchContext);
   const { currentUserData } = useContext(DataStateContext);
 

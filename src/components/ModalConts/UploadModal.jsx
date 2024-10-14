@@ -152,7 +152,7 @@ const InfoItem = styled.div`
     }
   }
   .camera {
-    padding: 4px 10px;
+    /* padding: 4px 10px; */
     font-size: 30px;
     border-radius: 50%;
     color: ${(props) => props.theme.iconColorB} !important;
