@@ -101,8 +101,9 @@ const SellItemsmb = styled.div`
     position: absolute;
     top: 150px;
     padding: 8px;
-    border-radius: 8px 8px 0 0;
+    border-radius: 8px;
     background: var(--color-light-gray-02);
+    cursor: pointer; 
     h2 {
       display: flex;
       text-align: left;
@@ -114,26 +115,26 @@ const SellItemsmb = styled.div`
 `;
 
 const SellItemsinfomb = styled.div`
-  display: none;
+  display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')}; 
   @media screen and (max-width: 768px) {
     width: 350px;
-    height: 80px;
-    top: 185px;
     padding: 15px;
-    display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
     position: absolute;
-    border-radius: 0 0 8px 8px;
+    top: 185px;
+    border-radius: 8px;
     background: var(--color-light-gray-02);
+    transition: opacity 0.5s ease;
+    opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   }
 `;
 
 const SellItemImgmb = styled.div`
-    display: none;
+  display: none;
   @media screen and (max-width: 768px) {
     display: flex;
-    position: absolute;
+    position: relative;
     img {
       width: 50px;
       height: 50px;
@@ -147,9 +148,9 @@ const SellItemDescmb = styled.div`
   @media screen and (max-width: 768px) {
     display: flex;
     flex-direction: column;
-    position: absolute;
+    position: relative;
     font-size: 12px;
-    margin-left: 60px;
+    margin-left: 15px;
     gap: 3px;
     span {
       color: #f00;
@@ -184,10 +185,10 @@ const CommentLiveInfomb = styled.div`
     padding-left: 20px;
     font-size: 12px;
     color: #fff;
-    gap: 5px; // 간격 줄임
+    gap: 5px; 
     img {
-      width: 40px; // 프로필 사진 크기 줄임
-      height: 40px; // 프로필 사진 크기 줄임
+      width: 40px; 
+      height: 40px; 
       border-radius: 50%;
     }
     animation: slide-up 0.5s ease;
@@ -567,19 +568,20 @@ const NoComment = styled.div`
 
 const ModalLive = () => {
   const comments = [
-    { id: 1, name: "이승연", text: "제가 너무 갖고 싶었던 물건인데 이런 가격에!" },
-    { id: 2, name: "김예지", text: "너무 예뻐요~~" },
-    { id: 3, name: "홍길동", text: "진짜 사고 싶어요!" },
-    { id: 4, name: "박지민", text: "이거 재고 있나요?" },
-    { id: 5, name: "최민수", text: "배송 언제 되나요?" },
-    { id: 6, name: "이수진", text: "사고 싶어서 기다리고 있어요!" },
-    { id: 7, name: "김도현", text: "혹시 사이즈 변경 가능할까요?" },
-    { id: 8, name: "이찬우", text: "이 제품 사진이 더 있을까요?" },
-    { id: 9, name: "홍길동", text: "특가 세일기간이 있나요?" },
+    { id: 1, name: "이승연", text: "제가 너무 갖고 싶었던 물건인데 이런 가격에!", img: "https://via.placeholder.com/40" },
+    { id: 2, name: "김예지", text: "너무 예뻐요~~", img: "https://via.placeholder.com/40" },
+    { id: 3, name: "홍길동", text: "진짜 사고 싶어요!", img: "https://via.placeholder.com/40" },
+    { id: 4, name: "박지민", text: "이거 재고 있나요?", img: "https://via.placeholder.com/40" },
+    { id: 5, name: "최민수", text: "배송 언제 되나요?", img: "https://via.placeholder.com/40" },
+    { id: 6, name: "이수진", text: "사고 싶어서 기다리고 있어요!", img: "https://via.placeholder.com/40" },
+    { id: 7, name: "김도현", text: "혹시 사이즈 변경 가능할까요?", img: "https://via.placeholder.com/40" },
+    { id: 8, name: "이찬우", text: "이 제품 사진이 더 있나요?", img: "https://via.placeholder.com/40" },
+    { id: 9, name: "홍길동", text: "특가 세일이 있나요?", img: "https://via.placeholder.com/40" },
   ];
 
   const [visibleComments, setVisibleComments] = useState([]);
   const [index, setIndex] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -595,6 +597,10 @@ const ModalLive = () => {
 
     return () => clearInterval(interval);
   }, [comments, index]);
+  
+    const toggleDropdown = () => {
+      setIsOpen((prev) => !prev);
+    };
 
   return (
     <>
@@ -625,47 +631,30 @@ const ModalLive = () => {
               <div className='countdown'><CountdownCircle /></div>
             </LivePoint>
           </Live>
-          <SellItemsmb>
-            <h2>판매중인 상품</h2>
-            <FontAwesomeIcon icon={faChevronDown}/>
-          </SellItemsmb>
-          <SellItemsinfomb>
-          <SellItemImgmb>
-            <div className='sellItemImg'></div>
-            <img src={SellItem1Img} alt="SellItem1Img" height="70px" width="70px" />
-            </SellItemImgmb>
-              <SellItemDescmb>
-                <p>★5%추가할인★스프라이트 백트임 긴팔니트</p>
-                <b><span>30%</span>19,900원</b>
-              </SellItemDescmb>
-          </SellItemsinfomb>
-          {/* <CommenstMb>
-              <CommentLiveInfomb>
-                  <img src='/img/commentProfile1.jpg'/>
-                  <div className='desc'>
-                    <h3>이승연</h3>
-                    <p>제가 너무 갖고 싶었던 물건인데 이런 가격에!</p>
-                  </div>
-              </CommentLiveInfomb>
-              <CommentLiveInfomb>
-                  <img src='/img/commentProfile2.jpg'/>
-                  <div className='desc'>
-                    <h3>김예지</h3>
-                    <p>너무 예뻐요~~</p>
-                  </div>
-              </CommentLiveInfomb>
-          </CommenstMb> */}
-          <Commenstmb>
-            {visibleComments.map((comment) => (
-              <CommentLiveInfomb key={comment.id}>
-                <img src={`/img/commentProfile${comment.id}.jpg`} alt={`${comment.name}의 프로필`} />
-                <div className='desc'>
-                <h3>{comment.name}</h3>
-                <p>{comment.text}</p>
-              </div>
-            </CommentLiveInfomb>
-            ))}
-          </Commenstmb>
+          <SellItemsmb onClick={toggleDropdown}>
+        <h2>판매중인 상품</h2>
+        <FontAwesomeIcon icon={faChevronDown} />
+      </SellItemsmb>
+      <SellItemsinfomb isOpen={isOpen}>
+        <SellItemImgmb>
+          <img src={SellItem1Img} alt="SellItem1Img" />
+        </SellItemImgmb>
+        <SellItemDescmb>
+          <p>★5%추가할인★스프라이트 백트임 긴팔니트</p>
+          <b><span>30%</span>19,900원</b>
+        </SellItemDescmb>
+      </SellItemsinfomb>
+      <Commenstmb>
+      {visibleComments.map((comment) => (
+        <CommentLiveInfomb key={comment.id}>
+          <img src={comment.img} alt={`${comment.name}의 프로필`} />
+          <div className='desc'>
+            <h3>{comment.name}</h3>
+            <p>{comment.text}</p>
+          </div>
+        </CommentLiveInfomb>
+      ))}
+    </Commenstmb>
         </LeftContent>
         <RightContent>
           <LiveProfile>
@@ -710,18 +699,18 @@ const ModalLive = () => {
           </SellItems>
           <Comment>
             <h3>댓글</h3>
-            <span>영상과 무관하거나 욕설, 비방 등의 댓글은 관리자에 의해 삭제될 수 있습니다.</span>
-            <NoComment>
+            {/* <span>영상과 무관하거나 욕설, 비방 등의 댓글은 관리자에 의해 삭제될 수 있습니다.</span> */}
+            {/* <NoComment>
               <div className='commentIcon'>
               <FontAwesomeIcon className='faComments' icon={faComments} />
               </div>
               <p>댓글이 없습니다. <br/> 첫 번째 댓글을 남겨주세요.</p>
             </NoComment>
-            <div className='test'></div>
+            <div className='test'></div> */}
             {/* <CommentWrite><PostUploadField/></CommentWrite> */}
           </Comment>
         </RightContent>
-        <LiveProfilemb>
+        {/* <LiveProfilemb>
             <div className='profileImgmb'>
             <img src={LiveProfileImg} alt="LiveProfileImgmb" />
             </div>
@@ -729,10 +718,10 @@ const ModalLive = () => {
               <div className='profileNamemb'><h4>미니멀데이</h4></div>
               <div className='profiledescmb'>가을옷 보러오세요~~</div>
             </LiveProfileSelfmb>
-        </LiveProfilemb>
+        </LiveProfilemb> */}
       </Commerce>
     </>
   )
 }
 
-export default ModalLive
+export default ModalLive;

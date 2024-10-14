@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
-import { DataDispatchContext } from "../../App.jsx";
-import CommentList from "../Mypage/CommentList";
+import { DataDispatchContext, DataStateContext } from "../../App.jsx";
+
 import styled from "styled-components";
 
 import {
@@ -12,6 +12,7 @@ import {
 import { FaRegHeart, FaRegComment } from "react-icons/fa";
 import { FaRegBookmark } from "react-icons/fa6";
 import { FiShare } from "react-icons/fi";
+import CommentSection from "./Comment.jsx";
 
 const SocialIcon = styled.div`
   ${MainTitle_18_n}
@@ -23,6 +24,7 @@ const SocialIcon = styled.div`
   padding: 0 10px 20px;
   border-bottom: 1px solid var(--color-light-gray-01);
   color: ${(props) => props.theme.textColor};
+  /* margin-bottom: 20px; */
   .socialIcon {
     cursor: pointer;
     display: flex;
@@ -41,6 +43,7 @@ const SocialIcon = styled.div`
     &:hover {
       color: var(--color-facebookblue) !important;
     }
+
     .socialIconText {
       ${SubDescription_16_n}
       color: ${(props) => props.theme.textColor};
@@ -51,28 +54,23 @@ const SocialIcon = styled.div`
   }
 `;
 
-const SocialBtnIcon = ({ postId, isLiked }) => {
+const SocialBtnIcon = ({ post }) => {
   const { onToggleLike } = useContext(DataDispatchContext);
+  const currentUser = useContext(DataStateContext);
+  console.log(currentUser);
   const [toggle, setToggle] = useState(false);
   const [like, setLike] = useState(false);
   const [save, setSave] = useState(false);
-
-  const handleCommentToggle = () => {
-    setToggle((prev) => !prev);
-  };
+  const handleCommentToggle = () => setToggle((prev) => !prev);
   const handleLikeToggle = async (e) => {
     e.preventDefault();
     try {
-      await onToggleLike(postId, like);
+      await onToggleLike(post.id, like);
       setLike((prev) => !prev);
     } catch (err) {
       console.error("Like error", err);
     }
   };
-  const handlSaveToggle = () => {
-    setSave((prev) => !prev);
-  };
-
   const shareKakao = () => {
     confirm("게시물을 공유하시겠습니까?");
     // if (confirm) {
@@ -145,6 +143,9 @@ const SocialBtnIcon = ({ postId, isLiked }) => {
     //   });
     // }
   };
+  if (!post) {
+    return <p>Loading...</p>; // 데이터가 로드되지 않은 상태 처리
+  }
 
   return (
     <>
@@ -172,7 +173,7 @@ const SocialBtnIcon = ({ postId, isLiked }) => {
           </div>
         </div>
         <div
-          onClick={handlSaveToggle}
+          // onClick={handlSaveToggle}
           style={{
             color: !save
               ? "${(props) => props.theme.textColor}"
@@ -184,9 +185,7 @@ const SocialBtnIcon = ({ postId, isLiked }) => {
           <div className="socialIconText">저장하기</div>
         </div>
       </SocialIcon>
-      <div style={{ display: !toggle ? "none" : "block" }}>
-        <CommentList />
-      </div>
+      {toggle && <CommentSection post={post} currentUser={currentUser} />}
     </>
   );
 };

@@ -298,7 +298,6 @@ const Mainlive = () => {
       currency: "KRW",
     }).format(item?.products?.discountPrice),
   }));
-  console.log(data);
 
   const settings = {
     dots: false,

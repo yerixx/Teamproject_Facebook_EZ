@@ -265,7 +265,7 @@ const Mainupload = ({ placeholder }) => {
     try {
       await onCreatePost(
         currentUserData.userId,
-        `${currentUserData.userName.firstName} ${currentUserData.userName.lastName}`,
+        `${currentUserData.userName.firstName}${currentUserData.userName.lastName}`,
         uploadText,
         imageUrl
       );
