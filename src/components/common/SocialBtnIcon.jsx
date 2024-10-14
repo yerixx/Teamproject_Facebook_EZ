@@ -13,6 +13,7 @@ import { FaRegHeart, FaRegComment } from "react-icons/fa";
 import { FaRegBookmark } from "react-icons/fa6";
 import { FiShare } from "react-icons/fi";
 import CommentSection from "./Comment.jsx";
+import Kakao from "./kakao.jsx";
 
 const SocialIcon = styled.div`
   ${MainTitle_18_n}
@@ -30,7 +31,7 @@ const SocialIcon = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
-
+    position: relative;
     @media (max-width: 768px) {
       width: 50%;
       justify-content: center;
@@ -40,8 +41,9 @@ const SocialIcon = styled.div`
         margin-right: 0px;
       }
     }
-    &:hover {
-      color: var(--color-facebookblue) !important;
+
+    &:hover > svg {
+      color: var(--color-facebookblue);
     }
 
     .socialIconText {
@@ -60,6 +62,7 @@ const SocialBtnIcon = ({ post }) => {
   console.log(currentUser);
   const [toggle, setToggle] = useState(false);
   const [like, setLike] = useState(false);
+  const [share, setShare] = useState(false);
   const [save, setSave] = useState(false);
   const handleCommentToggle = () => setToggle((prev) => !prev);
   const handleLikeToggle = async (e) => {
@@ -72,7 +75,7 @@ const SocialBtnIcon = ({ post }) => {
     }
   };
   const shareKakao = () => {
-    confirm("게시물을 공유하시겠습니까?");
+    setShare((prev) => !prev);
   };
   if (!post) {
     return <p>Loading...</p>; // 데이터가 로드되지 않은 상태 처리
@@ -102,6 +105,7 @@ const SocialBtnIcon = ({ post }) => {
           <div onClick={shareKakao} className="socialIconText">
             공유하기
           </div>
+          {share ? <Kakao shareKakao={shareKakao} /> : ""}
         </div>
         <div
           // onClick={handlSaveToggle}
