@@ -10,6 +10,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase.js";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { SubDescription_14_n } from "../../styles/GlobalStyles.styles.js";
+import defaultProfile from "/img/defaultProfile.jpg";
 
 // Styled-components
 const Wrapper = styled.div`
@@ -152,13 +153,11 @@ const InfoItem = styled.div`
     }
   }
   .camera {
-    /* padding: 4px 10px; */
     font-size: 30px;
     border-radius: 50%;
-    color: ${(props) => props.theme.iconColorB} !important;
+    color: ${(props) => props.theme.iconColorB};
     cursor: pointer;
     transition: all 0.3s;
-
     &:hover {
       padding: 4px 10px;
       border-radius: 50%;
@@ -273,7 +272,7 @@ const UploadModal = ({
             <div className="info">
               <img
                 className="profileImg"
-                src={currentUserData.fileImage || imageSrc}
+                src={currentUserData.fileImage || defaultProfile}
                 alt="profile Image"
               ></img>
               <div className="profilename">

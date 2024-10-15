@@ -13,6 +13,7 @@ export const darkTheme = {
   iconColorB: "#fff",
   cardBtnColorA: "#C9D1D9",
   cardBtnColorB: "#C9D1D9",
+  btnTextColor: "#0D1117",
   boxShadow: "rgba(0, 0, 0, 0.8)",
 };
 export const lightTheme = {
@@ -30,5 +31,6 @@ export const lightTheme = {
   iconColorB: "#000",
   cardBtnColorA: "var(--color-facebookblue)",
   cardBtnColorB: "var(--color-light-gray-01)",
+  btnTextColor: "#0D1117",
   boxShadow: "rgba(182, 182, 182, 0.8)",
 };
