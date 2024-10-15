@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { SiKakao } from "react-icons/si";
 import { IoCopyOutline } from "react-icons/io5";
 import { IoCloseOutline } from "react-icons/io5";
-import {
-  MainTitle_18_b,
-  MainTitle_22_b,
-} from "../../styles/GlobalStyles.styles";
+import { MainTitle_18_b } from "../../styles/GlobalStyles.styles";
 
 const Wrapper = styled.div`
   display: flex;
@@ -72,27 +68,25 @@ const Button = styled.div`
 
 const Kakao = ({ shareKakao }) => {
   const [url, setUrl] = useState("");
+  const [isKakaoReady, setIsKakaoReady] = useState(false);
   const closeModal = (e) => {
     e.stopPropagation(); // 모달 외부로 전파되지 않음
     shareKakao(e);
   };
 
   useEffect(() => {
-    // 1. Kakao SDK 스크립트 동적 로드
+    setUrl(window.location.href); // 현재 페이지의 URL 설정
     const script = document.createElement("script");
     script.src = "https://developers.kakao.com/sdk/js/kakao.min.js";
     script.async = true;
     document.body.appendChild(script);
-
-    // 2. SDK 로드 완료 후 초기화
     script.onload = () => {
       if (!window.Kakao.isInitialized()) {
-        window.Kakao.init("e0ade8708d9d362fd3988c329366a281"); // 여기에 본인의 JavaScript 키를 입력하세요
-        console.log("Kakao SDK initialized:", window.Kakao.isInitialized());
+        window.Kakao.init("e0ade8708d9d362fd3988c329366a281"); // 실제 앱 키로 대체하세요
       }
+      setIsKakaoReady(true); // SDK 로드 완료 후 활성화
     };
-    setUrl(window.location.href);
-    // 3. 컴포넌트 언마운트 시 스크립트 제거
+
     return () => {
       document.body.removeChild(script);
     };
@@ -100,9 +94,8 @@ const Kakao = ({ shareKakao }) => {
 
   // 4. 카카오톡 공유 함수
   const shareToKakao = () => {
-    if (window.Kakao) {
-      Kakao.Share.createDefaultButton({
-        container: "#kakaotalk-sharing-btn",
+    if (window.Kakao && window.Kakao.Link) {
+      window.Kakao.Link.sendDefault({
         objectType: "feed",
         content: {
           title: "오늘의 디저트",
@@ -122,7 +115,7 @@ const Kakao = ({ shareKakao }) => {
         ],
       });
     } else {
-      console.error("Kakao SDK is not loaded yet.");
+      console.error("Kakao SDK가 아직 준비되지 않았거나 오류가 있습니다.");
     }
   };
   const copyUrlToClipboard = async () => {
@@ -138,7 +131,7 @@ const Kakao = ({ shareKakao }) => {
       <IoCloseOutline onClick={shareKakao} />
       <h3>공유하기</h3>
       <ButtonContainer>
-        <Button onClick={closeModal}>
+        <Button onClick={isKakaoReady ? shareToKakao : null}>
           <img
             src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"
             alt="카카오톡 공유"
