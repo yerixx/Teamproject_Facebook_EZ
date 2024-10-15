@@ -620,7 +620,7 @@ const ModalLive = ({ item, closeModal }) => {
       <Commerce>
         <LeftContent>
           <Live>
-            <video src={item?.liveStream?.videoUrl} autoPlay loop></video>
+            <video src={item?.liveStream?.videoUrl} loop></video>
             <LiveStatus>
               <div className="fbLogo">
                 <img src={fbIcon} />

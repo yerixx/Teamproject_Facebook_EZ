@@ -1,4 +1,4 @@
-import React, { useState } from "react"; // useContext 제거
+import React, { useContext, useState } from "react"; // useContext 제거
 import styled from "styled-components";
 import { FiX } from "react-icons/fi";
 import { CiCamera } from "react-icons/ci";
@@ -6,12 +6,12 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { storage, db } from "../../firebase";
 import {
+  MainTitle_18_n,
   SubDescription_12_m,
   SubDescription_14_n,
+  SubDescription_16_n,
 } from "../../styles/GlobalStyles.styles";
-
-// 최대 비디오 파일 크기 (50MB)
-const MAX_VIDEO_SIZE = 50 * 1024 * 1024; // 50MB
+import { DataStateContext } from "../../App";
 
 // 전체 모달을 감싸는 스타일 컴포넌트
 const WrapperForm = styled.form`
@@ -29,13 +29,13 @@ const WrapperForm = styled.form`
 
 // 모달 내부 콘텐츠의 스타일 컴포넌트
 const Inner = styled.div`
-  width: 400px;
+  width: 50%;
   border-radius: 30px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   padding: 20px;
   @media screen and (max-width: 768px) {
-    width: 70%;
+    width: 90%;
   }
   .modaltitle {
     display: flex;
@@ -84,92 +84,97 @@ const Inner = styled.div`
 
   .storyupload {
     padding: 0 60px;
+
     .storyimage,
     .storyvideo {
       width: 100%;
       max-width: 650px;
-      height: 600px;
+      height: 100%;
       display: flex;
       justify-content: center;
       margin-bottom: 20px;
       img,
       video {
-        width: 100%;
-        height: 60%;
+        width: 300px;
+        height: 300px;
         border-radius: 8px;
-      }
-    }
-
-    .storyvideo {
-      /* 비디오 전용 추가 스타일 */
-      video {
-        border: 2px solid #d3d3d3;
-        border-radius: 8px;
-        /* 추가적인 스타일을 원하시면 여기에 작성 */
-      }
-    }
-
-    div {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      .camera {
-        padding: 4px 10px;
-        border: 1px solid #d3d3d3;
-        width: 100%;
-        height: 360px;
-        font-size: 70px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 20px;
-        cursor: pointer;
-        transition: all 0.3s;
-
-        &:hover {
-          color: var(--color-facebookblue);
-        }
-
-        .camera_icon {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          .text {
-            font-size: 20px;
-          }
-        }
-      }
-      .storytext {
-        width: 100%;
-        height: 100px;
-        border-radius: 8px;
-        padding: 10px;
-        ${SubDescription_14_n}
-        border: 1px solid #ccc;
-        resize: vertical;
-        margin-bottom: 20px;
         @media screen and (max-width: 768px) {
-          border: 1px solid red;
-          ${SubDescription_12_m}
+          width: 250px;
+          height: 280px;
         }
       }
-      button {
-        background: var(--color-facebookblue);
-        width: 100%;
-        height: 55px;
-        border-radius: 8px;
-        border: none;
-        font-size: 26px;
-        font-weight: bold;
-        color: #fff;
+    }
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .camera {
+      padding: 4px 10px;
+      border: 1px solid #d3d3d3;
+      width: 400px;
+      height: 360px;
+      font-size: 70px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+      @media screen and (max-width: 768px) {
+        width: 250px;
+        height: 280px;
+      }
+
+      &:hover {
+        color: var(--color-facebookblue);
+      }
+
+      .camera_icon {
         display: flex;
+        flex-direction: column;
         align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        &:disabled {
-          background: #ccc;
-          cursor: not-allowed;
+        .text {
+          font-size: 20px;
         }
+      }
+    }
+    .storytext {
+      width: 100%;
+      height: 100px;
+      border-radius: 8px;
+      padding: 10px;
+      ${SubDescription_14_n}
+      border: 1px solid #ccc;
+      resize: vertical;
+      margin-bottom: 20px;
+      @media screen and (max-width: 768px) {
+        border: 1px solid red;
+        ${SubDescription_12_m}
+      }
+    }
+    button {
+      background: ${(props) =>
+        props.disabled || (!props.hasImage && !props.hasVideo)
+          ? "#ccc"
+          : "var(--color-facebookblue)"};
+      width: 100%;
+      height: 55px;
+      border-radius: 8px;
+      border: none;
+      ${MainTitle_18_n}
+      font-weight: bold;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: ${(props) =>
+        props.disabled || (!props.hasImage && !props.hasVideo)
+          ? "not-allowed"
+          : "pointer"};
+      @media screen and (max-width: 768px) {
+        ${SubDescription_16_n}
       }
     }
   }
@@ -178,10 +183,12 @@ const Inner = styled.div`
 // Mainstorymodal 컴포넌트 정의
 const Mainstorymodal = ({ onClose }) => {
   const [storyText, setStoryText] = useState(""); // 스토리 텍스트 상태
+  const [storyName, setStoryName] = useState(""); // 스토리 텍스트 상태
   const [storyImage, setStoryImage] = useState(null); // 이미지 파일 상태
   const [storyVideo, setStoryVideo] = useState(null); // 비디오 파일 상태
   const [uploading, setUploading] = useState(false); // 업로드 상태
   const [error, setError] = useState(null); // 에러 메시지 상태
+  const { currentUserData } = useContext(DataStateContext);
 
   // 이미지 파일 처리
   const handleImageChange = (e) => {
@@ -230,11 +237,13 @@ const Mainstorymodal = ({ onClose }) => {
         text: storyText,
         imageUrl,
         videoUrl,
+        name: currentUserData.userName,
         createdAt: Timestamp.fromDate(new Date()),
       });
 
       // 상태 초기화
       setStoryText(""); // 텍스트 초기화
+      setStoryName(""); // name 초기화
       setStoryImage(null); // 이미지 초기화
       setStoryVideo(null); // 비디오 초기화
       onClose(); // 모달 닫기
@@ -250,7 +259,7 @@ const Mainstorymodal = ({ onClose }) => {
 
   return (
     <WrapperForm onSubmit={handleSubmit}>
-      <Inner>
+      <Inner hasImage={!!storyImage} hasVideo={!!storyVideo}>
         <div className="modaltitle">
           <div className="title">스토리 올리기</div>
           <div className="xmark" onClick={onClose}>
@@ -298,7 +307,10 @@ const Mainstorymodal = ({ onClose }) => {
               </div>
             )}
             {error && <p style={{ color: "red" }}>{error}</p>}
-            <button type="submit" disabled={uploading}>
+            <button
+              type="submit"
+              disabled={uploading || (!storyImage && !storyVideo)}
+            >
               {uploading ? "업로드 중..." : "스토리 게시하기"}
             </button>
           </div>
@@ -308,4 +320,4 @@ const Mainstorymodal = ({ onClose }) => {
   );
 };
 
-export default Mainstorymodal; // 컴포넌트 내보내기
+export default Mainstorymodal;

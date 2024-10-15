@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react"; // useState 임포트 추가
+import React, { useState, useContext, useEffect } from "react"; // useContext 추가
 import { DataStateContext } from "../../App.jsx";
 import styled from "styled-components";
 import { FaUser, FaPlus } from "react-icons/fa6";
@@ -10,54 +10,6 @@ import { MdOutlineNavigateNext, MdOutlineNavigateBefore } from "react-icons/md";
 import Mainstorymodal from "../Main/Mainstorymodal";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { storage, db } from "../../firebase";
-
-const mockData = [
-  {
-    id: 1,
-    name: "김정하",
-    imgSrc: "/img/test2.jpg",
-  },
-  {
-    id: 2,
-    name: "박예림",
-    imgSrc: "/img/test1.jpg",
-  },
-  {
-    id: 3,
-    name: "김예지",
-    imgSrc: "/img/test.jpg",
-  },
-  {
-    id: 4,
-    name: "박태환",
-    imgSrc: "/img/test3.jpg",
-  },
-  {
-    id: 5,
-    name: "지성준",
-    imgSrc: "/img/test4.jpg",
-  },
-  {
-    id: 6,
-    name: "이승연",
-    imgSrc: "/img/test5.jpg",
-  },
-  {
-    id: 7,
-    name: "한지훈",
-    imgSrc: "/img/test6.jpg",
-  },
-  {
-    id: 8,
-    name: "원 빈",
-    imgSrc: "/img/test7.jpg",
-  },
-  {
-    id: 9,
-    name: "피넛",
-    imgSrc: "/img/test8.jpg",
-  },
-];
 
 const Wrapper = styled.div`
   width: 100%;
@@ -191,6 +143,14 @@ const StoryFriend = styled.div`
     object-fit: cover;
     object-position: center;
   }
+  .storyvideo {
+    video {
+      width: 100%; /* 비디오 너비를 부모 요소에 맞추기 */
+      height: 100%; /* 비디오 높이를 부모 요소에 맞추기 */
+      object-fit: cover;
+      object-position: center; /* 비디오가 비율을 유지하며 화면에 맞게 표시 */
+    }
+  }
   .storyInfo {
     width: 100%;
     .story {
@@ -257,8 +217,6 @@ const NextBtn = styled.span`
   scale: 0.8;
   cursor: pointer;
   opacity: 0.4;
-  transition: all 0.3s;
-  scale: 0.8;
   svg {
     margin-left: 5px;
   }
@@ -299,8 +257,6 @@ const PrevBtn = styled.span`
   scale: 0.8;
   cursor: pointer;
   opacity: 0.4;
-  transition: all 0.3s;
-  scale: 0.8;
   svg {
     margin-left: 3px;
   }
@@ -326,7 +282,7 @@ const MainStory = () => {
   const [currentSlide, setCurrentSlide] = useState(0); // 현재 슬라이드 상태
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태 관리
   const [storys, setStorys] = useState([]);
-  const [setPostImage] = useState(null); // 모달에서 업로드된 이미지 상태
+  const [postImage, setPostImage] = useState(null); // 모달에서 업로드된 이미지 상태
   const { currentUserData } = useContext(DataStateContext);
 
   useEffect(() => {
@@ -349,7 +305,7 @@ const MainStory = () => {
     };
     fetchStorys();
   }, []);
-
+  console.log(storys);
   // 모달 열기 핸들러
   const openModal = () => {
     setIsModalOpen(true); // 모달을 열기 위해 상태를 true로 설정
@@ -361,10 +317,12 @@ const MainStory = () => {
   };
 
   // 모달 제출 핸들러
-  const handleModalSubmit = ({ text, image }) => {
+  const handleModalSubmit = ({ text, image, video }) => {
     // 제출된 데이터 처리
-    console.log("모달 제출 데이터:", text, image); // 콘솔에 제출 데이터 출력
-    setPostImage(image); // 제출된 이미지를 상태에 저장
+    console.log("모달 제출 데이터:", text, image, video); // 콘솔에 제출 데이터 출력
+    if (image) setPostImage(image); // 제출된 이미지를 상태에 저장
+    // 비디오도 저장하려면 별도의 상태 관리 필요
+    // 예: setPostVideo(video);
     setIsModalOpen(false); // 모달을 닫음
   };
 
@@ -381,7 +339,7 @@ const MainStory = () => {
     autoplaySpeed: 5000,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow currentSlide={currentSlide} />,
-    beforeChange: (next) => setCurrentSlide(next), // 슬라이드 변경 전 현재 슬라이드 업데이트
+    beforeChange: (current, next) => setCurrentSlide(next), // 슬라이드 변경 전 현재 슬라이드 업데이트
     responsive: [
       {
         breakpoint: 900, // 900px 이하일 때 설정
@@ -414,31 +372,46 @@ const MainStory = () => {
               </span>
               <h2>스토리 만들기</h2>
             </StoryItem>
-            {storys.map(
-              (
-                friend // 친구 데이터 배열을 맵으로 순회
-              ) => (
-                <StoryFriend key={friend.id}>
-                  <img src={friend.imageUrl} alt="스토리" />
-                  <div className="storyInfo">
-                    <div className="story">
-                      <div className="storyProfile">
-                        <img
-                          className="profileImg"
-                          src={
-                            currentUserData?.profileImage ||
-                            "/img/defaultProfile.jpg"
-                          }
-                          alt="Profile"
-                        />
-                      </div>
-                      {/*스토리 프로필*/}
-                    </div>
-                    <div className="storyName">{friend.name}</div>
+            {storys.map((story) => (
+              <StoryFriend key={story.id}>
+                {story.imageUrl && (
+                  <img src={story.imageUrl} alt="스토리 이미지" />
+                )}
+                {story.videoUrl && (
+                  <div className="storyvideo">
+                    <video muted loop>
+                      <source src={story.videoUrl} type="video/mp4" />
+                      지원되지 않는 비디오 형식입니다.
+                    </video>
                   </div>
-                </StoryFriend>
-              )
-            )}
+                )}
+                <div className="storyInfo">
+                  <div className="story">
+                    <div className="storyProfile">
+                      <img
+                        className="profileImg"
+                        src={
+                          currentUserData?.profileImage ||
+                          "/img/defaultProfile.jpg"
+                        }
+                        alt="Profile"
+                      />
+                    </div>
+                    {/*스토리 프로필*/}
+                  </div>
+                  <dv className="storyName">
+                    {story.name ? (
+                      <>
+                        {story?.name?.firstName}
+                        {story?.name?.lastName}
+                      </>
+                    ) : (
+                      "알수없는 사용자"
+                    )}
+                  </dv>
+                </div>
+              </StoryFriend>
+            ))}
           </Slider>
         </Items>
       </Inner>
