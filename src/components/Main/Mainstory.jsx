@@ -379,7 +379,7 @@ const MainStory = () => {
                 )}
                 {story.videoUrl && (
                   <div className="storyvideo">
-                    <video muted loop>
+                    <video autoPlay muted loop>
                       <source src={story.videoUrl} type="video/mp4" />
                       지원되지 않는 비디오 형식입니다.
                     </video>
@@ -399,7 +399,7 @@ const MainStory = () => {
                     </div>
                     {/*스토리 프로필*/}
                   </div>
-                  <dv className="storyName">
+                  <div className="storyName">
                     {story.name ? (
                       <>
                         {story?.name?.firstName}
@@ -408,7 +408,7 @@ const MainStory = () => {
                     ) : (
                       "알수없는 사용자"
                     )}
-                  </dv>
+                  </div>
                 </div>
               </StoryFriend>
             ))}

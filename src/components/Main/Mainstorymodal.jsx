@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"; // useContext 제거
+import React, { useState, useEffect } from "react"; // useContext 제거
 import styled from "styled-components";
 import { FiX } from "react-icons/fi";
 import { CiCamera } from "react-icons/ci";
@@ -6,12 +6,15 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { storage, db } from "../../firebase";
 import {
-  MainTitle_18_n,
   SubDescription_12_m,
   SubDescription_14_n,
-  SubDescription_16_n,
 } from "../../styles/GlobalStyles.styles";
-import { DataStateContext } from "../../App";
+
+// 최대 비디오 파일 크기 (50MB)
+const MAX_VIDEO_SIZE = 50 * 1024 * 1024; // 50MB
+
+// 지원되는 비디오 형식
+const SUPPORTED_VIDEO_FORMATS = ["video/mp4", "video/avi", "video/mov"];
 
 // 전체 모달을 감싸는 스타일 컴포넌트
 const WrapperForm = styled.form`
@@ -29,13 +32,13 @@ const WrapperForm = styled.form`
 
 // 모달 내부 콘텐츠의 스타일 컴포넌트
 const Inner = styled.div`
-  width: 50%;
+  width: 400px;
   border-radius: 30px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   padding: 20px;
   @media screen and (max-width: 768px) {
-    width: 90%;
+    width: 70%;
   }
   .modaltitle {
     display: flex;
@@ -84,97 +87,92 @@ const Inner = styled.div`
 
   .storyupload {
     padding: 0 60px;
-
     .storyimage,
     .storyvideo {
       width: 100%;
       max-width: 650px;
-      height: 100%;
+      height: 600px;
       display: flex;
       justify-content: center;
       margin-bottom: 20px;
       img,
       video {
-        width: 300px;
-        height: 300px;
+        width: 100%;
+        height: 60%;
         border-radius: 8px;
-        @media screen and (max-width: 768px) {
-          width: 250px;
-          height: 280px;
-        }
       }
     }
-  }
 
-  div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    .camera {
-      padding: 4px 10px;
-      border: 1px solid #d3d3d3;
-      width: 400px;
-      height: 360px;
-      font-size: 70px;
+    .storyvideo {
+      /* 비디오 전용 추가 스타일 */
+      video {
+        border: 2px solid #d3d3d3;
+        border-radius: 8px;
+        /* 추가적인 스타일을 원하시면 여기에 작성 */
+      }
+    }
+
+    div {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      margin-bottom: 20px;
-      cursor: pointer;
-      transition: all 0.3s;
-      @media screen and (max-width: 768px) {
-        width: 250px;
-        height: 280px;
-      }
-
-      &:hover {
-        color: var(--color-facebookblue);
-      }
-
-      .camera_icon {
+      .camera {
+        padding: 4px 10px;
+        border: 1px solid #d3d3d3;
+        width: 100%;
+        height: 360px;
+        font-size: 70px;
         display: flex;
-        flex-direction: column;
+        justify-content: center;
         align-items: center;
-        .text {
-          font-size: 20px;
+        margin-bottom: 20px;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        &:hover {
+          color: var(--color-facebookblue);
+        }
+
+        .camera_icon {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          .text {
+            font-size: 20px;
+          }
         }
       }
-    }
-    .storytext {
-      width: 100%;
-      height: 100px;
-      border-radius: 8px;
-      padding: 10px;
-      ${SubDescription_14_n}
-      border: 1px solid #ccc;
-      resize: vertical;
-      margin-bottom: 20px;
-      @media screen and (max-width: 768px) {
-        border: 1px solid red;
-        ${SubDescription_12_m}
+      .storytext {
+        width: 100%;
+        height: 100px;
+        border-radius: 8px;
+        padding: 10px;
+        ${SubDescription_14_n}
+        border: 1px solid #ccc;
+        resize: vertical;
+        margin-bottom: 20px;
+        @media screen and (max-width: 768px) {
+          border: 1px solid red;
+          ${SubDescription_12_m}
+        }
       }
-    }
-    button {
-      background: ${(props) =>
-        props.disabled || (!props.hasImage && !props.hasVideo)
-          ? "#ccc"
-          : "var(--color-facebookblue)"};
-      width: 100%;
-      height: 55px;
-      border-radius: 8px;
-      border: none;
-      ${MainTitle_18_n}
-      font-weight: bold;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: ${(props) =>
-        props.disabled || (!props.hasImage && !props.hasVideo)
-          ? "not-allowed"
-          : "pointer"};
-      @media screen and (max-width: 768px) {
-        ${SubDescription_16_n}
+      button {
+        background: var(--color-facebookblue);
+        width: 100%;
+        height: 55px;
+        border-radius: 8px;
+        border: none;
+        font-size: 26px;
+        font-weight: bold;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        &:disabled {
+          background: #ccc;
+          cursor: not-allowed;
+        }
       }
     }
   }
@@ -183,12 +181,31 @@ const Inner = styled.div`
 // Mainstorymodal 컴포넌트 정의
 const Mainstorymodal = ({ onClose }) => {
   const [storyText, setStoryText] = useState(""); // 스토리 텍스트 상태
-  const [storyName, setStoryName] = useState(""); // 스토리 텍스트 상태
   const [storyImage, setStoryImage] = useState(null); // 이미지 파일 상태
   const [storyVideo, setStoryVideo] = useState(null); // 비디오 파일 상태
   const [uploading, setUploading] = useState(false); // 업로드 상태
   const [error, setError] = useState(null); // 에러 메시지 상태
-  const { currentUserData } = useContext(DataStateContext);
+
+  const [imagePreview, setImagePreview] = useState(null); // 이미지 미리보기 URL 상태
+  const [videoPreview, setVideoPreview] = useState(null); // 비디오 미리보기 URL 상태
+
+  // 이미지 파일 처리 및 미리보기 URL 설정
+  useEffect(() => {
+    if (storyImage) {
+      const imgUrl = URL.createObjectURL(storyImage);
+      setImagePreview(imgUrl);
+      return () => URL.revokeObjectURL(imgUrl); // 컴포넌트 언마운트 시 URL 해제
+    }
+  }, [storyImage]);
+
+  // 비디오 파일 처리 및 미리보기 URL 설정
+  useEffect(() => {
+    if (storyVideo) {
+      const vidUrl = URL.createObjectURL(storyVideo);
+      setVideoPreview(vidUrl);
+      return () => URL.revokeObjectURL(vidUrl); // 컴포넌트 언마운트 시 URL 해제
+    }
+  }, [storyVideo]);
 
   // 이미지 파일 처리
   const handleImageChange = (e) => {
@@ -199,7 +216,18 @@ const Mainstorymodal = ({ onClose }) => {
   // 비디오 파일 처리
   const handleVideoChange = (e) => {
     const file = e.target.files[0]; // 선택된 파일
-    if (file) setStoryVideo(file); // 파일이 존재하면 상태 업데이트
+    if (file) {
+      // 파일 크기 및 형식 검증 (옵션)
+      if (file.size > MAX_VIDEO_SIZE) {
+        setError("비디오 파일 크기는 50MB 이하이어야 합니다.");
+        return;
+      }
+      if (!SUPPORTED_VIDEO_FORMATS.includes(file.type)) {
+        setError("지원되지 않는 비디오 형식입니다.");
+        return;
+      }
+      setStoryVideo(file); // 파일이 존재하면 상태 업데이트
+    }
   };
 
   // 폼 제출 처리
@@ -207,6 +235,7 @@ const Mainstorymodal = ({ onClose }) => {
     e.preventDefault(); // 기본 폼 제출 방지
     setUploading(true); // 업로드 시작
     setError(null); // 에러 초기화
+    console.log("Form submission started");
 
     try {
       let imageUrl = ""; // 이미지 URL 초기화
@@ -214,36 +243,40 @@ const Mainstorymodal = ({ onClose }) => {
 
       // 이미지 업로드 처리
       if (storyImage) {
+        console.log("이미지 업로드 시작");
         const imageRef = ref(
           storage,
           `images/${storyImage.name}-${Date.now()}`
         );
         const imageSnapshot = await uploadBytes(imageRef, storyImage);
         imageUrl = await getDownloadURL(imageSnapshot.ref);
+        console.log("이미지 업로드 완료:", imageUrl);
       }
 
       // 비디오 업로드 처리
       if (storyVideo) {
+        console.log("비디오 업로드 시작");
         const videoRef = ref(
           storage,
           `videos/${storyVideo.name}-${Date.now()}`
         );
         const videoSnapshot = await uploadBytes(videoRef, storyVideo);
         videoUrl = await getDownloadURL(videoSnapshot.ref);
+        console.log("비디오 업로드 완료:", videoUrl);
       }
 
       // Firestore에 스토리 추가
+      console.log("Firestore에 스토리 추가 시작");
       await addDoc(collection(db, "story"), {
         text: storyText,
         imageUrl,
         videoUrl,
-        name: currentUserData.userName,
         createdAt: Timestamp.fromDate(new Date()),
       });
+      console.log("Firestore에 스토리 추가 완료");
 
       // 상태 초기화
       setStoryText(""); // 텍스트 초기화
-      setStoryName(""); // name 초기화
       setStoryImage(null); // 이미지 초기화
       setStoryVideo(null); // 비디오 초기화
       onClose(); // 모달 닫기
@@ -254,12 +287,13 @@ const Mainstorymodal = ({ onClose }) => {
       alert("스토리 업로드에 실패했습니다.");
     } finally {
       setUploading(false); // 업로드 상태 종료
+      console.log("Form submission ended");
     }
   };
 
   return (
     <WrapperForm onSubmit={handleSubmit}>
-      <Inner hasImage={!!storyImage} hasVideo={!!storyVideo}>
+      <Inner>
         <div className="modaltitle">
           <div className="title">스토리 올리기</div>
           <div className="xmark" onClick={onClose}>
@@ -279,25 +313,30 @@ const Mainstorymodal = ({ onClose }) => {
                   type="file"
                   accept="image/*, video/*"
                   style={{ display: "none" }}
-                  onChange={(e) =>
-                    e.target.files[0].type.startsWith("image/")
-                      ? handleImageChange(e)
-                      : handleVideoChange(e)
-                  } // 파일 유형에 따라 처리
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file.type.startsWith("image/")) {
+                      handleImageChange(e);
+                    } else if (file.type.startsWith("video/")) {
+                      handleVideoChange(e);
+                    } else {
+                      setError("지원되지 않는 파일 형식입니다.");
+                    }
+                  }} // 파일 유형에 따라 처리
                 />
               </div>
             )}
             {storyImage && (
               <div className="storyimage">
                 <img
-                  src={URL.createObjectURL(storyImage)} // 선택한 이미지 미리보기
+                  src={imagePreview} // 선택한 이미지 미리보기
                   alt="스토리 이미지"
                 />
               </div>
             )}
             {storyVideo && (
               <div className="storyvideo">
-                <video controls>
+                <video>
                   <source
                     src={URL.createObjectURL(storyVideo)} // 선택한 비디오 미리보기
                     type={storyVideo.type}
@@ -307,10 +346,7 @@ const Mainstorymodal = ({ onClose }) => {
               </div>
             )}
             {error && <p style={{ color: "red" }}>{error}</p>}
-            <button
-              type="submit"
-              disabled={uploading || (!storyImage && !storyVideo)}
-            >
+            <button type="submit" disabled={uploading}>
               {uploading ? "업로드 중..." : "스토리 게시하기"}
             </button>
           </div>
@@ -320,4 +356,4 @@ const Mainstorymodal = ({ onClose }) => {
   );
 };
 
-export default Mainstorymodal;
+export default Mainstorymodal; // 컴포넌트 내보내기
