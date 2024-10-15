@@ -59,18 +59,19 @@ const SocialBtnIcon = ({ post }) => {
   const [like, setLike] = useState(false);
   const [save, setSave] = useState(false);
 
+  const likes = Array.isArray(post?.likes) ? post.likes.length : 0;
+
   // 포스트에 이미 좋아요를 눌렀는지 확인
   useEffect(() => {
-    // post.likes가 배열인지 확인한 후 처리
     if (
-      Array.isArray(post.likes) &&
+      Array.isArray(post?.likes) &&
       post.likes.includes(currentUserData?.userId)
     ) {
       setLike(true);
     }
     if (
       Array.isArray(currentUserData?.savedPosts) &&
-      currentUserData.savedPosts.includes(post.id)
+      currentUserData.savedPosts.includes(post?.id)
     ) {
       setSave(true);
     }
@@ -83,17 +84,15 @@ const SocialBtnIcon = ({ post }) => {
 
     try {
       if (like) {
-        // 이미 좋아요를 눌렀으면 좋아요 취소
         await updateDoc(postRef, {
           likes: arrayRemove(currentUserData.userId),
         });
       } else {
-        // 좋아요 추가
         await updateDoc(postRef, {
           likes: arrayUnion(currentUserData.userId),
         });
       }
-      setLike((prev) => !prev); // 토글 상태 업데이트
+      setLike((prev) => !prev);
     } catch (err) {
       console.error("Like error", err);
     }
@@ -104,26 +103,20 @@ const SocialBtnIcon = ({ post }) => {
 
     try {
       if (save) {
-        // 이미 저장된 상태이면 저장 취소
         await updateDoc(userRef, {
-          savedPosts: arrayRemove(post.id),
+          savedPosts: arrayRemove(post?.id),
         });
       } else {
-        // 저장하기 추가
         await updateDoc(userRef, {
-          savedPosts: arrayUnion(post.id),
+          savedPosts: arrayUnion(post?.id),
         });
       }
-      setSave((prev) => !prev); // 토글 상태 업데이트
+      setSave((prev) => !prev);
     } catch (err) {
       console.error("Save error", err);
     }
   };
 
-  // const shareKakao = () => {
-  //   confirm("게시물을 공유하시겠습니까?");
-  //   // 공유하기 로직 구현
-  // };
   const handleCopyClipBoard = async (text) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -132,6 +125,9 @@ const SocialBtnIcon = ({ post }) => {
       console.log(err);
     }
   };
+
+  // post가 없을 때 안전하게 렌더링 처리
+  if (!post) return null;
 
   return (
     <>
