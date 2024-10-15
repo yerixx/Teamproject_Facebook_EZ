@@ -161,7 +161,16 @@ const SellItemDescmb = styled.div`
 `;
 
 const CommenstMb = styled.div`
-  display: none;
+  display: flex;
+  width: 390px;
+  position: absolute;
+  bottom: 69px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  height: 100px;
   @media screen and (max-width: 768px) {
     width: 390px;
     position: absolute;
@@ -822,15 +831,17 @@ const ModalLive = ({ item, closeModal }) => {
               영상과 무관하거나 욕설, 비방 등의 댓글은 관리자에 의해 삭제될 수
               있습니다.
             </span>
-            {/* {visibleComments.map((comment) => (
-              <CommentLiveInfomb key={comment.id}>
-                <img src={comment.img} alt={`${comment.name}의 프로필`} />
-                <div className="desc">
-                  <h3>{comment.name}</h3>
-                  <p>{comment.text}</p>
-                </div>
-              </CommentLiveInfomb>
-            ))} */}
+            <CommenstMb>
+              {visibleComments.map((comment) => (
+                <CommentLiveInfomb key={comment.id}>
+                  <img src={comment.img} alt={`${comment.name}의 프로필`} />
+                  <div className="desc">
+                    <h3>{comment.name}</h3>
+                    <p>{comment.text}</p>
+                  </div>
+                </CommentLiveInfomb>
+              ))}
+            </CommenstMb>
           </Comment>
         </RightContent>
       </Commerce>
