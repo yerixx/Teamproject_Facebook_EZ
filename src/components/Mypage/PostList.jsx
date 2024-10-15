@@ -40,14 +40,20 @@ const PostList = () => {
     }
   };
 
-  const handleModalContOpen = (post) => {
-    setIsContOpen(true);
-    setPostedCont(post);
-  };
   const handleModalContClose = () => {
     setIsContOpen(false);
-    setPostedCont(null);
+    // setPostedCont(null); // 이 부분을 제거합니다.
   };
+
+  useEffect(() => {
+    console.log("Modal State Changed:", isContOpen, postedCont);
+  }, [isContOpen, postedCont]);
+
+  const handleModalContOpen = (post) => {
+    setPostedCont(post); // post를 먼저 설정한 후 모달을 엽니다.
+    setIsContOpen(true);
+  };
+
   const sortedPosts = userPosts.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
