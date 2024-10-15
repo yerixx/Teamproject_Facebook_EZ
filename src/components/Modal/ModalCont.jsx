@@ -254,18 +254,6 @@ const ModalCont = ({ post }) => {
         </LeftContent>
         <RightContent>
           <ControlsIcon>
-            <EditeIcon>
-              <EditeBox
-                //이거 쓰면됨
-                // handleEditBtn={handleEditBtn}
-                Title={
-                  <BsThreeDots
-                    style={{ marginTop: "3px" }}
-                    className="bsThreeDots"
-                  />
-                }
-              />
-            </EditeIcon>
             <CloseIcon onClick={closeButton}>
               <IoCloseOutline
                 className="closeIcon"

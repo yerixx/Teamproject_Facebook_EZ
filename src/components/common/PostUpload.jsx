@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import { DataDispatchContext, DataStateContext } from "../../App.jsx";
 
 import styled from "styled-components";
-import { SubDescription_16_n } from "../../styles/GlobalStyles.styles.js";
 
 import { BsArrowReturnLeft } from "react-icons/bs";
 import { FaSpinner } from "react-icons/fa";
@@ -10,7 +9,12 @@ import { CiEdit, CiCamera } from "react-icons/ci";
 import { FiX } from "react-icons/fi";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase.js";
-import testCat from "/img/testcat.jpg";
+
+import {
+  SubDescription_16_n,
+  SubDescription_14_n,
+} from "../../styles/GlobalStyles.styles.js";
+
 // Styled-components
 const WrapperForm = styled.form`
   width: 100%;
@@ -18,19 +22,23 @@ const WrapperForm = styled.form`
   display: flex;
   justify-content: center;
   @media (max-width: 768px) {
-    margin: 16px 0;
-    height: 150px;
+    width: 100%;
+    height: 90px;
   }
 `;
 const CommentCont = styled.div`
   width: var(--inner-width-02);
   display: flex;
   align-items: center;
-  padding: 20px 60px;
+  padding: 20px 50px;
+  /* padding: 20px 10px; */
   @media (max-width: 768px) {
-    margin: 0 10px;
+    width: 100%;
     padding: 0;
-    height: 100px;
+    padding-top: 10px;
+    &::placeholder {
+      ${SubDescription_14_n}
+    }
   }
   .commentUpLoadprofile {
     width: 100%;
@@ -55,11 +63,10 @@ const CommentCont = styled.div`
       height: 60px;
       margin: 0 15px;
       padding: 0 30px;
-      background: ${(props) => props.theme.inputColor};
-      border: 1px solid ${(props) => props.theme.borderColor};
-      color: var(--color-gray-01);
+      background: ${(props) => props.theme.cardColor};
+      border: 1px solid ${(props) => props.theme.cardColor};
+      color: ${(props) => props.theme.iconColorB};
       border-radius: 50px;
-
       &:focus {
         outline: none;
       }
@@ -67,6 +74,9 @@ const CommentCont = styled.div`
         margin: 0 10px;
         padding: 0 20px;
         height: 44px;
+        &::placeholder {
+          font-size: 13px;
+        }
       }
     }
     .ciEdit,
@@ -76,7 +86,8 @@ const CommentCont = styled.div`
       align-items: center;
       width: 55px;
       height: 55px;
-      background: var(--color-light-gray-01);
+      background: ${(props) => props.theme.cardColor};
+      color: ${(props) => props.theme.iconColor};
       border: none;
       border-radius: 50px;
       cursor: pointer;
@@ -121,13 +132,14 @@ const Inner = styled.div`
   padding: 50px 20px;
   border-radius: 30px;
   box-shadow: var(--box-shadow-01);
-  background-color: var(--color-white);
+  background-color: ${(props) => props.theme.bgColor};
 `;
 const ModalTitle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 26px;
+  color: ${(props) => props.theme.textColor};
   border-bottom: 1px solid var(--color-light-gray-01);
   height: 60px;
   position: relative;
@@ -158,9 +170,11 @@ const Posting = styled.div`
     border-radius: 8px;
     padding: 10px;
     font-size: 16px;
-    border: 1px solid #ccc;
     margin-bottom: 20px;
     resize: none;
+    border: 1px solid ${(props) => props.theme.textareaColor};
+    color: ${(props) => props.theme.iconColorB};
+    background: ${(props) => props.theme.textareaColor};
     @media (max-width: 768px) {
       font-size: 12px;
     }
@@ -235,7 +249,7 @@ const InfoItem = styled.div`
   }
 `;
 
-const Mainupload = ({ placeholder }) => {
+const PostUpload = ({ placeholder }) => {
   const { onCreatePost } = useContext(DataDispatchContext);
   const { currentUserData } = useContext(DataStateContext);
 
@@ -383,7 +397,6 @@ const Mainupload = ({ placeholder }) => {
                   />
                 </PostingImg>
               )}
-
               <input
                 type="file"
                 id="upload-image"
@@ -403,4 +416,4 @@ const Mainupload = ({ placeholder }) => {
   );
 };
 
-export default Mainupload;
+export default PostUpload;

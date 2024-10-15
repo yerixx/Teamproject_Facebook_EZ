@@ -8,8 +8,75 @@ import {
   MainTitle_22_b,
 } from "../../styles/GlobalStyles.styles";
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  width: 300px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  bottom: -220px;
+  right: -110px;
+  & > svg {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 20px;
+  }
+  h3 {
+    ${MainTitle_18_b}
+  }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 10px;
+`;
+
+const Button = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #f1f1f1;
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
+  }
+
+  span {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+  }
+`;
+
 const Kakao = ({ shareKakao }) => {
   const [url, setUrl] = useState("");
+  const closeModal = (e) => {
+    e.stopPropagation(); // 모달 외부로 전파되지 않음
+    shareKakao(e);
+  };
+
   useEffect(() => {
     // 1. Kakao SDK 스크립트 동적 로드
     const script = document.createElement("script");
@@ -30,68 +97,6 @@ const Kakao = ({ shareKakao }) => {
       document.body.removeChild(script);
     };
   }, []);
-
-  const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    padding: 20px;
-    width: 300px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    position: absolute;
-    bottom: -220px;
-    right: -110px;
-    & > svg {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 20px;
-    }
-    h3 {
-      ${MainTitle_18_b}
-    }
-  `;
-
-  const ButtonContainer = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-top: 10px;
-  `;
-
-  const Button = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 120px;
-    height: 120px;
-    background-color: #f9f9f9;
-    border-radius: 12px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: background-color 0.2s;
-
-    &:hover {
-      background-color: #f1f1f1;
-    }
-
-    img {
-      width: 50px;
-      height: 50px;
-    }
-
-    span {
-      margin-top: 10px;
-      font-size: 14px;
-      color: #333;
-    }
-  `;
 
   // 4. 카카오톡 공유 함수
   const shareToKakao = () => {
@@ -133,7 +138,7 @@ const Kakao = ({ shareKakao }) => {
       <IoCloseOutline onClick={shareKakao} />
       <h3>공유하기</h3>
       <ButtonContainer>
-        <Button onClick={shareToKakao}>
+        <Button onClick={closeModal}>
           <img
             src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"
             alt="카카오톡 공유"

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { IoEyeSharp } from "react-icons/io5";
 import Slider from "react-slick"; // 슬릭 슬라이더 import
@@ -25,10 +25,9 @@ const Wrapper = styled.div`
 `;
 
 const Inner = styled.div`
-  /* border: 1px solid #f00; */
   width: var(--inner-width-02);
   height: 480px;
-  padding: 27px 70px;
+  padding: 27px 38px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -303,6 +302,7 @@ const Mainlive = () => {
   const data = useContext(DataStateContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [shuffledData, setShuffledData] = useState([]);
   const mockData = data?.mockData?.liveCommerce?.map((item) => ({
     ...item,
     formattedPrice: new Intl.NumberFormat("ko-KR", {
@@ -310,7 +310,22 @@ const Mainlive = () => {
       currency: "KRW",
     }).format(item?.products?.discountPrice),
   }));
+  const shuffleArray = (array) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
 
+  // 컴포넌트가 마운트될 때 데이터를 랜덤하게 섞음
+  useEffect(() => {
+    if (data?.mockData?.liveCommerce) {
+      const randomData = shuffleArray(data.mockData.liveCommerce);
+      setShuffledData(randomData);
+    }
+  }, [data]);
   const settings = {
     dots: false,
     infinite: true,
@@ -357,8 +372,8 @@ const Mainlive = () => {
           <Items>
             <div className="livetext">라이브 커머스</div>
             <Slider {...settings}>
-              {mockData &&
-                mockData.map((item, index) => (
+              {shuffledData &&
+                shuffledData.map((item, index) => (
                   <Livecard key={index} onClick={() => openLive(item)}>
                     <div className="liveVideo">
                       <video

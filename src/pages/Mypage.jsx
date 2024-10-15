@@ -17,7 +17,6 @@ const Wrapper = styled.div`
   height: fit-content;
   margin: 0 auto;
   box-shadow: var(--box-shadow-01);
-
   @media (max-width: 768px) {
     max-width: 100%;
   }
@@ -28,7 +27,6 @@ const Inner = styled.div`
   height: fit-content;
   margin: 0 auto;
   box-shadow: var(--box-shadow-01);
-
   @media (max-width: 768px) {
     max-width: 100%;
   }
@@ -47,11 +45,13 @@ const ContChangeBtn = styled(motion.div)`
 
   .postBtn {
     ${MainTitle_18_n}
-    font-weight:600;
+    color: ${(props) => props.theme.textColor};
+
+    font-weight: 600;
     flex: 1;
     background: none;
     border: none;
-    /* color: var(--color-gray-01); */
+
     padding-bottom: 10px;
     position: relative;
     cursor: pointer;

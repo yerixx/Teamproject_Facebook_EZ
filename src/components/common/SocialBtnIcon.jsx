@@ -1,7 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { DataDispatchContext, DataStateContext } from "../../App.jsx";
-
 import styled from "styled-components";
+import CommentSection from "./Comment.jsx";
+import { db } from "../../firebase"; // 파이어베이스 DB 사용
+import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 
 import {
   MainTitle_18_n,
@@ -12,7 +14,6 @@ import {
 import { FaRegHeart, FaRegComment } from "react-icons/fa";
 import { FaRegBookmark } from "react-icons/fa6";
 import { FiShare } from "react-icons/fi";
-import CommentSection from "./Comment.jsx";
 import Kakao from "./kakao.jsx";
 
 const SocialIcon = styled.div`
@@ -26,6 +27,10 @@ const SocialIcon = styled.div`
   border-bottom: 1px solid var(--color-light-gray-01);
   color: ${(props) => props.theme.textColor};
   /* margin-bottom: 20px; */
+
+  & *:hover {
+    color: var(--color-facebookblue) !important;
+  }
   .socialIcon {
     cursor: pointer;
     display: flex;
@@ -42,10 +47,6 @@ const SocialIcon = styled.div`
       }
     }
 
-    &:hover > svg {
-      color: var(--color-facebookblue);
-    }
-
     .socialIconText {
       ${SubDescription_16_n}
       color: ${(props) => props.theme.textColor};
@@ -58,28 +59,88 @@ const SocialIcon = styled.div`
 
 const SocialBtnIcon = ({ post }) => {
   const { onToggleLike } = useContext(DataDispatchContext);
-  const currentUser = useContext(DataStateContext);
-  console.log(currentUser);
+  const { currentUserData } = useContext(DataStateContext);
   const [toggle, setToggle] = useState(false);
   const [like, setLike] = useState(false);
   const [share, setShare] = useState(false);
   const [save, setSave] = useState(false);
+
+  // 포스트에 이미 좋아요를 눌렀는지 확인
+  useEffect(() => {
+    // post.likes가 배열인지 확인한 후 처리
+    if (
+      Array.isArray(post.likes) &&
+      post.likes.includes(currentUserData?.userId)
+    ) {
+      setLike(true);
+    }
+    if (
+      Array.isArray(currentUserData?.savedPosts) &&
+      currentUserData.savedPosts.includes(post.id)
+    ) {
+      setSave(true);
+    }
+  }, [post, currentUserData]);
+
   const handleCommentToggle = () => setToggle((prev) => !prev);
-  const handleLikeToggle = async (e) => {
-    e.preventDefault();
+
+  const handleLikeToggle = async () => {
+    const postRef = doc(db, "posts", post.id);
+
     try {
-      await onToggleLike(post.id, like);
-      setLike((prev) => !prev);
+      if (like) {
+        // 이미 좋아요를 눌렀으면 좋아요 취소
+        await updateDoc(postRef, {
+          likes: arrayRemove(currentUserData.userId),
+        });
+      } else {
+        // 좋아요 추가
+        await updateDoc(postRef, {
+          likes: arrayUnion(currentUserData.userId),
+        });
+      }
+      setLike((prev) => !prev); // 토글 상태 업데이트
     } catch (err) {
       console.error("Like error", err);
     }
   };
-  const shareKakao = () => {
+  const shareKakao = (e) => {
+    e.stopPropagation();
     setShare((prev) => !prev);
   };
-  if (!post) {
-    return <p>Loading...</p>; // 데이터가 로드되지 않은 상태 처리
-  }
+  const handleSaveToggle = async () => {
+    const userRef = doc(db, "users", currentUserData.userId);
+
+    try {
+      if (save) {
+        // 이미 저장된 상태이면 저장 취소
+        await updateDoc(userRef, {
+          savedPosts: arrayRemove(post.id),
+        });
+      } else {
+        // 저장하기 추가
+        await updateDoc(userRef, {
+          savedPosts: arrayUnion(post.id),
+        });
+      }
+      setSave((prev) => !prev); // 토글 상태 업데이트
+    } catch (err) {
+      console.error("Save error", err);
+    }
+  };
+
+  // const shareKakao = () => {
+  //   confirm("게시물을 공유하시겠습니까?");
+  //   // 공유하기 로직 구현
+  // };
+  const handleCopyClipBoard = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      alert("클립보드에 링크가 복사되었어요.");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -87,14 +148,19 @@ const SocialBtnIcon = ({ post }) => {
         <div
           onClick={handleLikeToggle}
           style={{
-            color: !like
-              ? "${(props) => props.theme.textColor}"
-              : "var(--color-facebookblue)",
+            color: like ? "var(--color-facebookblue)" : "inherit",
           }}
           className="socialIcon"
         >
           <FaRegHeart />
-          <div className="socialIconText">좋아요</div>
+          <div
+            style={{
+              color: like ? "var(--color-facebookblue)" : "inherit",
+            }}
+            className="socialIconText"
+          >
+            좋아요
+          </div>
         </div>
         <div onClick={handleCommentToggle} className="socialIcon">
           <FaRegComment />
@@ -105,22 +171,27 @@ const SocialBtnIcon = ({ post }) => {
           <div onClick={shareKakao} className="socialIconText">
             공유하기
           </div>
-          {share ? <Kakao shareKakao={shareKakao} /> : ""}
+          {share ? <Kakao shareKakao={shareKakao} /> : null}
         </div>
         <div
-          // onClick={handlSaveToggle}
+          onClick={handleSaveToggle}
           style={{
-            color: !save
-              ? "${(props) => props.theme.textColor}"
-              : "var(--color-facebookblue)",
+            color: save ? "var(--color-facebookblue)" : "inherit",
           }}
           className="socialIcon"
         >
           <FaRegBookmark />
-          <div className="socialIconText">저장하기</div>
+          <div
+            style={{
+              color: save ? "var(--color-facebookblue)" : "inherit",
+            }}
+            className="socialIconText"
+          >
+            저장하기
+          </div>
         </div>
       </SocialIcon>
-      {toggle && <CommentSection post={post} currentUser={currentUser} />}
+      {toggle && <CommentSection post={post} currentUser={currentUserData} />}
     </>
   );
 };

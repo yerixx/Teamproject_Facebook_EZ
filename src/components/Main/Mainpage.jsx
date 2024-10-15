@@ -1,11 +1,14 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import SocialBtnIcon from "../common/SocialBtnIcon.jsx";
-import PostUpload from "../common/PostUpload.jsx";
-import EditeBox from "../common/EditeBox.jsx";
+import { DataDispatchContext, DataStateContext } from "../../App.jsx";
+import Mainlive from "./Mainlive.jsx";
+import ModalCont from "../Modal/ModalCont.jsx";
+import UploadModal from "../ModalConts/UploadModal.jsx";
+
+import defaultProfile from "/img/defaultProfile.jpg";
 
 // react-icon
-import { BsThreeDots } from "react-icons/bs";
 import { IoCloseOutline } from "react-icons/io5";
 import { FaEarthAmericas } from "react-icons/fa6";
 
@@ -16,22 +19,18 @@ import {
   SubDescription_16_n,
   SubDescription_14_n,
 } from "../../styles/GlobalStyles.styles.js";
-import { DataDispatchContext, DataStateContext } from "../../App.jsx";
-import Mainlive from "./Mainlive.jsx";
-import UploadModal from "../ModalConts/UploadModal.jsx";
-import CommentUpload from "../common/CommentUpload";
 
 const Wrapper = styled.section`
-  border-radius: var(--border-radius-30);
-  padding-top: 20px;
-  width: 900px;
-  min-height: 350px;
-  height: 100%;
   display: flex;
-
   align-items: center;
-  box-shadow: var(--box-shadow-01);
+  justify-content: center;
+  width: 100%;
+  height: fit-content;
+  margin: 0 auto;
+  padding-top: 20px;
+  border-radius: var(--border-radius-30);
   background-color: ${(props) => props.theme.ContainColor};
+  box-shadow: var(--box-shadow-01);
   @media (max-width: 768px) {
     width: 90%;
     padding-top: 20px;
@@ -40,11 +39,10 @@ const Wrapper = styled.section`
 const Inner = styled.article`
   width: var(--inner-width-02);
   height: 100%;
-  padding: 30px 90px;
+  padding: 20px 36px 30px;
   display: flex;
   flex-direction: column;
   align-content: space-between;
-
   @media (max-width: 768px) {
     max-width: 100%;
     padding: 0 20px;
@@ -69,23 +67,27 @@ const ProfileContent = styled.div`
   .profileImg {
     width: 60px;
     height: 60px;
-    background: var(--color-gray-01);
+    border-radius: 50%;
+    object-fit: cover;
     border-radius: 100px;
   }
   .profileName {
-    color: ${(props) => props.theme.textColor};
     ${MainTitle_22_b}
+    color: ${(props) => props.theme.textColor};
     @media (max-width: 768px) {
       ${SubTitle_16_b}
     }
   }
   .createdAt {
-    color: ${(props) => props.theme.subTextColor};
-    ${SubDescription_16_n}
+    ${SubDescription_14_n}
+    color: ${(props) => props.theme.textColor};
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 4px;
+    * {
+      color: ${(props) => props.theme.textColor};
+    }
     @media (max-width: 768px) {
       ${SubDescription_14_n}
     }
@@ -93,18 +95,16 @@ const ProfileContent = styled.div`
 `;
 const ControlsIcon = styled.div`
   display: flex;
+  align-items: center;
   gap: 0;
   font-size: 24px;
-
   cursor: pointer;
   transition: opacity 0.5s;
   *:hover {
     color: var(--color-facebookblue);
   }
 `;
-const EditeIcon = styled.div`
-  color: ${(props) => props.theme.textColor};
-`;
+
 const DeletIcon = styled.div`
   color: ${(props) => props.theme.textColor};
   @media (max-width: 768px) {
@@ -113,7 +113,7 @@ const DeletIcon = styled.div`
 `;
 const Contents = styled.div`
   position: relative;
-  padding: 30px 0;
+  padding: 30px 0 16px;
   @media (max-width: 768px) {
     padding: 0;
     max-width: 100%;
@@ -123,8 +123,7 @@ const Contents = styled.div`
     color: ${(props) => props.theme.textColor};
     font-weight: normal;
     word-break: break-all;
-    min-height: 70px;
-
+    min-height: 50px;
     @media (max-width: 768px) {
       ${SubDescription_14_n}
       padding:0 4px;
@@ -163,11 +162,11 @@ const Contents = styled.div`
   }
 `;
 const ContImg = styled.img`
-  /* margin-bottom: 30px; */
   width: 100%;
   height: 350px;
   background: var(--color-light-gray-01);
   object-fit: cover;
+  cursor: pointer;
   @media (max-width: 768px) {
     padding: 0;
     max-width: 100%;
@@ -176,6 +175,10 @@ const ContImg = styled.img`
 `;
 
 const Mainpage = ({ searchTerm }) => {
+  const [isContOpen, setIsContOpen] = useState(false);
+  const [postedCont, setPostedCont] = useState(null);
+
+  const [profileImg, setProfileImg] = useState(defaultProfile);
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태
   const [isEditing, setIsEditing] = useState(false); // 편집 모드 여부
   const [imageSrc, setImageSrc] = useState(""); // 편집할 이미지 소스
@@ -226,24 +229,22 @@ const Mainpage = ({ searchTerm }) => {
     const isConfirmed = confirm("게시물을 삭제하시겠습니까?");
     if (isConfirmed) {
       try {
-        await onDeletePost(postId); // 삭제 함수 호출
+        await onDeletePost(postId);
       } catch (err) {
         console.error("게시물 삭제 중 오류:", err);
       }
     }
   };
+
   const handleEditBtn = (postId, image, content) => {
-    console.log(`Edit button clicked for postId: ${postId}`);
     setEditingPostId(postId);
     setImageSrc(image || "");
     setContentDesc(content || "");
     setIsEditing(true);
     setIsModalOpen(true);
-    console.log("isModalOpen after setState:", isModalOpen); // 이 로그는 이전 상태를 출력할 수 있음
   };
-  useEffect(() => {
-    console.log("isModalOpen changed:", isModalOpen);
-  }, [isModalOpen]);
+  // useEffect(() => {}, [isModalOpen]);
+
   const closeModal = () => {
     setIsModalOpen(false);
     setIsEditing(false);
@@ -251,19 +252,29 @@ const Mainpage = ({ searchTerm }) => {
     setImageSrc("");
     setContentDesc("");
   };
+
   const handleUpdatePost = async (postId, updatedContent) => {
     try {
       await onUpdatePost(postId, { content: updatedContent });
       setIsModalOpen(false); // 모달 닫기
       setEditingPostId(null);
-      console.log("게시물이 성공적으로 수정되었습니다");
     } catch (error) {
       console.error("게시물 업데이트 중 오류 발생:", error);
     }
   };
-  console.log(filteredPosts);
+
+  const handleImageClick = (post) => {
+    setPostedCont(post); // 클릭한 게시물의 정보를 저장
+    setIsContOpen(true); // 모달 열기
+  };
+
+  const handleModalContClose = () => {
+    setIsContOpen(false);
+    setPostedCont(null);
+  };
 
   const isSearching = searchTerm.trim().length > 0;
+
   return (
     <>
       {filteredPosts.length > 0 ? (
@@ -275,25 +286,27 @@ const Mainpage = ({ searchTerm }) => {
                 <Inner>
                   <Profile>
                     <ProfileContent>
-                      <div className="profileImg"></div>
+                      <img
+                        className="profileImg"
+                        src={profileImg}
+                        alt="Profile"
+                      />
                       <div className="profileText">
                         <h1 className="profileName">{item.userName}</h1>
                         <p className="createdAt">
                           {formatDate(item.createdAt)}
+                          <FaEarthAmericas
+                            style={{
+                              fontSize: "14px",
+                              color: "black",
+                              marginTop: "2px",
+                            }}
+                          />
                         </p>
                       </div>
                     </ProfileContent>
                     {isAuthor && (
                       <ControlsIcon>
-                        <EditeIcon>
-                          <EditeBox
-                            postId={item.id}
-                            imageSrc={item.image}
-                            contentDesc={item.content}
-                            handleEditBtn={handleEditBtn}
-                            Title={<BsThreeDots />}
-                          />
-                        </EditeIcon>
                         <DeletIcon>
                           <IoCloseOutline
                             onClick={(e) => postDeleteBtn(e, item.id)}
@@ -305,11 +318,14 @@ const Mainpage = ({ searchTerm }) => {
                   <Contents>
                     <div className="contentDesc">{item.content}</div>
                     {item.image && (
-                      <ContImg src={item.image} alt="Post content" />
+                      <ContImg
+                        onClick={() => handleImageClick(item)} // 이미지 클릭 시 모달 열기
+                        src={item.image}
+                        alt="Post content"
+                      />
                     )}
                   </Contents>
                   <SocialBtnIcon post={item} />
-                  {/* <CommentUpload /> */}
                 </Inner>
               </Wrapper>
               {!isSearching && (i + 1) % 3 === 0 && <Mainlive />}
@@ -329,6 +345,10 @@ const Mainpage = ({ searchTerm }) => {
           isEditing={isEditing}
           currentUserData={currentUserData}
         />
+      )}
+
+      {isContOpen && (
+        <ModalCont post={postedCont} closeModal={handleModalContClose} />
       )}
     </>
   );

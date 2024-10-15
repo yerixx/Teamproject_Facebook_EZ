@@ -15,7 +15,6 @@ const Wrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-
   margin-top: 20px;
   @media screen and (max-width: 1050px) {
   }
@@ -156,16 +155,15 @@ const NextBtn = styled.span`
   height: 50px;
   border-radius: 50%;
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   position: absolute;
   top: 50%;
-  right: 10px;
+  right: -30px;
   transform: translateY(-50%);
   font-size: 40px;
   color: #fff;
   cursor: pointer;
-  opacity: 0.4;
+  opacity: 0.9;
   transition: all 0.3s;
   scale: 0.8;
   svg {
@@ -194,19 +192,18 @@ const PrevBtn = styled.span`
   height: 50px;
   border-radius: 50%;
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   z-index: 1;
   position: absolute;
   top: 50%;
-  left: 10px;
+  left: -30px;
   transform: translateY(-50%);
   font-size: 40px;
   color: #fff;
   cursor: pointer;
-  opacity: 0.4;
-  scale: 0.8;
+  opacity: 0.9;
   transition: all 0.3s;
+  scale: 0.8;
   svg {
     margin-left: 3px;
   }
@@ -306,8 +303,8 @@ const MainGroup = () => {
         </Title>
         <Items>
           <Slider className="slider" {...settings}>
-            {recommendedGroups.map((group) => (
-              <Item key={group.id}>
+            {recommendedGroups.map((group, i) => (
+              <Item key={i}>
                 <div className="ctegoryImg">
                   <img src={group.img} alt="" />
                 </div>

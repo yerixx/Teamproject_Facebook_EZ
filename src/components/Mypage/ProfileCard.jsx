@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -15,6 +15,7 @@ import {
   SubDescription_14_n,
   Paragraph_20_n,
 } from "../../styles/GlobalStyles.styles.js";
+import { DataStateContext } from "../../App.jsx";
 
 const WrapperFrom = styled.form`
   z-index: 1;
@@ -29,7 +30,7 @@ const WrapperFrom = styled.form`
   align-items: center;
   position: relative;
   padding: 0 90px;
-  background: var(--color-white);
+  background: ${(props) => props.theme.bgColor};
   border-radius: 30px 30px 0 0;
 
   @media (max-width: 768px) {
@@ -103,6 +104,7 @@ const ProfileText = styled.div`
     }
     .profileName {
       ${MainTitle_26_b}
+      color: ${(props) => props.theme.textColor};
       @media (max-width: 768px) {
         ${Paragraph_20_n}
         font-weight:700;
@@ -187,13 +189,12 @@ const Button = styled.div`
     cursor: pointer;
     transition: all 0.3s;
     &:nth-child(1) {
-      background: var(--color-facebookblue);
-      color: var(--color-white);
+      background: ${(props) => props.theme.cardBtnColorA};
+      color: ${(props) => props.theme.bgColor};
     }
-    /* &:nth-child(1), */
     &:nth-child(2) {
-      background: var(--color-light-gray-01);
-      color: var(--color-gray-01);
+      background: ${(props) => props.theme.cardBtnColorB};
+      color: ${(props) => props.theme.iconColorB};
     }
     &:hover {
       background: var(--color-facebookblue);
@@ -214,6 +215,9 @@ const Button = styled.div`
 `;
 
 const ProfileCard = () => {
+  const { currentUserData } = useContext(DataStateContext);
+
+  console.log(currentUserData);
   const [isEditing, setEditing] = useState(false);
   const [user, setUser] = useState(null);
   const [profileImg, setProfileImg] = useState(defaultProfile);
@@ -226,28 +230,23 @@ const ProfileCard = () => {
 
   // Firebase에서 로그인한 사용자 가져오기
   useEffect(() => {
+    if (currentUserData) {
+      setDesc(currentUserData.description || "A Photographer @pylpic");
+      setProfileImg(currentUserData.profileImage || defaultProfile);
+    }
+  }, [currentUserData]);
+
+  // Firebase에서 사용자 정보 가져오기
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUser(user); // 사용자 정보 저장
-        fetchProfileData(user); // Firestore에서 프로필 데이터 가져오기
+        setUser(user);
       } else {
         setUser(null);
       }
     });
     return () => unsubscribe();
   }, [auth]);
-
-  // Firestore에서 프로필 정보 가져오기
-  const fetchProfileData = async (user) => {
-    const userDocRef = doc(firestore, "users", user.uid);
-    const userDocSnap = await getDoc(userDocRef);
-
-    if (userDocSnap.exists()) {
-      const data = userDocSnap.data();
-      setProfileImg(data.profileImage || defaultProfile);
-      setDesc(data.description || "A Photographer @pylpic");
-    }
-  };
 
   // 이미지 파일 변경 처리
   const handleImgChange = async (e) => {
@@ -269,20 +268,28 @@ const ProfileCard = () => {
       }
     }
   };
+  const editSave = async (e) => {
+    e.preventDefault(); // 새로고침 방지
+    const confirmSave = window.confirm("프로필 수정을 저장하시겠습니까?");
+    if (confirmSave) {
+      try {
+        await onSubmit(); // Firebase에 업데이트
+        setEditing(false); // 수정 모드 해제
+      } catch (error) {
+        console.error("프로필 저장 중 오류:", error);
+      }
+    }
+  };
 
   // 프로필 설명 및 이미지 저장 처리
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async () => {
     if (user) {
       const userDocRef = doc(firestore, "users", user.uid);
       try {
-        await updateDoc(userDocRef, {
-          description: desc,
-          profileImage: profileImg,
-        });
+        await updateDoc(userDocRef, { description: desc }); // Firestore 업데이트
         alert("프로필이 성공적으로 업데이트되었습니다.");
       } catch (error) {
-        console.error("Error updating profile: ", error);
+        console.error("프로필 업데이트 오류:", error);
         alert("프로필 업데이트 중 오류가 발생했습니다.");
       }
     }
@@ -306,12 +313,7 @@ const ProfileCard = () => {
       setDesc("A Photographer @pylpic");
     }
   };
-  const editSave = (e) => {
-    const confirmSave = window.confirm("프로필을 설정을 저장하시겠습니까?");
-    if (confirmSave) {
-      setEditing(false);
-    }
-  };
+
   return (
     <WrapperFrom onSubmit={onSubmit}>
       <ProfileContain>
@@ -335,13 +337,14 @@ const ProfileCard = () => {
         <ProfileText>
           <div className="profileTop">
             <h1 className="profileName">
-              {user ? `${user.displayName || "사용자 이름"}` : "로그인 필요"}
-              {/* {currentUserData.userName.firstName}
-              {currentUserData.userName.lastName} */}
+              {currentUserData?.userName?.firstName}
+              {currentUserData?.userName?.lastName}
             </h1>
             <Button>
               <button>스토리추가</button>
-              <button onClick={profileEdite}>프로필수정</button>
+              <button type="button" onClick={() => setEditing(true)}>
+                프로필 수정
+              </button>
             </Button>
           </div>
           {isEditing ? (
