@@ -25,10 +25,9 @@ const Wrapper = styled.div`
 `;
 
 const Inner = styled.div`
-  /* border: 1px solid #f00; */
   width: var(--inner-width-02);
   height: 480px;
-  padding: 27px 70px;
+  padding: 27px 38px;
   display: flex;
   flex-direction: column;
   justify-content: center;

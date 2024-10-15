@@ -10,6 +10,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase.js";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { SubDescription_14_n } from "../../styles/GlobalStyles.styles.js";
+import defaultProfile from "/img/defaultProfile.jpg";
 
 // Styled-components
 const Wrapper = styled.div`
@@ -27,9 +28,9 @@ const Wrapper = styled.div`
 const Inner = styled.div`
   width: 820px;
   padding: 30px 20px 50px;
-  border-radius: 8px;
+  border-radius: 30px;
   box-shadow: var(--box-shadow-01);
-  background-color: var(--color-white);
+  background-color: ${(props) => props.theme.bgColor};
   @media (max-width: 768px) {
     margin: 0 20px;
   }
@@ -40,9 +41,10 @@ const ModalTitle = styled.div`
   justify-content: center;
   align-items: center;
   height: 40px;
-  font-size: 22px;
   margin-bottom: 15px;
   padding-bottom: 20px;
+  font-size: 22px;
+  color: ${(props) => props.theme.textColor};
   border-bottom: 1px solid var(--color-light-gray-01);
   @media (max-width: 768px) {
     font-size: 16px;
@@ -81,8 +83,11 @@ const Posting = styled.div`
     margin-bottom: 10px;
     padding: 14px 20px;
     border-radius: 8px;
-    border: 1px solid #fff;
-    background: var(--color-light-gray-02);
+    border: 1px solid ${(props) => props.theme.textareaColor};
+    color: ${(props) => props.theme.textColor};
+
+    background: ${(props) => props.theme.textareaColor};
+
     resize: none;
     @media (max-width: 768px) {
       font-size: 12px;
@@ -143,11 +148,14 @@ const InfoItem = styled.div`
       border-radius: 50%;
       overflow: hidden;
     }
+    .profilename {
+      color: ${(props) => props.theme.textColor};
+    }
   }
   .camera {
-    padding: 4px 10px;
     font-size: 30px;
     border-radius: 50%;
+    color: ${(props) => props.theme.iconColorB};
     cursor: pointer;
     transition: all 0.3s;
     &:hover {
@@ -167,7 +175,6 @@ const UploadModal = ({
   currentUserData,
 }) => {
   const { onUpdatePost, onCreatePost } = useContext(DataDispatchContext);
-
   const [isLoading, setIsLoading] = useState(false);
   const [uploadText, setUploadText] = useState("");
   const [uploadFile, setUploadFile] = useState(null);
@@ -176,6 +183,7 @@ const UploadModal = ({
       setUploadText(contentDesc || "");
     }
   }, [isEditing]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!uploadFile && !uploadText && !contentDesc) {
@@ -206,8 +214,8 @@ const UploadModal = ({
         alert("게시물이 수정되었습니다.");
       } else {
         await onCreatePost({
-          userId: "testUserId",
-          userName: "TestUser",
+          userId: "testUserId", // 여기에 실제 사용자 ID를 사용
+          userName: "TestUser", // 여기에 실제 사용자 이름을 사용
           content: uploadText,
           image: imageUrl,
           createdAt: new Date().toISOString(),
@@ -215,9 +223,12 @@ const UploadModal = ({
         alert("게시물이 성공적으로 업로드되었습니다.");
       }
 
+      // 폼 리셋
       setUploadText("");
       setUploadFile(null);
-      closeModal();
+
+      // 모달 닫기
+      closeModal(); // 게시물 업로드 후 모달 자동 닫기
     } catch (err) {
       console.error("게시물 처리 중 오류:", err);
     } finally {
@@ -261,7 +272,7 @@ const UploadModal = ({
             <div className="info">
               <img
                 className="profileImg"
-                src={currentUserData.fileImage || imageSrc}
+                src={currentUserData.fileImage || defaultProfile}
                 alt="profile Image"
               ></img>
               <div className="profilename">
@@ -270,7 +281,7 @@ const UploadModal = ({
               </div>
             </div>
             <label htmlFor="upload-image">
-              <CiCamera style={{ cursor: "pointer", fontSize: "30px" }} />
+              <CiCamera className="camera" />
             </label>
           </InfoItem>
           <textarea

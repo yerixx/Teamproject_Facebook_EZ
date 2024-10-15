@@ -34,9 +34,10 @@ const Wrapper = styled.div`
     width: fit-content;
     padding: 12px 38px;
     font-size: 14px;
-    background: #fff;
+    /* background: #fff; */
+    background: ${(props) => props.theme.ContainColor};
     border-radius: 8px;
-    box-shadow: 4px 6px 14px rgba(182, 182, 182, 0.8);
+    box-shadow: 4px 6px 14px ${(props) => props.theme.boxShadow};
     list-style-type: none;
     opacity: 0.2;
     visibility: hidden;

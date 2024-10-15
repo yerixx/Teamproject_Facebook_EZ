@@ -26,7 +26,6 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { auth, db } from "./firebase.js";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { darkTheme } from "./styles/theme.js";
 import { lightTheme } from "./styles/theme.js";
 import ProtectedRoute from "./components/common/ProtectedRoute.jsx";
@@ -199,24 +198,24 @@ function App() {
     liveCommerce: [],
     likeCategory: [],
     currentUserData: null,
-    points: 0,
   };
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  useEffect(() => {
-    dispatch({ type: "INIT_POINTS" });
-  }, []);
-  // 7초마다 포인트 지급 시도 (페이지 이름을 전달)
-  useEffect(() => {
-    const pageName = window.location.pathname; // 현재 페이지 경로 가져오기
-    const interval = setInterval(() => {
-      if (canAddPoints(pageName)) {
-        dispatch({ type: "ADD_POINTS", value: 500, page: pageName });
-      }
-    }, 7000);
+  // //라이브 포인트
+  // useEffect(() => {
+  //   dispatch({ type: "INIT_POINTS" });
+  // }, []);
+  // // 7초마다 포인트 지급 시도 (페이지 이름을 전달)
+  // useEffect(() => {
+  //   const pageName = window.location.pathname; // 현재 페이지 경로 가져오기
+  //   const interval = setInterval(() => {
+  //     if (canAddPoints(pageName)) {
+  //       dispatch({ type: "ADD_POINTS", value: 500, page: pageName });
+  //     }
+  //   }, 7000);
 
-    return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 해제
-  }, []);
+  //   return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 해제
+  // }, []);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -373,6 +372,17 @@ function App() {
           posts: [],
         },
       });
+      // 포인트 적립 로직 추가
+      // 7초마다 포인트 지급 시도 (개별 사용자로 포인트를 관리)
+      const pageName = window.location.pathname; // 현재 페이지 경로 가져오기
+      const interval = setInterval(() => {
+        if (canAddPoints(pageName)) {
+          dispatch({ type: "ADD_POINTS", value: 500, userId }); // userId별로 포인트 추가
+        }
+      }, 7000);
+
+      // 컴포넌트가 언마운트될 때 인터벌 해제
+      return () => clearInterval(interval);
     } catch (error) {
       console.error("Firestore에 유저 추가 중 오류 발생:", error);
     }

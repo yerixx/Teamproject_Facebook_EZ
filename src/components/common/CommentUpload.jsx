@@ -23,8 +23,8 @@ const CommentCont = styled.div`
     align-items: center;
 
     .profileImg {
-      width: 60px;
-      height: 60px;
+      width: 45px;
+      height: 45px;
       border-radius: 100px;
     }
 
@@ -44,8 +44,9 @@ const CommentCont = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 55px;
-      height: 55px;
+      padding: 15px;
+      /* width: 55px;
+      height: 55px; */
       background: #007bff;
       color: white;
       border: none;

@@ -126,7 +126,6 @@ const Center = styled.div`
   gap: 10px;
   left: 50%;
   transform: translateX(-50%);
-  /* border: 1px solid #ddd; */
   height: 100%;
   div {
     cursor: pointer;
@@ -190,7 +189,7 @@ const ProfileWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 3px;
+  gap: 10px;
   div {
     width: 40px;
     height: 40px;
@@ -207,6 +206,9 @@ const ProfileWrap = styled.div`
     color: ${(props) => props.theme.textColor};
     font-size: var(--font-size-subtitle);
     font-weight: normal;
+  }
+  .Potint {
+    color: var(--color-facebookblue);
   }
   @media screen and (max-width: 1050px) {
     width: 100px;
@@ -271,6 +273,8 @@ export const HeaderTop = () => {
 
 export const HeaderBottom = ({ onSearch }) => {
   const navigate = useNavigate();
+  const data = useContext(DataStateContext);
+  const currentUser = data.currentUserData;
   const { currentUserData } = useContext(DataStateContext);
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
   const { isDark, setIsDark } = useContext(DarkThemeContext);
@@ -305,7 +309,7 @@ export const HeaderBottom = ({ onSearch }) => {
   // currentUserData가 있을 때 로딩 해제
   useEffect(() => {
     if (currentUserData) {
-      console.log("유저 데이터 로드 완료:", currentUserData);
+      // console.log("유저 데이터 로드 완료:", currentUserData);
       setLoading(false); // 데이터가 로드된 후 로딩 해제
     }
   }, [currentUserData]);
@@ -333,6 +337,13 @@ export const HeaderBottom = ({ onSearch }) => {
     setSideBarGroupOpen(false);
     setSideWalletOpen(false);
   };
+  const goMypage = () => {
+    const userConfirm = confirm("마이페이지로 이동하시겠습니까?");
+    if (userConfirm) {
+      navigate("/mypage");
+      return;
+    }
+  };
 
   // LogOut
   const onLogOut = async () => {
@@ -359,24 +370,25 @@ export const HeaderBottom = ({ onSearch }) => {
         </div>
       </Left>
       <Center>
-        <div>
+        <div onClick={() => navigate("/")}>
           <AiFillHome />
         </div>
-        <div>
+        <div onClick={() => alert("서비스 준비중 입니다")}>
           <BsCollectionPlay />
         </div>
-        <div>
+        <div onClick={() => alert("서비스 준비중 입니다")}>
           <AiOutlineShop />
         </div>
-        <div>
+        <div onClick={() => alert("서비스 준비중 입니다")}>
           <IoPeopleOutline />
         </div>
       </Center>
       <Right>
-        <RightFirst onClick={sideWallet}>
+        <RightFirst>
           <ProfileWrap>
             <div>
               <img
+                onClick={goMypage}
                 src={
                   currentUserData.profileImage
                     ? currentUserData.profileImage
@@ -385,9 +397,12 @@ export const HeaderBottom = ({ onSearch }) => {
                 alt="User Profile"
               />
             </div>
-            <h3>
+            <h3 onClick={sideWallet}>
               {currentUserData.userName.firstName}
               {currentUserData.userName.lastName}
+            </h3>
+            <h3 onClick={sideWallet} className="Potint">
+              {currentUser.wallet.point}
             </h3>
           </ProfileWrap>
         </RightFirst>
@@ -398,7 +413,7 @@ export const HeaderBottom = ({ onSearch }) => {
           <IconWrap onClick={sideMenu}>
             <TbGridDots />
           </IconWrap>
-          <IconWrap>
+          <IconWrap onClick={() => alert("서비스 준비중 입니다")}>
             <FaBell />
           </IconWrap>
           <IconWrap onClick={() => setIsDark((prev) => !prev)}>

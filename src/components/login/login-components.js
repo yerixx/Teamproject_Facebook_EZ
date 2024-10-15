@@ -11,6 +11,7 @@ import {
 // Common
 export const Logo = styled.div`
   height: 30px;
+  cursor: pointer;
   img {
     width: 100%;
     height: 100%;
@@ -70,10 +71,11 @@ export const Inner = styled.article`
 `;
 export const FormContainer = styled.div`
   width: 1050px;
+  height: 790px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 60px 40px;
+  padding: 40px;
   background: var(--color-white);
   border-radius: var(--border-radius-30);
   box-shadow: var(--box-shadow-02);
@@ -82,7 +84,6 @@ export const FormContainer = styled.div`
     flex-direction: column;
     padding: 0;
     box-shadow: none;
-    /* margin-top: 60px; */
   }
 `;
 

@@ -7,7 +7,6 @@ import Mainlive from "../components/Main/Mainlive";
 import MainGroup from "../components/Main/MainGroup";
 import Mainpage from "../components/Main/Mainpage";
 import { auth } from "../firebase";
-import ModalCont from "../components/Modal/ModalCont";
 import { DataStateContext } from "../App";
 import LoadingScreen from "../components/common/LoadingScreen";
 
@@ -18,14 +17,22 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 const PostUploadField = styled.div`
+  width: var(--inner-width-02);
   background-color: ${(props) => props.theme.ContainColor};
   box-shadow: var(--box-shadow-01);
-  margin-top: 30px;
-  padding: 20px 0;
+  padding: 20px;
   border-radius: var(--border-radius-30);
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 90px;
+  }
 `;
+
 const MainSection = styled.section`
   margin-bottom: 20px;
   width: 1050px;
@@ -41,7 +48,7 @@ const MainSection = styled.section`
   }
 `;
 
-const Main = () => {
+const Main = ({ placeholder }) => {
   const { currentUserData } = useContext(DataStateContext);
   const [loading, setLoading] = useState(true); // 로딩 상태 관리
   const [searchTerm, setSearchTerm] = useState("");
@@ -56,7 +63,7 @@ const Main = () => {
 
         // 필요한 데이터가 로드될 때까지 대기
         if (currentUserData) {
-          console.log("유저 데이터:", currentUserData);
+          // console.log("유저 데이터:", currentUserData);
         }
 
         // 모든 데이터가 준비되면 로딩 상태 해제
@@ -87,8 +94,8 @@ const Main = () => {
           // 검색어가 없을 때 전체 섹션 표시
           <>
             <Mainstory />
-            <PostUploadField>
-              <PostUpload />
+            <PostUploadField style={{ padding: "10px 0" }}>
+              <PostUpload placeholder={"오늘 어떤일이 있으셨나요?"} />
             </PostUploadField>
             <MainGroup />
             <Mainpage searchTerm={searchTerm} />

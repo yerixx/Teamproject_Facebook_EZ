@@ -32,7 +32,6 @@ const Wrapper = styled.div`
   }
   .gotoLogin {
     text-align: center;
-    margin-bottom: -20px;
     cursor: pointer;
   }
   @media screen and (max-width: 768px) {
