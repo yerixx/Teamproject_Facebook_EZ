@@ -722,7 +722,6 @@ const ModalLive = ({ item, closeModal }) => {
     const randomProductId = item.products[randomIndex].id;
     navigate(`/modallive/${randomProductId}`);
   };
-  console.log(item);
 
   return (
     <>

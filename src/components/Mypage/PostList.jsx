@@ -45,10 +45,6 @@ const PostList = () => {
     // setPostedCont(null); // 이 부분을 제거합니다.
   };
 
-  useEffect(() => {
-    console.log("Modal State Changed:", isContOpen, postedCont);
-  }, [isContOpen, postedCont]);
-
   const handleModalContOpen = (post) => {
     setPostedCont(post); // post를 먼저 설정한 후 모달을 엽니다.
     setIsContOpen(true);

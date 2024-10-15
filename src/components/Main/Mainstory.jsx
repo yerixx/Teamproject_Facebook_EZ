@@ -299,7 +299,7 @@ const MainStory = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        console.log(storyData);
+
         setStorys(storyData);
       } catch (e) {
         console.error("Story 데이터 전송오류", e);
@@ -307,7 +307,7 @@ const MainStory = () => {
     };
     fetchStorys();
   }, []);
-  console.log(storys);
+
   // 모달 열기 핸들러
   const openModal = () => {
     setIsModalOpen(true); // 모달을 열기 위해 상태를 true로 설정
@@ -321,7 +321,6 @@ const MainStory = () => {
   // 모달 제출 핸들러
   const handleModalSubmit = ({ text, image, video }) => {
     // 제출된 데이터 처리
-    console.log("모달 제출 데이터:", text, image, video); // 콘솔에 제출 데이터 출력
     if (image) setPostImage(image); // 제출된 이미지를 상태에 저장
     // 비디오도 저장하려면 별도의 상태 관리 필요
     // 예: setPostVideo(video);
@@ -392,13 +391,13 @@ const MainStory = () => {
                     <div className="storyProfile">
                       <img
                         className="profileImg"
-                        src={currentUserData.fileImage || defaultProfile}
+                        src={story.profileImg || defaultProfile}
                         alt="Profile"
                       />
                     </div>
                     {/*스토리 프로필*/}
                   </div>
-                  <dv className="storyName">
+                  <div className="storyName">
                     {story.name ? (
                       <>
                         {story?.name?.firstName}
@@ -407,7 +406,7 @@ const MainStory = () => {
                     ) : (
                       "알수없는 사용자"
                     )}
-                  </dv>
+                  </div>
                 </div>
               </StoryFriend>
             ))}

@@ -32,9 +32,12 @@ const Inner = styled.div`
   width: 80%;
   max-width: 600px;
   border-radius: 30px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   padding: 20px;
+
+  ${(props) => props.$hasImage && "border: 2px solid blue;"}
+  ${(props) => props.$hasVideo && "border: 2px solid green;"}
+
   @media screen and (max-width: 768px) {
     width: 90%;
   }
@@ -184,7 +187,6 @@ const Inner = styled.div`
 // Mainstorymodal 컴포넌트 정의
 const Mainstorymodal = ({ onClose }) => {
   const [storyText, setStoryText] = useState(""); // 스토리 텍스트 상태
-  const [storyName, setStoryName] = useState(""); // 스토리 텍스트 상태
   const [storyImage, setStoryImage] = useState(null); // 이미지 파일 상태
   const [storyVideo, setStoryVideo] = useState(null); // 비디오 파일 상태
   const [uploading, setUploading] = useState(false); // 업로드 상태
@@ -202,7 +204,7 @@ const Mainstorymodal = ({ onClose }) => {
     const file = e.target.files[0]; // 선택된 파일
     if (file) setStoryVideo(file); // 파일이 존재하면 상태 업데이트
   };
-
+  // consoloe.log(currentUserData);
   // 폼 제출 처리
   const handleSubmit = async (e) => {
     e.preventDefault(); // 기본 폼 제출 방지
@@ -239,12 +241,12 @@ const Mainstorymodal = ({ onClose }) => {
         imageUrl,
         videoUrl,
         name: currentUserData.userName,
+        profileImg: currentUserData.profileImage,
         createdAt: Timestamp.fromDate(new Date()),
       });
 
       // 상태 초기화
       setStoryText(""); // 텍스트 초기화
-      setStoryName(""); // name 초기화
       setStoryImage(null); // 이미지 초기화
       setStoryVideo(null); // 비디오 초기화
       onClose(); // 모달 닫기
@@ -260,7 +262,7 @@ const Mainstorymodal = ({ onClose }) => {
 
   return (
     <WrapperForm onSubmit={handleSubmit}>
-      <Inner hasImage={!!storyImage} hasVideo={!!storyVideo}>
+      <Inner $hasImage={!!storyImage} $hasVideo={!!storyVideo}>
         <div className="modaltitle">
           <div className="title">스토리 올리기</div>
           <div className="xmark" onClick={onClose}>

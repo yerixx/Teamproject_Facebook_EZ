@@ -89,8 +89,10 @@ const GroupContents = styled.div`
 const GroupTitle = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   align-items: flex-start;
   gap: 3px;
+  width: 60%;
   h2 {
     font-size: var(--font-size-subtitle);
     font-weight: normal;
@@ -103,6 +105,7 @@ const GroupTitle = styled.div`
     color: var(--color-gray-01);
   }
   @media screen and (max-width: 768px) {
+    width: 40%;
     div {
       flex-direction: column;
       span {
@@ -117,9 +120,11 @@ const GroupTitle = styled.div`
 /* eslint-disable react/prop-types */
 const SideBarGroup = ({ openGroup, closeModal }) => {
   const { currentUserData, category } = useContext(DataStateContext);
-  const state = useContext(DataStateContext);
+  const categoryData = category[0];
+  const categories = Object.keys(categoryData)
+    .filter((key) => !isNaN(Number(key))) // 키가 숫자인 프로퍼티만 선택합니다.
+    .map((key) => categoryData[key]);
 
-  console.log(state.category[1]?.title);
   const [recommendedGroups, setRecommendedGroups] = useState([]);
 
   const closeRef = useRef(null);
@@ -173,6 +178,14 @@ const SideBarGroup = ({ openGroup, closeModal }) => {
 
     return shuffledItems.slice(0, 3);
   };
+  const possibleTexts = [
+    "크리에이터",
+    "블로거",
+    "작가",
+    "예술가",
+    "카페",
+    "동호회",
+  ];
 
   return (
     <Wrapper
@@ -194,71 +207,65 @@ const SideBarGroup = ({ openGroup, closeModal }) => {
       </Title>
       <Group>
         {recommendedGroups.length > 0
-          ? recommendedGroups.map((group, index) => (
-              <GroupContents key={index}>
-                <img src={group.img} alt={group.title} />
-                <GroupTitle>
-                  <h2>{group.title}</h2>
-                  <div>
-                    <span>멤버 {group.member}명</span>
-                  </div>
-                </GroupTitle>
-                <span>팔로우</span>
-              </GroupContents>
-            ))
-          : category.slice(0, 3).map((cat) => (
-              <GroupContents key={cat.id}>
-                <img src={cat.img} alt={cat.title} />
-                <GroupTitle>
-                  <h2>{cat.title}</h2>
-                  <div>
-                    <span>멤버 {cat.member}명</span>
-                  </div>
-                </GroupTitle>
-                <span>팔로우</span>
-              </GroupContents>
-            ))}
+          ? recommendedGroups.map((group, index) => {
+              const randomText =
+                possibleTexts[Math.floor(Math.random() * possibleTexts.length)];
+              return (
+                <GroupContents key={index}>
+                  <img src={currentUserData.img} alt={group.title} />
+                  <GroupTitle>
+                    <h2>{group.title}</h2>
+                    <div>
+                      <span>{randomText}</span>
+                      <span>・</span>
+                      <span>멤버 {group.member}명</span>
+                    </div>
+                  </GroupTitle>
+                  <span>팔로우</span>
+                </GroupContents>
+              );
+            })
+          : categories.slice(6, 9).map((cat) => {
+              const randomText =
+                possibleTexts[Math.floor(Math.random() * possibleTexts.length)];
+              return (
+                <GroupContents key={cat.id}>
+                  <img src={cat.img} alt={cat.title} />
+                  <GroupTitle>
+                    <h2>{cat.title}</h2>
+                    <div>
+                      <span>{randomText}</span>
+                      <span>・</span>
+                      <span>팔로워 {cat.member}명</span>
+                    </div>
+                  </GroupTitle>
+                  <span>팔로우</span>
+                </GroupContents>
+              );
+            })}
       </Group>
       <Title>
         <h3>추천페이지</h3>
       </Title>
       <Group>
-        <GroupContents>
-          <img />
-          <GroupTitle>
-            <h2>여행</h2>
-            <div>
-              <span>동영상 크리에이터</span>
-              <span>・</span>
-              <span>팔로워 10만명</span>
-            </div>
-          </GroupTitle>
-          <span>팔로우</span>
-        </GroupContents>
-        <GroupContents>
-          <img />
-          <GroupTitle>
-            <h2>여행</h2>
-            <div>
-              <span>동영상 크리에이터</span>
-              <span>・</span>
-              <span>팔로워 10만명</span>
-            </div>
-          </GroupTitle>
-          <span>팔로우</span>
-        </GroupContents>
-        <GroupContents>
-          <img />
-          <GroupTitle>
-            <h2>여행</h2>
-            <div>
-              <span>동영상 크리에이터</span>
-              <span>・</span>
-              <span>팔로워 10만명</span>
-            </div>
-          </GroupTitle>
-          <span>팔로우</span>
-        </GroupContents>
+        {categories.slice(3, 6).map((cat) => {
+          const randomText =
+            possibleTexts[Math.floor(Math.random() * possibleTexts.length)];
+          return (
+            <GroupContents key={cat.id}>
+              <img src={cat.img} alt={cat.title} />
+              <GroupTitle>
+                <h2>{cat.title}</h2>
+                <div>
+                  <span>{randomText}</span>
+                  <span>・</span>
+                  <span>팔로워 {cat.member}명</span>
+                </div>
+              </GroupTitle>
+              <span>팔로우</span>
+            </GroupContents>
+          );
+        })}
       </Group>
     </Wrapper>
   );

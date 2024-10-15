@@ -63,7 +63,6 @@ const Main = ({ placeholder }) => {
 
         // 필요한 데이터가 로드될 때까지 대기
         if (currentUserData) {
-          // console.log("유저 데이터:", currentUserData);
         }
 
         // 모든 데이터가 준비되면 로딩 상태 해제

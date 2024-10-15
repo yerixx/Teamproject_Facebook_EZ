@@ -297,9 +297,11 @@ function App() {
   }, []);
 
   const onCreatePost = async (userId, userName, content, image = null) => {
+    const { currentUserData } = state;
     const newPost = {
       userId,
       userName,
+      profileImage: currentUserData.profileImage || "",
       content,
       createdAt: new Date().toISOString(),
       likes: 0,

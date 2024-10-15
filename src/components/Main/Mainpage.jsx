@@ -255,7 +255,7 @@ const Mainpage = ({ searchTerm }) => {
   };
 
   const isSearching = searchTerm.trim().length > 0;
-
+  console.log(filteredPosts);
   return (
     <>
       {filteredPosts.length > 0 ? (
@@ -269,7 +269,7 @@ const Mainpage = ({ searchTerm }) => {
                     <ProfileContent>
                       <img
                         className="profileImg"
-                        src={profileImg}
+                        src={item.profileImage || defaultProfile}
                         alt="Profile"
                       />
                       <div className="profileText">

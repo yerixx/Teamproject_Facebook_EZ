@@ -23,7 +23,7 @@ import SideBarWallet from "./SideBarWallet";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
-
+import defaultProfile from "/img/defaultProfile.jpg";
 const Header = styled.div`
   background-color: ${(props) => props.theme.bgColor};
   z-index: 100;
@@ -393,7 +393,7 @@ export const HeaderBottom = ({ onSearch }) => {
                 src={
                   currentUserData.profileImage
                     ? currentUserData.profileImage
-                    : "/img/testcat.jpg"
+                    : defaultProfile
                 }
                 alt="User Profile"
               />

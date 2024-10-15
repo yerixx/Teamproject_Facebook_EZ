@@ -216,8 +216,6 @@ const Button = styled.div`
 
 const ProfileCard = () => {
   const { currentUserData } = useContext(DataStateContext);
-
-  console.log(currentUserData);
   const [isEditing, setEditing] = useState(false);
   const [user, setUser] = useState(null);
   const [profileImg, setProfileImg] = useState(defaultProfile);

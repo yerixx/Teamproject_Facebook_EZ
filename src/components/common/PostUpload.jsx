@@ -54,7 +54,7 @@ const CommentCont = styled.div`
       width: 60px;
       height: 60px;
       border-radius: 50%;
-
+      object-fit: cover;
       @media (max-width: 768px) {
         width: 40px;
         height: 40px;
@@ -248,10 +248,10 @@ const InfoItem = styled.div`
     align-items: center;
     margin-bottom: 15px;
     .profileImg {
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      overflow: hidden;
+      object-fit: cover;
     }
     .profilename {
       color: ${(props) => props.theme.textColor};
@@ -278,7 +278,6 @@ const PostUpload = ({ placeholder }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [uploadText, setUploadText] = useState("");
   const [uploadFile, setUploadFile] = useState(null);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -397,12 +396,12 @@ const PostUpload = ({ placeholder }) => {
                 <div className="info">
                   <img
                     className="profileImg"
-                    src={currentUserData.fileImage || defaultProfile}
+                    src={currentUserData.profileImage || defaultProfile}
                     alt="profile Image"
                   ></img>
                   <div className="profilename">
                     {currentUserData
-                      ? `${currentUserData.userName.firstName} ${currentUserData.userName.lastName}`
+                      ? `${currentUserData.userName.firstName}${currentUserData.userName.lastName}`
                       : "사용자"}
                   </div>
                 </div>
