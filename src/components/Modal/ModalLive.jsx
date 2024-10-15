@@ -114,8 +114,9 @@ const SellItemsmb = styled.div`
 `;
 
 const SellItemsinfomb = styled.div`
-  display: none;
+  display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')}; 
   @media screen and (max-width: 768px) {
+    
     width: 350px;
     height: 80px;
     top: 125px;
@@ -126,6 +127,8 @@ const SellItemsinfomb = styled.div`
     position: absolute;
     border-radius: 0 0 8px 8px;
     background: var(--color-light-gray-02);
+    transition: opacity 0.5s ease;
+    opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   }
 `;
 
@@ -543,6 +546,7 @@ const NoComment = styled.div`
   padding: 20px 0;
   font-size: 14px;
   color: var(--color-gray-01);
+  border: 1px solid #f00;
   .commentIcon {
     margin-bottom: 10px;
     .faComments {
@@ -703,10 +707,10 @@ const ModalLive = ({ item, closeModal }) => {
       </SellItemsmb>
       <SellItemsinfomb isOpen={isOpen}>
         <SellItemImgmb>
-          <img src={SellItem1Img} alt="SellItem1Img" />
+          <img src={item?.liveStream?.profileImage}  alt="SellItem1Img" />
         </SellItemImgmb>
         <SellItemDescmb>
-          <p>★5%추가할인★스프라이트 백트임 긴팔니트</p>
+          <p>★5%추가할인★{item?.liveStream?.name}</p>
           <b><span>30%</span>19,900원</b>
         </SellItemDescmb>
       </SellItemsinfomb>
@@ -778,20 +782,13 @@ const ModalLive = ({ item, closeModal }) => {
                 댓글이 없습니다. <br /> 첫 번째 댓글을 남겨주세요.
               </p>
             </NoComment>
-            <div className="test"></div>
+            <input
+            className="test"
+            type="text"
+            placeholder="댓글을 입력하세요."
+            />
           </Comment>
         </RightContent>
-        {/* <LiveProfilemb>
-          <div className="profileImgmb">
-            <img src={LiveProfilemb} alt="LiveProfileImgmb" />
-          </div>
-          <LiveProfileSelfmb>
-            <div className="profileNamemb">
-              <h4>미니멀데이</h4>
-            </div>
-            <div className="profiledescmb">가을옷 보러오세요~~</div>
-          </LiveProfileSelfmb>
-        </LiveProfilemb> */}
       </Commerce>
     </>
   );
