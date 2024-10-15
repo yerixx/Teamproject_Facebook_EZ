@@ -353,6 +353,7 @@ export const HeaderBottom = ({ onSearch }) => {
       navigate("/login");
     }
   };
+  console.log(currentUserData);
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -402,7 +403,7 @@ export const HeaderBottom = ({ onSearch }) => {
               {currentUserData.userName.lastName}
             </h3>
             <h3 onClick={sideWallet} className="Potint">
-              {currentUser.wallet.point}
+              {currentUserData.wallet.point}p
             </h3>
           </ProfileWrap>
         </RightFirst>

@@ -28,8 +28,8 @@ const PostUploadField = styled.div`
   padding: 20px;
   border-radius: var(--border-radius-30);
   @media (max-width: 768px) {
-    width: 100%;
-    height: 90px;
+    width: 90vw;
+    height: 80px;
   }
 `;
 

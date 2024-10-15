@@ -32,8 +32,7 @@ const Wrapper = styled.section`
   background-color: ${(props) => props.theme.ContainColor};
   box-shadow: var(--box-shadow-01);
   @media (max-width: 768px) {
-    width: 90%;
-    padding-top: 20px;
+    width: 90vw;
   }
 `;
 const Inner = styled.article`
@@ -44,8 +43,11 @@ const Inner = styled.article`
   flex-direction: column;
   align-content: space-between;
   @media (max-width: 768px) {
-    max-width: 100%;
-    padding: 0 20px;
+    border-radius: var(--border-radius-08);
+    padding: 20px 30px;
+    min-width: 360px;
+    height: 100%;
+    /* margin: 0 auto; */
   }
 `;
 const Profile = styled.div`
@@ -61,7 +63,6 @@ const ProfileContent = styled.div`
   align-items: center;
   gap: 20px;
   @media (max-width: 768px) {
-    width: 100%;
     gap: 16px;
   }
   .profileImg {
@@ -183,7 +184,6 @@ const Mainpage = ({ searchTerm }) => {
   const [isEditing, setIsEditing] = useState(false); // 편집 모드 여부
   const [imageSrc, setImageSrc] = useState(""); // 편집할 이미지 소스
   const [contentDesc, setContentDesc] = useState(""); // 편집할 내용
-  const isLiked = false; // 초기 좋아요 여부
   const [posts, setPosts] = useState([]);
 
   const [editingPostId, setEditingPostId] = useState(null);
@@ -236,31 +236,12 @@ const Mainpage = ({ searchTerm }) => {
     }
   };
 
-  const handleEditBtn = (postId, image, content) => {
-    setEditingPostId(postId);
-    setImageSrc(image || "");
-    setContentDesc(content || "");
-    setIsEditing(true);
-    setIsModalOpen(true);
-  };
-  // useEffect(() => {}, [isModalOpen]);
-
   const closeModal = () => {
     setIsModalOpen(false);
     setIsEditing(false);
     setEditingPostId(null);
     setImageSrc("");
     setContentDesc("");
-  };
-
-  const handleUpdatePost = async (postId, updatedContent) => {
-    try {
-      await onUpdatePost(postId, { content: updatedContent });
-      setIsModalOpen(false); // 모달 닫기
-      setEditingPostId(null);
-    } catch (error) {
-      console.error("게시물 업데이트 중 오류 발생:", error);
-    }
   };
 
   const handleImageClick = (post) => {
@@ -316,7 +297,9 @@ const Mainpage = ({ searchTerm }) => {
                     )}
                   </Profile>
                   <Contents>
-                    <div className="contentDesc">{item.content}</div>
+                    {item.content ? (
+                      <div className="contentDesc">{item.content}</div>
+                    ) : null}
                     {item.image && (
                       <ContImg
                         onClick={() => handleImageClick(item)} // 이미지 클릭 시 모달 열기

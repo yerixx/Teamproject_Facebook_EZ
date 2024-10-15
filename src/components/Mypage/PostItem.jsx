@@ -281,18 +281,18 @@ const PostItem = ({ post, onDeletePost, handleModalContOpen }) => {
           <SocialBtnIcon post={post} />
         </Inner>
       </Wrapper>
-      {isModalOpen && (
+      {isModalOpen ? (
         <UploadModal
+          closeModal={closeModal}
           userId={userId}
           postId={editingPostId} // 수정할 게시물의 ID를 전달
           imageSrc={image}
           contentDesc={content}
           createdAt={createdAt}
-          closeModal={closeModal}
           isEditing={isEditing}
           currentUserData={currentUserData}
         />
-      )}
+      ) : null}
     </>
   );
 };

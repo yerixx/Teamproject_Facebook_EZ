@@ -127,6 +127,7 @@ const SideBarWallet = ({ onClick, closeModal }) => {
   const data = useContext(DataStateContext);
   const points = data?.points || 0;
   const liveCommerce = data?.liveCommerce || [];
+  const { currentUserData } = useContext(DataStateContext);
 
   const closeRef = useRef(null);
   const handleClickOutside = (event) => {
@@ -163,12 +164,8 @@ const SideBarWallet = ({ onClick, closeModal }) => {
       </Title>
       <Box>
         <WalletItem>
-          <img />
-          <span>{points || 0} p</span>
-        </WalletItem>
-        <WalletItem>
-          <img />
-          <span>{data.currentUserData?.wallet?.won || 0} 원</span>
+          <img src="/img/point.png" />
+          <span>{currentUserData.wallet.point}p </span>
         </WalletItem>
         <WalletItem onClick={() => alert("서비스 준비중 입니다")}>
           <div>+</div>

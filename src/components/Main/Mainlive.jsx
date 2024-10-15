@@ -40,6 +40,7 @@ const Inner = styled.div`
     width: 100%;
   }
   @media screen and (max-width: 768px) {
+    height: 100%;
     margin: 0;
     box-shadow: none;
     background-color: inherit;
@@ -303,13 +304,6 @@ const Mainlive = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [shuffledData, setShuffledData] = useState([]);
-  const mockData = data?.mockData?.liveCommerce?.map((item) => ({
-    ...item,
-    formattedPrice: new Intl.NumberFormat("ko-KR", {
-      style: "currency",
-      currency: "KRW",
-    }).format(item?.products?.discountPrice),
-  }));
   const shuffleArray = (array) => {
     const shuffled = [...array];
     for (let i = shuffled.length - 1; i > 0; i--) {

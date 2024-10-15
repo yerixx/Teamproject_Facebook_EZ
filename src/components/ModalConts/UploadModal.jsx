@@ -229,7 +229,10 @@ const UploadModal = ({
       setUploadFile(null);
 
       // 모달 닫기
-      closeModal(); // 게시물 업로드 후 모달 자동 닫기
+
+      console.log("closeModal 함수 호출 전");
+      closeModal();
+      console.log("closeModal 함수 호출 후");
     } catch (err) {
       console.error("게시물 처리 중 오류:", err);
     } finally {

@@ -21,21 +21,24 @@ const WrapperForm = styled.form`
   height: fit-content;
   display: flex;
   justify-content: center;
+  align-items: center;
   @media (max-width: 768px) {
     width: 100%;
-    height: 90px;
+    height: 100%;
+    padding: 0 20px;
   }
 `;
 const CommentCont = styled.div`
   width: var(--inner-width-02);
   display: flex;
   align-items: center;
+
   padding: 20px 50px;
   /* padding: 20px 10px; */
   @media (max-width: 768px) {
     width: 100%;
     padding: 0;
-    padding-top: 10px;
+
     &::placeholder {
       ${SubDescription_14_n}
     }
@@ -287,6 +290,7 @@ const PostUpload = ({ placeholder }) => {
       );
       setUploadText("");
       setUploadFile(null);
+      closeModal();
       alert("게시물 업로드가 완료됐습니다");
     } catch (err) {
       console.error("게시물 업로드 중 오류:", err);
@@ -390,7 +394,11 @@ const PostUpload = ({ placeholder }) => {
                 required
               />
               {uploadFile && (
-                <PostingImg>
+                <PostingImg
+                  type="button"
+                  onClick={handleSubmit}
+                  disabled={isLoading}
+                >
                   <img
                     src={URL.createObjectURL(uploadFile)}
                     alt="게시물 이미지"
