@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import React, { useState } from "react"; // useState 임포트 추가
+import React, { useContext, useState } from "react"; // useState 임포트 추가
 import styled from "styled-components";
 import { FaUser, FaPlus } from "react-icons/fa6";
 import Slider from "react-slick";
@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { SubDescription_16_n } from "../../styles/GlobalStyles.styles";
 import { MdOutlineNavigateNext, MdOutlineNavigateBefore } from "react-icons/md";
-import Mainmodal from "./Mainmodal"; // 모달 컴포넌트 임포트
+import { DataStateContext } from "../../App";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -27,7 +27,7 @@ const Wrapper = styled.div`
 
 const Inner = styled.div`
   /* border: 1px solid red; */
-  width: 1000px;
+  width: var(--inner-width-02);
   height: 360px;
   padding: 27px 30px;
   display: flex;
@@ -37,6 +37,7 @@ const Inner = styled.div`
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius-30);
   position: relative;
+  background-color: ${(props) => props.theme.ContainColor};
   @media screen and (max-width: 1050px) {
     width: 100%;
   }
@@ -69,7 +70,7 @@ const Items = styled.div`
 `;
 
 const StoryItem = styled.div`
-  border: 1px solid var(--color-light-gray-01);
+  border: 2px solid ${(props) => props.theme.cardColor};
   width: 100%;
   height: 320px;
   border-radius: 8px;
@@ -113,6 +114,7 @@ const StoryItem = styled.div`
     display: flex;
     justify-content: center;
     line-height: 8;
+    color: ${(props) => props.theme.textColor};
   }
   @media screen and (max-width: 768px) {
     height: 200px;
@@ -276,6 +278,7 @@ const MainStory = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태 관리
   const [postImage, setPostImage] = useState(null); // 모달에서 업로드된 이미지 상태
+  const data = useContext(DataStateContext);
 
   // 모달 열기 핸들러
   const openModal = () => {
@@ -290,7 +293,6 @@ const MainStory = () => {
   // 모달 제출 핸들러
   const handleModalSubmit = ({ text, image }) => {
     // 필요한 경우 제출된 데이터를 처리
-    console.log("모달 제출 데이터:", text, image);
     setPostImage(image);
     setIsModalOpen(false);
   };

@@ -4,16 +4,17 @@ import {
   MainTitle_18_n,
   MainTitle_22_b,
 } from "../../styles/GlobalStyles.styles";
-import { IoClose } from "react-icons/io5";
 import Slider from "react-slick";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { MdOutlineNavigateBefore } from "react-icons/md";
-
+import { DataStateContext } from "../../App";
+import { useContext, useEffect, useState } from "react";
+import { getDocs, collection } from "firebase/firestore";
+import { db } from "../../firebase";
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-
   margin-top: 20px;
   @media screen and (max-width: 1050px) {
   }
@@ -23,7 +24,7 @@ const Wrapper = styled.div`
 `;
 
 const Inner = styled.div`
-  width: 1000px;
+  width: var(--inner-width-02);
   height: 440px;
   padding: 27px 30px;
   display: flex;
@@ -33,6 +34,7 @@ const Inner = styled.div`
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius-30);
   position: relative;
+  background-color: ${(props) => props.theme.ContainColor};
   @media screen and (max-width: 1050px) {
     width: 100%;
   }
@@ -51,10 +53,11 @@ const Title = styled.div`
   h2 {
     ${MainTitle_22_b}
     margin-bottom: 5px;
+    color: ${(props) => props.theme.textColor};
   }
   span {
     ${MainTitle_18_n}
-    color: var(--color-gray-01);
+    color: ${(props) => props.theme.subTextColor};
   }
 `;
 
@@ -79,27 +82,22 @@ const Items = styled.div`
 const Item = styled.div`
   width: 100%;
   height: 320px;
-  background: #999;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   overflow: hidden;
   position: relative;
-
-  svg {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    font-size: 40px;
-    font-weight: bold;
-    color: #fff;
-    background-color: var(--color-light-gray-01);
-    border-radius: 50%;
+  .ctegoryImg {
+    height: 220px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
-
-  div {
-    background: var(--color-light-gray-02);
+  .info {
+    background: ${(props) => props.theme.cardColor};
     padding: 10px 20px;
     height: 130px;
     display: flex;
@@ -108,7 +106,7 @@ const Item = styled.div`
     width: 100%;
     position: absolute;
     bottom: 0;
-
+    color: ${(props) => props.theme.dfaultColor};
     h3 {
       ${MainTitle_18_n}
     }
@@ -120,6 +118,7 @@ const Item = styled.div`
     }
 
     span {
+      color: #222;
       font-size: 14px;
       font-weight: normal;
       margin-bottom: 10px;
@@ -156,16 +155,15 @@ const NextBtn = styled.span`
   height: 50px;
   border-radius: 50%;
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   position: absolute;
   top: 50%;
-  right: 10px;
+  right: -30px;
   transform: translateY(-50%);
   font-size: 40px;
   color: #fff;
   cursor: pointer;
-  opacity: 0.4;
+  opacity: 0.9;
   transition: all 0.3s;
   scale: 0.8;
   svg {
@@ -194,19 +192,18 @@ const PrevBtn = styled.span`
   height: 50px;
   border-radius: 50%;
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   z-index: 1;
   position: absolute;
   top: 50%;
-  left: 10px;
+  left: -30px;
   transform: translateY(-50%);
   font-size: 40px;
   color: #fff;
   cursor: pointer;
-  opacity: 0.4;
-  scale: 0.8;
+  opacity: 0.9;
   transition: all 0.3s;
+  scale: 0.8;
   svg {
     margin-left: 3px;
   }
@@ -227,6 +224,45 @@ const PrevArrow = ({ onClick }) => {
 };
 
 const MainGroup = () => {
+  const { currentUserData } = useContext(DataStateContext);
+  const [recommendedGroups, setRecommendedGroups] = useState([]);
+
+  useEffect(() => {
+    if (currentUserData) {
+      fetchGroups();
+    }
+  }, [currentUserData]);
+
+  const fetchGroups = async () => {
+    try {
+      const groupsSnapshot = await getDocs(collection(db, "category"));
+      const groups = groupsSnapshot.docs.flatMap((doc) =>
+        Object.values(doc.data())
+      );
+
+      if (
+        currentUserData.likeCategory &&
+        currentUserData.likeCategory.length > 0
+      ) {
+        // 사용자의 likeCategory 배열과 그룹 제목을 매칭해 필터링
+        const filteredGroups = groups.filter((group) =>
+          currentUserData.likeCategory.some(
+            (category) => category === group.title
+          )
+        );
+
+        // 추천 그룹이 없으면 모든 그룹 보여주기
+        setRecommendedGroups(
+          filteredGroups.length > 0 ? filteredGroups : groups
+        );
+      } else {
+        // likeCategory가 없으면 전체 그룹을 보여줌
+        setRecommendedGroups(groups);
+      }
+    } catch (error) {
+      console.error("그룹 데이터를 불러오지 못했습니다.", error);
+    }
+  };
   const settings = {
     dots: false,
     infinite: true,
@@ -235,21 +271,23 @@ const MainGroup = () => {
     slidesToScroll: 1,
     autoplay: true,
     swipe: true,
+    swipeToSlide: true,
+    touchMove: true,
     autoplaySpeed: 8000,
-    nextArrow: <NextArrow />, // 화살표 버튼을 커스텀해서 사용
+    nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     responsive: [
       {
-        breakpoint: 768, // 1024px 이하일 때
+        breakpoint: 768,
         settings: {
-          slidesToShow: 3, // 슬라이드를 2개만 보여줌
+          slidesToShow: 3,
           slidesToScroll: 1,
         },
       },
       {
-        breakpoint: 550, // 600px 이하일 때
+        breakpoint: 550,
         settings: {
-          slidesToShow: 2, // 슬라이드를 1개만 보여줌
+          slidesToShow: 2,
           slidesToScroll: 1,
         },
       },
@@ -265,54 +303,18 @@ const MainGroup = () => {
         </Title>
         <Items>
           <Slider className="slider" {...settings}>
-            <Item>
-              {/* <IoClose /> */}
-              <div>
-                <h3>함께하는 세계여행</h3>
-                <h4>멤버 4.4천명</h4>
-                <span>그룹 가입</span>
-              </div>
-            </Item>
-            <Item>
-              {/* <IoClose /> */}
-              <div>
-                <h3>반려동물</h3>
-                <h4>멤버 2.4천명</h4>
-                <span>그룹 가입</span>
-              </div>
-            </Item>
-            <Item>
-              {/* <IoClose /> */}
-              <div>
-                <h3>운동</h3>
-                <h4>멤버 3.2천명</h4>
-                <span>그룹 가입</span>
-              </div>
-            </Item>
-            <Item>
-              {/* <IoClose /> */}
-              <div>
-                <h3>1</h3>
-                <h4>멤버 3.2천명</h4>
-                <span>그룹 가입</span>
-              </div>
-            </Item>
-            <Item>
-              {/* <IoClose /> */}
-              <div>
-                <h3>2</h3>
-                <h4>멤버 3.2천명</h4>
-                <span>그룹 가입</span>
-              </div>
-            </Item>
-            <Item>
-              {/* <IoClose /> */}
-              <div>
-                <h3>운동</h3>
-                <h4>멤버 3.2천명</h4>
-                <span>그룹 가입</span>
-              </div>
-            </Item>
+            {recommendedGroups.map((group) => (
+              <Item key={group.id}>
+                <div className="ctegoryImg">
+                  <img src={group.img} alt="" />
+                </div>
+                <div className="info">
+                  <h3>{group.title}</h3>
+                  <h4>멤버 {group.member}명</h4>
+                  <span>그룹 가입</span>
+                </div>
+              </Item>
+            ))}
           </Slider>
         </Items>
       </Inner>

@@ -7,6 +7,7 @@ import { AiFillHome } from "react-icons/ai";
 
 import { IoPeopleOutline } from "react-icons/io5";
 import { MdOutlineLogout } from "react-icons/md";
+import { FiSun } from "react-icons/fi";
 
 import { TbGridDots } from "react-icons/tb";
 import { FaSearch } from "react-icons/fa";
@@ -14,15 +15,17 @@ import mobileLogo from "../../img/Logo.png";
 import SideBarMenu from "./SideBarMenu";
 import { useContext, useEffect, useState } from "react";
 import SideBarGroup from "./SideBarGroup";
-import SideBarWallet from "./SideBarWallet";
-import { DataStateContext } from "../../App";
+
+import { DarkThemeContext, DataStateContext } from "../../App";
 import HeaderlogoImg from "../../img/HeaderLogo.svg";
 import styled from "styled-components";
+import SideBarWallet from "./SideBarWallet";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 
 const Header = styled.div`
-  background-color: var(--color-white);
+  background-color: ${(props) => props.theme.bgColor};
   z-index: 100;
   width: 100%;
   height: 56px;
@@ -38,17 +41,16 @@ const Header = styled.div`
   }
 `;
 const HeaderSticky = styled.div`
-  background-color: var(--color-white);
+  background-color: ${(props) => props.theme.bgColor};
   z-index: 100;
   padding: 0 15px;
   width: 100%;
   height: 88px;
-  background: var(--color-white);
   display: flex;
   align-items: center;
   top: 0;
   left: 0;
-  position: ${(prop) => (prop.isSticky ? "fixed" : "relative")};
+  position: ${(props) => (props.$sticky ? "fixed" : "relative")};
   -webkit-box-shadow: 0 4px 6px -6px #222;
   -moz-box-shadow: 0 4px 6px -6px #222;
   box-shadow: 0 4px 6px -6px #222;
@@ -73,6 +75,7 @@ const Left = styled.div`
   div {
     position: relative;
     svg {
+      color: ${(props) => props.theme.textColor};
       position: absolute;
       left: 20px;
       top: 50%;
@@ -82,10 +85,19 @@ const Left = styled.div`
       width: 254px;
       height: 48px;
       border-radius: 140px;
-      border: none;
-      background-color: #e5e6eb;
+      border: 1px solid ${(props) => props.theme.borderColor};
+      background-color: ${(props) => props.theme.inputColor};
       padding-left: 50px;
       font-size: 16px;
+      &::placeholder {
+        transition: all 0.3s;
+      }
+      &:focus {
+        outline: none;
+        &::placeholder {
+          color: transparent;
+        }
+      }
     }
   }
   .mobileLogo {
@@ -114,7 +126,6 @@ const Center = styled.div`
   gap: 10px;
   left: 50%;
   transform: translateX(-50%);
-  /* border: 1px solid #ddd; */
   height: 100%;
   div {
     cursor: pointer;
@@ -125,6 +136,7 @@ const Center = styled.div`
     align-items: center;
     border-bottom: 2.5px solid var(--color-facebookblue);
     svg {
+      color: ${(props) => props.theme.textColor};
       font-size: 24px;
     }
   }
@@ -177,7 +189,7 @@ const ProfileWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 3px;
+  gap: 10px;
   div {
     width: 40px;
     height: 40px;
@@ -191,8 +203,12 @@ const ProfileWrap = styled.div`
     }
   }
   h3 {
+    color: ${(props) => props.theme.textColor};
     font-size: var(--font-size-subtitle);
     font-weight: normal;
+  }
+  .Potint {
+    color: var(--color-facebookblue);
   }
   @media screen and (max-width: 1050px) {
     width: 100px;
@@ -212,6 +228,11 @@ const RightSecond = styled.div`
   }
   & > div:nth-child(1) {
     display: none;
+  }
+  @media screen and (max-width: 1050px) {
+    & > div:nth-child(3) {
+      display: none;
+    }
   }
   @media screen and (max-width: 768px) {
     & > div:nth-child(1) {
@@ -243,30 +264,41 @@ const IconWrap = styled.div`
 export const HeaderTop = () => {
   return (
     <Header>
-      <img src={HeaderlogoImg} alt="" />
+      <Link to="/">
+        <img src={HeaderlogoImg} alt="haederLogo" />
+      </Link>
     </Header>
   );
 };
 
-export const HeaderBottom = () => {
+export const HeaderBottom = ({ onSearch }) => {
   const navigate = useNavigate();
   const data = useContext(DataStateContext);
   const currentUser = data.currentUserData;
-  console.log(currentUser);
+  const { currentUserData } = useContext(DataStateContext);
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
+  const { isDark, setIsDark } = useContext(DarkThemeContext);
   const [sideBarGroupOpen, setSideBarGroupOpen] = useState(false);
   const [sideWalletOpen, setSideWalletOpen] = useState(false);
-  const [isSticky, setIsSticky] = useState(false);
-
+  const [issticky, setissticky] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const handleSearchChange = (e) => {
+    const searchTerm = e.target.value;
+    if (onSearch) {
+      onSearch(searchTerm); // 함수가 있으면 호출
+    } else {
+      console.warn("onSearch 함수가 전달되지 않았습니다.");
+    }
+  };
   // 스크롤 위치 감지 및 상태 업데이트
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
         // 스크롤 위치가 100px 이상일 때 고정
-        setIsSticky(true);
+        setissticky(true);
       } else {
         // 스크롤 위치가 100px 이하일 때 원래 상태로
-        setIsSticky(false);
+        setissticky(false);
       }
     };
     window.addEventListener("scroll", handleScroll);
@@ -274,6 +306,13 @@ export const HeaderBottom = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  // currentUserData가 있을 때 로딩 해제
+  useEffect(() => {
+    if (currentUserData) {
+      // console.log("유저 데이터 로드 완료:", currentUserData);
+      setLoading(false); // 데이터가 로드된 후 로딩 해제
+    }
+  }, [currentUserData]);
   const sideMenu = (e) => {
     e.stopPropagation();
     setSideMenuOpen((prev) => !prev);
@@ -298,6 +337,13 @@ export const HeaderBottom = () => {
     setSideBarGroupOpen(false);
     setSideWalletOpen(false);
   };
+  const goMypage = () => {
+    const userConfirm = confirm("마이페이지로 이동하시겠습니까?");
+    if (userConfirm) {
+      navigate("/mypage");
+      return;
+    }
+  };
 
   // LogOut
   const onLogOut = async () => {
@@ -307,44 +353,58 @@ export const HeaderBottom = () => {
       navigate("/login");
     }
   };
-
-  // console.log(auth.currentUser);
-
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
-    <HeaderSticky isSticky={isSticky}>
+    <HeaderSticky $sticky={issticky ? "true" : null}>
       <Left>
         <img className="mobileLogo" src={mobileLogo} alt="mobileLogo" />
         <div>
           <FaMagnifyingGlass />
-          <input type="text" placeholder="Search Facebook" />
+          <input
+            type="text"
+            placeholder="Search Facebook"
+            onChange={handleSearchChange}
+          />
         </div>
       </Left>
       <Center>
-        <div>
+        <div onClick={() => navigate("/")}>
           <AiFillHome />
         </div>
-        <div>
+        <div onClick={() => alert("서비스 준비중 입니다")}>
           <BsCollectionPlay />
         </div>
-        <div>
+        <div onClick={() => alert("서비스 준비중 입니다")}>
           <AiOutlineShop />
         </div>
-        <div>
+        <div onClick={() => alert("서비스 준비중 입니다")}>
           <IoPeopleOutline />
         </div>
       </Center>
       <Right>
-        <RightFirst onClick={sideWallet}>
+        <RightFirst>
           <ProfileWrap>
             <div>
-              <img src="/img/testcat.jpg" alt="" />
+              <img
+                onClick={goMypage}
+                src={
+                  currentUserData.profileImage
+                    ? currentUserData.profileImage
+                    : "/img/testcat.jpg"
+                }
+                alt="User Profile"
+              />
             </div>
-            <h3>
-              {/* {auth.currentUser.email.split("@")[0]} */}
-              {currentUser?.userName.lastName}
+            <h3 onClick={sideWallet}>
+              {currentUserData.userName.firstName}
+              {currentUserData.userName.lastName}
+            </h3>
+            <h3 onClick={sideWallet} className="Potint">
+              {currentUser.wallet.point}
             </h3>
           </ProfileWrap>
-          {/* <span>{currentUser?.wallet.point}p</span> */}
         </RightFirst>
         <RightSecond>
           <IconWrap>
@@ -356,8 +416,8 @@ export const HeaderBottom = () => {
           <IconWrap>
             <FaBell />
           </IconWrap>
-          <IconWrap>
-            <FaMoon />
+          <IconWrap onClick={() => setIsDark((prev) => !prev)}>
+            {isDark ? <FiSun /> : <FaMoon />}
           </IconWrap>
           <IconWrap>
             <MdOutlineLogout onClick={onLogOut} />
@@ -365,13 +425,35 @@ export const HeaderBottom = () => {
         </RightSecond>
       </Right>
       {sideMenuOpen && (
-        <SideBarMenu openGroup={sideGroup} closeModal={closeModal} />
+        <SideBarMenu
+          sideMenuOpen={sideMenuOpen}
+          openGroup={() => setSideBarGroupOpen((prev) => !prev)}
+          closeModal={() => {
+            setSideMenuOpen(false);
+            setSideBarGroupOpen(false);
+            setSideWalletOpen(false);
+          }}
+        />
       )}
       {sideBarGroupOpen && (
-        <SideBarGroup openGroup={sideGroup} closeModal={closeModal} />
+        <SideBarGroup
+          openGroup={() => setSideBarGroupOpen((prev) => !prev)}
+          closeModal={() => {
+            setSideMenuOpen(false);
+            setSideBarGroupOpen(false);
+            setSideWalletOpen(false);
+          }}
+        />
       )}
       {sideWalletOpen && (
-        <SideBarWallet onClick={sideWallet} closeModal={closeModal} />
+        <SideBarWallet
+          onClick={() => setSideWalletOpen((prev) => !prev)}
+          closeModal={() => {
+            setSideMenuOpen(false);
+            setSideBarGroupOpen(false);
+            setSideWalletOpen(false);
+          }}
+        />
       )}
     </HeaderSticky>
   );

@@ -7,6 +7,7 @@ import {
   InputWrapperRow,
   Input,
   FormTitle,
+  FormDesc,
   FormItemTitle,
   FormItemDesc,
   Pager,
@@ -17,7 +18,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 const Wrapper = styled.div`
   padding: 25px;
   background: var(--color-light-gray-02);
-  box-shadow: var(--box-shadow-01);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   border-radius: var(--border-radius-08);
   @media screen and (max-width: 768px) {
     width: 390px;
@@ -113,6 +114,15 @@ const AdditionalForm = ({ updateUserData, mobileSize, progress }) => {
     // progress 값을 2로 설정하여 URL에 반영
     searchParams.set("progress", "2");
     setSearchParams(searchParams);
+
+    if (mobileSize) {
+      setTimeout(() => {
+        window.scrollTo({
+          top: document.body.scrollHeight, // 페이지의 가장 아래로 이동
+          behavior: "smooth", // 부드럽게 스크롤
+        });
+      }, 5);
+    }
   };
   const handleGenderChange = (e) => {
     updateUserData("gender", e.target.value);
@@ -138,16 +148,17 @@ const AdditionalForm = ({ updateUserData, mobileSize, progress }) => {
 
   return (
     <Wrapper>
-      <Form height={700}>
+      <Form height={630}>
         {mobileSize ? null : (
           <FormTitle>회원님을 위한 맞춤 홈피드를 준비할게요</FormTitle>
         )}
+        <FormDesc>
+          언제든지 프로필에서 회원님의 정보를 변경할 수 있습니다.
+        </FormDesc>
         <Ul>
           <li>
             <FormItemTitle>성별 입력</FormItemTitle>
-            <FormItemDesc>
-              언제든지 프로필에서 회원님의 성별을 변경할 수 있습니다.
-            </FormItemDesc>
+            <FormItemDesc>성별을 선택하세요.</FormItemDesc>
             <InputWrapperRow>
               <Label htmlFor="woman">
                 여성
@@ -173,10 +184,7 @@ const AdditionalForm = ({ updateUserData, mobileSize, progress }) => {
           </li>
           <li>
             <FormItemTitle>생년월일 입력</FormItemTitle>
-            <FormItemDesc>
-              생년월일을 선택하세요. <br />
-              언제든지 비공개로 변경할 수 있습니다.
-            </FormItemDesc>
+            <FormItemDesc>생년월일을 선택하세요.</FormItemDesc>
             <Input
               id="birth"
               name="birth"
@@ -187,10 +195,7 @@ const AdditionalForm = ({ updateUserData, mobileSize, progress }) => {
           </li>
           <li>
             <FormItemTitle>지역 입력</FormItemTitle>
-            <FormItemDesc>
-              지역을 선택하세요. <br />
-              언제든지 비공개로 변경할 수 있습니다.
-            </FormItemDesc>
+            <FormItemDesc>지역을 선택하세요.</FormItemDesc>
             <SelectItem>
               <div className="select-icon">
                 <svg
@@ -226,7 +231,13 @@ const AdditionalForm = ({ updateUserData, mobileSize, progress }) => {
           </li>
         </Ul>
         <div>
-          {mobileSize ? null : <Button onClick={handleNext}>다음</Button>}
+          {mobileSize ? null : (
+            <Pager>
+              <span className="active"></span>
+              <span></span>
+            </Pager>
+          )}
+          <Button onClick={handleNext}>다음</Button>
         </div>
       </Form>
     </Wrapper>

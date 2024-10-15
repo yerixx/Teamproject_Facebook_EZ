@@ -2,8 +2,9 @@ import styled from "styled-components";
 import { Paragraph_20_n } from "../../styles/GlobalStyles.styles";
 import { IoClose } from "react-icons/io5";
 import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 
-const Wrapper = styled.div.withConfig({
+const Wrapper = styled(motion.div).withConfig({
   shouldForwardProp: (prop) => prop !== "isOpen",
 })`
   z-index: 3;
@@ -22,8 +23,8 @@ const Wrapper = styled.div.withConfig({
   overflow-y: auto;
   -ms-overflow-style: none; /* IE, Edge */
   scrollbar-width: none;
+  background-color: ${(props) => props.theme.ContainColor};
   @media screen and (max-width: 1050px) {
-    top: 130px;
     right: 10px;
   }
   @media screen and (max-width: 768px) {
@@ -36,6 +37,7 @@ const TopTitle = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: ${(props) => props.theme.textColor};
   h2 {
     ${Paragraph_20_n}
   }
@@ -45,12 +47,14 @@ const TopTitle = styled.div`
   }
 `;
 const Title = styled.div`
+  color: ${(props) => props.theme.textColor};
   display: flex;
   justify-content: space-between;
 `;
 
 const Group = styled.div`
   /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); */
+  color: ${(props) => props.theme.textColor};
   border-radius: var(--border-radius-30);
   display: flex;
   flex-direction: column;
@@ -126,7 +130,14 @@ const SideBarGroup = ({ openGroup, closeModal }) => {
     };
   }, []);
   return (
-    <Wrapper ref={closeRef} onClick={(e) => e.stopPropagation()}>
+    <Wrapper
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      ref={closeRef}
+      onClick={(e) => e.stopPropagation()}
+    >
       <TopTitle>
         <h2>회원님을 위한 커뮤니티</h2>
         <span>
