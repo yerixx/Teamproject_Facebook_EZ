@@ -26,12 +26,12 @@ const SocialIcon = styled.div`
   padding: 0 10px 20px;
   border-bottom: 1px solid var(--color-light-gray-01);
   color: ${(props) => props.theme.textColor};
-  /* margin-bottom: 20px; */
-
   & *:hover {
     color: var(--color-facebookblue) !important;
   }
   .socialIcon {
+    ${SubDescription_16_n}
+    color: ${(props) => props.theme.iconColorB};
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -49,7 +49,7 @@ const SocialIcon = styled.div`
 
     .socialIconText {
       ${SubDescription_16_n}
-      color: ${(props) => props.theme.textColor};
+      color: ${(props) => props.theme.iconColorB};
       @media (max-width: 768px) {
         display: none;
       }
@@ -87,7 +87,6 @@ const SocialBtnIcon = ({ post }) => {
 
   const handleLikeToggle = async () => {
     const postRef = doc(db, "posts", post.id);
-
     try {
       if (like) {
         await updateDoc(postRef, {
@@ -109,7 +108,6 @@ const SocialBtnIcon = ({ post }) => {
   };
   const handleSaveToggle = async () => {
     const userRef = doc(db, "users", currentUserData.userId);
-
     try {
       if (save) {
         await updateDoc(userRef, {
@@ -125,7 +123,6 @@ const SocialBtnIcon = ({ post }) => {
       console.error("Save error", err);
     }
   };
-
   const handleCopyClipBoard = async (text) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -160,7 +157,7 @@ const SocialBtnIcon = ({ post }) => {
         </div>
         <div onClick={handleCommentToggle} className="socialIcon">
           <FaRegComment />
-          <div className="socialIconText">댓글</div>
+          댓글
         </div>
         <div className="socialIcon">
           <FiShare />

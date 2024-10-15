@@ -19,6 +19,7 @@ const Wrapper = styled(motion.div)`
   overflow-y: auto;
   -ms-overflow-style: none; /* IE, Edge */
   scrollbar-width: none;
+  cursor: pointer;
   @media screen and (max-width: 1050px) {
     right: 10px;
   }
@@ -159,7 +160,7 @@ const SideBarMenu = ({ openGroup, closeModal, sideMenuOpen }) => {
         </svg>
         <span>그룹</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="34"
           height="34"
@@ -187,7 +188,7 @@ const SideBarMenu = ({ openGroup, closeModal, sideMenuOpen }) => {
         </svg>
         <span>Messenger</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="36"
           height="26"
@@ -230,7 +231,7 @@ const SideBarMenu = ({ openGroup, closeModal, sideMenuOpen }) => {
         </svg>
         <span>친구</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="30"
           height="30"
@@ -260,7 +261,7 @@ const SideBarMenu = ({ openGroup, closeModal, sideMenuOpen }) => {
 
         <span>과거의 오늘</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="24"
           height="36"
@@ -289,7 +290,7 @@ const SideBarMenu = ({ openGroup, closeModal, sideMenuOpen }) => {
 
         <span>저장됨</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="28"
           height="26"
@@ -305,7 +306,7 @@ const SideBarMenu = ({ openGroup, closeModal, sideMenuOpen }) => {
 
         <span>동영상</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="36"
           height="26"
@@ -364,7 +365,7 @@ const SideBarMenu = ({ openGroup, closeModal, sideMenuOpen }) => {
 
         <span>피드</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="36"
           height="36"
@@ -426,7 +427,7 @@ const SideBarMenu = ({ openGroup, closeModal, sideMenuOpen }) => {
 
         <span>이벤트</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="36"
           height="36"
@@ -488,7 +489,7 @@ const SideBarMenu = ({ openGroup, closeModal, sideMenuOpen }) => {
 
         <span>광고 관리자</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="36"
           height="36"
@@ -580,7 +581,7 @@ const SideBarMenu = ({ openGroup, closeModal, sideMenuOpen }) => {
 
         <span>Meta Quest</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="28"
           height="28"
@@ -596,7 +597,7 @@ const SideBarMenu = ({ openGroup, closeModal, sideMenuOpen }) => {
 
         <span>게시물</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="32"
           height="26"
@@ -612,7 +613,7 @@ const SideBarMenu = ({ openGroup, closeModal, sideMenuOpen }) => {
 
         <span>스토리</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="28"
           height="26"
@@ -628,7 +629,7 @@ const SideBarMenu = ({ openGroup, closeModal, sideMenuOpen }) => {
 
         <span>릴스</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="24"
           height="28"

@@ -91,7 +91,7 @@ const CommentCont = styled.div`
       width: 55px;
       height: 55px;
       background: ${(props) => props.theme.cardColor};
-      color: ${(props) => props.theme.iconColor};
+      color: ${(props) => props.theme.iconColorB};
       border: none;
       border-radius: 50px;
       cursor: pointer;
@@ -112,6 +112,7 @@ const CommentCont = styled.div`
     }
     .ciEdit {
       padding: 16px;
+      color: ${(props) => props.theme.iconColorB};
     }
   }
   @media (max-width: 768px) {
@@ -191,9 +192,7 @@ const Posting = styled.div`
     border-radius: 8px;
     border: 1px solid ${(props) => props.theme.textareaColor};
     color: ${(props) => props.theme.textColor};
-
     background: ${(props) => props.theme.textareaColor};
-
     resize: none;
     @media (max-width: 768px) {
       font-size: 12px;
@@ -259,13 +258,11 @@ const InfoItem = styled.div`
     }
   }
   .camera {
-    /* padding: 4px 10px; */
     font-size: 30px;
     border-radius: 50%;
-    color: ${(props) => props.theme.iconColorB} !important;
+    color: ${(props) => props.theme.iconColorB};
     cursor: pointer;
     transition: all 0.3s;
-
     &:hover {
       padding: 4px 10px;
       border-radius: 50%;
@@ -398,7 +395,6 @@ const PostUpload = ({ placeholder }) => {
             <Posting>
               <InfoItem>
                 <div className="info">
-                  {/* <div className="profile"></div> */}
                   <img
                     className="profileImg"
                     src={currentUserData.fileImage || defaultProfile}
@@ -411,7 +407,13 @@ const PostUpload = ({ placeholder }) => {
                   </div>
                 </div>
                 <label htmlFor="upload-image">
-                  <CiCamera style={{ cursor: "pointer", fontSize: "30px" }} />
+                  <CiCamera
+                    className="camera"
+                    style={{
+                      cursor: "pointer",
+                      fontSize: "30px",
+                    }}
+                  />
                 </label>
               </InfoItem>
               <textarea

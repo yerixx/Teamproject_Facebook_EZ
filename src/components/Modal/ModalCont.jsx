@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+
+import { DataStateContext } from "../../App.jsx";
 import { styled } from "styled-components";
 
 import EditeBox from "../common/EditeBox.jsx";
@@ -8,7 +10,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { IoCloseOutline } from "react-icons/io5";
 import { FaEarthAmericas } from "react-icons/fa6";
 
-import testCat from "/img/testcat.jpg";
+import defaultProfile from "/img/defaultProfile.jpg";
 
 import {
   MainTitle_18_b,
@@ -46,7 +48,7 @@ const LeftContent = styled.section`
   justify-content: center;
   align-items: center;
   position: relative;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: ${(props) => props.theme.modalBgColor};
 `;
 const RightContent = styled.section`
   flex: 1;
@@ -58,7 +60,7 @@ const RightContent = styled.section`
   margin: 0 auto;
   padding-top: 40px;
   gap: 20px;
-  background: #fff;
+  background-color: ${(props) => props.theme.bgColor};
 `;
 const ControlsIcon = styled.div`
   display: flex;
@@ -95,6 +97,7 @@ const CloseIcon = styled.div`
   right: 30px;
   font-size: 25px;
   cursor: pointer;
+  color: ${(props) => props.theme.textColor};
   @media screen and (max-width: 768px) {
     color: var(--color-white);
   }
@@ -114,7 +117,6 @@ const ImageContent = styled.div`
     height: 390px;
     object-fit: cover;
   }
-
   img {
     width: 100%;
     height: 100%;
@@ -140,7 +142,6 @@ const ModalProfileImg = styled.div`
   .profileImg {
     width: 80px;
     height: 80px;
-    background-color: var(--color-light-gray-02);
     border-radius: 50%;
     @media screen and (max-width: 768px) {
       width: 60px;
@@ -150,6 +151,7 @@ const ModalProfileImg = styled.div`
       width: 100%;
       height: 100%;
       border-radius: 50%;
+      object-fit: cover;
     }
   }
   @media screen and (max-width: 768px) {
@@ -164,6 +166,7 @@ const ModalProfileSelf = styled.div`
   margin-left: 20px;
   .profileName {
     ${MainTitle_18_b}
+    color: ${(props) => props.theme.textColor};
     @media screen and (max-width: 768px) {
       color: var(--color-white);
     }
@@ -172,6 +175,11 @@ const ModalProfileSelf = styled.div`
     display: flex;
     gap: 4px;
     ${SubDescription_14_n}
+    color: ${(props) => props.theme.textColor};
+
+    * {
+      color: ${(props) => props.theme.textColor};
+    }
     @media screen and (max-width: 768px) {
       color: var(--color-white);
     }
@@ -184,6 +192,7 @@ const ModalDesc = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  color: ${(props) => props.theme.textColor};
   @media screen and (max-width: 1050px) {
     width: 100%;
     height: 100px;
@@ -203,22 +212,17 @@ const ModalDesc = styled.div`
   }
 `;
 const SocialIcon = styled.div`
-  * {
-    display: flex;
-    justify-content: space-around;
-    gap: 40px;
-    ${SubDescription_14_n}
-  }
   width: 90%;
+  display: flex;
+  justify-content: space-around;
+  gap: 40px;
   @media (max-width: 768px) {
     position: absolute;
     width: 100%;
     bottom: 0;
-    * {
-      color: var(--color-white);
-    }
   }
 `;
+
 const Mobile = styled.div`
   display: none;
   @media (max-width: 768px) {
@@ -229,6 +233,8 @@ const Mobile = styled.div`
 `;
 
 const ModalCont = ({ post }) => {
+  const { currentUserData } = useContext(DataStateContext);
+
   const [closeBtn, setCloseBtn] = useState(false);
   const closeButton = () => {
     setCloseBtn(true);
@@ -255,22 +261,25 @@ const ModalCont = ({ post }) => {
         <RightContent>
           <ControlsIcon>
             <CloseIcon onClick={closeButton}>
-              <IoCloseOutline
-                className="closeIcon"
-                // onClick={postDeleteBtn}
-              />
+              <IoCloseOutline className="closeIcon" />
             </CloseIcon>
           </ControlsIcon>
           <ModalProfileImg>
-            <div className="profileImg">
-              <img src={testCat} alt="ModalProfileImg" />
-            </div>
+            <img
+              className="profileImg"
+              src={currentUserData.fileImage || defaultProfile}
+              alt="profile Image"
+            />
             <ModalProfileSelf>
-              <div className="profileName">박예림</div>
+              <div className="profileName">
+                {currentUserData.userName.firstName}
+                {currentUserData.userName.lastName}
+              </div>
               <div className="profiledesc">
-                {formatDate(post.createdAt)}{" "}
+                {formatDate(post.createdAt)}
                 <FaEarthAmericas
                   style={{
+                    color: "${(props) => props.theme.textColor}",
                     fontSize: "14px",
                     color: "black",
                     marginTop: "4px",
@@ -283,7 +292,7 @@ const ModalCont = ({ post }) => {
             <p>{post.content}</p>
           </ModalDesc>
           <SocialIcon>
-            <SocialBtnIcon />
+            <SocialBtnIcon post={post} />
           </SocialIcon>
         </RightContent>
       </DeskTop>
@@ -291,25 +300,22 @@ const ModalCont = ({ post }) => {
       <Mobile>
         <ControlsIcon>
           <EditeIcon>
-            <EditeBox
-              //이거 쓰면됨
-              // handleEditBtn={handleEditBtn}
-              Title={<BsThreeDots />}
-            />
+            <EditeBox Title={<BsThreeDots />} />
           </EditeIcon>
           <CloseIcon onClick={closeButton}>
-            <IoCloseOutline
-              className="closeIcon"
-              // onClick={postDeleteBtn}
-            />
+            <IoCloseOutline className="closeIcon" />
           </CloseIcon>
         </ControlsIcon>
         <ModalProfileImg>
-          <div className="profileImg">
-            <img src={post.image} alt="ModalProfileImg" />
-          </div>
+          <img
+            className="profileImg"
+            src={currentUserData.fileImage || defaultProfile}
+          />
           <ModalProfileSelf>
-            <div className="profileName">박예림</div>
+            <div className="profileName">
+              {currentUserData.userName.firstName}
+              {currentUserData.userName.lastName}
+            </div>
             <div className="profiledesc">{formatDate(post.createdAt)}</div>
           </ModalProfileSelf>
         </ModalProfileImg>
@@ -320,7 +326,7 @@ const ModalCont = ({ post }) => {
           <p>{post.content}</p>
         </ModalDesc>
         <SocialIcon>
-          <SocialBtnIcon />
+          <SocialBtnIcon post={post} />
         </SocialIcon>
       </Mobile>
     </Wrapper>

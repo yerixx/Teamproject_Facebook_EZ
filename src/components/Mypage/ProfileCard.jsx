@@ -194,7 +194,7 @@ const Button = styled.div`
     }
     &:nth-child(2) {
       background: ${(props) => props.theme.cardBtnColorB};
-      color: ${(props) => props.theme.iconColorB};
+      color: ${(props) => props.theme.btnTextColor};
     }
     &:hover {
       background: var(--color-facebookblue);

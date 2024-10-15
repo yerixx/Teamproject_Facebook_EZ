@@ -414,7 +414,7 @@ export const HeaderBottom = ({ onSearch }) => {
           <IconWrap onClick={sideMenu}>
             <TbGridDots />
           </IconWrap>
-          <IconWrap>
+          <IconWrap onClick={() => alert("서비스 준비중 입니다")}>
             <FaBell />
           </IconWrap>
           <IconWrap onClick={() => setIsDark((prev) => !prev)}>

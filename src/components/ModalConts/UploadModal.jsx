@@ -6,10 +6,9 @@ import styled from "styled-components";
 import { CiCamera } from "react-icons/ci";
 import { FiX } from "react-icons/fi";
 import { storage } from "../../firebase.js";
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../../firebase.js";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { SubDescription_14_n } from "../../styles/GlobalStyles.styles.js";
+import defaultProfile from "/img/defaultProfile.jpg";
 
 // Styled-components
 const Wrapper = styled.div`
@@ -84,9 +83,7 @@ const Posting = styled.div`
     border-radius: 8px;
     border: 1px solid ${(props) => props.theme.textareaColor};
     color: ${(props) => props.theme.textColor};
-
     background: ${(props) => props.theme.textareaColor};
-
     resize: none;
     @media (max-width: 768px) {
       font-size: 12px;
@@ -108,6 +105,7 @@ const PostingImg = styled.div`
     border-radius: 8px;
   }
 `;
+
 const PostingBtn = styled.button`
   width: 100%;
   height: 55px;
@@ -130,6 +128,7 @@ const PostingBtn = styled.button`
     height: 40px;
   }
 `;
+
 const InfoItem = styled.div`
   display: flex;
   justify-content: space-between;
@@ -152,13 +151,11 @@ const InfoItem = styled.div`
     }
   }
   .camera {
-    /* padding: 4px 10px; */
     font-size: 30px;
     border-radius: 50%;
-    color: ${(props) => props.theme.iconColorB} !important;
+    color: ${(props) => props.theme.iconColorB};
     cursor: pointer;
     transition: all 0.3s;
-
     &:hover {
       padding: 4px 10px;
       border-radius: 50%;
@@ -276,7 +273,7 @@ const UploadModal = ({
             <div className="info">
               <img
                 className="profileImg"
-                src={currentUserData.fileImage || imageSrc}
+                src={currentUserData.fileImage || defaultProfile}
                 alt="profile Image"
               ></img>
               <div className="profilename">

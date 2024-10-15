@@ -29,11 +29,6 @@
 
 @keyframes fill {
   from {
-    transform: rotate(0deg); /* 시작 각도 0도 */
-  }
-  to {
-    transform: rotate(360deg); /* 최종 각도 360도 */
-
     transform: rotate(0deg);
   }
   to {
