@@ -9,6 +9,7 @@ import { CiEdit, CiCamera } from "react-icons/ci";
 import { FiX } from "react-icons/fi";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase.js";
+import defaultProfile from "/img/defaultProfile.jpg";
 
 import {
   SubDescription_16_n,
@@ -131,53 +132,69 @@ const Wrapper = styled.div`
   z-index: 1000;
 `;
 const Inner = styled.div`
-  width: var(--inner-width-02);
-  padding: 50px 20px;
+  width: 820px;
+  padding: 30px 20px 50px;
   border-radius: 30px;
   box-shadow: var(--box-shadow-01);
   background-color: ${(props) => props.theme.bgColor};
+  @media (max-width: 768px) {
+    margin: 0 20px;
+  }
 `;
 const ModalTitle = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 26px;
+  height: 40px;
+  margin-bottom: 15px;
+  padding-bottom: 20px;
+  font-size: 22px;
   color: ${(props) => props.theme.textColor};
   border-bottom: 1px solid var(--color-light-gray-01);
-  height: 60px;
-  position: relative;
-  margin-bottom: 15px;
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
   .title {
     font-weight: bold;
   }
   .xmark {
     width: 26px;
-    height: 26px;
+    height: 40px;
     display: flex;
     align-items: center;
     position: absolute;
-    top: 17px;
+    top: -10px;
     right: 20px;
     cursor: pointer;
     transition: color 0.3s;
     &:hover {
       color: var(--color-facebookblue);
     }
+    @media (max-width: 768px) {
+      top: -8px;
+      font-size: 20px;
+    }
   }
 `;
 const Posting = styled.div`
   padding: 0 60px;
+  @media (max-width: 768px) {
+    padding: 0 16px;
+  }
   textarea {
+    ${SubDescription_14_n}
     width: 100%;
     height: 100px;
+    margin-bottom: 10px;
+    padding: 14px 20px;
     border-radius: 8px;
-    padding: 10px;
-    font-size: 16px;
-    margin-bottom: 20px;
-    resize: none;
     border: 1px solid ${(props) => props.theme.textareaColor};
-    color: ${(props) => props.theme.iconColorB};
+    color: ${(props) => props.theme.textColor};
+
     background: ${(props) => props.theme.textareaColor};
+
+    resize: none;
     @media (max-width: 768px) {
       font-size: 12px;
     }
@@ -187,11 +204,11 @@ const Posting = styled.div`
   }
 `;
 const PostingImg = styled.div`
-  width: 740px;
+  width: 100%;
   height: 360px;
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   img {
     width: 100%;
     object-fit: cover;
@@ -199,14 +216,14 @@ const PostingImg = styled.div`
   }
 `;
 const PostingBtn = styled.button`
-  background: var(--color-facebookblue);
   width: 100%;
   height: 55px;
   border-radius: 8px;
   border: none;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   color: var(--color-white);
+  background: var(--color-facebookblue);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -214,6 +231,10 @@ const PostingBtn = styled.button`
   transition: opacity 0.3s;
   &:hover {
     opacity: 0.8;
+  }
+  @media (max-width: 768px) {
+    font-size: 16px;
+    height: 40px;
   }
 `;
 const InfoItem = styled.div`
@@ -227,23 +248,24 @@ const InfoItem = styled.div`
     gap: 10px;
     align-items: center;
     margin-bottom: 15px;
-    .profile {
-      background: var(--color-gray-01);
+    .profileImg {
       width: 40px;
       height: 40px;
       border-radius: 50%;
       overflow: hidden;
     }
     .profilename {
-      color: var(--color-gray-01);
+      color: ${(props) => props.theme.textColor};
     }
   }
   .camera {
-    padding: 4px 10px;
+    /* padding: 4px 10px; */
     font-size: 30px;
     border-radius: 50%;
+    color: ${(props) => props.theme.iconColorB} !important;
     cursor: pointer;
     transition: all 0.3s;
+
     &:hover {
       padding: 4px 10px;
       border-radius: 50%;
@@ -376,7 +398,12 @@ const PostUpload = ({ placeholder }) => {
             <Posting>
               <InfoItem>
                 <div className="info">
-                  <div className="profile"></div>
+                  {/* <div className="profile"></div> */}
+                  <img
+                    className="profileImg"
+                    src={currentUserData.fileImage || defaultProfile}
+                    alt="profile Image"
+                  ></img>
                   <div className="profilename">
                     {currentUserData
                       ? `${currentUserData.userName.firstName} ${currentUserData.userName.lastName}`

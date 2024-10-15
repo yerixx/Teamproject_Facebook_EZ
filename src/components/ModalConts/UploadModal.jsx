@@ -27,7 +27,7 @@ const Wrapper = styled.div`
 const Inner = styled.div`
   width: 820px;
   padding: 30px 20px 50px;
-  border-radius: 8px;
+  border-radius: 30px;
   box-shadow: var(--box-shadow-01);
   background-color: ${(props) => props.theme.bgColor};
   @media (max-width: 768px) {

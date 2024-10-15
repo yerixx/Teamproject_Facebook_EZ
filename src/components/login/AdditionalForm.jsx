@@ -7,6 +7,7 @@ import {
   InputWrapperRow,
   Input,
   FormTitle,
+  FormDesc,
   FormItemTitle,
   FormItemDesc,
   Pager,
@@ -147,16 +148,17 @@ const AdditionalForm = ({ updateUserData, mobileSize, progress }) => {
 
   return (
     <Wrapper>
-      <Form height={700}>
+      <Form height={630}>
         {mobileSize ? null : (
           <FormTitle>회원님을 위한 맞춤 홈피드를 준비할게요</FormTitle>
         )}
+        <FormDesc>
+          언제든지 프로필에서 회원님의 정보를 변경할 수 있습니다.
+        </FormDesc>
         <Ul>
           <li>
             <FormItemTitle>성별 입력</FormItemTitle>
-            <FormItemDesc>
-              언제든지 프로필에서 회원님의 성별을 변경할 수 있습니다.
-            </FormItemDesc>
+            <FormItemDesc>성별을 선택하세요.</FormItemDesc>
             <InputWrapperRow>
               <Label htmlFor="woman">
                 여성
@@ -182,10 +184,7 @@ const AdditionalForm = ({ updateUserData, mobileSize, progress }) => {
           </li>
           <li>
             <FormItemTitle>생년월일 입력</FormItemTitle>
-            <FormItemDesc>
-              생년월일을 선택하세요. <br />
-              언제든지 비공개로 변경할 수 있습니다.
-            </FormItemDesc>
+            <FormItemDesc>생년월일을 선택하세요.</FormItemDesc>
             <Input
               id="birth"
               name="birth"
@@ -196,10 +195,7 @@ const AdditionalForm = ({ updateUserData, mobileSize, progress }) => {
           </li>
           <li>
             <FormItemTitle>지역 입력</FormItemTitle>
-            <FormItemDesc>
-              지역을 선택하세요. <br />
-              언제든지 비공개로 변경할 수 있습니다.
-            </FormItemDesc>
+            <FormItemDesc>지역을 선택하세요.</FormItemDesc>
             <SelectItem>
               <div className="select-icon">
                 <svg

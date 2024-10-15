@@ -116,7 +116,7 @@ const Signup = () => {
         minHeight: `100vh`,
         flexDirection: `column`,
         gap: `20px`,
-        padding: mobileSize ? `20px 0` : `100px 0 150px`,
+        padding: mobileSize ? `20px 0` : `30px 0`,
       }}
     >
       {mobileSize ? (

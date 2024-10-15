@@ -23,24 +23,25 @@ import { Link, useSearchParams } from "react-router-dom/dist";
 // <FormTitle className={mobileSize ? "isMobile" : ""}>
 
 const Wrapper = styled.div`
-  height: 750px;
+  /* height: 750px; */
   padding: 25px 0;
   display: flex;
   justify-content: space-between;
+  li {
+    position: relative;
+  }
   .requiredPoint {
     color: #e53e3e;
   }
   .gotoLogin {
     text-align: center;
-    margin-bottom: -20px;
     cursor: pointer;
   }
   @media screen and (max-width: 768px) {
     height: 100%;
     padding: 0;
     display: block;
-
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     form > input:last-child {
       width: 360px;
       position: absolute;
@@ -61,8 +62,9 @@ const InputWrap = styled.div`
   }
 `;
 const Erorr = styled.span`
+  position: absolute;
+  bottom: -23px;
   width: 100%;
-  margin-top: -8px;
   font-size: 14px;
   color: crimson;
   text-align: start;
@@ -74,6 +76,7 @@ const SignupForm = ({ mobileSize, updateUserData, handleSignup }) => {
     handleSubmit,
     formState: { errors },
     setError,
+    getValues,
   } = useForm();
 
   const [searchParams] = useSearchParams();
@@ -89,7 +92,7 @@ const SignupForm = ({ mobileSize, updateUserData, handleSignup }) => {
 
   return (
     <Wrapper>
-      <Form onSubmit={handleSubmit(onValid)}>
+      <Form onSubmit={handleSubmit(onValid)} height={630}>
         {mobileSize ? null : <FormTitle>Facebook에 가입하기</FormTitle>}
         <Ul>
           <li>
@@ -179,7 +182,7 @@ const SignupForm = ({ mobileSize, updateUserData, handleSignup }) => {
               비밀번호 입력 <span className="requiredPoint">*</span>
             </FormItemTitle>
             <FormItemDesc>
-              6자 이상의 문자 또는 숫자로 비밀번호를 만드세요.
+              8자 이상의 문자 또는 숫자로 비밀번호를 만드세요.
             </FormItemDesc>
             <InputWrapperColumn>
               <Input
@@ -189,13 +192,16 @@ const SignupForm = ({ mobileSize, updateUserData, handleSignup }) => {
                     value: 8,
                     message: "비밀번호는 8자 이상 입력해주세요.",
                   },
+                  validate: (value) =>
+                    value === getValues("password2") ||
+                    "비밀번호가 일치하지 않습니다.",
                 })}
                 type="password"
                 placeholder="비밀번호"
                 width={430}
               />
 
-              <Erorr>{errors?.password1?.message}</Erorr>
+              {/* <Erorr>{errors?.password1?.message}</Erorr> */}
               <Input
                 {...register("password2", {
                   required: "비밀번호 확인을 입력해주세요.",
@@ -205,7 +211,8 @@ const SignupForm = ({ mobileSize, updateUserData, handleSignup }) => {
                 placeholder="비밀번호 확인"
                 width={430}
               />
-              <Erorr>{errors?.password2?.message}</Erorr>
+              <Erorr>{errors?.password1?.message}</Erorr>
+              {/* <Erorr>{errors?.password2?.message}</Erorr> */}
             </InputWrapperColumn>
           </li>
         </Ul>
