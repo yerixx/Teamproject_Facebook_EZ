@@ -1,54 +1,50 @@
-import React, { useEffect, useState} from 'react'
-import ReactDOM from 'react-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {createGlobalStyle, styled} from 'styled-components';
-import GlobalStyles from '../../styles/GlobalStyles.styles';
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { styled } from "styled-components";
+import { DataDispatchContext } from "../../App";
 
-// import PostUploadField from '../detail/PostUploadField';
-import CountdownCircle from '../common/CountdownCircle';
+import CountdownCircle from "../common/CountdownCircle";
 import { faChevronDown, faComments } from "@fortawesome/free-solid-svg-icons";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import fbIcon from "../../img/fbIcon.svg";
 import liveIcon from "../../img/liveIcon.svg";
-import LiveProfileImg from "../../img/LiveProfile.jpg";
 import LiveView from "../../img/Live.jpg";
-import SellItem1Img from "../../img/sellItem1.jpg"
-import SellItem2Img from "../../img/sellItem2.jpg"
+import SellItem1Img from "../../img/sellItem1.jpg";
+import SellItem2Img from "../../img/sellItem2.jpg";
+import { IoCloseOutline } from "react-icons/io5";
 
 const Commerce = styled.div`
-  /* width: 1920px;
-  height: 1080px; */
   width: 100%;
   height: 100vh;
-  /* margin: 0 auto; */
   display: flex;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
+  z-index: 1000;
   @media screen and (max-width: 768px) {
     width: 100%;
     height: 100vh;
-    position: relative;
   }
 `;
 
 const LeftContent = styled.section`
-  /* width: 1270px; */
   flex: 2;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  background-color:rgba(0,0,0,0.9);
-  /* border: 1px solid #f00; */
-  .faXmark {
-    position: absolute;
-    top: 33px;
-    right: 30px;
-    color: #fff;
-    font-size: 25px;
-    cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.9);
+`;
+
+const CloseIcon = styled.div`
+  position: absolute;
+  top: 33px;
+  right: 30px;
+  font-size: 25px;
+  cursor: pointer;
+  @media screen and (max-width: 768px) {
+    color: var(--color-white);
   }
   @media screen and (max-width: 768px) {
     height: 100vh;
@@ -56,6 +52,7 @@ const LeftContent = styled.section`
 `;
 
 const Live = styled.div`
+  overflow: hidden;
   width: 500px;
   height: 700px;
   position: relative;
@@ -65,10 +62,13 @@ const Live = styled.div`
   background-image: url(${LiveView});
   background-repeat: no-repeat;
   background-position: top center;
-  video {
-    display: none;
-  }
   background-size: cover;
+  cursor: pointer;
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
   @media screen and (max-width: 1050px) {
     width: 400px;
     height: 600px;
@@ -99,11 +99,10 @@ const SellItemsmb = styled.div`
     display: flex;
     justify-content: space-between;
     position: absolute;
-    top: 150px;
+    top: 90px;
     padding: 8px;
-    border-radius: 8px;
+    border-radius: 8px 8px 0 0;
     background: var(--color-light-gray-02);
-    cursor: pointer; 
     h2 {
       display: flex;
       text-align: left;
@@ -115,18 +114,18 @@ const SellItemsmb = styled.div`
 `;
 
 const SellItemsinfomb = styled.div`
-  display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')}; 
+  display: none;
   @media screen and (max-width: 768px) {
     width: 350px;
+    height: 80px;
+    top: 125px;
     padding: 15px;
-    /* justify-content: space-between; */
+    display: flex;
+    justify-content: space-between;
     align-items: center;
     position: absolute;
-    top: 185px;
-    border-radius: 8px;
+    border-radius: 0 0 8px 8px;
     background: var(--color-light-gray-02);
-    transition: opacity 0.5s ease;
-    opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   }
 `;
 
@@ -134,7 +133,7 @@ const SellItemImgmb = styled.div`
   display: none;
   @media screen and (max-width: 768px) {
     display: flex;
-    position: relative;
+    position: absolute;
     img {
       width: 50px;
       height: 50px;
@@ -148,9 +147,9 @@ const SellItemDescmb = styled.div`
   @media screen and (max-width: 768px) {
     display: flex;
     flex-direction: column;
-    position: relative;
+    position: absolute;
     font-size: 12px;
-    margin-left: 15px;
+    margin-left: 60px;
     gap: 3px;
     span {
       color: #f00;
@@ -159,7 +158,7 @@ const SellItemDescmb = styled.div`
   }
 `;
 
-const Commenstmb = styled.div`
+const CommenstMb = styled.div`
   display: none;
   @media screen and (max-width: 768px) {
     width: 390px;
@@ -207,44 +206,48 @@ const CommentLiveInfomb = styled.div`
 `;
 
 const LiveStatus = styled.div`
-  width: 224px;
-  height: 57px;
+  width: 220px;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-  top: 5px;
+  position: absolute;
+  top: 10px;
   left: 10px;
   gap: 10px;
   color: #fff;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  .liveViewer {
+    margin-left: 13px;
+  }
   @media screen and (max-width: 1050px) {
+    width: 200px;
     font-size: 12px;
-    top: 0;
-    left: 0;
     .liveViewer {
-      margin-left: 5px;
-      font-size: 12px;
     }
   }
   @media screen and (max-width: 768px) {
-    width: 100%;
+    width: 355px;
     display: flex;
     justify-content: flex-start;
     padding: 20px;
     margin-top: 20px;
     object-fit: cover;
     /* border: 1px solid #f00; */
-    .fbLogo, .liveLogo, .liveViewer {
-    position: absolute;
-    z-index: 1;
-  }
-  .liveLogo {
-    margin-left: 40px;
-  }
-  .liveViewer {
-    padding: 0 80px;
-    margin-right: 70px;
-  }
+    .fbLogo,
+    .liveLogo,
+    .liveViewer {
+      position: absolute;
+      z-index: 1;
+    }
+    .liveLogo {
+      margin-left: 40px;
+    }
+    .liveViewer {
+      padding: 0 80px;
+      margin-right: 70px;
+    }
   }
 `;
 
@@ -256,8 +259,7 @@ const LivePoint = styled.div`
   align-items: center;
   position: absolute;
   bottom: 0;
-  border-radius: 0 0 8px 8px;
-  background-color: rgba(0,0,0,0.8);
+  background-color: rgba(0, 0, 0, 0.8);
   .point {
     width: 140px;
     height: 36px;
@@ -267,23 +269,16 @@ const LivePoint = styled.div`
     cursor: pointer;
     transition: all 0.3s;
     &:hover {
-      background-color: var( --color-facebookblue);
+      background-color: var(--color-facebookblue);
       color: var(--color-white);
     }
   }
   .pointDS {
+    text-align: end;
+    width: 230px;
     color: var(--color-white);
   }
-  /* .pointTime {
-    width: 30px;
-    height: 30px;
-    color: var(--color-white);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #fff;
-    border-radius: 50%;
-  } */
+
   @media screen and (max-width: 1050px) {
     width: 400px;
     height: 70px;
@@ -317,7 +312,6 @@ const RightContent = styled.section`
   justify-content: center;
   align-items: center;
   gap: 20px;
-  /* border: 1px solid #f00; */
   @media screen and (max-width: 768px) {
     display: none;
   }
@@ -326,36 +320,36 @@ const RightContent = styled.section`
 const LiveProfile = styled.div`
   width: 100%;
   padding: 0 40px;
-  /* border: 1px solid #f00; */
   display: flex;
   .profileImg {
-    /* background-color: var(--color-light-gray-02); */
+    width: 80px;
+    height: 80px;
+    background-color: var(--color-light-gray-02);
     border-radius: 50%;
     img {
       width: 80px;
+      height: 80px;
+      object-fit: cover;
       border-radius: 50%;
     }
-  }
-  @media screen and (max-width: 1050px) {
-    padding: 0 50px;
   }
 `;
 
 const LiveProfilemb = styled.div`
   display: none;
-    @media screen and (max-width: 768px) {
-      display: flex;
-      align-items: center;
-      position: absolute;
-      top: 80px;
-      left: 20px;
-      .profileImgmb {
-        img {
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-        }
+  @media screen and (max-width: 768px) {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 80px;
+    left: 20px;
+    .profileImgmb {
+      img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
       }
+    }
   }
 `;
 
@@ -374,6 +368,11 @@ const LiveProfileSelf = styled.div`
     font-size: var(--font-size-description-01);
     font-weight: 400;
     color: var(--color-gray-01);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `;
 
@@ -401,8 +400,14 @@ const LiveContents = styled.div`
   h3 {
     border-bottom: 1px solid var(--color-light-gray-01);
     padding-bottom: 15px;
-    /* padding: 15px 0; */
     font-size: var(--font-size-description-01);
+  }
+  p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   @media screen and (max-width: 1050px) {
     padding: 0 50px;
@@ -413,22 +418,11 @@ const LiveContents = styled.div`
   }
 `;
 
-const SellItems = styled.div`
-width: 100%;
-/* border: 1px solid #f00; */
-padding: 0 40px;
-@media screen and (max-width: 1050px) {
-    padding: 0 50px;
-  }
-  @media screen and (max-width: 768px) {
-    display: none;
-  }
-`;
-
 const SellItem = styled.div`
-padding-bottom: 15px;
-background-color: var(--color-light-gray-02);
-border-radius: 8px;
+  width: 480px;
+  padding-bottom: 15px;
+  background-color: var(--color-light-gray-02);
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -471,6 +465,7 @@ const SellItemInfo = styled.div`
 const SellItemImg = styled.div`
   width: 70px;
   height: 70px;
+  object-fit: cover;
   cursor: pointer;
   @media screen and (max-width: 1050px) {
     background-color: none;
@@ -479,13 +474,12 @@ const SellItemImg = styled.div`
 
 const SellItemDesc = styled.div`
   p {
-    padding-bottom: 8px;
     color: var(--color-gray-01);
     display: -webkit-box;
-  height: 30px;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   span {
     color: #f00;
@@ -501,7 +495,6 @@ const SellItemDesc = styled.div`
 
 const Comment = styled.div`
   width: 100%;
-  /* border: 1px solid #f00; */
   padding: 0 40px;
   h3 {
     display: flex;
@@ -519,16 +512,16 @@ const Comment = styled.div`
     padding: 10px 0;
     color: var(--color-gray-01);
   }
-  .test{
+  .test {
     height: 60px;
     border: 1px solid #f00;
     border-radius: 8px;
     margin-bottom: 10px;
   }
   @media screen and (max-width: 1050px) {
-    /* border: 1px solid #f00; */
     padding: 0 50px;
-    h3, span {
+    h3,
+    span {
       font-size: 14px;
     }
     .test {
@@ -550,12 +543,11 @@ const NoComment = styled.div`
   padding: 20px 0;
   font-size: 14px;
   color: var(--color-gray-01);
-  /* border: 1px solid #f00; */
   .commentIcon {
     margin-bottom: 10px;
     .faComments {
       font-size: 40px;
-      color: var( --color-facebookblue);
+      color: var(--color-facebookblue);
     }
   }
   @media screen and (max-width: 1050px) {
@@ -566,7 +558,7 @@ const NoComment = styled.div`
   }
 `;
 
-const ModalLive = () => {
+const ModalLive = ({ item, closeModal }) => {
   const comments = [
     { id: 1, name: "이승연", text: "제가 너무 갖고 싶었던 물건인데 이런 가격에!", img: "https://via.placeholder.com/40" },
     { id: 2, name: "김예지", text: "너무 예뻐요~~", img: "https://via.placeholder.com/40" },
@@ -602,33 +594,107 @@ const ModalLive = () => {
       setIsOpen((prev) => !prev);
     };
 
+  const { id } = useParams(); // URL에서 id 파라미터 받아오기
+  const { dispatch } = useContext(DataDispatchContext);
+  const [pointMessage, setPointMessage] = useState(
+    "7초 후에 500 포인트가 적립됩니다."
+  );
+  const [resetKey, setResetKey] = useState(null); // 카운트다운 리셋을 위한 키
+  const [remainingTime, setRemainingTime] = useState(null); // 남은 시간을 저장할 상태
+  const navigate = useNavigate();
+
+  // 현재 id와 일치하는 제품 찾기
+  const currentProduct =
+    item.products && item.products.id === parseInt(id) ? item.products : null;
+  useEffect(() => {
+    if (item) {
+      const storedIds =
+        JSON.parse(localStorage.getItem("earnedPointIds")) || [];
+      const lastAddedTime = localStorage.getItem("lastAddedTime");
+
+      // 24시간 내에 포인트를 적립한 적이 있는지 확인
+      if (
+        lastAddedTime &&
+        Date.now() - new Date(lastAddedTime).getTime() < 86400000
+      ) {
+        setPointMessage("내일 다시 포인트를 적립할 수 있어요~");
+        setRemainingTime(0);
+        return; // 24시간이 지나지 않았으면 애니메이션 실행 안함
+      }
+
+      // URL의 id와 일치하는 제품을 찾음
+      const currentProduct = item.products.find(
+        (product) => product.id === parseInt(id)
+      );
+
+      if (storedIds.includes(id)) {
+        setPointMessage("내일 다시 포인트를 적립할 수 있어요~");
+      } else {
+        const startTime = Date.now();
+        setResetKey(startTime);
+        setRemainingTime(7);
+
+        let timer = setTimeout(() => {
+          dispatch({
+            type: "ADD_POINTS",
+            value: 500,
+          });
+          setPointMessage("내일 다시 포인트를 적립할 수 있어요~");
+          alert("500포인트가 적립되었습니다!");
+
+          // 포인트 적립 시간 저장
+          localStorage.setItem("lastAddedTime", new Date().toISOString());
+
+          // 적립된 ID 저장
+          storedIds.push(id);
+          localStorage.setItem("earnedPointIds", JSON.stringify(storedIds));
+
+          setTimeout(() => {
+            setResetKey(Date.now());
+            setRemainingTime(7);
+          }, 86400000); // 24시간 후 다시 실행
+        }, 7000);
+
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [id, item, dispatch]);
+
+  const handleButtonClick = () => {
+    const randomIndex = Math.floor(Math.random() * item.products.length);
+    const randomProductId = item.products[randomIndex].id;
+    navigate(`/modallive/${randomProductId}`);
+  };
+  console.log(item);
+
   return (
     <>
       <Commerce>
         <LeftContent>
-          <FontAwesomeIcon className='faXmark' icon={faXmark} />
           <Live>
+            <video src={item?.liveStream?.videoUrl} autoPlay loop></video>
             <LiveStatus>
-              <div className='fbLogo'>
-                <img src={fbIcon}/>
+              <div className="fbLogo">
+                <img src={fbIcon} />
               </div>
-              <div className='liveLogo'>
+              <div className="liveLogo">
                 <img src={liveIcon} />
               </div>
-              <div className='liveViewer'>2,023명 시청 중</div>
-              <div className='liveVideo'>
-                <video 
-                src='/video/liveFood.mp4'
-                autoPlay
-                muted
-                loop
-                />
+              <div className="liveViewer">
+                {item.liveStream.currentViewers}명 시청 중
               </div>
             </LiveStatus>
             <LivePoint>
-              <button className='point'>포인트 더 모으기</button>
-              <div className='pointDS'>7초 후에 500 포인트가 적립됩니다.</div>
-              <div className='countdown'><CountdownCircle /></div>
+              <button onClick={handleButtonClick} className="point">
+                포인트 더 모으기
+              </button>
+              <div className="pointDS">{pointMessage}</div>
+              <div className="countdown">
+                <CountdownCircle
+                  resetKey={resetKey}
+                  remainingTime={remainingTime}
+                />
+              </div>
             </LivePoint>
           </Live>
           <SellItemsmb onClick={toggleDropdown}>
@@ -644,7 +710,7 @@ const ModalLive = () => {
           <b><span>30%</span>19,900원</b>
         </SellItemDescmb>
       </SellItemsinfomb>
-      <Commenstmb>
+      <CommenstMb>
       {visibleComments.map((comment) => (
         <CommentLiveInfomb key={comment.id}>
           <img src={comment.img} alt={`${comment.name}의 프로필`} />
@@ -654,76 +720,81 @@ const ModalLive = () => {
           </div>
         </CommentLiveInfomb>
       ))}
-    </Commenstmb>
+    </CommenstMb>
         </LeftContent>
         <RightContent>
+          <CloseIcon onClick={closeModal}>
+            <IoCloseOutline className="closeIcon" />
+          </CloseIcon>
           <LiveProfile>
-            <div className='profileImg'>
-            <img src={LiveProfileImg} alt="LiveProfileImg" />
+            <div className="profileImg">
+              <img src={item?.liveStream?.profileImage} alt="LiveProfileImg" />
             </div>
             <LiveProfileSelf>
-              <div className='profileName'>미니멀데이</div>
-              <div className='profiledesc'>가을옷 보러오세요~~</div>
+              <div className="profileName">{item?.liveStream?.name}</div>
+              <div className="profiledesc">{item?.liveStream?.description}</div>
             </LiveProfileSelf>
           </LiveProfile>
           <LiveContents>
             <h3>라이브 안내</h3>
-            <p>안녕하세요~~ <br/> 고퀄리티 옷들만 판매하고 있어요. 미니멀 데이에서 가을옷 득템하세요!</p>
+            <p>{item?.liveStream?.liveInfo}</p>
           </LiveContents>
-          <SellItems>
-            <SellItem>
-              <h3>판매중인 상품</h3>
-              <SellInfos>
-                <SellItemInfo>
+          <SellItem>
+            <h3>판매중인 상품</h3>
+            <SellInfos>
+              {item?.products?.map((product, index) => (
+                <SellItemInfo key={product?.id || index}>
                   <SellItemImg>
-                    <div className='sellItemImg'></div>
-                    <img src={SellItem1Img} alt="SellItem1Img" height="70px" width="70px" />
-                    </SellItemImg>
+                    <div className="sellItemImg"></div>
+                    <img
+                      src={product?.productImage}
+                      alt="productImage"
+                      height="70px"
+                      width="70px"
+                    />
+                  </SellItemImg>
                   <SellItemDesc>
-                    <p>★5%추가할인★스프라이트 백트임 긴팔니트</p>
-                    <b><span>30%</span>19,900원</b>
+                    <p>{product?.name}</p>
+                    <b>
+                      <span>{product?.discountRate}</span>
+                      {product?.discountPrice}
+                    </b>
                   </SellItemDesc>
                 </SellItemInfo>
-                <SellItemInfo>
-                  <SellItemImg>
-                    <div className='sellItemImg'></div>
-                    <img src={SellItem2Img} alt="SellItem2Img" height="70px" width="70px" />
-                    </SellItemImg>
-                  <SellItemDesc>
-                    <p>메디슨 클래식 플랩 레더백</p>
-                    <b>34,000원</b>
-                  </SellItemDesc>
-                </SellItemInfo>
-              </SellInfos>
-            </SellItem>
-          </SellItems>
+              ))}
+            </SellInfos>
+          </SellItem>
           <Comment>
             <h3>댓글</h3>
-            {/* <span>영상과 무관하거나 욕설, 비방 등의 댓글은 관리자에 의해 삭제될 수 있습니다.</span> */}
-            {/* <NoComment>
-              <div className='commentIcon'>
-              <FontAwesomeIcon className='faComments' icon={faComments} />
+            <span>
+              영상과 무관하거나 욕설, 비방 등의 댓글은 관리자에 의해 삭제될 수
+              있습니다.
+            </span>
+            <NoComment>
+              <div className="commentIcon">
+                <FontAwesomeIcon className="faComments" icon={faComments} />
               </div>
-              <p>댓글이 없습니다. <br/> 첫 번째 댓글을 남겨주세요.</p>
+              <p>
+                댓글이 없습니다. <br /> 첫 번째 댓글을 남겨주세요.
+              </p>
             </NoComment>
-            <div className='test'></div> */}
-            {/* <CommentWrite><PostUploadField/></CommentWrite> */}
+            <div className="test"></div>
           </Comment>
         </RightContent>
-        <LiveProfilemb>
-            <div className='profileImgmb'>
-            <img src={LiveProfileImg} alt="LiveProfileImgmb" />
+        {/* <LiveProfilemb>
+          <div className="profileImgmb">
+            <img src={LiveProfilemb} alt="LiveProfileImgmb" />
+          </div>
+          <LiveProfileSelfmb>
+            <div className="profileNamemb">
+              <h4>미니멀데이</h4>
             </div>
-            <LiveProfileSelfmb>
-              <div className='profileNamemb'><h4>미니멀데이</h4></div>
-              <div className='profiledescmb'>가을옷 보러오세요~~</div>
-            </LiveProfileSelfmb>
-        </LiveProfilemb>
+            <div className="profiledescmb">가을옷 보러오세요~~</div>
+          </LiveProfileSelfmb>
+        </LiveProfilemb> */}
       </Commerce>
     </>
-  )
-}
+  );
+};
 
 export default ModalLive;
-
-
