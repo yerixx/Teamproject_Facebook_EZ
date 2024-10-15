@@ -9,9 +9,11 @@ import { faChevronDown, faComments } from "@fortawesome/free-solid-svg-icons";
 import fbIcon from "../../img/fbIcon.svg";
 import liveIcon from "../../img/liveIcon.svg";
 import LiveView from "../../img/Live.jpg";
-import SellItem1Img from "../../img/sellItem1.jpg";
-import SellItem2Img from "../../img/sellItem2.jpg";
 import { IoCloseOutline } from "react-icons/io5";
+
+import { BsArrowReturnLeft } from "react-icons/bs";
+import { FaSpinner } from "react-icons/fa";
+import testCat from "/img/testcat.jpg";
 
 const Commerce = styled.div`
   width: 100%;
@@ -114,9 +116,8 @@ const SellItemsmb = styled.div`
 `;
 
 const SellItemsinfomb = styled.div`
-  display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')}; 
+  display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
   @media screen and (max-width: 768px) {
-    
     width: 350px;
     height: 80px;
     top: 125px;
@@ -162,7 +163,15 @@ const SellItemDescmb = styled.div`
 `;
 
 const CommenstMb = styled.div`
-  display: none;
+  display: flex;
+  width: 390px;
+  position: absolute;
+  bottom: 69px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+  height: 100px;
   @media screen and (max-width: 768px) {
     width: 390px;
     position: absolute;
@@ -171,7 +180,7 @@ const CommenstMb = styled.div`
     flex-direction: column;
     gap: 10px;
     background-color: rgba(0, 0, 0, 0.6);
-    overflow: hidden; 
+    overflow: hidden;
     height: 100px;
   }
 `;
@@ -187,48 +196,55 @@ const CommentLiveInfomb = styled.div`
     padding-left: 20px;
     font-size: 12px;
     color: #fff;
-    gap: 5px; 
+    gap: 5px;
     img {
-      width: 40px; 
-      height: 40px; 
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
     }
     animation: slide-up 0.5s ease;
 
     @keyframes slide-up {
-    from {
-      transform: translateY(10px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
+      from {
+        transform: translateY(10px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
   }
+`;
+
+const CommentLiveInfomb2 = styled.div`
+  display: flex;
+  position: relative;
+  right: 0;
+  @media screen and (max-width: 768px) {
+    display: none;
   }
 `;
 
 const LiveStatus = styled.div`
-  width: 220px;
-  height: 50px;
-  display: flex;
+  position: absolute;
   justify-content: center;
   align-items: center;
-  position: absolute;
+  width: 180px;
+  height: 50px;
+  display: flex;
+  gap: 5px;
   top: 10px;
   left: 10px;
-  gap: 10px;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 20px;
+  border-radius: 12px;
   .liveViewer {
-    margin-left: 13px;
+    margin-bottom: 4px;
   }
   @media screen and (max-width: 1050px) {
     width: 200px;
     font-size: 12px;
-    .liveViewer {
-    }
   }
   @media screen and (max-width: 768px) {
     width: 355px;
@@ -237,7 +253,6 @@ const LiveStatus = styled.div`
     padding: 20px;
     margin-top: 20px;
     object-fit: cover;
-    /* border: 1px solid #f00; */
     .fbLogo,
     .liveLogo,
     .liveViewer {
@@ -497,7 +512,10 @@ const SellItemDesc = styled.div`
 `;
 
 const Comment = styled.div`
+  border: 1px solid #f00;
+
   width: 100%;
+  height: 100%;
   padding: 0 40px;
   h3 {
     display: flex;
@@ -562,17 +580,142 @@ const NoComment = styled.div`
   }
 `;
 
-const ModalLive = ({ item, closeModal }) => {
+const WrapperForm = styled.form`
+  width: 100%;
+  height: fit-content;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+`;
+
+const CommentCont = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+
+  .commentUpLoadprofile {
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    .profileImg {
+      width: 45px;
+      height: 45px;
+      border-radius: 100px;
+    }
+
+    .profileuploadText {
+      width: 100%;
+      height: 40px;
+      margin: 0 15px;
+      padding: 0 20px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .submitBtn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      /* width: 55px;
+      height: 55px; */
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+    }
+
+    .submitBtn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+`;
+
+const CommenstMb2 = styled.div``;
+
+const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [content, setContent] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Content to be submitted:", content); // 입력 값 확인
+
+    if (!content.trim()) return; // 공백 방지
+
+    try {
+      setIsLoading(true);
+      await onCreateComment(content); // postId는 CommentSection에서 이미 처리됨
+      setContent(""); // 입력창 초기화
+    } catch (error) {
+      console.error("댓글 업로드 실패:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const comments = [
-    { id: 1, name: "이승연", text: "제가 너무 갖고 싶었던 물건인데 이런 가격에!", img: "https://via.placeholder.com/40" },
-    { id: 2, name: "김예지", text: "너무 예뻐요~~", img: "https://via.placeholder.com/40" },
-    { id: 3, name: "홍길동", text: "진짜 사고 싶어요!", img: "https://via.placeholder.com/40" },
-    { id: 4, name: "박지민", text: "이거 재고 있나요?", img: "https://via.placeholder.com/40" },
-    { id: 5, name: "최민수", text: "배송 언제 되나요?", img: "https://via.placeholder.com/40" },
-    { id: 6, name: "이수진", text: "사고 싶어서 기다리고 있어요!", img: "https://via.placeholder.com/40" },
-    { id: 7, name: "김도현", text: "혹시 사이즈 변경 가능할까요?", img: "https://via.placeholder.com/40" },
-    { id: 8, name: "이찬우", text: "이 제품 사진이 더 있나요?", img: "https://via.placeholder.com/40" },
-    { id: 9, name: "홍길동", text: "특가 세일이 있나요?", img: "https://via.placeholder.com/40" },
+    {
+      id: 1,
+      name: "이승연",
+      text: "제가 너무 갖고 싶었던 물건인데 이런 가격에!",
+      img: "https://via.placeholder.com/40",
+    },
+    {
+      id: 2,
+      name: "김예지",
+      text: "너무 예뻐요~~",
+      img: "https://via.placeholder.com/40",
+    },
+    {
+      id: 3,
+      name: "홍길동",
+      text: "진짜 사고 싶어요!",
+      img: "https://via.placeholder.com/40",
+    },
+    {
+      id: 4,
+      name: "박지민",
+      text: "이거 재고 있나요?",
+      img: "https://via.placeholder.com/40",
+    },
+    {
+      id: 5,
+      name: "최민수",
+      text: "배송 언제 되나요?",
+      img: "https://via.placeholder.com/40",
+    },
+    {
+      id: 6,
+      name: "이수진",
+      text: "사고 싶어서 기다리고 있어요!",
+      img: "https://via.placeholder.com/40",
+    },
+    {
+      id: 7,
+      name: "김도현",
+      text: "혹시 사이즈 변경 가능할까요?",
+      img: "https://via.placeholder.com/40",
+    },
+    {
+      id: 8,
+      name: "이찬우",
+      text: "이 제품 사진이 더 있나요?",
+      img: "https://via.placeholder.com/40",
+    },
+    {
+      id: 9,
+      name: "홍길동",
+      text: "특가 세일이 있나요?",
+      img: "https://via.placeholder.com/40",
+    },
   ];
 
   const [visibleComments, setVisibleComments] = useState([]);
@@ -593,10 +736,10 @@ const ModalLive = ({ item, closeModal }) => {
 
     return () => clearInterval(interval);
   }, [comments, index]);
-  
-    const toggleDropdown = () => {
-      setIsOpen((prev) => !prev);
-    };
+
+  const toggleDropdown = () => {
+    setIsOpen((prev) => !prev);
+  };
 
   const { id } = useParams(); // URL에서 id 파라미터 받아오기
   const { dispatch } = useContext(DataDispatchContext);
@@ -693,38 +836,42 @@ const ModalLive = ({ item, closeModal }) => {
                 포인트 더 모으기
               </button>
               <div className="pointDS">{pointMessage}</div>
-              <div className="countdown">
-                <CountdownCircle
-                  resetKey={resetKey}
-                  remainingTime={remainingTime}
-                />
-              </div>
+              {remainingTime !== 0 && (
+                <div className="countdown">
+                  <CountdownCircle
+                    resetKey={resetKey}
+                    remainingTime={remainingTime}
+                  />
+                </div>
+              )}
             </LivePoint>
           </Live>
           <SellItemsmb onClick={toggleDropdown}>
-        <h2>판매중인 상품</h2>
-        <FontAwesomeIcon icon={faChevronDown} />
-      </SellItemsmb>
-      <SellItemsinfomb isOpen={isOpen}>
-        <SellItemImgmb>
-          <img src={item?.liveStream?.profileImage}  alt="SellItem1Img" />
-        </SellItemImgmb>
-        <SellItemDescmb>
-          <p>★5%추가할인★{item?.liveStream?.name}</p>
-          <b><span>30%</span>19,900원</b>
-        </SellItemDescmb>
-      </SellItemsinfomb>
-      <CommenstMb>
-      {visibleComments.map((comment) => (
-        <CommentLiveInfomb key={comment.id}>
-          <img src={comment.img} alt={`${comment.name}의 프로필`} />
-          <div className='desc'>
-            <h3>{comment.name}</h3>
-            <p>{comment.text}</p>
-          </div>
-        </CommentLiveInfomb>
-      ))}
-    </CommenstMb>
+            <h2>판매중인 상품</h2>
+            <FontAwesomeIcon icon={faChevronDown} />
+          </SellItemsmb>
+          <SellItemsinfomb isOpen={isOpen}>
+            <SellItemImgmb>
+              <img src={item?.liveStream?.profileImage} alt="SellItem1Img" />
+            </SellItemImgmb>
+            <SellItemDescmb>
+              <p>★5%추가할인★{item?.liveStream?.name}</p>
+              <b>
+                <span>30%</span>19,900원
+              </b>
+            </SellItemDescmb>
+          </SellItemsinfomb>
+          <CommenstMb>
+            {visibleComments.map((comment) => (
+              <CommentLiveInfomb key={comment.id}>
+                <img src={comment.img} alt={`${comment.name}의 프로필`} />
+                <div className="desc">
+                  <h3>{comment.name}</h3>
+                  <p>{comment.text}</p>
+                </div>
+              </CommentLiveInfomb>
+            ))}
+          </CommenstMb>
         </LeftContent>
         <RightContent>
           <CloseIcon onClick={closeModal}>
@@ -774,19 +921,35 @@ const ModalLive = ({ item, closeModal }) => {
               영상과 무관하거나 욕설, 비방 등의 댓글은 관리자에 의해 삭제될 수
               있습니다.
             </span>
-            <NoComment>
-              <div className="commentIcon">
-                <FontAwesomeIcon className="faComments" icon={faComments} />
-              </div>
-              <p>
-                댓글이 없습니다. <br /> 첫 번째 댓글을 남겨주세요.
-              </p>
-            </NoComment>
-            <input
-            className="test"
+            <CommenstMb2>
+              {visibleComments.map((comment) => (
+                <CommentLiveInfomb2 key={comment.id}>
+                  <img src={comment.img} alt={`${comment.name}의 프로필`} />
+                  <div className="desc">
+                    <h3>{comment.name}</h3>
+                    <p>{comment.text}</p>
+                  </div>
+                </CommentLiveInfomb2>
+              ))}
+            </CommenstMb2>
+            <WrapperForm onSubmit={handleSubmit}>
+      <CommentCont>
+        <div className="commentUpLoadprofile">
+          <img src={testCat} className="profileImg" alt="profileImg" />
+          <input
+            className="profileuploadText"
+            onChange={(e) => setContent(e.target.value)}
             type="text"
-            placeholder="댓글을 입력하세요."
-            />
+            placeholder="댓글을 입력하세요"
+            value={content}
+            required
+          />
+          <button disabled={isLoading} type="submit" className="submitBtn">
+            {isLoading ? <FaSpinner /> : <BsArrowReturnLeft />}
+          </button>
+        </div>
+      </CommentCont>
+            </WrapperForm>
           </Comment>
         </RightContent>
       </Commerce>
@@ -795,9 +958,3 @@ const ModalLive = ({ item, closeModal }) => {
 };
 
 export default ModalLive;
-
-
-
-
-
-

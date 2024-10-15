@@ -1,11 +1,15 @@
 import React, { useState, useContext } from "react";
+
 import { DataStateContext } from "../../App.jsx";
 import { styled } from "styled-components";
+
 import EditeBox from "../common/EditeBox.jsx";
 import SocialBtnIcon from "../common/SocialBtnIcon.jsx";
+
 import { BsThreeDots } from "react-icons/bs";
 import { IoCloseOutline } from "react-icons/io5";
 import { FaEarthAmericas } from "react-icons/fa6";
+
 import defaultProfile from "/img/defaultProfile.jpg";
 
 import {
@@ -14,7 +18,6 @@ import {
   SubDescription_14_n,
 } from "../../styles/GlobalStyles.styles.js";
 
-// 스타일 정의
 const Wrapper = styled.div`
   position: fixed;
   top: 0;
@@ -45,9 +48,8 @@ const LeftContent = styled.section`
   justify-content: center;
   align-items: center;
   position: relative;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: ${(props) => props.theme.modalBgColor};
 `;
-
 const RightContent = styled.section`
   flex: 1;
   display: flex;
@@ -58,9 +60,8 @@ const RightContent = styled.section`
   margin: 0 auto;
   padding-top: 40px;
   gap: 20px;
-  background: #fff;
+  background-color: ${(props) => props.theme.bgColor};
 `;
-
 const ControlsIcon = styled.div`
   display: flex;
   position: absolute;
@@ -72,17 +73,37 @@ const ControlsIcon = styled.div`
     top: 20px;
   }
 `;
-
+const EditeIcon = styled.div`
+  position: absolute;
+  top: 33px;
+  right: 50px;
+  font-size: 20px;
+  cursor: pointer;
+  @media screen and (max-width: 768px) {
+    * {
+      color: var(--color-white);
+    }
+    .optionList {
+      box-shadow: none;
+    }
+    .optionItem {
+      color: black;
+    }
+  }
+`;
 const CloseIcon = styled.div`
   position: absolute;
   top: 33px;
   right: 30px;
   font-size: 25px;
   cursor: pointer;
+  color: ${(props) => props.theme.textColor};
   @media screen and (max-width: 768px) {
     color: var(--color-white);
   }
 `;
+const ArrowBtn = styled.div``;
+const Trigger = styled.div``;
 
 const ImageContent = styled.div`
   width: 780px;
@@ -94,8 +115,8 @@ const ImageContent = styled.div`
   @media screen and (max-width: 768px) {
     width: 100%;
     height: 390px;
+    object-fit: cover;
   }
-  
   img {
     width: 100%;
     height: 100%;
@@ -104,9 +125,16 @@ const ImageContent = styled.div`
     &:hover {
       transform: scale(1.2);
     }
+    @media screen and (max-width: 768px) {
+      width: 100%;
+      height: 390px;
+      object-fit: cover;
+      &:hover {
+        transform: scale(1);
+      }
+    }
   }
 `;
-
 const ModalProfileImg = styled.div`
   width: 100%;
   padding: 0 40px;
@@ -115,6 +143,10 @@ const ModalProfileImg = styled.div`
     width: 80px;
     height: 80px;
     border-radius: 50%;
+    @media screen and (max-width: 768px) {
+      width: 60px;
+      height: 60px;
+    }
     img {
       width: 100%;
       height: 100%;
@@ -122,8 +154,10 @@ const ModalProfileImg = styled.div`
       object-fit: cover;
     }
   }
+  @media screen and (max-width: 768px) {
+    padding: 50px 20px;
+  }
 `;
-
 const ModalProfileSelf = styled.div`
   display: flex;
   flex-direction: column;
@@ -132,14 +166,25 @@ const ModalProfileSelf = styled.div`
   margin-left: 20px;
   .profileName {
     ${MainTitle_18_b}
+    color: ${(props) => props.theme.textColor};
+    @media screen and (max-width: 768px) {
+      color: var(--color-white);
+    }
   }
   .profiledesc {
     display: flex;
     gap: 4px;
     ${SubDescription_14_n}
+    color: ${(props) => props.theme.textColor};
+
+    * {
+      color: ${(props) => props.theme.textColor};
+    }
+    @media screen and (max-width: 768px) {
+      color: var(--color-white);
+    }
   }
 `;
-
 const ModalDesc = styled.div`
   ${SubDescription_16_n}
   width: 100%;
@@ -147,22 +192,31 @@ const ModalDesc = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  overflow-y: auto; /* 세로 스크롤 추가 */
-  max-height: 150px; /* 최대 높이 설정 */
-  background: rgba(0, 0, 0, 0.5); /* 배경 설정 */
-  
+  color: ${(props) => props.theme.textColor};
+  @media screen and (max-width: 1050px) {
+    width: 100%;
+    height: 100px;
+    padding: 0;
+    font-size: 14px;
+    overflow-y: scroll;
+    color: var(--color-white);
+    background: rgba(0, 0, 0, 0.5);
+  }
   p {
     word-wrap: keep-all;
-    /* padding-bottom: 15px; */
+    padding-bottom: 15px;
+    @media screen and (max-width: 1050px) {
+      padding: 20px;
+      font-size: 14px;
+    }
   }
 `;
-
 const SocialIcon = styled.div`
   width: 90%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  gap: 20px;
+  gap: 10px;
   @media (max-width: 768px) {
     position: absolute;
     width: 100%;
@@ -181,12 +235,11 @@ const Mobile = styled.div`
 
 const ModalCont = ({ post }) => {
   const { currentUserData } = useContext(DataStateContext);
+
   const [closeBtn, setCloseBtn] = useState(false);
-  
   const closeButton = () => {
     setCloseBtn(true);
   };
-
   const formatDate = (isoString) => {
     const date = new Date(isoString);
     const year = date.getFullYear();
@@ -200,6 +253,8 @@ const ModalCont = ({ post }) => {
       {/* Desktop */}
       <DeskTop>
         <LeftContent>
+          <ArrowBtn></ArrowBtn>
+          <Trigger></Trigger>
           <ImageContent>
             <img src={post.image} />
           </ImageContent>
@@ -223,7 +278,14 @@ const ModalCont = ({ post }) => {
               </div>
               <div className="profiledesc">
                 {formatDate(post.createdAt)}
-                <FaEarthAmericas style={{ fontSize: "14px", color: "black", marginTop: "4px" }} />
+                <FaEarthAmericas
+                  style={{
+                    color: "${(props) => props.theme.textColor}",
+                    fontSize: "14px",
+                    color: "black",
+                    marginTop: "4px",
+                  }}
+                />
               </div>
             </ModalProfileSelf>
           </ModalProfileImg>
@@ -238,6 +300,9 @@ const ModalCont = ({ post }) => {
       {/* mobile */}
       <Mobile>
         <ControlsIcon>
+          <EditeIcon>
+            <EditeBox Title={<BsThreeDots />} />
+          </EditeIcon>
           <CloseIcon onClick={closeButton}>
             <IoCloseOutline className="closeIcon" />
           </CloseIcon>

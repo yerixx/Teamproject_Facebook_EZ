@@ -50,7 +50,7 @@ const router = createBrowserRouter([
         element: <Detail />,
       },
       {
-        path: "modallive",
+        path: "modallive/:id",
         element: <ModalLive />,
       },
       {
@@ -419,6 +419,7 @@ function App() {
       createdAt: new Date().toISOString(),
       likes: 0,
     };
+
     try {
       const postDocRef = doc(db, "posts", postId);
       const postDoc = await getDoc(postDocRef);
