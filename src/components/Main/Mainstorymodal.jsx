@@ -1,15 +1,17 @@
-import React, { useState, useContext } from "react"; // React와 useState, useContext 훅을 임포트
-import styled from "styled-components"; // styled-components를 사용하여 스타일 컴포넌트 작성
-import { FiX } from "react-icons/fi"; // 닫기 아이콘을 위한 FiX 아이콘 임포트
-import { CiCamera } from "react-icons/ci"; // 카메라 아이콘을 위한 CiCamera 아이콘 임포트
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Firebase Storage 관련 함수 임포트
-import { collection, addDoc, Timestamp } from "firebase/firestore"; // Firestore 관련 함수 임포트
-import { DataDispatchContext } from "../../App"; // 데이터 디스패치 컨텍스트 임포트
-import { storage, db } from "../../firebase"; // Firebase 스토리지와 데이터베이스 임포트
+import React, { useState } from "react"; // useContext 제거
+import styled from "styled-components";
+import { FiX } from "react-icons/fi";
+import { CiCamera } from "react-icons/ci";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { storage, db } from "../../firebase";
 import {
   SubDescription_12_m,
   SubDescription_14_n,
 } from "../../styles/GlobalStyles.styles";
+
+// 최대 비디오 파일 크기 (50MB)
+const MAX_VIDEO_SIZE = 50 * 1024 * 1024; // 50MB
 
 // 전체 모달을 감싸는 스타일 컴포넌트
 const WrapperForm = styled.form`
@@ -82,14 +84,16 @@ const Inner = styled.div`
 
   .storyupload {
     padding: 0 60px;
-    .storyimage, .storyvideo {
+    .storyimage,
+    .storyvideo {
       width: 100%;
       max-width: 650px;
       height: 600px;
       display: flex;
       justify-content: center;
       margin-bottom: 20px;
-      img, video {
+      img,
+      video {
         width: 100%;
         height: 60%;
         border-radius: 8px;
@@ -178,7 +182,6 @@ const Mainstorymodal = ({ onClose }) => {
   const [storyVideo, setStoryVideo] = useState(null); // 비디오 파일 상태
   const [uploading, setUploading] = useState(false); // 업로드 상태
   const [error, setError] = useState(null); // 에러 메시지 상태
-  const { onCreateStory } = useContext(DataDispatchContext); // 데이터 디스패치 컨텍스트에서 함수 가져오기
 
   // 이미지 파일 처리
   const handleImageChange = (e) => {
@@ -230,7 +233,7 @@ const Mainstorymodal = ({ onClose }) => {
         createdAt: Timestamp.fromDate(new Date()),
       });
 
-      await onCreateStory("testUserId", "TestUser", storyText, imageUrl, videoUrl); // 스토리 생성 후 처리
+      // 상태 초기화
       setStoryText(""); // 텍스트 초기화
       setStoryImage(null); // 이미지 초기화
       setStoryVideo(null); // 비디오 초기화
@@ -290,6 +293,7 @@ const Mainstorymodal = ({ onClose }) => {
                     src={URL.createObjectURL(storyVideo)} // 선택한 비디오 미리보기
                     type={storyVideo.type}
                   />
+                  지원되지 않는 비디오 형식입니다.
                 </video>
               </div>
             )}

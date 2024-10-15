@@ -241,9 +241,7 @@ const Mainpage = ({ searchTerm }) => {
     setIsModalOpen(true);
     console.log("isModalOpen after setState:", isModalOpen); // 이 로그는 이전 상태를 출력할 수 있음
   };
-  useEffect(() => {
-    console.log("isModalOpen changed:", isModalOpen);
-  }, [isModalOpen]);
+  useEffect(() => {}, [isModalOpen]);
   const closeModal = () => {
     setIsModalOpen(false);
     setIsEditing(false);
@@ -261,7 +259,6 @@ const Mainpage = ({ searchTerm }) => {
       console.error("게시물 업데이트 중 오류 발생:", error);
     }
   };
-  console.log(filteredPosts);
 
   const isSearching = searchTerm.trim().length > 0;
   return (

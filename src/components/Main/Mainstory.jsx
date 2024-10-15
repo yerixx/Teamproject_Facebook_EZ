@@ -1,4 +1,5 @@
-import React, { useState } from "react"; // useState 임포트 추가
+import React, { useState, useContext, useEffect } from "react"; // useState 임포트 추가
+import { DataStateContext } from "../../App.jsx";
 import styled from "styled-components";
 import { FaUser, FaPlus } from "react-icons/fa6";
 import Slider from "react-slick";
@@ -7,6 +8,8 @@ import "slick-carousel/slick/slick-theme.css";
 import { SubDescription_16_n } from "../../styles/GlobalStyles.styles";
 import { MdOutlineNavigateNext, MdOutlineNavigateBefore } from "react-icons/md";
 import Mainstorymodal from "../Main/Mainstorymodal";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { storage, db } from "../../firebase";
 
 const mockData = [
   {
@@ -191,8 +194,8 @@ const StoryFriend = styled.div`
   .storyInfo {
     width: 100%;
     .story {
-      width: 44px;
-      height: 44px;
+      width: 50px;
+      height: 50px;
       position: absolute;
       top: 8px;
       left: 8px;
@@ -206,6 +209,14 @@ const StoryFriend = styled.div`
         height: 100%;
         background: #aaa;
         border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .profileImg {
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+        }
       }
     }
 
@@ -314,7 +325,30 @@ const PrevArrow = ({ onClick, currentSlide }) => {
 const MainStory = () => {
   const [currentSlide, setCurrentSlide] = useState(0); // 현재 슬라이드 상태
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태 관리
+  const [storys, setStorys] = useState([]);
   const [setPostImage] = useState(null); // 모달에서 업로드된 이미지 상태
+  const { currentUserData } = useContext(DataStateContext);
+
+  useEffect(() => {
+    const fetchStorys = async () => {
+      try {
+        const storysQuery = query(
+          collection(db, "story"),
+          orderBy("createdAt", "desc")
+        );
+        const querySnapshot = await getDocs(storysQuery);
+        const storyData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        console.log(storyData);
+        setStorys(storyData);
+      } catch (e) {
+        console.error("Story 데이터 전송오류", e);
+      }
+    };
+    fetchStorys();
+  }, []);
 
   // 모달 열기 핸들러
   const openModal = () => {
@@ -380,22 +414,27 @@ const MainStory = () => {
               </span>
               <h2>스토리 만들기</h2>
             </StoryItem>
-            {mockData.map(
+            {storys.map(
               (
                 friend // 친구 데이터 배열을 맵으로 순회
               ) => (
                 <StoryFriend key={friend.id}>
-
-                  <img
-            className="profileImg"
-            src={currentUserData?.profileImage || "/img/defaultProfile.jpg"}
-            alt="Profile"
-          />
+                  <img src={friend.imageUrl} alt="스토리" />
                   <div className="storyInfo">
                     <div className="story">
-                      <div className="storyProfile"></div> {/* 스토리 프로필 */}
+                      <div className="storyProfile">
+                        <img
+                          className="profileImg"
+                          src={
+                            currentUserData?.profileImage ||
+                            "/img/defaultProfile.jpg"
+                          }
+                          alt="Profile"
+                        />
+                      </div>
+                      {/*스토리 프로필*/}
                     </div>
-                    <div className="storyName">{friend.name}</div>{" "}
+                    <div className="storyName">{friend.name}</div>
                   </div>
                 </StoryFriend>
               )

@@ -57,7 +57,6 @@ const SocialIcon = styled.div`
 const SocialBtnIcon = ({ post }) => {
   const { onToggleLike } = useContext(DataDispatchContext);
   const currentUser = useContext(DataStateContext);
-  console.log(currentUser);
   const [toggle, setToggle] = useState(false);
   const [like, setLike] = useState(false);
   const [save, setSave] = useState(false);
