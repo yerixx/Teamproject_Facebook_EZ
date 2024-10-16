@@ -14,7 +14,7 @@ import { styled } from "styled-components";
 
 // 개별 댓글 컴포넌트
 const Comment = ({ comment, onDelete }) => {
-  const { currentUserData } = useContext(DataStateContext);
+  const { users } = useContext(DataStateContext);
 
   const [likes, setLikes] = useState(0);
   const [liked, setLiked] = useState(false);
@@ -30,6 +30,9 @@ const Comment = ({ comment, onDelete }) => {
       setLikes(parseInt(savedLikesCount, 10));
     }
   }, [comment.id]);
+
+  const authorDats = users?.find((user) => user.userId === comment.userId);
+  console.log(authorDats);
 
   const handleToggleLike = () => {
     setLiked((prev) => {
@@ -49,7 +52,7 @@ const Comment = ({ comment, onDelete }) => {
     <div className="comment">
       <img
         className="profileImg"
-        src={currentUserData?.profileImage || "/img/defaultProfile.jpg"}
+        src={authorDats?.profileImage || "/img/defaultProfile.jpg"}
         alt="Profile"
       />
       <div className="commentContentWrapper">
@@ -83,7 +86,7 @@ const CommentList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
-  max-height: 500px;
+  max-height: 250px;
   overflow-y: auto;
   .profileImg {
     width: 45px;
@@ -114,7 +117,12 @@ const CommentSection = ({ post }) => {
         id: doc.id,
         ...doc.data(),
       }));
-      setComments(fetchedComments);
+
+      // 댓글을 최신순으로 정렬
+      const sortedComments = fetchedComments.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+      setComments(sortedComments);
     });
 
     return () => unsubscribe();
@@ -123,7 +131,7 @@ const CommentSection = ({ post }) => {
   const handleCreateComment = async (postId, content) => {
     if (!content.trim()) return;
     const formattedUserName = currentUserData?.userName
-      ? `${currentUserData.userName.firstName} ${currentUserData.userName.lastName}`
+      ? `${currentUserData.userName.firstName}${currentUserData.userName.lastName}`
       : "Anonymous";
     const newComment = {
       content,

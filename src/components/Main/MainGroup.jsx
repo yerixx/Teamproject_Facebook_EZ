@@ -141,6 +141,7 @@ const Item = styled.div`
       background-color: var(--color-light-gray-01);
       border-radius: 8px;
       text-align: center;
+      cursor: pointer;
       @media (max-width: 768px) {
         ${SubDescription_14_n}
         font-weight:bold;
@@ -329,7 +330,9 @@ const MainGroup = () => {
                     <div className="info">
                       <h3>{group.title}</h3>
                       <h4>멤버 {group.member}명</h4>
-                      <span>그룹 가입</span>
+                      <span onClick={() => alert("서비스 준비중 입니다.")}>
+                        그룹 가입
+                      </span>
                     </div>
                   </Item>
                 ))
@@ -341,7 +344,9 @@ const MainGroup = () => {
                     <div className="info">
                       <h3>{item.name}</h3>
                       <h4>멤버 {item.members}명</h4>
-                      <span>그룹 가입</span>
+                      <span onClick={() => alert("서비스 준비중 입니다.")}>
+                        그룹 가입
+                      </span>
                     </div>
                   </Item>
                 ))}

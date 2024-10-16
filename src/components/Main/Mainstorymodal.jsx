@@ -277,7 +277,7 @@ const Mainstorymodal = ({ onClose }) => {
 
   return (
     <WrapperForm onSubmit={handleSubmit}>
-      <Inner hasImage={!!storyImage} hasVideo={!!storyVideo}>
+      <Inner $hasImage={!!storyImage} $hasVideo={!!storyVideo}>
         <div className="modaltitle">
           <div className="title">스토리 올리기</div>
           <div className="xmark" onClick={onClose}>
