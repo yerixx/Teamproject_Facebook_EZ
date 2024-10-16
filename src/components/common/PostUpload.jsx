@@ -235,7 +235,7 @@ const InfoItem = styled.div`
   }
 `;
 
-const Mainupload = ({ placeholder }) => {
+const PostUpload = ({ placeholder }) => {
   const { onCreatePost } = useContext(DataDispatchContext);
   const { currentUserData } = useContext(DataStateContext);
 
@@ -403,4 +403,4 @@ const Mainupload = ({ placeholder }) => {
   );
 };
 
-export default Mainupload;
+export default PostUpload;

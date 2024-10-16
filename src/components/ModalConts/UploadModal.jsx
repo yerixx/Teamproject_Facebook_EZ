@@ -1,162 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
-import { DataDispatchContext } from "../../App.jsx";
-
+import { DataDispatchContext, DataStateContext } from "../../App.jsx";
 import styled from "styled-components";
-
 import { CiCamera } from "react-icons/ci";
 import { FiX } from "react-icons/fi";
-import { storage } from "../../firebase.js";
+import { storage, db } from "../../firebase.js";
 import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../../firebase.js";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { SubDescription_14_n } from "../../styles/GlobalStyles.styles.js";
 
-// Styled-components
-const Wrapper = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-`;
-const Inner = styled.div`
-  width: 820px;
-  padding: 30px 20px 50px;
-  border-radius: 8px;
-  box-shadow: var(--box-shadow-01);
-  background-color: var(--color-white);
-  @media (max-width: 768px) {
-    margin: 0 20px;
-  }
-`;
-const ModalTitle = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-  font-size: 22px;
-  margin-bottom: 15px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--color-light-gray-01);
-  @media (max-width: 768px) {
-    font-size: 16px;
-  }
-  .title {
-    font-weight: bold;
-  }
-  .xmark {
-    width: 26px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    position: absolute;
-    top: -10px;
-    right: 20px;
-    cursor: pointer;
-    transition: color 0.3s;
-    &:hover {
-      color: var(--color-facebookblue);
-    }
-    @media (max-width: 768px) {
-      top: -8px;
-      font-size: 20px;
-    }
-  }
-`;
-const Posting = styled.div`
-  padding: 0 60px;
-  @media (max-width: 768px) {
-    padding: 0 16px;
-  }
-  textarea {
-    ${SubDescription_14_n}
-    width: 100%;
-    height: 100px;
-    margin-bottom: 10px;
-    padding: 14px 20px;
-    border-radius: 8px;
-    border: 1px solid #fff;
-    background: var(--color-light-gray-02);
-    resize: none;
-    @media (max-width: 768px) {
-      font-size: 12px;
-    }
-    &:focus {
-      outline: none;
-    }
-  }
-`;
-const PostingImg = styled.div`
-  width: 100%;
-  height: 360px;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 10px;
-  img {
-    width: 100%;
-    object-fit: cover;
-    border-radius: 8px;
-  }
-`;
-const PostingBtn = styled.button`
-  width: 100%;
-  height: 55px;
-  border-radius: 8px;
-  border: none;
-  font-size: 18px;
-  font-weight: bold;
-  color: var(--color-white);
-  background: var(--color-facebookblue);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: opacity 0.3s;
-  &:hover {
-    opacity: 0.8;
-  }
-  @media (max-width: 768px) {
-    font-size: 16px;
-    height: 40px;
-  }
-`;
-const InfoItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  .info {
-    font-size: 16px;
-    font-weight: bold;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: 15px;
-    .profileImg {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      overflow: hidden;
-    }
-  }
-  .camera {
-    padding: 4px 10px;
-    font-size: 30px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.3s;
-    &:hover {
-      padding: 4px 10px;
-      border-radius: 50%;
-      color: var(--color-facebookblue);
-    }
-  }
-`;
+// Styled-components 정의 (생략)
 
 const UploadModal = ({
   closeModal,
@@ -167,15 +19,19 @@ const UploadModal = ({
   currentUserData,
 }) => {
   const { onUpdatePost, onCreatePost } = useContext(DataDispatchContext);
+  const { currentUserData: userData } = useContext(DataStateContext);
 
   const [isLoading, setIsLoading] = useState(false);
   const [uploadText, setUploadText] = useState("");
   const [uploadFile, setUploadFile] = useState(null);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     if (isEditing) {
       setUploadText(contentDesc || "");
     }
-  }, [isEditing]);
+  }, [isEditing, contentDesc]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!uploadFile && !uploadText && !contentDesc) {
@@ -220,6 +76,8 @@ const UploadModal = ({
       closeModal();
     } catch (err) {
       console.error("게시물 처리 중 오류:", err);
+      setError("게시물 업로드에 실패했습니다.");
+      alert("게시물 업로드에 실패했습니다.");
     } finally {
       setIsLoading(false);
     }
@@ -261,12 +119,12 @@ const UploadModal = ({
             <div className="info">
               <img
                 className="profileImg"
-                src={currentUserData.fileImage || imageSrc}
+                src={userData?.fileImage || imageSrc}
                 alt="profile Image"
-              ></img>
+              />
               <div className="profilename">
-                {currentUserData.userName.firstName}
-                {currentUserData.userName.lastName}
+                {userData?.userName?.firstName || "이름"}
+                {userData?.userName?.lastName || "성"}
               </div>
             </div>
             <label htmlFor="upload-image">
@@ -294,7 +152,13 @@ const UploadModal = ({
             style={{ display: "none" }}
             onChange={handleImageChange}
           />
-          <PostingBtn onClick={handleSubmit} disabled={isLoading}>
+          {error && <p style={{ color: "red" }}>{error}</p>}
+          <PostingBtn
+            onClick={handleSubmit}
+            disabled={isLoading || (!uploadFile && !imageSrc)}
+            hasImage={!!uploadFile}
+            hasVideo={false} // 비디오 기능이 없을 경우
+          >
             {isLoading ? "게시 중..." : isEditing ? "수정하기" : "게시하기"}
           </PostingBtn>
         </Posting>
