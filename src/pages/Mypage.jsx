@@ -46,12 +46,10 @@ const ContChangeBtn = styled(motion.div)`
   .postBtn {
     ${MainTitle_18_n}
     color: ${(props) => props.theme.textColor};
-
     font-weight: 600;
     flex: 1;
     background: none;
     border: none;
-
     padding-bottom: 10px;
     position: relative;
     cursor: pointer;
@@ -67,7 +65,7 @@ const ContChangeBtn = styled(motion.div)`
     bottom: -2px;
     height: 4px;
     background-color: var(--color-facebookblue);
-    width: 50%;
+    width: 33%;
   }
 `;
 
@@ -83,7 +81,9 @@ const Mypage = () => {
     setId(tabId);
     setUpload((prev) => !prev);
   };
-
+  const nope = () => {
+    alert("서비스 준비중 입니다");
+  };
   return (
     <Wrapper>
       <HeaderTop />
@@ -97,12 +97,15 @@ const Mypage = () => {
           <button className="postBtn" onClick={() => handleClick(1)}>
             사진 및 동영상
           </button>
+          <button className="postBtn" onClick={nope}>
+            내 지갑
+          </button>
           <motion.div
             className="underline"
             layoutId="underline"
             style={{
-              width: "50%",
-              left: id === 0 ? "0%" : "50%",
+              width: "33.33%",
+              left: id === 0 ? "0%" : "33%",
             }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           />

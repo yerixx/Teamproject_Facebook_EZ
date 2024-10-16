@@ -236,6 +236,14 @@ const Mainpage = ({ searchTerm }) => {
     }
   };
 
+  const openModal = (post) => {
+    setIsModalOpen(true);
+    setIsEditing(true);
+    setEditingPostId(post.id);
+    setImageSrc(post.image || "");
+    setContentDesc(post.content || "");
+  };
+
   const closeModal = () => {
     setIsModalOpen(false);
     setIsEditing(false);
@@ -250,8 +258,8 @@ const Mainpage = ({ searchTerm }) => {
   };
 
   const handleModalContClose = () => {
-    setIsContOpen(false);
     setPostedCont(null);
+    setIsContOpen(false);
   };
 
   const isSearching = searchTerm.trim().length > 0;

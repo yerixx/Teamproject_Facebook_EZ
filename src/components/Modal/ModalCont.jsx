@@ -232,12 +232,12 @@ const Mobile = styled.div`
   }
 `;
 
-const ModalCont = ({ post }) => {
+const ModalCont = ({ post, closeModal }) => {
   const { currentUserData } = useContext(DataStateContext);
 
   const [closeBtn, setCloseBtn] = useState(false);
   const closeButton = () => {
-    setCloseBtn(true);
+    closeModal();
   };
   const formatDate = (isoString) => {
     const date = new Date(isoString);

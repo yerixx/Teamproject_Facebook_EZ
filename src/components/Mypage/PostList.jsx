@@ -67,10 +67,7 @@ const PostList = () => {
         ))}
       </Wrapper>
       {isContOpen && (
-        <ModalCont
-          post={postedCont}
-          handleModalContClose={handleModalContClose}
-        />
+        <ModalCont post={postedCont} closeModal={handleModalContClose} />
       )}
     </>
   );
