@@ -56,6 +56,13 @@
   font-weight: 600;
 }
 
+.actions button.deleteBtn {
+  color: var(--color-gray-02);
+  cursor: pointer;
+  padding: 0; 
+  font-size: 13px; 
+}
+
 .actions button:hover {
   color: #0056b3;
 }

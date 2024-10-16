@@ -14,6 +14,9 @@ const CommentCont = styled.div`
   display: flex;
   align-items: center;
   padding: 10px;
+  @media (max-width: 768px) {
+    padding: 0;
+  }
   .commentUpLoadprofile {
     width: 100%;
     display: flex;
@@ -39,8 +42,6 @@ const CommentCont = styled.div`
       justify-content: center;
       align-items: center;
       padding: 15px;
-      /* width: 55px;
-      height: 55px; */
       background: #007bff;
       color: white;
       border: none;

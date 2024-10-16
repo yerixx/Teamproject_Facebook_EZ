@@ -105,15 +105,14 @@ const Livecard = styled.div`
   .liveheader {
     display: flex;
     align-items: center;
-    padding-left: 10px;
-    gap: 2px;
-    background: rgba(0, 0, 0, 0.5);
-    color: var(--color-white);
     position: absolute;
+    top: 0;
     width: 100%;
     height: 50px;
+    gap: 2px;
+    padding-left: 10px;
+    color: var(--color-white);
     border-radius: 8px 8px 0 0;
-    top: 0;
     .liveBage {
       background: #ed413f;
       padding: 2px 7px;
@@ -185,11 +184,11 @@ const Livecard = styled.div`
           padding-top: 4px;
           ${SubDescription_14_n}
           font-weight:bold;
-
           display: flex;
           gap: 5px;
           span {
-            color: red;
+            color: #ed413f;
+            /* color: var(--color-facebookblue); */
           }
         }
 
@@ -391,7 +390,6 @@ const Mainlive = () => {
                           <IoEyeSharp />
                           {item?.liveStream?.currentViewers}
                         </div>
-                        <div className="point">+500P</div>
                       </div>
                     </div>
                     <div className="liveinfo">
@@ -405,7 +403,7 @@ const Mainlive = () => {
                             <span>{item?.products[0]?.discountRate}</span>
                             {item?.products[0]?.discountPrice}
                           </span>
-                          <button>라이브 보기</button>
+                          <button>+500P</button>
                         </div>
                       </div>
                     </div>

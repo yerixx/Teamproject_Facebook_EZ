@@ -781,16 +781,6 @@ const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
     if (item && currentUserData) {
       const lastPointTime = localStorage.getItem("lastPointTime");
       const now = new Date();
-      const interval = setInterval(() => {
-        setVisibleComments((prev) => {
-          const newComments = [...prev, comments[index]];
-          if (newComments.length > 4) {
-            newComments.shift();
-          }
-          return newComments;
-        });
-        setIndex((prev) => (prev + 1) % comments.length);
-      }, 2000);
 
       if (lastPointTime) {
         const lastTime = new Date(lastPointTime);
@@ -831,6 +821,20 @@ const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
       return () => clearTimeout(timer);
     }
   }, [item, currentUserData]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setVisibleComments((prev) => {
+        const newComments = [...prev, comments[index]];
+        if (newComments.length > 4) {
+          newComments.shift();
+        }
+        return newComments;
+      });
+      setIndex((prev) => (prev + 1) % comments.length);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [comments, index]);
 
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
@@ -862,7 +866,10 @@ const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
               </div>
             </LiveStatus>
             <LivePoint>
-              <button onClick={handleButtonClick} className="point">
+              <button
+                onClick={() => alert("서비스 준비중 입니다.")}
+                className="point"
+              >
                 포인트 더 모으기
               </button>
               <div className="pointDS">{pointMessage}</div>
