@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
 import {
-  MainTitle_18_n,
-  MainTitle_22_b,
+  MainTitle_18_b,
+  SubDescription_16_n,
+  SubTitle_16_b,
+  SubDescription_14_n,
 } from "../../styles/GlobalStyles.styles";
 import Slider from "react-slick";
 import { MdOutlineNavigateNext } from "react-icons/md";
@@ -39,25 +41,32 @@ const Inner = styled.div`
     width: 100%;
   }
   @media screen and (max-width: 768px) {
-    border-radius: var(--border-radius-08);
+    border-radius: var(--border-radius-30);
     padding: 20px 15px;
     width: 90vw;
-    /* height: 100%; */
     min-width: 360px;
     height: 100%;
-    /* margin: 0 auto; */
   }
 `;
 
 const Title = styled.div`
   h2 {
-    ${MainTitle_22_b}
+    ${MainTitle_18_b}
     margin-bottom: 5px;
     color: ${(props) => props.theme.textColor};
+    @media (max-width: 768px) {
+      ${SubTitle_16_b}
+      white-space: nowrap; /* 텍스트를 한 줄로 제한 */
+      overflow: hidden; /* 넘치는 텍스트를 숨김 */
+      text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
+    }
   }
   span {
-    ${MainTitle_18_n}
+    ${SubDescription_16_n}
     color: ${(props) => props.theme.subTextColor};
+    @media (max-width: 768px) {
+      ${SubDescription_14_n}
+    }
   }
 `;
 
@@ -107,32 +116,40 @@ const Item = styled.div`
     position: absolute;
     bottom: 0;
     color: ${(props) => props.theme.dfaultColor};
-    h3 {
-      ${MainTitle_18_n}
+    @media (max-width: 768px) {
+      height: 100px;
     }
-
+    h3 {
+      ${SubTitle_16_b}
+      @media (max-width: 768px) {
+        white-space: nowrap; /* 텍스트를 한 줄로 */
+        text-overflow: ellipsis;
+        ${SubDescription_14_n}
+        font-weight:bold;
+      }
+    }
     h4 {
-      font-size: 14px;
-      font-weight: normal;
+      ${SubDescription_14_n}
       margin-bottom: 10px;
     }
 
     span {
-      color: #222;
-      font-size: 14px;
-      font-weight: normal;
       margin-bottom: 10px;
       padding: 10px;
+      color: #222;
+      ${SubTitle_16_b}
       background-color: var(--color-light-gray-01);
-      text-align: center;
       border-radius: 8px;
+      text-align: center;
+      @media (max-width: 768px) {
+        ${SubDescription_14_n}
+        font-weight:bold;
+        padding: 5px 10px;
+      }
     }
-  }
-  @media screen and (max-width: 1050px) {
   }
   @media screen and (max-width: 768px) {
     height: 250px;
-
     div {
       height: 110px;
       h3 {

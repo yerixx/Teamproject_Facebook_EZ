@@ -1,26 +1,27 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import styled from "styled-components";
-import letterLogoImg from "../img/HeaderLogo.svg";
-import circleLogoImg from "../img/Logo.svg";
-import SignupForm from "../components/login/SignupForm";
-import AdditionalForm from "../components/login/AdditionalForm";
-import MobileHeader from "../components/login/MobileHeader";
-import MobileButtonWrapper from "../components/login/MobileButtonWrapper";
-import SignupCategory from "../components/login/SignupCategory";
-import {
-  Wrapper,
-  Inner,
-  Logo,
-  FormContainer,
-  FormTitle,
-} from "../components/login/login-components";
+
 import { DataDispatchContext } from "../App";
+
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth";
 import { auth } from "../firebase";
+
+import SignupForm from "../components/login/SignupForm";
+import AdditionalForm from "../components/login/AdditionalForm";
+import MobileHeader from "../components/login/MobileHeader";
+import SignupCategory from "../components/login/SignupCategory";
+
+import letterLogoImg from "/img/HeaderLogo.svg";
+
+import {
+  Wrapper,
+  Inner,
+  Logo,
+  FormContainer,
+} from "../components/login/login-components";
 
 const Signup = () => {
   const { onAddUser } = useContext(DataDispatchContext);

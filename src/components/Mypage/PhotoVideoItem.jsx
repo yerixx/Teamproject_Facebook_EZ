@@ -54,6 +54,7 @@ const ContText = styled.div`
   .contTitle {
     ${SubTitle_16_b}
     width: 100%;
+    height: 30px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

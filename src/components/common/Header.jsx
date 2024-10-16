@@ -1,29 +1,32 @@
-// import { AiFillHome } from "react-icons/ai";
+import { DarkThemeContext, DataStateContext } from "../../App";
+
+import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import { auth } from "../../firebase";
+
+import SideBarMenu from "./SideBarMenu";
+import SideBarGroup from "./SideBarGroup";
+import SideBarWallet from "./SideBarWallet";
+
+import styled from "styled-components";
+
+import mobileLogo from "/img/Logo.png";
+import HeaderlogoImg from "/img/HeaderLogo.svg";
+import defaultProfile from "/img/defaultProfile.jpg";
+
 import { AiOutlineShop } from "react-icons/ai";
 import { BsCollectionPlay } from "react-icons/bs";
 import { FaBell, FaMoon } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { AiFillHome } from "react-icons/ai";
-
 import { IoPeopleOutline } from "react-icons/io5";
 import { MdOutlineLogout } from "react-icons/md";
 import { FiSun } from "react-icons/fi";
-
 import { TbGridDots } from "react-icons/tb";
 import { FaSearch } from "react-icons/fa";
-import mobileLogo from "../../img/Logo.png";
-import SideBarMenu from "./SideBarMenu";
-import { useContext, useEffect, useState } from "react";
-import SideBarGroup from "./SideBarGroup";
 
-import { DarkThemeContext, DataStateContext } from "../../App";
-import HeaderlogoImg from "../../img/HeaderLogo.svg";
-import styled from "styled-components";
-import SideBarWallet from "./SideBarWallet";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { auth } from "../../firebase";
-import defaultProfile from "/img/defaultProfile.jpg";
 const Header = styled.div`
   background-color: ${(props) => props.theme.bgColor};
   z-index: 100;
@@ -141,7 +144,6 @@ const Center = styled.div`
     }
   }
   @media screen and (max-width: 1050px) {
-    /* gap: 0; */
     div {
       width: 50px;
     }
@@ -178,9 +180,6 @@ const RightFirst = styled.div`
     span {
       display: none;
     }
-  }
-  @media screen and (max-width: 768px) {
-    /* display: none; */
   }
 `;
 const ProfileWrap = styled.div`
@@ -360,7 +359,12 @@ export const HeaderBottom = ({ onSearch }) => {
   return (
     <HeaderSticky $sticky={issticky ? "true" : null}>
       <Left>
-        <img className="mobileLogo" src={mobileLogo} alt="mobileLogo" />
+        <img
+          className="mobileLogo"
+          onClick={() => navigate("/")}
+          src={mobileLogo}
+          alt="mobileLogo"
+        />
         <div>
           <FaMagnifyingGlass />
           <input

@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import Logoimg from "../../img/Logo.svg";
+
+import Logoimg from "/img/Logo.svg";
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -19,15 +20,15 @@ const Circle = styled(motion.span)`
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: var(--color-facebookblue);
-  box-shadow: var(--box-shadow-02);
+  background-color: #1877f2;
+  box-shadow: 3px 8px 10px 0px rgba(15, 22, 30, 0.11);
 `;
 const CircleLogo = styled(motion.span)`
   width: 35px;
   height: 35px;
   border-radius: 50%;
   background: url(${Logoimg}) center/cover no-repeat;
-  box-shadow: var(--box-shadow-02);
+  box-shadow: 3px 8px 10px 0px rgba(15, 22, 30, 0.11);
 `;
 
 const containerVariants = {

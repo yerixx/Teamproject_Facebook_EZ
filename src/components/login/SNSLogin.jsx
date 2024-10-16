@@ -1,18 +1,19 @@
 import React from "react";
-import styled from "styled-components";
-import { GithubAuthProvider, signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+
+import { GithubAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../firebase";
-import googleIcon from "../../img/google-icon.svg";
-import appleIcon from "../../img/apple-icon.svg";
-import githubIcon from "../../img/github-icon.svg";
-import { FormDesc, FormTitle } from "./login-components";
+
+import styled from "styled-components";
+import { FormDesc } from "./login-components";
+
+import googleIcon from "/img/google-icon.svg";
+import appleIcon from "/img/apple-icon.svg";
+import githubIcon from "/img/github-icon.svg";
 
 const Wrapper = styled.div`
   width: 100%;
   padding: 30px 0;
-  /* border-top: 1px solid var(--color-gray-02);
-  border-bottom: 1px solid var(--color-gray-02); */
   p {
     color: inherit;
   }

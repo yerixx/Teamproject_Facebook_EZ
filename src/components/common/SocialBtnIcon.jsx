@@ -22,8 +22,9 @@ const SocialIcon = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 50px;
-  padding: 0 20px 10px;
+  height: 4px;
+  padding: 10px 20px;
+  margin-bottom: 20px;
   color: ${(props) => props.theme.textColor};
   & *:hover {
     color: var(--color-facebookblue) !important;

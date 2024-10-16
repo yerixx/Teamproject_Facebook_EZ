@@ -33,6 +33,7 @@ const Wrapper = styled.section`
   box-shadow: var(--box-shadow-01);
   @media (max-width: 768px) {
     width: 90vw;
+    padding-top: 10px;
   }
 `;
 const Inner = styled.article`
@@ -46,7 +47,7 @@ const Inner = styled.article`
     border-radius: var(--border-radius-08);
     padding: 20px 30px;
     min-width: 360px;
-    height: 100%;
+    height: 80%;
     /* margin: 0 auto; */
   }
 `;
@@ -55,7 +56,7 @@ const Profile = styled.div`
   justify-content: space-between;
   @media (max-width: 768px) {
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 `;
 const ProfileContent = styled.div`
@@ -71,6 +72,10 @@ const ProfileContent = styled.div`
     border-radius: 50%;
     object-fit: cover;
     border-radius: 100px;
+    @media (max-width: 768px) {
+      width: 48px;
+      height: 48px;
+    }
   }
   .profileName {
     ${MainTitle_22_b}
@@ -114,7 +119,7 @@ const DeletIcon = styled.div`
 `;
 const Contents = styled.div`
   position: relative;
-  padding: 30px 0 16px;
+  padding: 20px 0;
   @media (max-width: 768px) {
     padding: 0;
     max-width: 100%;
@@ -128,6 +133,7 @@ const Contents = styled.div`
     @media (max-width: 768px) {
       ${SubDescription_14_n}
       padding:0 4px;
+      min-height: 30px;
     }
   }
   .contentImgs {
@@ -304,7 +310,7 @@ const Mainpage = ({ searchTerm }) => {
                     ) : null}
                     {item.image && (
                       <ContImg
-                        onClick={() => handleImageClick(item)} // 이미지 클릭 시 모달 열기
+                        onClick={() => handleImageClick(item)}
                         src={item.image}
                         alt="Post content"
                       />

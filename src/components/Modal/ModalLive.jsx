@@ -1,21 +1,23 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { styled } from "styled-components";
+
 import { DataDispatchContext, DataStateContext } from "../../App";
 
-import CountdownCircle from "../common/CountdownCircle";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import fbIcon from "../../img/fbIcon.svg";
-import liveIcon from "../../img/liveIcon.svg";
-import LiveView from "../../img/Live.jpg";
-import { IoCloseOutline } from "react-icons/io5";
 import { auth, db } from "../../firebase";
 import { doc, updateDoc } from "firebase/firestore";
 
+import { styled } from "styled-components";
+
+import CountdownCircle from "../common/CountdownCircle";
+
+import fbIcon from "/img/fbIcon.svg";
+import liveIcon from "/img/liveIcon.svg";
+import LiveView from "/img/Live.jpg";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { IoCloseOutline } from "react-icons/io5";
 import { BsArrowReturnLeft } from "react-icons/bs";
 import { FaSpinner } from "react-icons/fa";
-import testCat from "/img/testcat.jpg";
 
 const Commerce = styled.div`
   width: 100%;
@@ -379,25 +381,6 @@ const LiveProfile = styled.div`
   }
 `;
 
-const LiveProfilemb = styled.div`
-  display: none;
-  @media screen and (max-width: 768px) {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    top: 80px;
-    left: 20px;
-    .profileImgmb {
-      img {
-        width: 50px;
-        height: 50px;
-        object-fit: cover;
-        border-radius: 50%;
-      }
-    }
-  }
-`;
-
 const LiveProfileSelf = styled.div`
   display: flex;
   flex-direction: column;
@@ -418,19 +401,6 @@ const LiveProfileSelf = styled.div`
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-`;
-
-const LiveProfileSelfmb = styled.div`
-  display: none;
-  @media screen and (max-width: 768px) {
-    display: flex;
-    flex-direction: column;
-    margin-left: 13px;
-    gap: 5px;
-    font-size: 12px;
-    color: #fff;
-    padding-bottom: 10px;
   }
 `;
 
@@ -625,8 +595,6 @@ const CommentCont = styled.div`
       justify-content: center;
       align-items: center;
       padding: 15px;
-      /* width: 55px;
-      height: 55px; */
       background: #007bff;
       color: white;
       border: none;
@@ -729,10 +697,10 @@ const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { currentUserData } = useContext(DataStateContext);
   const { dispatch } = useContext(DataDispatchContext);
-  const { id } = useParams(); // URL에서 id 파라미터 받아오기
+
   const [resetKey, setResetKey] = useState(null); // 카운트다운 리셋을 위한 키
   const [remainingTime, setRemainingTime] = useState(null); // 남은 시간을 저장할 상태
-  const navigate = useNavigate();
+
   const [pointMessage, setPointMessage] = useState(
     "7초 후에 500 포인트가 적립됩니다."
   );
@@ -743,7 +711,6 @@ const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
       await updateDoc(userDocRef, {
         "wallet.point": newPoints,
       });
-      console.log("Firebase에 포인트 업데이트 성공:", newPoints);
     } catch (error) {
       console.error("Firebase에 포인트 업데이트 중 오류 발생:", error);
     }

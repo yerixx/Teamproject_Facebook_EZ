@@ -13,6 +13,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   gap: 60px;
   padding-bottom: 60px;
+  @media (max-width: 768px) {
+    gap: 30px;
+    padding-bottom: 0;
+  }
 `;
 
 const PostList = () => {
