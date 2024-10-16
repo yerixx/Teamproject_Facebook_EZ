@@ -752,7 +752,6 @@ const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
   const [index, setIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
 
-  console.log(visibleComments);
   useEffect(() => {
     const interval = setInterval(() => {
       setVisibleComments((prev) => {
@@ -863,7 +862,10 @@ const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
               </div>
             </LiveStatus>
             <LivePoint>
-              <button onClick={handleButtonClick} className="point">
+              <button
+                onClick={() => alert("서비스 준비중 입니다.")}
+                className="point"
+              >
                 포인트 더 모으기
               </button>
               <div className="pointDS">{pointMessage}</div>

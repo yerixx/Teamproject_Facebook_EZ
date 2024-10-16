@@ -390,7 +390,6 @@ const Mainlive = () => {
                           <IoEyeSharp />
                           {item?.liveStream?.currentViewers}
                         </div>
-                        {/* <div className="point">+500P</div> */}
                       </div>
                     </div>
                     <div className="liveinfo">
