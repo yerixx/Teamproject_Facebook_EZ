@@ -191,6 +191,7 @@ const Mainpage = ({ searchTerm }) => {
   const { onDeletePost } = useContext(DataDispatchContext);
   const data = useContext(DataStateContext);
   const { currentUserData } = data;
+
   const postData = data.posts || [];
   const lastPostRef = useRef(null);
 
@@ -235,14 +236,6 @@ const Mainpage = ({ searchTerm }) => {
         console.error("게시물 삭제 중 오류:", err);
       }
     }
-  };
-
-  const openModal = (post) => {
-    setIsModalOpen(true);
-    setIsEditing(true);
-    setEditingPostId(post.id);
-    setImageSrc(post.image || "");
-    setContentDesc(post.content || "");
   };
 
   const closeModal = () => {

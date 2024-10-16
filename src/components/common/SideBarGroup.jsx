@@ -119,8 +119,8 @@ const GroupTitle = styled.div`
 `;
 /* eslint-disable react/prop-types */
 const SideBarGroup = ({ openGroup, closeModal }) => {
-  const { currentUserData, category } = useContext(DataStateContext);
-  const categoryData = category[0];
+  const { currentUserData, category, mockData } = useContext(DataStateContext);
+  const categoryData = category[0] || {};
   const categories = Object.keys(categoryData)
     .filter((key) => !isNaN(Number(key))) // 키가 숫자인 프로퍼티만 선택합니다.
     .map((key) => categoryData[key]);
@@ -225,18 +225,18 @@ const SideBarGroup = ({ openGroup, closeModal }) => {
                 </GroupContents>
               );
             })
-          : categories.slice(6, 9).map((cat) => {
+          : mockData.category.slice(6, 9).map((cat, i) => {
               const randomText =
                 possibleTexts[Math.floor(Math.random() * possibleTexts.length)];
               return (
-                <GroupContents key={cat.id}>
-                  <img src={cat.img} alt={cat.title} />
+                <GroupContents key={i}>
+                  <img src={cat.image} alt={cat.name} />
                   <GroupTitle>
-                    <h2>{cat.title}</h2>
+                    <h2>{cat.name}</h2>
                     <div>
                       <span>{randomText}</span>
                       <span>・</span>
-                      <span>팔로워 {cat.member}명</span>
+                      <span>팔로워 {cat.members}명</span>
                     </div>
                   </GroupTitle>
                   <span>팔로우</span>
@@ -248,18 +248,18 @@ const SideBarGroup = ({ openGroup, closeModal }) => {
         <h3>추천페이지</h3>
       </Title>
       <Group>
-        {categories.slice(3, 6).map((cat) => {
+        {mockData.category.slice(3, 6).map((cat, i) => {
           const randomText =
             possibleTexts[Math.floor(Math.random() * possibleTexts.length)];
           return (
-            <GroupContents key={cat.id}>
-              <img src={cat.img} alt={cat.title} />
+            <GroupContents key={i}>
+              <img src={cat.image} alt={cat.name} />
               <GroupTitle>
-                <h2>{cat.title}</h2>
+                <h2>{cat.name}</h2>
                 <div>
                   <span>{randomText}</span>
                   <span>・</span>
-                  <span>팔로워 {cat.member}명</span>
+                  <span>팔로워 {cat.members}명</span>
                 </div>
               </GroupTitle>
               <span>팔로우</span>

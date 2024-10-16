@@ -224,9 +224,9 @@ const PrevArrow = ({ onClick }) => {
 };
 
 const MainGroup = () => {
-  const { currentUserData } = useContext(DataStateContext);
+  const { currentUserData, mockData } = useContext(DataStateContext);
   const [recommendedGroups, setRecommendedGroups] = useState([]);
-
+  console.log(mockData);
   useEffect(() => {
     if (currentUserData) {
       fetchGroups();
@@ -303,18 +303,31 @@ const MainGroup = () => {
         </Title>
         <Items>
           <Slider className="slider" {...settings}>
-            {recommendedGroups.map((group, i) => (
-              <Item key={i}>
-                <div className="ctegoryImg">
-                  <img src={group.img} alt="" />
-                </div>
-                <div className="info">
-                  <h3>{group.title}</h3>
-                  <h4>멤버 {group.member}명</h4>
-                  <span>그룹 가입</span>
-                </div>
-              </Item>
-            ))}
+            {recommendedGroups.length > 0
+              ? recommendedGroups.map((group, i) => (
+                  <Item key={i}>
+                    <div className="ctegoryImg">
+                      <img src={group.img} alt="" />
+                    </div>
+                    <div className="info">
+                      <h3>{group.title}</h3>
+                      <h4>멤버 {group.member}명</h4>
+                      <span>그룹 가입</span>
+                    </div>
+                  </Item>
+                ))
+              : mockData.category.map((item, i) => (
+                  <Item key={i}>
+                    <div className="ctegoryImg">
+                      <img src={item.image} alt="" />
+                    </div>
+                    <div className="info">
+                      <h3>{item.name}</h3>
+                      <h4>멤버 {item.members}명</h4>
+                      <span>그룹 가입</span>
+                    </div>
+                  </Item>
+                ))}
           </Slider>
         </Items>
       </Inner>
