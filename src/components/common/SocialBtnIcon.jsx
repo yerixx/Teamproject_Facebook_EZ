@@ -23,39 +23,17 @@ const SocialIcon = styled.div`
   align-items: center;
   width: 100%;
   height: 50px;
-  padding: 0 10px 20px;
-  border-bottom: 1px solid var(--color-light-gray-01);
+  padding: 0 20px 10px;
   color: ${(props) => props.theme.textColor};
   & *:hover {
     color: var(--color-facebookblue) !important;
   }
-  /* .socialIcon {
-    ${SubDescription_16_n}
-    color: ${(props) => props.theme.iconColorB};
-    cursor: pointer;
-    display: flex;
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: space-between;
     align-items: center;
-    gap: 10px;
-    position: relative;
-    @media (max-width: 768px) {
-      width: 50%;
-      justify-content: center;
-      margin-right: 20px;
-      font-size: 20px;
-      &:last-child {
-        margin-right: 0px;
-      }
-    }
-
-    .socialIconText {
-      ${SubDescription_16_n}
-      color: ${(props) => props.theme.iconColorB};
-      @media (max-width: 768px) {
-        display: none;
-      }
-    }
-  } */
-
+    font-size: 20px;
+  }
   .socialIcon {
     ${SubDescription_16_n}
     color: ${(props) => props.theme.iconColorB};
@@ -64,21 +42,17 @@ const SocialIcon = styled.div`
     align-items: center;
     gap: 10px;
     .socialIconText {
+      width: 80px;
       @media (max-width: 768px) {
         display: none;
         font-size: 20px;
       }
     }
     @media (max-width: 768px) {
-      width: 50%;
       justify-content: center;
       align-items: center;
-      margin-top: 20px;
-      margin-right: 20px;
-      font-size: 14px;
-      &:last-child {
-        margin-right: 0px;
-      }
+      margin-top: 10px;
+      font-size: 20px;
     }
   }
 `;
@@ -90,16 +64,15 @@ const SocialBtnIcon = ({ post }) => {
   const [like, setLike] = useState(false);
   const [share, setShare] = useState(false);
   const [save, setSave] = useState(false);
+  const [likes, setLikes] = useState(0); // likes 상태 추가
 
-  const likes = Array.isArray(post?.likes) ? post.likes.length : 0;
-
-  // 포스트에 이미 좋아요를 눌렀는지 확인
   useEffect(() => {
-    if (
-      Array.isArray(post?.likes) &&
-      post.likes.includes(currentUserData?.userId)
-    ) {
-      setLike(true);
+    // 초기 좋아요 수 설정
+    if (Array.isArray(post?.likes)) {
+      setLikes(post.likes.length); // 초기 좋아요 수 설정
+      if (post.likes.includes(currentUserData?.userId)) {
+        setLike(true);
+      }
     }
     if (
       Array.isArray(currentUserData?.savedPosts) &&
@@ -118,10 +91,12 @@ const SocialBtnIcon = ({ post }) => {
         await updateDoc(postRef, {
           likes: arrayRemove(currentUserData.userId),
         });
+        setLikes((prev) => prev - 1); // 좋아요 수 감소
       } else {
         await updateDoc(postRef, {
           likes: arrayUnion(currentUserData.userId),
         });
+        setLikes((prev) => prev + 1); // 좋아요 수 증가
       }
       setLike((prev) => !prev);
     } catch (err) {
@@ -149,6 +124,7 @@ const SocialBtnIcon = ({ post }) => {
       console.error("Save error", err);
     }
   };
+
   const handleCopyClipBoard = async (text) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -172,16 +148,17 @@ const SocialBtnIcon = ({ post }) => {
           className="socialIcon"
         >
           <FaRegHeart />
-          <div className="socialIconText">좋아요</div>
+          <div className="socialIconText">
+            {like ? "좋아요" : "좋아요"} {likes > 0 ? likes : ""}
+          </div>
         </div>
         <div onClick={handleCommentToggle} className="socialIcon">
           <FaRegComment />
           <div className="socialIconText">댓글</div>
         </div>
-
         <div onClick={shareKakao} className="socialIcon">
           <FiShare />
-          <div className="socialIconText">댓글</div>
+          <div className="socialIconText">공유하기</div>
           {share ? <Kakao shareKakao={shareKakao} /> : null}
         </div>
         <div

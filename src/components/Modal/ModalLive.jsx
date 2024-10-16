@@ -46,10 +46,23 @@ const CloseIcon = styled.div`
   font-size: 25px;
   cursor: pointer;
   @media screen and (max-width: 768px) {
-    color: var(--color-white);
+    display: none;
   }
+`;
+
+const CloseIconmb = styled.div`
+  display: none;
   @media screen and (max-width: 768px) {
-    height: 100vh;
+    display: flex;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 25px;
+    color: var(--color-white);
+    background: rgb(0, 0, 0, 0.5);
+    border-radius: 50%;
+    padding: 7px;
+    cursor: pointer;
   }
 `;
 
@@ -201,7 +214,8 @@ const CommentLiveInfomb = styled.div`
       height: 40px;
       border-radius: 50%;
     }
-    animation: slide-up 0.5s ease;
+    animation: slide-up 0.5s ease forwards;
+
     @keyframes slide-up {
       from {
         transform: translateY(10px);
@@ -219,6 +233,16 @@ const CommentLiveInfomb2 = styled.div`
   display: flex;
   position: relative;
   right: 0;
+  gap: 10px;
+  padding: 10px;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--color-gray-01);
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
   @media screen and (max-width: 768px) {
     display: none;
   }
@@ -276,6 +300,7 @@ const LivePoint = styled.div`
   position: absolute;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.8);
+
   .point {
     width: 140px;
     height: 36px;
@@ -284,6 +309,7 @@ const LivePoint = styled.div`
     background-color: var(--color-white);
     cursor: pointer;
     transition: all 0.3s;
+    z-index: 2;
     &:hover {
       background-color: var(--color-facebookblue);
       color: var(--color-white);
@@ -363,6 +389,7 @@ const LiveProfilemb = styled.div`
       img {
         width: 50px;
         height: 50px;
+        object-fit: cover;
         border-radius: 50%;
       }
     }
@@ -510,9 +537,8 @@ const SellItemDesc = styled.div`
 `;
 
 const Comment = styled.div`
-  border: 1px solid #f00;
   width: 100%;
-  height: 100%;
+  height: 380px;
   padding: 0 40px;
   h3 {
     display: flex;
@@ -524,15 +550,15 @@ const Comment = styled.div`
     font-size: var(--font-size-description-01);
   }
   span {
+    font-size: 14px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px 0;
-    color: var(--color-gray-01);
+    padding: 10px 0 20px;
+    color: var(--color-gray-02);
   }
   .test {
     height: 60px;
-    border: 1px solid #f00;
     border-radius: 8px;
     margin-bottom: 10px;
   }
@@ -586,22 +612,26 @@ const WrapperForm = styled.form`
 `;
 
 const CommentCont = styled.div`
-  width: 100%;
+  min-width: 29%;
+  position: fixed;
   display: flex;
   align-items: center;
+  bottom: 10px;
   padding: 10px;
 
+  @media (max-width: 768px) {
+    min-width: 33.3%;
+    padding: 0;
+  }
   .commentUpLoadprofile {
     width: 100%;
     display: flex;
     align-items: center;
-
     .profileImg {
       width: 45px;
       height: 45px;
       border-radius: 100px;
     }
-
     .profileuploadText {
       width: 100%;
       height: 40px;
@@ -635,7 +665,10 @@ const CommentCont = styled.div`
   }
 `;
 
-const CommenstMb2 = styled.div``;
+const CommenstMb2 = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -662,56 +695,56 @@ const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
     {
       id: 1,
       name: "이승연",
-      text: "제가 너무 갖고 싶었던 물건인데 이런 가격에!",
-      img: "https://via.placeholder.com/40",
+      text: "가격이 정말 합리적이에요!",
+      img: "https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg",
     },
     {
       id: 2,
       name: "김예지",
-      text: "너무 예뻐요~~",
-      img: "https://via.placeholder.com/40",
+      text: "리뷰 보고 구매하려고 하는데, 혹시 실물사진은 어디서 볼 수 있나요?",
+      img: "https://cdn.pixabay.com/photo/2019/11/22/03/58/cat-4644008_1280.jpg",
     },
     {
       id: 3,
-      name: "홍길동",
-      text: "진짜 사고 싶어요!",
-      img: "https://via.placeholder.com/40",
+      name: "박예림",
+      text: "오늘 특별 할인가요? 이 가격이면 완전 대혜자!!😀😆",
+      img: "https://cdn.pixabay.com/photo/2017/07/19/10/19/cat-2518653_1280.jpg",
     },
     {
       id: 4,
-      name: "박지민",
-      text: "이거 재고 있나요?",
-      img: "https://via.placeholder.com/40",
+      name: "박태환",
+      text: "이 상품 아직 재고가 있나요?",
+      img: "https://cdn.pixabay.com/photo/2018/06/29/03/16/panda-3505189_1280.jpg",
     },
     {
       id: 5,
-      name: "최민수",
-      text: "배송 언제 되나요?",
-      img: "https://via.placeholder.com/40",
+      name: "김정하",
+      text: "특별한 이벤트나 프로모션이 있는지 궁금해요~~",
+      img: "https://cdn.pixabay.com/photo/2023/05/09/07/18/space-7980556_1280.jpg",
     },
     {
       id: 6,
       name: "이수진",
-      text: "사고 싶어서 기다리고 있어요!",
-      img: "https://via.placeholder.com/40",
+      text: "이번꺼 대박!! 사고 싶어서 기다리고 있어요!ㅎㅎ",
+      img: "https://cdn.pixabay.com/photo/2019/02/18/17/57/flower-4004980_1280.jpg",
     },
     {
       id: 7,
-      name: "김도현",
-      text: "혹시 사이즈 변경 가능할까요?",
-      img: "https://via.placeholder.com/40",
+      name: "지성준",
+      text: "혹시 옵션 변경 가능할까요?",
+      img: "https://cdn.pixabay.com/photo/2016/07/16/19/36/space-probe-1522546_1280.jpg",
     },
     {
       id: 8,
       name: "이찬우",
-      text: "이 제품 사진이 더 있나요?",
-      img: "https://via.placeholder.com/40",
+      text: "제품을 사용해보고 직접 후기를 남겨주신 분이 많아서 좋네요~",
+      img: "https://cdn.pixabay.com/photo/2020/04/11/08/14/skywheel-5029327_1280.jpg",
     },
     {
       id: 9,
-      name: "홍길동",
-      text: "특가 세일이 있나요?",
-      img: "https://via.placeholder.com/40",
+      name: "박수진",
+      text: "배송 기간이 얼마나 걸릴까요? 빨리 받아보고 싶은 마음에 고민중입니다. ",
+      img: "https://cdn.pixabay.com/photo/2012/09/04/21/20/penguin-56101_1280.jpg",
     },
   ];
 
@@ -719,11 +752,12 @@ const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
   const [index, setIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
 
+  console.log(visibleComments);
   useEffect(() => {
     const interval = setInterval(() => {
       setVisibleComments((prev) => {
         const newComments = [...prev, comments[index]];
-        if (newComments.length > 2) {
+        if (newComments.length > 4) {
           newComments.shift();
         }
         return newComments;
@@ -859,8 +893,8 @@ const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
             </SellItemDescmb>
           </SellItemsinfomb>
           <CommenstMb>
-            {visibleComments.map((comment) => (
-              <CommentLiveInfomb key={comment.id}>
+            {visibleComments.map((comment, i) => (
+              <CommentLiveInfomb key={i}>
                 <img src={comment.img} alt={`${comment.name}의 프로필`} />
                 <div className="desc">
                   <h3>{comment.name}</h3>
@@ -869,6 +903,9 @@ const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
               </CommentLiveInfomb>
             ))}
           </CommenstMb>
+          <CloseIconmb onClick={closeModal}>
+            <IoCloseOutline className="closeIconmb" />
+          </CloseIconmb>
         </LeftContent>
         <RightContent>
           <CloseIcon onClick={closeModal}>
@@ -913,18 +950,18 @@ const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
             </SellInfos>
           </SellItem>
           <Comment>
-            <h3>댓글</h3>
+            <h3>실시간 댓글</h3>
             <span>
               영상과 무관하거나 욕설, 비방 등의 댓글은 관리자에 의해 삭제될 수
               있습니다.
             </span>
             <CommenstMb2>
               {visibleComments.map((comment) => (
-                <CommentLiveInfomb2 key={comment.id}>
-                  <img src={comment.img} alt={`${comment.name}의 프로필`} />
+                <CommentLiveInfomb2 key={comment?.id}>
+                  <img src={comment?.img} alt={`${comment?.name}의 프로필`} />
                   <div className="desc">
-                    <h4>{comment.name}</h4>
-                    <p>{comment.text}</p>
+                    <h4>{comment?.name}</h4>
+                    <p>{comment?.text}</p>
                   </div>
                 </CommentLiveInfomb2>
               ))}
