@@ -13,6 +13,13 @@ import {
   FormContainer,
 } from "../components/login/login-components";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+
+const DividingLine = styled.div`
+  width: 1px;
+  height: 430px;
+  background: var(--color-gray-02);
+`;
 
 const Login = () => {
   const navigate = useNavigate();
@@ -61,6 +68,7 @@ const Login = () => {
           ) : (
             <>
               <AccountLogin />
+              <DividingLine />
               <OtherLogin />
             </>
           )}
