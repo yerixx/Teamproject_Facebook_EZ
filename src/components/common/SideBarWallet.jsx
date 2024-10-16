@@ -21,7 +21,7 @@ const Wrapper = styled(motion.div)`
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   max-height: 80vh;
   overflow-y: auto;
-  -ms-overflow-style: none; /* IE, Edge */
+  -ms-overflow-style: none;
   scrollbar-width: none;
   @media screen and (max-width: 1050px) {
     right: 10px;
@@ -122,25 +122,31 @@ const ProductItemInfo = styled.div`
     }
   }
 `;
-/* eslint-disable react/prop-types */
+
 const SideBarWallet = ({ onClick, closeModal }) => {
   const data = useContext(DataStateContext);
-  const currentUser = data.currentUserData;
+  const points = data?.points || 0;
+  const liveCommerce = data?.liveCommerce || [];
+  const { currentUserData } = useContext(DataStateContext);
+
   const closeRef = useRef(null);
   const handleClickOutside = (event) => {
     if (closeRef.current && !closeRef.current.contains(event.target)) {
       closeModal(); // 모달을 닫는 함수 호출
     }
   };
-  useEffect(() => {
-    // 모달이 마운트되면 클릭 이벤트 추가
-    document.addEventListener("click", handleClickOutside);
 
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
     return () => {
-      // 모달이 언마운트되면 클릭 이벤트 제거
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
+  if (!data) {
+    return <div>로딩 중...</div>; // 데이터가 로드되지 않았을 때 로딩 상태를 표시
+  }
+
   return (
     <Wrapper
       initial={{ opacity: 0 }}
@@ -158,14 +164,10 @@ const SideBarWallet = ({ onClick, closeModal }) => {
       </Title>
       <Box>
         <WalletItem>
-          <img />
-          <span>{currentUser.wallet.point} p</span>
+          <img src="https://www.pngplay.com/wp-content/uploads/5/Alphabet-P-PNG-Pic-Background.png" />
+          <span>{currentUserData.wallet.point}p </span>
         </WalletItem>
-        <WalletItem>
-          <img />
-          <span>{currentUser.wallet.won} 원</span>
-        </WalletItem>
-        <WalletItem>
+        <WalletItem onClick={() => alert("서비스 준비중 입니다")}>
           <div>+</div>
           <span>지갑 추가</span>
         </WalletItem>
@@ -174,45 +176,29 @@ const SideBarWallet = ({ onClick, closeModal }) => {
         <h3>최근 본 상품</h3>
       </Title>
       <Box>
-        <RecentProductItem>
-          <img />
-          <ProductItemInfo>
-            <h4>★5%추가할인★스프라이트 백트임 긴팔니트..</h4>
-            <div>
-              <span>30%</span>
-              <span>19,000원</span>
-            </div>
-          </ProductItemInfo>
-          <div className="icon">
-            <MdOutlineShoppingBag />
+        {liveCommerce.length > 0 ? (
+          liveCommerce.map((liveItem) =>
+            liveItem?.products?.map((product) => (
+              <RecentProductItem key={product.id}>
+                <img src={product?.productImage} alt={product.name} />
+                <ProductItemInfo>
+                  <h4>{product?.name}</h4>
+                  <div>
+                    <span>{product?.discountRate}</span>
+                    <span>{product?.discountPrice}</span>
+                  </div>
+                </ProductItemInfo>
+                <div className="icon">
+                  <MdOutlineShoppingBag />
+                </div>
+              </RecentProductItem>
+            ))
+          )
+        ) : (
+          <div style={{ color: "${(props) => props.theme.textColor}" }}>
+            최근 본 상품이 없습니다.
           </div>
-        </RecentProductItem>
-        <RecentProductItem>
-          <img />
-          <ProductItemInfo>
-            <h4>★5%추가할인★스프라이트 백트임 긴팔니트..</h4>
-            <div>
-              <span>30%</span>
-              <span>19,000원</span>
-            </div>
-          </ProductItemInfo>
-          <div className="icon">
-            <MdOutlineShoppingBag />
-          </div>
-        </RecentProductItem>
-        <RecentProductItem>
-          <img />
-          <ProductItemInfo>
-            <h4>★5%추가할인★스프라이트 백트임 긴팔니트..</h4>
-            <div>
-              <span>30%</span>
-              <span>19,000원</span>
-            </div>
-          </ProductItemInfo>
-          <div className="icon">
-            <MdOutlineShoppingBag />
-          </div>
-        </RecentProductItem>
+        )}
       </Box>
     </Wrapper>
   );
