@@ -101,6 +101,9 @@ const PostingImg = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
+  @media (max-width: 768px) {
+    height: fit-content;
+  }
   .deletIcon {
     position: absolute;
     top: 10px;
@@ -110,13 +113,15 @@ const PostingImg = styled.div`
     padding: 5px 8px 4px;
     color: #fff;
     font-size: 20px;
-
     cursor: pointer;
   }
   img {
     width: 100%;
     object-fit: cover;
     border-radius: 8px;
+    @media (max-width: 768px) {
+      height: 150px;
+    }
   }
 `;
 

@@ -29,6 +29,7 @@ const Inner = styled.div`
   border-radius: 30px 30px 0 0;
   box-shadow: var(--box-shadow-01);
   @media (max-width: 768px) {
+    border-radius: 0;
     max-width: 100%;
   }
 `;

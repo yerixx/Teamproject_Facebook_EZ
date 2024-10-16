@@ -42,6 +42,7 @@ const CoverImg = styled.img`
   object-fit: cover;
 
   @media (max-width: 768px) {
+    border-radius: 0;
     width: 100%;
     height: 300px;
   }

@@ -114,7 +114,7 @@ const ImageContent = styled.div`
   overflow: hidden;
   @media screen and (max-width: 768px) {
     width: 100%;
-    height: 390px;
+    height: 280px;
     object-fit: cover;
   }
   img {
@@ -127,7 +127,7 @@ const ImageContent = styled.div`
     }
     @media screen and (max-width: 768px) {
       width: 100%;
-      height: 390px;
+      height: 300px;
       object-fit: cover;
       &:hover {
         transform: scale(1);
@@ -222,7 +222,7 @@ const SocialIcon = styled.div`
   @media (max-width: 768px) {
     position: absolute;
     width: 100%;
-    max-height: 380px;
+    max-height: 300px;
     overflow-y: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -291,7 +291,6 @@ const ModalCont = ({ post, closeModal }) => {
                   style={{
                     color: "${(props) => props.theme.textColor}",
                     fontSize: "14px",
-                    color: "black",
                     marginTop: "4px",
                   }}
                 />
@@ -317,6 +316,7 @@ const ModalCont = ({ post, closeModal }) => {
           <img
             className="profileImg"
             src={currentUserData.fileImage || defaultProfile}
+            alt="profile Image"
           />
           <ModalProfileSelf>
             <div className="profileName">
