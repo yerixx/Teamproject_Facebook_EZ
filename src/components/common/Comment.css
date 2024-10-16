@@ -20,6 +20,7 @@
 }
 
 .comment-content {
+  min-width: 120px;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -57,10 +58,10 @@
 }
 
 .actions button.deleteBtn {
-  color: var(--color-gray-02);
+  color: var(--color-gray-01);
   cursor: pointer;
-  padding: 0; 
-  font-size: 13px; 
+  padding: 0;
+  font-size: 13px;
 }
 
 .actions button:hover {

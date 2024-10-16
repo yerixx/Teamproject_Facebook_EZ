@@ -319,7 +319,7 @@ const LivePoint = styled.div`
   }
   .pointDS {
     text-align: end;
-    width: 230px;
+    width: 290px;
     color: var(--color-white);
   }
 
@@ -579,32 +579,6 @@ const Comment = styled.div`
   }
 `;
 
-const NoComment = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 20px 0;
-  font-size: 14px;
-  color: var(--color-gray-01);
-  border: 1px solid #f00;
-  .commentIcon {
-    margin-bottom: 10px;
-    .faComments {
-      font-size: 40px;
-      color: var(--color-facebookblue);
-    }
-  }
-  @media screen and (max-width: 1050px) {
-    font-size: 12px;
-    .faComments {
-      font-size: 30px;
-    }
-  }
-`;
-
 const WrapperForm = styled.form`
   width: 100%;
   height: fit-content;
@@ -775,11 +749,11 @@ const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
     }
   };
 
-  console.log(visibleComments);
-
   useEffect(() => {
     if (item && currentUserData) {
-      const lastPointTime = localStorage.getItem("lastPointTime");
+      const lastPointTime = localStorage.getItem(
+        `lastPointTime_${item.liveStream.id}`
+      );
       const now = new Date();
 
       if (lastPointTime) {
@@ -789,10 +763,11 @@ const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
 
         if (diffMinutes < 30) {
           // 30분이 지나지 않았을 경우
-          const remainingMinutes = 10 - diffMinutes;
+          const remainingMinutes = 30 - diffMinutes; // 30분 기준으로 남은 시간 계산
           setPointMessage(
             `${remainingMinutes}분 후에 포인트를 다시 적립할 수 있습니다.`
           );
+          setRemainingTime(0); // 카운트다운을 숨김
           return; // 포인트 적립 프로세스를 진행하지 않음
         }
       }
@@ -808,14 +783,31 @@ const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
           payload: 500,
         });
 
-        // 포인트 적립 시간 저장
-        localStorage.setItem("lastPointTime", new Date().toISOString());
+        // 각 동영상별 포인트 적립 시간 저장
+        localStorage.setItem(
+          `lastPointTime_${item.liveStream.id}`,
+          new Date().toISOString()
+        );
 
         // 메시지 업데이트 및 알림
         setPointMessage(
           "포인트가 적립되었습니다! 30분 후에 다시 받을 수 있습니다."
         );
         alert("500포인트가 적립되었습니다!");
+
+        // 포인트 적립 후 카운트다운을 숨김
+        setRemainingTime(0);
+
+        // 30분 후에 다시 카운트다운을 시작
+        const resetTimer = setTimeout(
+          () => {
+            setRemainingTime(7000); // 7초 카운트다운 다시 시작
+            setPointMessage("7초 후에 500 포인트가 적립됩니다.");
+          },
+          30 * 60 * 1000
+        ); // 30분 후에 다시 카운트다운 시작
+
+        return () => clearTimeout(resetTimer);
       }, 7000);
 
       return () => clearTimeout(timer);
@@ -838,14 +830,6 @@ const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
 
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
-  };
-
-  // 현재 id와 일치하는 제품 찾기
-
-  const handleButtonClick = () => {
-    const randomIndex = Math.floor(Math.random() * item.products.length);
-    const randomProductId = item.products[randomIndex].id;
-    navigate(`/modallive/${randomProductId}`);
   };
 
   return (
@@ -975,7 +959,14 @@ const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
             <WrapperForm onSubmit={handleSubmit}>
               <CommentCont>
                 <div className="commentUpLoadprofile">
-                  <img src={testCat} className="profileImg" alt="profileImg" />
+                  {/* <img src={testCat} className="profileImg" alt="profileImg" /> */}
+                  <img
+                    className="profileImg"
+                    src={
+                      currentUserData?.profileImage || "/img/defaultProfile.jpg"
+                    }
+                    alt="Profile"
+                  />
                   <input
                     className="profileuploadText"
                     onChange={(e) => setContent(e.target.value)}

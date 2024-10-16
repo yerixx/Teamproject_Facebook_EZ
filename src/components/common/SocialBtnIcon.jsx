@@ -53,6 +53,9 @@ const SocialIcon = styled.div`
       align-items: center;
       margin-top: 10px;
       font-size: 20px;
+      &:last-child {
+        margin-right: 0px;
+      }
     }
   }
 `;

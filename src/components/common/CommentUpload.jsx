@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { BsArrowReturnLeft } from "react-icons/bs";
 import { FaSpinner } from "react-icons/fa";
-import testCat from "/img/testcat.jpg";
+import { DataStateContext } from "../../App.jsx";
+
 const WrapperForm = styled.form`
   width: 100%;
   height: fit-content;
@@ -55,7 +56,8 @@ const CommentCont = styled.div`
   }
 `;
 const CommentUpload = ({ postId, onCreateComment }) => {
-  console.log("onCreateComment:", onCreateComment); // 로그로 확인
+  const { currentUserData } = useContext(DataStateContext);
+
   const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState("");
   const handleSubmit = async (e) => {
@@ -76,7 +78,11 @@ const CommentUpload = ({ postId, onCreateComment }) => {
     <WrapperForm onSubmit={handleSubmit}>
       <CommentCont>
         <div className="commentUpLoadprofile">
-          <img src={testCat} className="profileImg" alt="profileImg" />
+          <img
+            className="profileImg"
+            src={currentUserData?.profileImage || "/img/defaultProfile.jpg"}
+            alt="Profile"
+          />
           <input
             className="profileuploadText"
             onChange={(e) => setContent(e.target.value)}
