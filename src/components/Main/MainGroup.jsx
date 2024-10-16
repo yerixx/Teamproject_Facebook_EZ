@@ -10,7 +10,7 @@ import Slider from "react-slick";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { MdOutlineNavigateBefore } from "react-icons/md";
 import { DataStateContext } from "../../App";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../firebase";
 const Wrapper = styled.div`
@@ -357,4 +357,4 @@ const MainGroup = () => {
   );
 };
 
-export default MainGroup;
+export default React.memo(MainGroup);

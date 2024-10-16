@@ -200,22 +200,6 @@ function App() {
   };
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // //라이브 포인트
-  // useEffect(() => {
-  //   dispatch({ type: "INIT_POINTS" });
-  // }, []);
-  // // 7초마다 포인트 지급 시도 (페이지 이름을 전달)
-  // useEffect(() => {
-  //   const pageName = window.location.pathname; // 현재 페이지 경로 가져오기
-  //   const interval = setInterval(() => {
-  //     if (canAddPoints(pageName)) {
-  //       dispatch({ type: "ADD_POINTS", value: 500, page: pageName });
-  //     }
-  //   }, 7000);
-
-  //   return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 해제
-  // }, []);
-
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -396,16 +380,6 @@ function App() {
     }
   };
   const onToggleLike = async (postId, isLiked) => {
-    // try {
-    //   const postDocRef = doc(db, "posts", postId);
-
-    //   await updateDoc(postDocRef, {
-    //     likes: isLiked ? true : false,
-    //   });
-    // } catch (err) {
-    //   console.error("Like error :", err);
-    // }
-
     dispatch({
       type: "LIKE_POST",
       postId: postId, // 좋아요가 눌린 포스트 ID

@@ -398,7 +398,6 @@ const MainStory = () => {
     ],
   };
 
-  console.log(currentUserData);
   return (
     <Wrapper>
       <Inner>
@@ -468,4 +467,4 @@ const MainStory = () => {
   );
 };
 
-export default MainStory; // MainStory 컴포넌트 내보내기
+export default React.memo(MainStory);

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { SubTitle_16_b } from "../../styles/GlobalStyles.styles";
 import { IoClose } from "react-icons/io5";
-import { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { DataStateContext } from "../../App";
 import { motion } from "framer-motion";
 
@@ -222,4 +222,4 @@ const SideBarWallet = ({ onClick, closeModal }) => {
   );
 };
 
-export default SideBarWallet;
+export default React.memo(SideBarWallet);

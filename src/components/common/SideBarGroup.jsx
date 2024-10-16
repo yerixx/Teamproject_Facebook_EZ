@@ -271,4 +271,4 @@ const SideBarGroup = ({ openGroup, closeModal }) => {
   );
 };
 
-export default SideBarGroup;
+export default React.memo(SideBarGroup);
