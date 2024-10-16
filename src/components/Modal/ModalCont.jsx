@@ -214,12 +214,20 @@ const ModalDesc = styled.div`
 const SocialIcon = styled.div`
   width: 90%;
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
-  gap: 40px;
+  gap: 10px;
   @media (max-width: 768px) {
     position: absolute;
     width: 100%;
+    max-height: 380px;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
     bottom: 0;
+    font-size: 12px;
+    background-color: #fff;
+    border-radius: 8px 8px 0 0;
   }
 `;
 
@@ -299,9 +307,6 @@ const ModalCont = ({ post }) => {
       {/* mobile */}
       <Mobile>
         <ControlsIcon>
-          <EditeIcon>
-            <EditeBox Title={<BsThreeDots />} />
-          </EditeIcon>
           <CloseIcon onClick={closeButton}>
             <IoCloseOutline className="closeIcon" />
           </CloseIcon>
@@ -326,7 +331,7 @@ const ModalCont = ({ post }) => {
           <p>{post.content}</p>
         </ModalDesc>
         <SocialIcon>
-          <SocialBtnIcon post={post} />
+          <SocialBtnIcon className="SocialBtnIcon" post={post} />
         </SocialIcon>
       </Mobile>
     </Wrapper>

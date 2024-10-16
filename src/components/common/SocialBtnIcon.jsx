@@ -29,7 +29,7 @@ const SocialIcon = styled.div`
   & *:hover {
     color: var(--color-facebookblue) !important;
   }
-  .socialIcon {
+  /* .socialIcon {
     ${SubDescription_16_n}
     color: ${(props) => props.theme.iconColorB};
     cursor: pointer;
@@ -52,6 +52,32 @@ const SocialIcon = styled.div`
       color: ${(props) => props.theme.iconColorB};
       @media (max-width: 768px) {
         display: none;
+      }
+    }
+  } */
+
+  .socialIcon {
+    ${SubDescription_16_n}
+    color: ${(props) => props.theme.iconColorB};
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    .socialIconText {
+      @media (max-width: 768px) {
+        display: none;
+        font-size: 20px;
+      }
+    }
+    @media (max-width: 768px) {
+      width: 50%;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      margin-right: 20px;
+      font-size: 14px;
+      &:last-child {
+        margin-right: 0px;
       }
     }
   }
@@ -146,24 +172,16 @@ const SocialBtnIcon = ({ post }) => {
           className="socialIcon"
         >
           <FaRegHeart />
-          <div
-            style={{
-              color: like ? "var(--color-facebookblue)" : "inherit",
-            }}
-            className="socialIconText"
-          >
-            좋아요
-          </div>
+          <div className="socialIconText">좋아요</div>
         </div>
         <div onClick={handleCommentToggle} className="socialIcon">
           <FaRegComment />
-          댓글
+          <div className="socialIconText">댓글</div>
         </div>
-        <div className="socialIcon">
+
+        <div onClick={shareKakao} className="socialIcon">
           <FiShare />
-          <div onClick={shareKakao} className="socialIconText">
-            공유하기
-          </div>
+          <div className="socialIconText">댓글</div>
           {share ? <Kakao shareKakao={shareKakao} /> : null}
         </div>
         <div
@@ -174,14 +192,7 @@ const SocialBtnIcon = ({ post }) => {
           className="socialIcon"
         >
           <FaRegBookmark />
-          <div
-            style={{
-              color: save ? "var(--color-facebookblue)" : "inherit",
-            }}
-            className="socialIconText"
-          >
-            저장하기
-          </div>
+          <div className="socialIconText">저장하기</div>
         </div>
       </SocialIcon>
       {toggle && <CommentSection post={post} currentUser={currentUserData} />}
