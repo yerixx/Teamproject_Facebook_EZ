@@ -99,10 +99,10 @@ const Kakao = ({ shareKakao }) => {
       window.Kakao.Link.sendDefault({
         objectType: "feed",
         content: {
-          title: "오늘의 디저트",
-          description: "아메리카노, 빵, 케익",
-          imageUrl:
-            "https://mud-kage.kakao.com/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg",
+          title: "Facebook",
+          description:
+            "Facebook을 통해 친구, 가족, 아는 사람들과 서로의 소식을 확인해 보세요.",
+          imageUrl: "/img/opengraph.jpg",
           link: {
             mobileWebUrl: url,
             webUrl: url,
