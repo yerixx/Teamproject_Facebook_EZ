@@ -15,8 +15,9 @@ const Wrapper = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 50px;
   margin-bottom: 140px;
-
+  height: 475px;
   @media (max-width: 768px) {
     max-width: 100%;
     height: 400px;
@@ -37,6 +38,7 @@ const CoverImg = styled.img`
   width: 100%;
   /*Wrapper height와 같이 수정해야함  */
   height: 475px;
+  border-radius: 30px 30px 0 0;
   object-fit: cover;
 
   @media (max-width: 768px) {

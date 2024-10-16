@@ -26,6 +26,8 @@ const Inner = styled.div`
   width: var(--inner-width-02);
   height: fit-content;
   margin: 0 auto;
+  border-radius: 30px 30px 0 0;
+
   box-shadow: var(--box-shadow-01);
   @media (max-width: 768px) {
     max-width: 100%;
