@@ -32,7 +32,6 @@ const WrapperFrom = styled.form`
   padding: 0 90px;
   background: ${(props) => props.theme.bgColor};
   border-radius: 30px 30px 0 0;
-
   @media (max-width: 768px) {
     top: -30px;
     max-width: 100%;
