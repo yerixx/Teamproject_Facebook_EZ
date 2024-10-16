@@ -73,24 +73,7 @@ const ControlsIcon = styled.div`
     top: 20px;
   }
 `;
-const EditeIcon = styled.div`
-  position: absolute;
-  top: 33px;
-  right: 50px;
-  font-size: 20px;
-  cursor: pointer;
-  @media screen and (max-width: 768px) {
-    * {
-      color: var(--color-white);
-    }
-    .optionList {
-      box-shadow: none;
-    }
-    .optionItem {
-      color: black;
-    }
-  }
-`;
+
 const CloseIcon = styled.div`
   position: absolute;
   top: 33px;
@@ -112,6 +95,8 @@ const ImageContent = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  border-radius: 8px;
+
   @media screen and (max-width: 768px) {
     width: 100%;
     height: 280px;
@@ -121,6 +106,7 @@ const ImageContent = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 8px;
     transition: transform 0.3s ease;
     &:hover {
       transform: scale(1.2);

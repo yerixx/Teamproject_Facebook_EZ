@@ -120,7 +120,7 @@ const PostingImg = styled.div`
     object-fit: cover;
     border-radius: 8px;
     @media (max-width: 768px) {
-      height: 150px;
+      height: 200px;
     }
   }
 `;

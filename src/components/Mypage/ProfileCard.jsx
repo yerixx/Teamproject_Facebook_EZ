@@ -16,6 +16,7 @@ import {
   Paragraph_20_n,
 } from "../../styles/GlobalStyles.styles.js";
 import { DataStateContext } from "../../App.jsx";
+import Mainstorymodal from "../Main/Mainstorymodal.jsx";
 
 const WrapperFrom = styled.form`
   z-index: 1;
@@ -201,7 +202,6 @@ const Button = styled.div`
       color: var(--color-white);
       font-weight: 600;
     }
-    /* 미디어 쿼리 */
     @media (max-width: 768px) {
       ${SubDescription_12_m}
       max-width:76px;
@@ -216,6 +216,8 @@ const Button = styled.div`
 
 const ProfileCard = () => {
   const { currentUserData } = useContext(DataStateContext);
+  const [modalOpen, setIsModalOpen] = useState(false);
+
   const [isEditing, setEditing] = useState(false);
   const [user, setUser] = useState(null);
   const [profileImg, setProfileImg] = useState(defaultProfile);
@@ -293,11 +295,6 @@ const ProfileCard = () => {
     }
   };
 
-  const profileEdite = () => {
-    const confirmEdit = window.confirm("프로필을 수정 하시겠습니까?");
-    if (confirmEdit) setEditing((prev) => !prev);
-  };
-
   const handleIconClick = () => {
     fileRef.current.click();
   };
@@ -312,62 +309,96 @@ const ProfileCard = () => {
     }
   };
 
+  const storyModalOpen = () => {
+    setIsModalOpen(true);
+  };
+  // 모달 닫기 핸들러
+  const closeModal = () => {
+    setIsModalOpen(false); // 모달을 닫기 위해 상태를 false로 설정
+  };
+
+  // 모달 제출 핸들러
+  const handleModalSubmit = ({ text, image, video }) => {
+    // 제출된 데이터 처리
+    if (image) setPostImage(image); // 제출된 이미지를 상태에 저장
+    // 비디오도 저장하려면 별도의 상태 관리 필요
+    // 예: setPostVideo(video);
+    setIsModalOpen(false); // 모달을 닫음
+  };
+
   return (
-    <WrapperFrom onSubmit={onSubmit}>
-      <ProfileContain>
-        <ProfileImgCont>
-          <img className="profileImg" src={profileImg} alt="Profile" />
-          <input
-            type="file"
-            id="fileInput"
-            name="fileInput"
-            ref={fileRef}
-            onChange={handleImgChange}
-            accept="image/*"
-            style={{ display: "none" }}
-          />
-          <FontAwesomeIcon
-            onClick={handleIconClick}
-            className="editIcon"
-            icon={faCamera}
-          />
-        </ProfileImgCont>
-        <ProfileText>
-          <div className="profileTop">
-            <h1 className="profileName">
-              {currentUserData?.userName?.firstName}
-              {currentUserData?.userName?.lastName}
-            </h1>
-            <Button>
-              <button>스토리추가</button>
-              <button type="button" onClick={() => setEditing(true)}>
-                프로필 수정
-              </button>
-            </Button>
-          </div>
-          {isEditing ? (
-            <EditProfileDesc>
-              <div className="editBox">
-                <textarea
-                  value={desc}
-                  onChange={(e) => setDesc(e.target.value)}
-                />
-                <div className="editBtns">
-                  <button onClick={editCencel} type="submit">
-                    취소
-                  </button>
-                  <button onClick={editSave} type="submit">
-                    확인
-                  </button>
+    <>
+      <WrapperFrom onSubmit={onSubmit}>
+        <ProfileContain>
+          <ProfileImgCont>
+            <img className="profileImg" src={profileImg} alt="Profile" />
+            <input
+              type="file"
+              id="fileInput"
+              name="fileInput"
+              ref={fileRef}
+              onChange={handleImgChange}
+              accept="image/*"
+              style={{ display: "none" }}
+            />
+            <FontAwesomeIcon
+              onClick={handleIconClick}
+              className="editIcon"
+              icon={faCamera}
+            />
+          </ProfileImgCont>
+          <ProfileText>
+            <div className="profileTop">
+              <h1 className="profileName">
+                {currentUserData?.userName?.firstName}
+                {currentUserData?.userName?.lastName}
+              </h1>
+              <Button>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    storyModalOpen();
+                  }}
+                >
+                  스토리추가
+                </button>
+                <button type="button" onClick={() => setEditing(true)}>
+                  프로필 수정
+                </button>
+              </Button>
+            </div>
+            {isEditing ? (
+              <EditProfileDesc>
+                <div className="editBox">
+                  <textarea
+                    value={desc}
+                    onChange={(e) => setDesc(e.target.value)}
+                  />
+                  <div className="editBtns">
+                    <button onClick={editCencel} type="submit">
+                      취소
+                    </button>
+                    <button onClick={editSave} type="submit">
+                      확인
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </EditProfileDesc>
-          ) : (
-            <ProfileDesc> {desc} </ProfileDesc>
-          )}
-        </ProfileText>
-      </ProfileContain>
-    </WrapperFrom>
+              </EditProfileDesc>
+            ) : (
+              <ProfileDesc> {desc} </ProfileDesc>
+            )}
+          </ProfileText>
+        </ProfileContain>
+      </WrapperFrom>
+      {modalOpen && (
+        <Mainstorymodal
+          isOpen={modalOpen}
+          onClose={closeModal}
+          onSubmit={handleModalSubmit}
+        />
+      )}
+    </>
   );
 };
 

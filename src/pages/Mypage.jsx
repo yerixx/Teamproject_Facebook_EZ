@@ -84,25 +84,6 @@ const UploadInner = styled.div`
     margin: 80px auto 20px;
   }
 `;
-// const UploadInner = styled.div`
-//   padding: 30px;
-//   background-color: ${(props) => props.theme.ContainColor};
-//   box-shadow: var(--box-shadow-01);
-//   border-radius: var(--border-radius-30);
-//   z-index: 4;
-//   @media (max-width: 768px) {
-//     padding-bottom: 0px;
-//     margin-bottom: -40px;
-//   }
-// `;
-
-// const UploadInner = styled.div`
-
-//   @media (max-width: 768px) {
-//     width: 90vw;
-//     height: 80px;
-//   }
-// `;
 
 const Mypage = () => {
   const [id, setId] = useState(0);

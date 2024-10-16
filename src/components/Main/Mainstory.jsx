@@ -252,7 +252,7 @@ const StoryProfileImg = styled.div`
     width: 100%;
     height: 80px;
     bottom: 0;
-    background: #fff;
+    background: ${(props) => props.theme.storyBox};
     span:first-child {
       position: relative;
       display: flex;
@@ -260,7 +260,7 @@ const StoryProfileImg = styled.div`
       align-items: center;
       width: 55px;
       height: 55px;
-      border: 5px solid #fff;
+      border: 5px solid ${(props) => props.theme.storyBorder};
       background-color: var(--color-facebookblue);
       border-radius: 50%;
       left: 50%;
@@ -283,14 +283,14 @@ const StoryProfileImg = styled.div`
       left: 50%;
       bottom: 26px;
       transform: translateX(-50%);
-      ${SubDescription_16_n}
-      color: ${(props) => props.theme.textColor};
+      font-size: 14px;
+      color: ${(props) => props.theme.iconColorB};
     }
   }
   @media screen and (max-width: 768px) {
     .storyTextBox {
+      height: 40px;
       span:first-child {
-        border: 3px solid #fff;
         width: 34px;
         height: 34px;
         svg {
@@ -298,6 +298,8 @@ const StoryProfileImg = styled.div`
         }
       }
       span:last-child {
+        border: none;
+        bottom: 40px;
       }
     }
   }
@@ -459,7 +461,6 @@ const MainStory = () => {
       </Inner>
       {isModalOpen && (
         <Mainstorymodal
-          isOpen={isModalOpen} // 모달 열림 상태
           onClose={closeModal} // 모달 닫기 핸들러
           onSubmit={handleModalSubmit} // 모달 제출 핸들러
         />

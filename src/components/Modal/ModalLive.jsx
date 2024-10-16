@@ -612,6 +612,7 @@ const CommentCont = styled.div`
 const CommenstMb2 = styled.div`
   display: flex;
   flex-direction: column;
+  border: 1px solid #f00;
 `;
 
 const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
