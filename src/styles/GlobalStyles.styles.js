@@ -39,6 +39,7 @@ body{
     --color-light-gray-01: #E6E6E6;
     --color-light-gray-02: #F4F4F4;
     --color-white: #FFFFFF;
+    --color-error: #F0284A;
    /* Border Radius */
     --border-radius-08: 8px;
     --border-radius-30: 30px;

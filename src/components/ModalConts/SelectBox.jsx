@@ -65,9 +65,6 @@ const Wrapper = styled.div`
       border-bottom: 0 none;
     }
   }
-  @media screen and (max-width: 1050px) {
-    display: none;
-  }
 `;
 
 const SelectBox = ({ Title, desc1, desc2, desc3 }) => {

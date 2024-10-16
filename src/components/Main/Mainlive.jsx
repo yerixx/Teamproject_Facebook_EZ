@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { FaStar } from "react-icons/fa";
+import { IoEyeSharp } from "react-icons/io5";
 import Slider from "react-slick"; // 슬릭 슬라이더 import
 import {
   MainTitle_18_b,
   MainTitle_22_b,
   SubDescription_12_m,
   SubDescription_16_n,
+  SubDescription_14_n,
 } from "../../styles/GlobalStyles.styles";
 import { MdOutlineNavigateBefore, MdOutlineNavigateNext } from "react-icons/md";
+import { DataStateContext } from "../../App";
+import ModalLive from "../Modal/ModalLive";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -22,15 +25,12 @@ const Wrapper = styled.div`
 `;
 
 const Inner = styled.div`
-  margin: 20px 0;
-  /* border: 1px solid red; */
   width: var(--inner-width-02);
-  height: 430px;
-  padding: 27px 30px;
+  height: 480px;
+  padding: 27px 38px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius-30);
   position: relative;
@@ -40,8 +40,10 @@ const Inner = styled.div`
     width: 100%;
   }
   @media screen and (max-width: 768px) {
+    height: 100%;
     margin: 0;
     box-shadow: none;
+    background-color: inherit;
     padding: 0;
     width: 90vw;
     min-width: 360px;
@@ -55,6 +57,7 @@ const Inner = styled.div`
 `;
 
 const Items = styled.div`
+  cursor: pointer;
   .slider {
     width: 100%;
     height: 100%;
@@ -88,52 +91,56 @@ const Livecard = styled.div`
     width: 100%;
     /* height: 52vh; */
   }
-
-  > img {
+  .liveVideo {
     width: 100%;
-    height: 90%;
-    object-fit: cover;
-    border-radius: 8px;
+    height: 350px;
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
   }
 
   .liveheader {
     display: flex;
     align-items: center;
     padding-left: 10px;
+    gap: 2px;
     background: rgba(0, 0, 0, 0.5);
     color: var(--color-white);
     position: absolute;
     width: 100%;
-    height: 43px;
+    height: 50px;
     border-radius: 8px 8px 0 0;
     top: 0;
-
     .liveBage {
       background: #ed413f;
-      ${SubDescription_16_n}
-      padding: 4px 5px;
+      padding: 2px 7px;
       border-radius: 3px;
       margin-right: 5px;
-      @media screen and (max-width: 768px) {
-        font-size: 14px;
-      }
+      font-size: 12px;
     }
     .item {
       display: flex;
-      gap: 40px;
-
+      gap: 10px;
       .viewers {
-        ${SubDescription_16_n}
+        display: flex;
+        align-items: center;
+        /* padding-left: 40px; */
+        gap: 4px;
+        ${SubDescription_14_n}
         @media screen and (max-width: 768px) {
-          font-size: 14px;
+          ${SubDescription_14_n}
         }
       }
       .point {
-        ${SubDescription_16_n}
+        ${SubDescription_14_n}
+        font-weight:bold;
         position: absolute;
         right: 10px;
         @media screen and (max-width: 768px) {
-          font-size: 14px;
+          ${SubDescription_14_n}
         }
       }
     }
@@ -156,25 +163,18 @@ const Livecard = styled.div`
       padding-left: 10px;
       display: flex;
       flex-direction: column;
+      /* gap: 10px; */
 
       .subtitle {
-        ${SubDescription_16_n}
+        ${SubDescription_14_n}
+
         display: flex;
         align-items: center;
-        gap: 5px;
-        @media screen and (max-width: 768px) {
-          ${SubDescription_12_m}
-        }
       }
 
       .title {
-        ${SubDescription_16_n}
-        @media (max-width: 768px) {
-          font-size: 14px;
-          @media screen and (max-width: 768px) {
-            ${SubDescription_12_m}
-          }
-        }
+        ${SubDescription_14_n}
+        font-weight:bold;
       }
 
       .item {
@@ -182,30 +182,40 @@ const Livecard = styled.div`
         justify-content: space-between;
 
         .price {
-          ${SubDescription_16_n}
-          display: flex;
-          gap: 3px;
-          @media screen and (max-width: 768px) {
-            ${SubDescription_12_m}
-          }
+          padding-top: 4px;
+          ${SubDescription_14_n}
+          font-weight:bold;
 
+          display: flex;
+          gap: 5px;
           span {
             color: red;
           }
         }
 
         button {
+          width: auto;
           ${SubDescription_12_m}
+
           border: none;
           border-radius: 8px;
-          padding: 3px 7px;
+          padding: 6px 7px;
           background: var(--color-gray-01);
           color: var(--color-white);
           cursor: pointer;
+          transition: all 0.3s;
+          &:hover {
+            opacity: 0.8;
+          }
           @media screen and (max-width: 768px) {
-            ${SubDescription_12_m}
+            display: none;
           }
         }
+      }
+    }
+    @media screen and (max-width: 768px) {
+      .info {
+        gap: 0;
       }
     }
   }
@@ -218,11 +228,10 @@ const NextBtn = styled.span`
   height: 50px;
   border-radius: 50%;
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   position: absolute;
   top: 50%;
-  right: 10px;
+  right: -30px;
   transform: translateY(-50%);
   font-size: 40px;
   color: #fff;
@@ -258,12 +267,11 @@ const PrevBtn = styled.span`
   height: 50px;
   border-radius: 50%;
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   z-index: 1;
   position: absolute;
   top: 50%;
-  left: 10px;
+  left: -30px;
   transform: translateY(-50%);
   font-size: 40px;
   color: #fff;
@@ -292,6 +300,26 @@ const PrevArrow = ({ onClick }) => {
 };
 
 const Mainlive = () => {
+  const data = useContext(DataStateContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [shuffledData, setShuffledData] = useState([]);
+  const shuffleArray = (array) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
+  // 컴포넌트가 마운트될 때 데이터를 랜덤하게 섞음
+  useEffect(() => {
+    if (data?.mockData?.liveCommerce) {
+      const randomData = shuffleArray(data.mockData.liveCommerce);
+      setShuffledData(randomData);
+    }
+  }, [data]);
   const settings = {
     dots: false,
     infinite: true,
@@ -312,7 +340,7 @@ const Mainlive = () => {
         },
       },
       {
-        breakpoint: 580,
+        breakpoint: 616,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
@@ -320,47 +348,75 @@ const Mainlive = () => {
       },
     ],
   };
+  const openLive = (item) => {
+    setSelectedItem(item); // 선택된 항목 데이터를 상태에 저장
+    setIsModalOpen(true); // 모달을 열기
+  };
+
+  // 모달 닫기 함수
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedItem(null);
+  };
 
   return (
-    <Wrapper>
-      <Inner>
-        <Items>
-          <div className="livetext">라이브 커머스</div>
-          <Slider {...settings}>
-            {[...Array(5)].map((item, index) => (
-              <Livecard key={index}>
-                <img src="../public/img/live.jpg" alt="testimg" />
-                <div className="liveheader">
-                  <div className="liveBage">LIVE</div>
-                  <div className="item">
-                    <div className="viewers">9,452 시청</div>
-                    <div className="point">+500P</div>
-                  </div>
-                </div>
-                <div className="liveinfo">
-                  {/* <img src="../public/img/live.jpg" alt="profile" /> */}
-                  <div className="info">
-                    <span className="subtitle">
-                      <FaStar />
-                      5% 추가할인
-                      <FaStar />
-                    </span>
-                    <span className="title">NEW ARRIVAL SHOES</span>
-                    <div className="item">
-                      <span className="price">
-                        <span>30%</span>
-                        19,000원
-                      </span>
-                      <button>라이브 보기</button>
+    <>
+      <Wrapper>
+        <Inner>
+          <Items>
+            <div className="livetext">라이브 커머스</div>
+            <Slider {...settings}>
+              {shuffledData &&
+                shuffledData.map((item, index) => (
+                  <Livecard key={index} onClick={() => openLive(item)}>
+                    <div className="liveVideo">
+                      <video
+                        muted
+                        loop
+                        onMouseEnter={(e) => e.target.play()} // 마우스 오버 시 재생
+                        onMouseLeave={(e) => {
+                          e.target.pause();
+                        }}
+                      >
+                        <source
+                          src={item?.liveStream?.videoUrl}
+                          type="video/mp4"
+                        ></source>
+                      </video>
                     </div>
-                  </div>
-                </div>
-              </Livecard>
-            ))}
-          </Slider>
-        </Items>
-      </Inner>
-    </Wrapper>
+                    <div className="liveheader">
+                      <div className="liveBage">LIVE</div>
+                      <div className="item">
+                        <div className="viewers">
+                          <IoEyeSharp />
+                          {item?.liveStream?.currentViewers}
+                        </div>
+                        <div className="point">+500P</div>
+                      </div>
+                    </div>
+                    <div className="liveinfo">
+                      <div className="info">
+                        <span className="subtitle">
+                          {item?.liveStream?.name}
+                        </span>
+                        <span className="title">{item?.products[0]?.name}</span>
+                        <div className="item">
+                          <span className="price">
+                            <span>{item?.products[0]?.discountRate}</span>
+                            {item?.products[0]?.discountPrice}
+                          </span>
+                          <button>라이브 보기</button>
+                        </div>
+                      </div>
+                    </div>
+                  </Livecard>
+                ))}
+            </Slider>
+          </Items>
+        </Inner>
+      </Wrapper>
+      {isModalOpen && <ModalLive item={selectedItem} closeModal={closeModal} />}
+    </>
   );
 };
 
