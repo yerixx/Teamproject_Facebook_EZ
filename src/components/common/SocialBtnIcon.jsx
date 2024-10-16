@@ -19,10 +19,8 @@ const SocialIcon = styled.div`
   align-items: center;
   width: 100%;
   height: 50px;
-  padding: 0 10px 20px;
-  border-bottom: 1px solid var(--color-light-gray-01);
+  padding: 0 20px 10px;
   color: ${(props) => props.theme.textColor};
-  /* margin-bottom: 20px; */
 
   & *:hover {
     color: var(--color-facebookblue) !important;
@@ -62,16 +60,15 @@ const SocialBtnIcon = ({ post }) => {
   const [toggle, setToggle] = useState(false);
   const [like, setLike] = useState(false);
   const [save, setSave] = useState(false);
+  const [likes, setLikes] = useState(0); // likes 상태 추가
 
-  const likes = Array.isArray(post?.likes) ? post.likes.length : 0;
-
-  // 포스트에 이미 좋아요를 눌렀는지 확인
   useEffect(() => {
-    if (
-      Array.isArray(post?.likes) &&
-      post.likes.includes(currentUserData?.userId)
-    ) {
-      setLike(true);
+    // 초기 좋아요 수 설정
+    if (Array.isArray(post?.likes)) {
+      setLikes(post.likes.length); // 초기 좋아요 수 설정
+      if (post.likes.includes(currentUserData?.userId)) {
+        setLike(true);
+      }
     }
     if (
       Array.isArray(currentUserData?.savedPosts) &&
@@ -90,10 +87,12 @@ const SocialBtnIcon = ({ post }) => {
         await updateDoc(postRef, {
           likes: arrayRemove(currentUserData.userId),
         });
+        setLikes((prev) => prev - 1); // 좋아요 수 감소
       } else {
         await updateDoc(postRef, {
           likes: arrayUnion(currentUserData.userId),
         });
+        setLikes((prev) => prev + 1); // 좋아요 수 증가
       }
       setLike((prev) => !prev);
     } catch (err) {
@@ -118,6 +117,7 @@ const SocialBtnIcon = ({ post }) => {
       console.error("Save error", err);
     }
   };
+
   const handleCopyClipBoard = async (text) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -146,7 +146,7 @@ const SocialBtnIcon = ({ post }) => {
             }}
             className="socialIconText"
           >
-            좋아요
+            {like ? "좋아요" : "좋아요"} {likes > 0 ? likes : 0}
           </div>
         </div>
         <div onClick={handleCommentToggle} className="socialIcon">

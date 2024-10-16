@@ -193,6 +193,7 @@ const ModalDesc = styled.div`
   flex-direction: column;
   gap: 10px;
   color: ${(props) => props.theme.textColor};
+  /* border: 1px solid #f00; */
   @media screen and (max-width: 1050px) {
     width: 100%;
     height: 100px;
@@ -208,6 +209,7 @@ const ModalDesc = styled.div`
     @media screen and (max-width: 1050px) {
       padding: 20px;
       font-size: 14px;
+      /* border-top: 1px solid #ccc; */
     }
   }
 `;
@@ -228,7 +230,6 @@ const SocialIcon = styled.div`
     font-size: 12px;
     background-color: #fff;
     border-radius: 8px 8px 0 0;
-    /* border: 1px solid #f00; */
   }
 `;
 

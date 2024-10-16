@@ -46,10 +46,23 @@ const CloseIcon = styled.div`
   font-size: 25px;
   cursor: pointer;
   @media screen and (max-width: 768px) {
-    color: var(--color-white);
+    display: none;
   }
+`;
+
+const CloseIconmb = styled.div`
+  display: none;
   @media screen and (max-width: 768px) {
-    height: 100vh;
+    display: flex;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 25px;
+    color: var(--color-white);
+    background: rgb(0, 0, 0, 0.5);
+    border-radius: 50%;
+    padding: 7px;
+    cursor: pointer;
   }
 `;
 
@@ -202,7 +215,7 @@ const CommentLiveInfomb = styled.div`
       height: 40px;
       border-radius: 50%;
     }
-    animation: slide-up 0.5s ease;
+    animation: slide-up 0.5s ease forwards;
 
     @keyframes slide-up {
       from {
@@ -654,8 +667,6 @@ const CommentCont = styled.div`
 const CommenstMb2 = styled.div`
   display: flex;
   flex-direction: column;
-  border: 1px solid #f00;
-  /* position: absolute; */
 
 `;
 
@@ -684,7 +695,7 @@ const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
     {
       id: 1,
       name: "이승연",
-      text: "가격이 정말 합리적이에요! 특별 할인 기간이 있다면 어떤 시점인지 미리 알고 싶어요. 많이 사면 추가 할인도 있나요?",
+      text: "가격이 정말 합리적이에요!",
       img: "https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg",
     },
     {
@@ -726,7 +737,7 @@ const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
     {
       id: 8,
       name: "이찬우",
-      text: "제품을 사용해보고 직접 후기를 남겨주신 분이 많아서 좋습니다. 실제로 어떤지 궁금해요!",
+      text: "제품을 사용해보고 직접 후기를 남겨주신 분이 많아서 좋네요~",
       img: "https://cdn.pixabay.com/photo/2020/04/11/08/14/skywheel-5029327_1280.jpg",
     },
     {
@@ -892,6 +903,9 @@ console.log(visibleComments)
               </CommentLiveInfomb>
             ))}
           </CommenstMb>
+          <CloseIconmb onClick={closeModal}>
+            <IoCloseOutline className="closeIconmb" />
+          </CloseIconmb>
         </LeftContent>
         <RightContent>
           <CloseIcon onClick={closeModal}>
