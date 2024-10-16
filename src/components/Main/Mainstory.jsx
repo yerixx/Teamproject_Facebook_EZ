@@ -309,7 +309,23 @@ const MainStory = () => {
   const [storys, setStorys] = useState([]);
   const [postImage, setPostImage] = useState(null); // 모달에서 업로드된 이미지 상태
   const { currentUserData } = useContext(DataStateContext);
-
+  const mockStorys = [
+    {
+      id: 1,
+    },
+    {
+      id: 2,
+    },
+    {
+      id: 3,
+    },
+    {
+      id: 4,
+    },
+    {
+      id: 5,
+    },
+  ];
   useEffect(() => {
     const fetchStorys = async () => {
       try {
@@ -330,7 +346,7 @@ const MainStory = () => {
     };
     fetchStorys();
   }, []);
-
+  const displayedStorys = storys.length > 0 ? storys : mockStorys;
   // 모달 열기 핸들러
   const openModal = () => {
     setIsModalOpen(true); // 모달을 열기 위해 상태를 true로 설정
@@ -402,7 +418,7 @@ const MainStory = () => {
                 />
               </StoryProfileImg>
             </StoryItem>
-            {storys.map((story) => (
+            {displayedStorys.map((story) => (
               <StoryFriend key={story.id}>
                 {story.imageUrl && (
                   <img src={story.imageUrl} alt="스토리 이미지" />
@@ -424,7 +440,6 @@ const MainStory = () => {
                         alt="Profile"
                       />
                     </div>
-                    {/*스토리 프로필*/}
                   </div>
                   <div className="storyName">
                     {story.name ? (
@@ -433,7 +448,7 @@ const MainStory = () => {
                         {story?.name?.lastName}
                       </>
                     ) : (
-                      "알수없는 사용자"
+                      ""
                     )}
                   </div>
                 </div>
@@ -442,7 +457,6 @@ const MainStory = () => {
           </Slider>
         </Items>
       </Inner>
-      {/* 모달 컴포넌트 렌더링 */}
       {isModalOpen && (
         <Mainstorymodal
           isOpen={isModalOpen} // 모달 열림 상태

@@ -208,6 +208,19 @@ const PostingImg = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
+  position: relative;
+  .deletIcon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 5px 8px 4px;
+    color: #fff;
+    font-size: 20px;
+
+    cursor: pointer;
+  }
   img {
     width: 100%;
     object-fit: cover;
@@ -273,7 +286,7 @@ const InfoItem = styled.div`
 const PostUpload = ({ placeholder }) => {
   const { onCreatePost } = useContext(DataDispatchContext);
   const { currentUserData } = useContext(DataStateContext);
-
+  const [closeImg, setCloseImg] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [uploadText, setUploadText] = useState("");
   const [uploadFile, setUploadFile] = useState(null);
@@ -331,6 +344,8 @@ const PostUpload = ({ placeholder }) => {
   };
 
   const closeModal = () => {
+    setUploadFile(null);
+    setUploadText("");
     setIsModalOpen(false);
   };
 
@@ -348,7 +363,9 @@ const PostUpload = ({ placeholder }) => {
       confirm("게시물을 작성 하겠습니까?");
     }
   };
-
+  const closeImgOpen = () => {
+    setCloseImg(false);
+  };
   return (
     <WrapperForm onSubmit={handleSubmit}>
       <CommentCont>
@@ -423,16 +440,21 @@ const PostUpload = ({ placeholder }) => {
                 required
               />
               {uploadFile && (
-                <PostingImg
-                  type="button"
-                  onClick={handleSubmit}
-                  disabled={isLoading}
-                >
-                  <img
-                    src={URL.createObjectURL(uploadFile)}
-                    alt="게시물 이미지"
-                  />
-                </PostingImg>
+                <>
+                  {!closeImg ? (
+                    ""
+                  ) : (
+                    <PostingImg type="button" disabled={isLoading}>
+                      <div className="deletIcon" onClick={closeImgOpen}>
+                        <FiX />
+                      </div>
+                      <img
+                        src={URL.createObjectURL(uploadFile)}
+                        alt="게시물 이미지"
+                      />
+                    </PostingImg>
+                  )}
+                </>
               )}
               <input
                 type="file"

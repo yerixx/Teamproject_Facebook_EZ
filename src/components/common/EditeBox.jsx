@@ -93,10 +93,8 @@ const EditeBox = ({ Title, postId, handleEditBtn }) => {
 
       // 수정할 데이터 객체를 생성 (예: content 업데이트)
       const updatedData = {
-        content: "Updated content here", // 실제로는 사용자가 수정한 데이터를 여기에 추가
         updatedAt: new Date().toISOString(), // 업데이트 시간을 기록
       };
-
       handleEditBtn(postId); // 수정 버튼 클릭 시 처리
       onUpdatePost(postId, updatedData) // 수정할 데이터 전달
         .then(() => {
