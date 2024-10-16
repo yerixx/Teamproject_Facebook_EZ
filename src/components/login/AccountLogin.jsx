@@ -5,7 +5,7 @@ import NavigateSignup from "./NavigateSignup";
 
 const Wrapper = styled.div`
   width: 430px;
-  height: 472px;
+  height: 430px;
   display: flex;
   flex-direction: column;
   align-items: center;

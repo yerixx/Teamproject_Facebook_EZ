@@ -5,7 +5,7 @@ import SNSLogin from "./SNSLogin";
 
 const Wrapper = styled.div`
   width: 360px;
-  height: 472px;
+  height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

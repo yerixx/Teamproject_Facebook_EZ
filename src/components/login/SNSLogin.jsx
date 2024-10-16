@@ -6,13 +6,16 @@ import { auth } from "../../firebase";
 import googleIcon from "../../img/google-icon.svg";
 import appleIcon from "../../img/apple-icon.svg";
 import githubIcon from "../../img/github-icon.svg";
-import { FormDesc } from "./login-components";
+import { FormDesc, FormTitle } from "./login-components";
 
 const Wrapper = styled.div`
   width: 100%;
   padding: 30px 0;
-  border-top: 1px solid var(--color-gray-02);
-  border-bottom: 1px solid var(--color-gray-02);
+  /* border-top: 1px solid var(--color-gray-02);
+  border-bottom: 1px solid var(--color-gray-02); */
+  p {
+    color: inherit;
+  }
   ul {
     display: flex;
     justify-content: center;
