@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"; // useContext 제거
+import React, { useContext, useState } from "react"; // useContext 추가
 import styled from "styled-components";
 import { FiX } from "react-icons/fi";
 import { CiCamera } from "react-icons/ci";
@@ -13,6 +13,7 @@ import {
 } from "../../styles/GlobalStyles.styles";
 import { DataStateContext } from "../../App";
 
+// 최대 비디오 파일 크기 (50MB)
 const MAX_VIDEO_SIZE = 50 * 1024 * 1024; // 50MB
 
 // 전체 모달을 감싸는 스타일 컴포넌트
@@ -32,33 +33,36 @@ const WrapperForm = styled.form`
 // 모달 내부 콘텐츠의 스타일 컴포넌트
 const Inner = styled.div`
   width: 80%;
-  max-width: 600px;
+  max-width: 360px;
   border-radius: 30px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
-  padding: 20px;
+  padding: 20px 0px;
   @media screen and (max-width: 768px) {
     width: 90%;
   }
+
   .modaltitle {
     display: flex;
-    justify-content: center;
+
     align-items: center;
     font-size: 26px;
     border-bottom: 1px solid #d3d3d3;
-    height: 60px;
+    height: 50px;
     position: relative;
     margin-bottom: 15px;
+
     .title {
       font-weight: bold;
     }
+
     .xmark {
       width: 26px;
       height: 26px;
       display: flex;
       align-items: center;
       position: absolute;
-      top: 17px;
+      top: 8px;
       right: 20px;
       cursor: pointer;
     }
@@ -82,25 +86,30 @@ const Inner = styled.div`
   }
 
   .storyupload {
-    padding: 0 60px;
-
     .storyimage,
     .storyvideo {
       width: 100%;
-      max-width: 650px;
-      height: 100%;
+      max-width: 300px;
+      height: 300px;
       display: flex;
       justify-content: center;
       margin-bottom: 20px;
+      overflow: hidden; /* 이미지나 비디오가 컨테이너를 벗어나지 않도록 */
+
       img,
       video {
-        width: 300px;
-        height: 300px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* 컨테이너에 맞게 비율 유지하며 채움 */
         border-radius: 8px;
-        @media screen and (max-width: 768px) {
-          width: 250px;
-          height: 280px;
-        }
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .storyimage,
+      .storyvideo {
+        max-width: 250px;
+        height: 280px;
       }
     }
   }
@@ -109,11 +118,11 @@ const Inner = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+
     .camera {
-      padding: 4px 10px;
       border: 1px solid #d3d3d3;
-      width: 400px;
-      height: 360px;
+      width: 300px;
+      height: 320px;
       font-size: 50px;
       display: flex;
       justify-content: center;
@@ -121,6 +130,7 @@ const Inner = styled.div`
       margin-bottom: 20px;
       cursor: pointer;
       transition: all 0.3s;
+
       @media screen and (max-width: 768px) {
         width: 250px;
         height: 280px;
@@ -134,11 +144,13 @@ const Inner = styled.div`
         display: flex;
         flex-direction: column;
         align-items: center;
+
         .text {
-          font-size: 20px;
+          ${SubDescription_16_n}
         }
       }
     }
+
     .storytext {
       width: 100%;
       height: 100px;
@@ -148,11 +160,13 @@ const Inner = styled.div`
       border: 1px solid #ccc;
       resize: vertical;
       margin-bottom: 20px;
+
       @media screen and (max-width: 768px) {
         border: 1px solid red;
         ${SubDescription_12_m}
       }
     }
+
     button {
       background: ${(props) =>
         props.disabled || (!props.hasImage && !props.hasVideo)
@@ -172,6 +186,7 @@ const Inner = styled.div`
         props.disabled || (!props.hasImage && !props.hasVideo)
           ? "not-allowed"
           : "pointer"};
+
       @media screen and (max-width: 768px) {
         ${SubDescription_16_n}
       }
@@ -179,10 +194,8 @@ const Inner = styled.div`
   }
 `;
 
-// Mainstorymodal 컴포넌트 정의
 const Mainstorymodal = ({ onClose }) => {
   const [storyText, setStoryText] = useState(""); // 스토리 텍스트 상태
-  const [storyName, setStoryName] = useState(""); // 스토리 텍스트 상태
   const [storyImage, setStoryImage] = useState(null); // 이미지 파일 상태
   const [storyVideo, setStoryVideo] = useState(null); // 비디오 파일 상태
   const [uploading, setUploading] = useState(false); // 업로드 상태
@@ -223,6 +236,13 @@ const Mainstorymodal = ({ onClose }) => {
 
       // 비디오 업로드 처리
       if (storyVideo) {
+        // 비디오 파일 크기 확인
+        if (storyVideo.size > MAX_VIDEO_SIZE) {
+          throw new Error(
+            "비디오 파일 크기가 너무 큽니다. 50MB 이하의 파일을 선택해주세요."
+          );
+        }
+
         const videoRef = ref(
           storage,
           `videos/${storyVideo.name}-${Date.now()}`
@@ -236,21 +256,20 @@ const Mainstorymodal = ({ onClose }) => {
         text: storyText,
         imageUrl,
         videoUrl,
-        name: currentUserData.userName,
+        name: currentUserData.userName, // 작성자 이름 추가
         createdAt: Timestamp.fromDate(new Date()),
       });
 
       // 상태 초기화
       setStoryText(""); // 텍스트 초기화
-      setStoryName(""); // name 초기화
       setStoryImage(null); // 이미지 초기화
       setStoryVideo(null); // 비디오 초기화
       onClose(); // 모달 닫기
       alert("스토리가 성공적으로 업로드되었습니다!"); // 성공 메시지
     } catch (err) {
       console.error("오류 발생:", err);
-      setError("스토리 업로드에 실패했습니다."); // 에러 상태 업데이트
-      alert("스토리 업로드에 실패했습니다.");
+      setError(err.message || "스토리 업로드에 실패했습니다."); // 에러 상태 업데이트
+      alert(err.message || "스토리 업로드에 실패했습니다.");
     } finally {
       setUploading(false); // 업로드 상태 종료
     }
@@ -296,7 +315,7 @@ const Mainstorymodal = ({ onClose }) => {
             )}
             {storyVideo && (
               <div className="storyvideo">
-                <video autoPlay muted loop>
+                <video autoPlay muted loop controls>
                   <source
                     src={URL.createObjectURL(storyVideo)} // 선택한 비디오 미리보기
                     type={storyVideo.type}
@@ -308,7 +327,7 @@ const Mainstorymodal = ({ onClose }) => {
             {error && <p style={{ color: "red" }}>{error}</p>}
             <button
               type="submit"
-              disabled={uploading || (!storyImage && !storyVideo)}
+              disabled={uploading || (!storyImage && !storyVideo)} // 조건 추가: 이미지나 비디오가 없으면 disabled
             >
               {uploading ? "업로드 중..." : "스토리 게시하기"}
             </button>
