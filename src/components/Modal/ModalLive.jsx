@@ -5,12 +5,10 @@ import { styled } from "styled-components";
 import { DataDispatchContext } from "../../App";
 
 import CountdownCircle from "../common/CountdownCircle";
-import { faChevronDown, faComments } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import fbIcon from "../../img/fbIcon.svg";
 import liveIcon from "../../img/liveIcon.svg";
 import LiveView from "../../img/Live.jpg";
-import SellItem1Img from "../../img/sellItem1.jpg";
-import SellItem2Img from "../../img/sellItem2.jpg";
 import { IoCloseOutline } from "react-icons/io5";
 
 const Commerce = styled.div`
@@ -85,7 +83,6 @@ const Live = styled.div`
         left: 0;
         width: 390px;
         height: 100vh;
-        /* transform: translate(-50%, -50%); */
         object-fit: cover;
       }
     }
@@ -202,7 +199,6 @@ const CommentLiveInfomb = styled.div`
       border-radius: 50%;
     }
     animation: slide-up 0.5s ease;
-
     @keyframes slide-up {
       from {
         transform: translateY(10px);
@@ -663,6 +659,7 @@ const ModalLive = ({ item, closeModal }) => {
   // 현재 id와 일치하는 제품 찾기
   const currentProduct =
     item.products && item.products.id === parseInt(id) ? item.products : null;
+
   useEffect(() => {
     if (item) {
       const storedIds =
@@ -672,7 +669,7 @@ const ModalLive = ({ item, closeModal }) => {
       // 24시간 내에 포인트를 적립한 적이 있는지 확인
       if (
         lastAddedTime &&
-        Date.now() - new Date(lastAddedTime).getTime() < 86400000
+        Date.now() - new Date(lastAddedTime).getTime() < 1800000
       ) {
         setPointMessage("내일 다시 포인트를 적립할 수 있어요~");
         setRemainingTime(0);
@@ -709,7 +706,7 @@ const ModalLive = ({ item, closeModal }) => {
           setTimeout(() => {
             setResetKey(Date.now());
             setRemainingTime(7);
-          }, 86400000); // 24시간 후 다시 실행
+          }, 1800000); // 86400000 24시간 후 다시 실행
         }, 7000);
 
         return () => clearTimeout(timer);
@@ -830,7 +827,7 @@ const ModalLive = ({ item, closeModal }) => {
               영상과 무관하거나 욕설, 비방 등의 댓글은 관리자에 의해 삭제될 수
               있습니다.
             </span>
-            <CommenstMb>
+            {/* <CommenstMb>
               {visibleComments.map((comment) => (
                 <CommentLiveInfomb key={comment.id}>
                   <img src={comment.img} alt={`${comment.name}의 프로필`} />
@@ -840,7 +837,7 @@ const ModalLive = ({ item, closeModal }) => {
                   </div>
                 </CommentLiveInfomb>
               ))}
-            </CommenstMb>
+            </CommenstMb> */}
           </Comment>
         </RightContent>
       </Commerce>

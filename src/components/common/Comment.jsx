@@ -13,7 +13,7 @@ import { DataStateContext } from "../../App";
 import { styled } from "styled-components";
 
 // 개별 댓글 컴포넌트
-const Comment = ({ comment, onDelete }) => {
+const Comment = ({ comment, onDelete, showDelete }) => {
   console.log(comment);
   const [likes, setLikes] = useState(0);
   const [liked, setLiked] = useState(false);
@@ -39,7 +39,7 @@ const Comment = ({ comment, onDelete }) => {
           <button className={liked ? "liked" : ""} onClick={handleToggleLike}>
             {liked ? "좋아요 취소" : "좋아요"} {likes}
           </button>
-          <button onClick={onDelete}>삭제</button>
+          {showDelete && <button onClick={onDelete}>삭제</button>}
         </div>
       </div>
     </div>
@@ -58,6 +58,7 @@ const CommentSection = ({ post }) => {
   useEffect(() => {
     console.log("Post Data:", post); // post 데이터 확인
   }, [post]);
+
   useEffect(() => {
     if (!post?.id) return; // post.id가 없을 때 return
 
@@ -113,14 +114,19 @@ const CommentSection = ({ post }) => {
       console.error("댓글 삭제 중 오류 발생:", error);
     }
   };
+  const sortedPosts = comments.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+
   return (
     <Wrapper>
       <h4>댓글</h4>
-      {comments.map((comment) => (
+      {sortedPosts.map((comment) => (
         <Comment
           key={comment.id}
           comment={comment}
           onDelete={() => handleDeleteComment(comment.id)}
+          showDelete={comment.userId === currentUserData?.userId}
         />
       ))}
       <CommentUpload

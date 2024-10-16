@@ -3,31 +3,26 @@ import styled from "styled-components";
 import { BsArrowReturnLeft } from "react-icons/bs";
 import { FaSpinner } from "react-icons/fa";
 import testCat from "/img/testcat.jpg";
-
 const WrapperForm = styled.form`
   width: 100%;
   height: fit-content;
   display: flex;
   justify-content: center;
 `;
-
 const CommentCont = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
   padding: 10px;
-
   .commentUpLoadprofile {
     width: 100%;
     display: flex;
     align-items: center;
-
     .profileImg {
-      width: 60px;
-      height: 60px;
+      width: 45px;
+      height: 45px;
       border-radius: 100px;
     }
-
     .profileuploadText {
       width: 100%;
       height: 40px;
@@ -39,39 +34,33 @@ const CommentCont = styled.div`
         outline: none;
       }
     }
-
     .submitBtn {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 55px;
-      height: 55px;
+      padding: 15px;
+      /* width: 55px;
+      height: 55px; */
       background: #007bff;
       color: white;
       border: none;
       border-radius: 50px;
       cursor: pointer;
     }
-
     .submitBtn:disabled {
       opacity: 0.6;
       cursor: not-allowed;
     }
   }
 `;
-
 const CommentUpload = ({ postId, onCreateComment }) => {
   console.log("onCreateComment:", onCreateComment); // 로그로 확인
-
   const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState("");
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Content to be submitted:", content); // 입력 값 확인
-
     if (!content.trim()) return; // 공백 방지
-
     try {
       setIsLoading(true);
       await onCreateComment(content); // postId는 CommentSection에서 이미 처리됨
@@ -82,7 +71,6 @@ const CommentUpload = ({ postId, onCreateComment }) => {
       setIsLoading(false);
     }
   };
-
   return (
     <WrapperForm onSubmit={handleSubmit}>
       <CommentCont>
@@ -104,5 +92,4 @@ const CommentUpload = ({ postId, onCreateComment }) => {
     </WrapperForm>
   );
 };
-
 export default CommentUpload;

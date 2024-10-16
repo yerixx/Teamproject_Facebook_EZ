@@ -176,35 +176,6 @@ const CommentList = ({ style }) => {
           </div>
         </CommentTop>
         <Comment />
-        {/* <CommentLists>
-          <div className="commentList">
-            <div className="commentFirstImg"></div>
-            <div className="commentFirstDesc">
-              <div className="firstDescTop">
-                <b>김예지</b>
-                <span>
-                  <b>김정하</b> <span>여기 가보는 거 어때?</span>
-                </span>
-              </div>
-              <DescBottom>
-                <div>좋아요</div>
-                <div>답글달기</div>
-              </DescBottom>
-            </div>
-          </div>
-          <div className="commentList">
-            <div className="commentSecImg"></div>
-            <div className="commentSecDesc">
-              <div className="secDescTop">
-                <b>김정하</b> <span>완전 좋아요!!</span>
-              </div>
-              <DescBottom>
-                <div>좋아요</div>
-                <div>답글달기</div>
-              </DescBottom>
-            </div>
-          </div>
-        </CommentLists> */}
       </Inner>
     </Wrapper>
   );

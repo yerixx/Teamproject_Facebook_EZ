@@ -213,6 +213,7 @@ const PostItem = ({ post, onDeletePost, handleModalContOpen }) => {
   const handleEdit = (postId) => {
     openEditModal(postId); // 수정할 게시물의 ID 전달
   };
+
   const openEditModal = (postId) => {
     if (confirm("게시물을 수정 하시겠습니까?")) {
       setIsEditing(true);
