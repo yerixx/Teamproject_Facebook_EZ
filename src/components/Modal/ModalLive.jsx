@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { styled } from "styled-components";
-import { DataDispatchContext } from "../../App";
+import { DataDispatchContext, DataStateContext } from "../../App";
 
 import CountdownCircle from "../common/CountdownCircle";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
@@ -10,6 +10,8 @@ import fbIcon from "../../img/fbIcon.svg";
 import liveIcon from "../../img/liveIcon.svg";
 import LiveView from "../../img/Live.jpg";
 import { IoCloseOutline } from "react-icons/io5";
+import { auth, db } from "../../firebase";
+import { doc, updateDoc } from "firebase/firestore";
 
 const Commerce = styled.div`
   width: 100%;
@@ -111,7 +113,7 @@ const SellItemsmb = styled.div`
 `;
 
 const SellItemsinfomb = styled.div`
-  display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
+  display: ${({ $isOpen }) => ($isOpen ? "flex" : "none")};
   @media screen and (max-width: 768px) {
     width: 350px;
     height: 80px;
@@ -627,92 +629,78 @@ const ModalLive = ({ item, closeModal }) => {
   const [visibleComments, setVisibleComments] = useState([]);
   const [index, setIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const { currentUserData } = useContext(DataStateContext);
+  const { dispatch } = useContext(DataDispatchContext);
+  const { id } = useParams(); // URL에서 id 파라미터 받아오기
+  const [resetKey, setResetKey] = useState(null); // 카운트다운 리셋을 위한 키
+  const [remainingTime, setRemainingTime] = useState(null); // 남은 시간을 저장할 상태
+  const navigate = useNavigate();
+  const [pointMessage, setPointMessage] = useState(
+    "7초 후에 500 포인트가 적립됩니다."
+  );
+  const updateUserPointsInFirebase = async (newPoints) => {
+    try {
+      const userId = auth.currentUser.uid; // 현재 사용자 UID 가져오기
+      const userDocRef = doc(db, "users", userId);
+      await updateDoc(userDocRef, {
+        "wallet.point": newPoints,
+      });
+      console.log("Firebase에 포인트 업데이트 성공:", newPoints);
+    } catch (error) {
+      console.error("Firebase에 포인트 업데이트 중 오류 발생:", error);
+    }
+  };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setVisibleComments((prev) => {
-        const newComments = [...prev, comments[index]];
-        if (newComments.length > 2) {
-          newComments.shift();
-        }
-        return newComments;
-      });
-      setIndex((prev) => (prev + 1) % comments.length);
-    }, 2000);
+    if (item && currentUserData) {
+      const lastPointTime = localStorage.getItem("lastPointTime");
+      const now = new Date();
 
-    return () => clearInterval(interval);
-  }, [comments, index]);
+      if (lastPointTime) {
+        const lastTime = new Date(lastPointTime);
+        const diff = now - lastTime;
+        const diffMinutes = Math.floor(diff / 1000 / 60);
+
+        if (diffMinutes < 30) {
+          // 30분이 지나지 않았을 경우
+          const remainingMinutes = 30 - diffMinutes;
+          setPointMessage(
+            `${remainingMinutes}분 후에 포인트를 다시 적립할 수 있습니다.`
+          );
+          return; // 포인트 적립 프로세스를 진행하지 않음
+        }
+      }
+
+      // 포인트 적립 가능하므로 타이머 시작
+      const timer = setTimeout(async () => {
+        const newPoints = (currentUserData.wallet?.point || 0) + 500;
+        await updateUserPointsInFirebase(newPoints);
+
+        // 상태 업데이트
+        dispatch({
+          type: "ADD_POINTS",
+          payload: 500,
+        });
+
+        // 포인트 적립 시간 저장
+        localStorage.setItem("lastPointTime", new Date().toISOString());
+
+        // 메시지 업데이트 및 알림
+        setPointMessage(
+          "포인트가 적립되었습니다! 30분 후에 다시 받을 수 있습니다."
+        );
+        alert("500포인트가 적립되었습니다!");
+      }, 7000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [item, currentUserData]);
 
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
   };
 
-  const { id } = useParams(); // URL에서 id 파라미터 받아오기
-  const { dispatch } = useContext(DataDispatchContext);
-  const [pointMessage, setPointMessage] = useState(
-    "7초 후에 500 포인트가 적립됩니다."
-  );
-  const [resetKey, setResetKey] = useState(null); // 카운트다운 리셋을 위한 키
-  const [remainingTime, setRemainingTime] = useState(null); // 남은 시간을 저장할 상태
-  const navigate = useNavigate();
-
   // 현재 id와 일치하는 제품 찾기
-  const currentProduct =
-    item.products && item.products.id === parseInt(id) ? item.products : null;
-
-  useEffect(() => {
-    if (item) {
-      const storedIds =
-        JSON.parse(localStorage.getItem("earnedPointIds")) || [];
-      const lastAddedTime = localStorage.getItem("lastAddedTime");
-
-      // 24시간 내에 포인트를 적립한 적이 있는지 확인
-      if (
-        lastAddedTime &&
-        Date.now() - new Date(lastAddedTime).getTime() < 1800000
-      ) {
-        setPointMessage("내일 다시 포인트를 적립할 수 있어요~");
-        setRemainingTime(0);
-        return; // 24시간이 지나지 않았으면 애니메이션 실행 안함
-      }
-
-      // URL의 id와 일치하는 제품을 찾음
-      const currentProduct = item.products.find(
-        (product) => product.id === parseInt(id)
-      );
-
-      if (storedIds.includes(id)) {
-        setPointMessage("내일 다시 포인트를 적립할 수 있어요~");
-      } else {
-        const startTime = Date.now();
-        setResetKey(startTime);
-        setRemainingTime(7);
-
-        let timer = setTimeout(() => {
-          dispatch({
-            type: "ADD_POINTS",
-            value: 500,
-          });
-          setPointMessage("내일 다시 포인트를 적립할 수 있어요~");
-          alert("500포인트가 적립되었습니다!");
-
-          // 포인트 적립 시간 저장
-          localStorage.setItem("lastAddedTime", new Date().toISOString());
-
-          // 적립된 ID 저장
-          storedIds.push(id);
-          localStorage.setItem("earnedPointIds", JSON.stringify(storedIds));
-
-          setTimeout(() => {
-            setResetKey(Date.now());
-            setRemainingTime(7);
-          }, 1800000); // 86400000 24시간 후 다시 실행
-        }, 7000);
-
-        return () => clearTimeout(timer);
-      }
-    }
-  }, [id, item, dispatch]);
 
   const handleButtonClick = () => {
     const randomIndex = Math.floor(Math.random() * item.products.length);
@@ -756,7 +744,7 @@ const ModalLive = ({ item, closeModal }) => {
             <h2>판매중인 상품</h2>
             <FontAwesomeIcon icon={faChevronDown} />
           </SellItemsmb>
-          <SellItemsinfomb isOpen={isOpen}>
+          <SellItemsinfomb $isOpen={isOpen}>
             <SellItemImgmb>
               <img src={item?.liveStream?.profileImage} alt="SellItem1Img" />
             </SellItemImgmb>

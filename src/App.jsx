@@ -138,19 +138,17 @@ const reducer = (state, action) => {
       const initialPoints = storedPoints ? parseInt(storedPoints) : 0;
       return { ...state, points: initialPoints };
     }
-    case "ADD_POINTS": {
-      // utils.js의 canAddPoints 사용하여 포인트 지급 가능 여부 확인
-      if (!canAddPoints(action.page)) {
-        return state; // 포인트 지급이 불가능하면 그대로 반환
-      } // 포인트 추가 및 시간 업데이트
-      const updatedPoints = state.points + action.value;
-      localStorage.setItem("points", updatedPoints);
-      // 마지막 포인트 추가 시간을 기록
-      setLastAddedTime(action.page);
-
-      return { ...state, points: updatedPoints };
-    }
-
+    case "ADD_POINTS":
+      return {
+        ...state,
+        currentUserData: {
+          ...state.currentUserData,
+          wallet: {
+            ...state.currentUserData.wallet,
+            point: (state.currentUserData.wallet?.point || 0) + action.payload,
+          },
+        },
+      };
     case "SET_CURRENT_USER_DATA":
       return { ...state, currentUserData: action.data };
     default:

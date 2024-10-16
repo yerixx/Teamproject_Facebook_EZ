@@ -218,7 +218,7 @@ const SideBarGroup = ({ openGroup, closeModal }) => {
                     <div>
                       <span>{randomText}</span>
                       <span>・</span>
-                      <span>멤버 {group.member}명</span>
+                      <span>멤버 {group.member}명</span>``
                     </div>
                   </GroupTitle>
                   <span>팔로우</span>
