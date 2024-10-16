@@ -513,7 +513,6 @@ const SellItemDesc = styled.div`
 
 const Comment = styled.div`
   border: 1px solid #f00;
-
   width: 100%;
   height: 100%;
   padding: 0 40px;
@@ -926,7 +925,7 @@ const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
                 <CommentLiveInfomb2 key={comment.id}>
                   <img src={comment.img} alt={`${comment.name}의 프로필`} />
                   <div className="desc">
-                    <h3>{comment.name}</h3>
+                    <h4>{comment.name}</h4>
                     <p>{comment.text}</p>
                   </div>
                 </CommentLiveInfomb2>

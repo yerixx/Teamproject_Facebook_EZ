@@ -37,8 +37,10 @@ const SocialIcon = styled.div`
     @media (max-width: 768px) {
       width: 50%;
       justify-content: center;
+      align-items: center;
+      margin-top: 20px;
       margin-right: 20px;
-      font-size: 20px;
+      font-size: 14px;
       &:last-child {
         margin-right: 0px;
       }
@@ -125,7 +127,6 @@ const SocialBtnIcon = ({ post }) => {
     }
   };
 
-  // post가 없을 때 안전하게 렌더링 처리
   if (!post) return null;
 
   return (

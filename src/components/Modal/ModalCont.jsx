@@ -220,7 +220,15 @@ const SocialIcon = styled.div`
   @media (max-width: 768px) {
     position: absolute;
     width: 100%;
+    max-height: 380px;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
     bottom: 0;
+    font-size: 12px;
+    background-color: #fff;
+    border-radius: 8px 8px 0 0;
+    /* border: 1px solid #f00; */
   }
 `;
 
@@ -327,7 +335,7 @@ const ModalCont = ({ post }) => {
           <p>{post.content}</p>
         </ModalDesc>
         <SocialIcon>
-          <SocialBtnIcon post={post} />
+          <SocialBtnIcon className="SocialBtnIcon" post={post} />
         </SocialIcon>
       </Mobile>
     </Wrapper>
