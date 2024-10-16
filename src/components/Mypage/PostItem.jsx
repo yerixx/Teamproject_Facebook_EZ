@@ -188,7 +188,7 @@ const PostItem = ({ post, onDeletePost, handleModalContOpen }) => {
   const [editingPostId, setEditingPostId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { id, userId, content, createdAt, image } = post;
-  const isLiked = false; // 초기 좋아요 여부
+  // const isLiked = false; // 초기 좋아요 여부
 
   const formatDate = (isoString) => {
     const date = new Date(isoString);

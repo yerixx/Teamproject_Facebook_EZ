@@ -14,6 +14,8 @@ import { styled } from "styled-components";
 
 // 개별 댓글 컴포넌트
 const Comment = ({ comment, onDelete }) => {
+  const { currentUserData } = useContext(DataStateContext);
+
   const [likes, setLikes] = useState(0);
   const [liked, setLiked] = useState(false);
 
@@ -46,9 +48,9 @@ const Comment = ({ comment, onDelete }) => {
   return (
     <div className="comment">
       <img
-        src={comment.profilePic || "/img/defaultProfile.jpg"}
-        alt={`${comment.formattedUserName}'s profile`}
-        className="profile-pic"
+        className="profileImg"
+        src={currentUserData?.profileImage || "/img/defaultProfile.jpg"}
+        alt="Profile"
       />
       <div className="commentContentWrapper">
         <div className="comment-content">
@@ -78,8 +80,24 @@ const Wrapper = styled.div`
 `;
 
 const CommentList = styled.div`
-  max-height: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  max-height: 500px;
   overflow-y: auto;
+  .profileImg {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-bottom: 28px;
+    margin-right: 14px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  }
 `;
 
 const CommentSection = ({ post }) => {
