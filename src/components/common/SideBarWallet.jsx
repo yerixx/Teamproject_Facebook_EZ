@@ -2,10 +2,11 @@ import styled from "styled-components";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { SubTitle_16_b } from "../../styles/GlobalStyles.styles";
 import { IoClose } from "react-icons/io5";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { DataStateContext } from "../../App";
+import { motion } from "framer-motion";
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   z-index: 3;
   position: absolute;
   top: 100px;
@@ -14,16 +15,15 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background: #fff;
+  background: ${(props) => props.theme.ContainColor};
   padding: 28px 20px;
   border-radius: var(--border-radius-30);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   max-height: 80vh;
   overflow-y: auto;
-  -ms-overflow-style: none; /* IE, Edge */
+  -ms-overflow-style: none;
   scrollbar-width: none;
   @media screen and (max-width: 1050px) {
-    top: 130px;
     right: 10px;
   }
   @media screen and (max-width: 768px) {
@@ -32,6 +32,7 @@ const Wrapper = styled.div`
   }
 `;
 const Title = styled.div`
+  color: ${(props) => props.theme.textColor};
   display: flex;
   justify-content: space-between;
   span {
@@ -48,6 +49,7 @@ const Box = styled.div`
   }
 `;
 const WalletItem = styled.div`
+  color: ${(props) => props.theme.textColor};
   display: flex;
   align-items: center;
   gap: 15px;
@@ -63,14 +65,16 @@ const WalletItem = styled.div`
     align-items: center;
   }
   div {
-    color: var(--color-facebookblue);
+    color: #777;
     font-size: 30px;
+    padding-bottom: 3px;
+    text-align: center;
   }
 `;
 
 const RecentProductItem = styled.div`
   padding: 0 10px;
-  background: var(--color-light-gray-02);
+  background: ${(props) => props.theme.cardColor};
   width: 347px;
   height: 90px;
   border-radius: 10px;
@@ -79,8 +83,9 @@ const RecentProductItem = styled.div`
   justify-content: space-around;
   gap: 10px;
   img {
-    min-width: 60px;
+    width: 60px;
     height: 60px;
+    object-fit: cover;
     background: #ddd;
     border-radius: 10px;
   }
@@ -106,6 +111,7 @@ const ProductItemInfo = styled.div`
   flex-direction: column;
   h4 {
     ${SubTitle_16_b}
+    color: ${(props) => props.theme.textColor};
   }
   div {
     font-weight: bold;
@@ -115,31 +121,61 @@ const ProductItemInfo = styled.div`
       color: red;
     }
     span:nth-child(2) {
-      color: var(--color-gray-01);
+      color: ${(props) => props.theme.subTextColor};
     }
   }
 `;
-/* eslint-disable react/prop-types */
+
 const SideBarWallet = ({ onClick, closeModal }) => {
+  const [randomProducts, setRandomProducts] = useState([]);
   const data = useContext(DataStateContext);
-  const currentUser = data.currentUserData;
+  const { currentUserData } = useContext(DataStateContext);
+  const { mockData } = useContext(DataStateContext);
+  const liveCommerce = mockData.liveCommerce;
+
+  const points = data?.points || 0;
+
   const closeRef = useRef(null);
   const handleClickOutside = (event) => {
     if (closeRef.current && !closeRef.current.contains(event.target)) {
       closeModal(); // 모달을 닫는 함수 호출
     }
   };
-  useEffect(() => {
-    // 모달이 마운트되면 클릭 이벤트 추가
-    document.addEventListener("mousedown", handleClickOutside);
 
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
     return () => {
-      // 모달이 언마운트되면 클릭 이벤트 제거
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    if (liveCommerce.length > 0) {
+      // 모든 liveItem의 products 배열을 하나로 합침
+      const allProducts = liveCommerce.flatMap((liveItem) => liveItem.products);
+
+      // 랜덤하게 3개의 상품 선택
+      const selectedProducts = allProducts
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 3);
+
+      setRandomProducts(selectedProducts); // 랜덤 상품 상태로 설정
+    }
+  }, [liveCommerce]);
+
+  if (!data) {
+    return <div>로딩 중...</div>; // 데이터가 로드되지 않았을 때 로딩 상태를 표시
+  }
+
   return (
-    <Wrapper ref={closeRef}>
+    <Wrapper
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      ref={closeRef}
+      onClick={(e) => e.stopPropagation()}
+    >
       <Title>
         <h3>Wallett +</h3>
         <span>
@@ -148,61 +184,39 @@ const SideBarWallet = ({ onClick, closeModal }) => {
       </Title>
       <Box>
         <WalletItem>
-          <img />
-          <span>{currentUser.wallet.point} p</span>
+          <img src="https://www.pngplay.com/wp-content/uploads/5/Alphabet-P-PNG-Pic-Background.png" />
+          <span>{currentUserData.wallet.point}p </span>
         </WalletItem>
-        <WalletItem>
-          <img />
-          <span>{currentUser.wallet.wan} 원</span>
-        </WalletItem>
-        <WalletItem>
+        <WalletItem onClick={() => alert("서비스 준비중 입니다")}>
           <div>+</div>
           <span>지갑 추가</span>
         </WalletItem>
       </Box>
       <Title>
-        <h3>최근 본 상품</h3>
+        <h3>추천 상품</h3>
       </Title>
       <Box>
-        <RecentProductItem>
-          <img />
-          <ProductItemInfo>
-            <h4>★5%추가할인★스프라이트 백트임 긴팔니트..</h4>
-            <div>
-              <span>30%</span>
-              <span>19,000원</span>
-            </div>
-          </ProductItemInfo>
-          <div className="icon">
-            <MdOutlineShoppingBag />
+        {randomProducts.length > 0 ? (
+          randomProducts.map((product) => (
+            <RecentProductItem key={product.id}>
+              <img src={product.productImage} alt={product.name} />
+              <ProductItemInfo>
+                <h4>{product.name}</h4>
+                <div>
+                  <span>{product.discountRate}</span>
+                  <span>{product.discountPrice}</span>
+                </div>
+              </ProductItemInfo>
+              <div className="icon">
+                <MdOutlineShoppingBag />
+              </div>
+            </RecentProductItem>
+          ))
+        ) : (
+          <div style={{ color: "${(props) => props.theme.textColor}" }}>
+            상품이 없습니다.
           </div>
-        </RecentProductItem>
-        <RecentProductItem>
-          <img />
-          <ProductItemInfo>
-            <h4>★5%추가할인★스프라이트 백트임 긴팔니트..</h4>
-            <div>
-              <span>30%</span>
-              <span>19,000원</span>
-            </div>
-          </ProductItemInfo>
-          <div className="icon">
-            <MdOutlineShoppingBag />
-          </div>
-        </RecentProductItem>
-        <RecentProductItem>
-          <img />
-          <ProductItemInfo>
-            <h4>★5%추가할인★스프라이트 백트임 긴팔니트..</h4>
-            <div>
-              <span>30%</span>
-              <span>19,000원</span>
-            </div>
-          </ProductItemInfo>
-          <div className="icon">
-            <MdOutlineShoppingBag />
-          </div>
-        </RecentProductItem>
+        )}
       </Box>
     </Wrapper>
   );

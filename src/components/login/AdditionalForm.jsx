@@ -7,17 +7,26 @@ import {
   InputWrapperRow,
   Input,
   FormTitle,
+  FormDesc,
   FormItemTitle,
   FormItemDesc,
   Pager,
   Button,
 } from "./login-components";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const Wrapper = styled.div`
   padding: 25px;
   background: var(--color-light-gray-02);
-  box-shadow: var(--box-shadow-02);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   border-radius: var(--border-radius-08);
+  @media screen and (max-width: 768px) {
+    width: 390px;
+    min-width: 390px;
+    padding: 0 15px;
+    background: var(--color-white);
+    box-shadow: none;
+  }
 `;
 const Label = styled.label`
   display: inline-block;
@@ -87,7 +96,7 @@ const LocationWrapper = styled.ul`
   }
 `;
 
-const AdditionalForm = () => {
+const AdditionalForm = ({ updateUserData, mobileSize, progress }) => {
   // select
   const options = [
     { value: 1, location: "서울" },
@@ -98,50 +107,95 @@ const AdditionalForm = () => {
 
   const [location, setLocation] = useState("지역");
   const [isSelectOpen, setIsSelectOpen] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleNext = (e) => {
+    e.preventDefault(); // 폼의 기본 제출 동작 방지
+    // progress 값을 2로 설정하여 URL에 반영
+    searchParams.set("progress", "2");
+    setSearchParams(searchParams);
+
+    if (mobileSize) {
+      setTimeout(() => {
+        window.scrollTo({
+          top: document.body.scrollHeight, // 페이지의 가장 아래로 이동
+          behavior: "smooth", // 부드럽게 스크롤
+        });
+      }, 5);
+    }
+  };
+  const handleGenderChange = (e) => {
+    updateUserData("gender", e.target.value);
+  };
+
+  const handleBirthChange = (e) => {
+    updateUserData("birthdate", e.target.value);
+  };
+
+  const handleLocationChange = (location) => {
+    setLocation(location);
+    updateUserData("city", location);
+  };
 
   const toggleOption = () => {
     setIsSelectOpen((current) => !current);
   };
+
   const closeOption = (e) => {
     setIsSelectOpen(false);
-    setLocation(e.target.innerText);
+    handleLocationChange(e.target.innerText);
   };
 
   return (
     <Wrapper>
-      <Form height={700}>
-        <FormTitle>회원님을 위한 맞춤 홈피드를 준비할게요</FormTitle>
+      <Form height={630}>
+        {mobileSize ? null : (
+          <FormTitle>회원님을 위한 맞춤 홈피드를 준비할게요</FormTitle>
+        )}
+        <FormDesc>
+          언제든지 프로필에서 회원님의 정보를 변경할 수 있습니다.
+        </FormDesc>
         <Ul>
           <li>
             <FormItemTitle>성별 입력</FormItemTitle>
-            <FormItemDesc>
-              언제든지 프로필에서 회원님의 성별을 변경할 수 있습니다.
-            </FormItemDesc>
+            <FormItemDesc>성별을 선택하세요.</FormItemDesc>
             <InputWrapperRow>
               <Label htmlFor="woman">
                 여성
-                <Input name="gender" type="radio" value="female" id="woman" />
+                <Input
+                  name="gender"
+                  type="radio"
+                  value="female"
+                  id="woman"
+                  onChange={handleGenderChange}
+                />
               </Label>
               <Label htmlFor="man">
                 남성
-                <Input name="gender" type="radio" value="male" id="man" />
+                <Input
+                  name="gender"
+                  type="radio"
+                  value="male"
+                  id="man"
+                  onChange={handleGenderChange}
+                />
               </Label>
             </InputWrapperRow>
           </li>
           <li>
             <FormItemTitle>생년월일 입력</FormItemTitle>
-            <FormItemDesc>
-              생년월일을 선택하세요. <br />
-              언제든지 비공개로 변경할 수 있습니다.
-            </FormItemDesc>
-            <Input id="birth" name="birth" type="date" width={430} />
+            <FormItemDesc>생년월일을 선택하세요.</FormItemDesc>
+            <Input
+              id="birth"
+              name="birth"
+              type="date"
+              width={430}
+              onChange={handleBirthChange}
+            />
           </li>
           <li>
             <FormItemTitle>지역 입력</FormItemTitle>
-            <FormItemDesc>
-              지역을 선택하세요. <br />
-              언제든지 비공개로 변경할 수 있습니다.
-            </FormItemDesc>
+            <FormItemDesc>지역을 선택하세요.</FormItemDesc>
             <SelectItem>
               <div className="select-icon">
                 <svg
@@ -177,11 +231,13 @@ const AdditionalForm = () => {
           </li>
         </Ul>
         <div>
-          <Pager>
-            <span className="active"></span>
-            <span></span>
-          </Pager>
-          <Button>다음</Button>
+          {mobileSize ? null : (
+            <Pager>
+              <span className="active"></span>
+              <span></span>
+            </Pager>
+          )}
+          <Button onClick={handleNext}>다음</Button>
         </div>
       </Form>
     </Wrapper>

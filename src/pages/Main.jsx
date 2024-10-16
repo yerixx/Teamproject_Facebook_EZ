@@ -1,85 +1,106 @@
-import React from "react";
-// import { MainHeader01Style } from "../styles/GlobalStyles.styles";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { HeaderBottom, HeaderTop } from "../components/common/Header";
-// import LeftSideBar from "../components/common/LeftSideBar";
-import ModalCont from "../components/Modal/ModalCont";
-// import { useContext } from "react";
-// import { DataDispatchContext, DataStateContext } from "../App";
-import MainPage from "../components/Main/Mainpage";
-import Mainupload from "../components/Main/Mainupload";
+import PostUpload from "../components/common/PostUpload";
 import Mainstory from "../components/Main/Mainstory";
 import Mainlive from "../components/Main/Mainlive";
 import MainGroup from "../components/Main/MainGroup";
-import Mainbutton from "../components/Main/Mainbutton";
+import Mainpage from "../components/Main/Mainpage";
+import { auth } from "../firebase";
+import { DataStateContext } from "../App";
+import LoadingScreen from "../components/common/LoadingScreen";
 
 const Wrapper = styled.div`
+  position: relative;
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
+const PostUploadField = styled.div`
+  width: var(--inner-width-02);
+  background-color: ${(props) => props.theme.ContainColor};
+  box-shadow: var(--box-shadow-01);
+  padding: 20px;
+  border-radius: var(--border-radius-30);
+  @media (max-width: 768px) {
+    width: 90vw;
+    height: 80px;
+  }
+`;
+
 const MainSection = styled.section`
+  margin-bottom: 20px;
   width: 1050px;
   padding: 0 90px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 30px;
-  /* padding: 28px 20px; */
-  position: absolute;
   top: 140px;
   @media screen and (max-width: 768px) {
-    top: 80px;
+    top: 70px;
   }
 `;
 
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-`;
-// const Maintest = styled.div`
-//   width: 1000px;
-//   border: 1px solid #f00;
-// `;
+const Main = ({ placeholder }) => {
+  const { currentUserData } = useContext(DataStateContext);
+  const [loading, setLoading] = useState(true); // 로딩 상태 관리
+  const [searchTerm, setSearchTerm] = useState("");
+  useEffect(() => {
+    const initialize = async () => {
+      try {
+        // 사용자 인증 상태 체크
+        await auth.onAuthStateChanged((user) => {
+          if (user) {
+          }
+        });
 
-const Main = () => {
-  // const { onCreatePost } = useContext(DataDispatchContext);
-  // const { posts } = useContext(DataStateContext);
-  // const create = () => {
-  //   onCreatePost("1", "sldkjf");
-  // };
+        // 필요한 데이터가 로드될 때까지 대기
+        if (currentUserData) {
+        }
+
+        // 모든 데이터가 준비되면 로딩 상태 해제
+        setLoading(false);
+      } catch (error) {
+        console.error("초기화 중 오류가 발생했습니다.", error);
+      }
+    };
+
+    initialize();
+  }, [currentUserData]);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
+  const isSearching = searchTerm.trim().length > 0;
+
   return (
     <Wrapper>
-    
       <HeaderTop />
-      <HeaderBottom />
-      {/* <SideBarWallet /> */}
-      {/* <SideBarGroup /> */}
-      {/* <SideBarMenu /> */}
-       <MainSection> 
-        <Mainstory />
-        <Container>
-          <Mainupload />
-          <Mainbutton />
-          {/* <Mainmodal /> */}
-        </Container>
-        <MainGroup />
-        <MainPage />
-        {/* <Maintest>
-          <button onClick={create}>생성</button>
-          {posts.map((item, i) => (
-            <div key={i}>{item.content}</div>
-          ))}
-        </Maintest> */}
-        <Mainlive />
+      <HeaderBottom onSearch={(term) => setSearchTerm(term)} />
+      <MainSection>
+        {isSearching ? (
+          // 검색 중일 때 Mainpage만 보여줌
+          <Mainpage searchTerm={searchTerm} />
+        ) : (
+          // 검색어가 없을 때 전체 섹션 표시
+          <>
+            <Mainstory />
+            <PostUploadField style={{ padding: "10px 0" }}>
+              <PostUpload placeholder={"오늘 어떤일이 있으셨나요?"} />
+            </PostUploadField>
+            <MainGroup />
+            <Mainpage searchTerm={searchTerm} />
+          </>
+        )}
       </MainSection>
-
-
     </Wrapper>
   );
 };

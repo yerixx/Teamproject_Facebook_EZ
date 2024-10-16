@@ -11,6 +11,7 @@ import {
 // Common
 export const Logo = styled.div`
   height: 30px;
+  cursor: pointer;
   img {
     width: 100%;
     height: 100%;
@@ -60,12 +61,12 @@ export const Inner = styled.article`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 30px;
+  gap: 20px;
+  position: relative;
   @media screen and (max-width: 768px) {
     width: 390px;
     min-width: 390px;
     padding: 0 15px;
-    /* overflow: scroll; */
   }
 `;
 export const FormContainer = styled.div`
@@ -73,7 +74,7 @@ export const FormContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 60px 40px;
+  padding: 40px;
   background: var(--color-white);
   border-radius: var(--border-radius-30);
   box-shadow: var(--box-shadow-02);
@@ -82,7 +83,6 @@ export const FormContainer = styled.div`
     flex-direction: column;
     padding: 0;
     box-shadow: none;
-    /* margin-top: 60px; */
   }
 `;
 
@@ -108,7 +108,8 @@ export const Ul = styled.ul`
   margin-bottom: 20px;
   li {
     p {
-      margin: 8px 0 10px;
+      margin: 5px 0;
+      line-height: 1.2;
     }
   }
   @media screen and (max-width: 768px) {
@@ -202,7 +203,6 @@ export const Input = styled.input`
 export const FormTitle = styled.h3`
   ${MainTitle_24_m}
   text-align: center;
-  margin-bottom: 10px;
   @media screen and (max-width: 768px) {
     margin-bottom: 0;
     ${Paragraph_20_n};
@@ -227,7 +227,7 @@ export const Pager = styled.div`
   justify-content: center;
   align-items: center;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   span {
     width: 10px;
     height: 10px;

@@ -1,8 +1,8 @@
+import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
-const Wrapper = styled.div`
-  transition: all 0.3s;
+const Wrapper = styled(motion.div)`
   z-index: 3;
   position: absolute;
   top: 100px;
@@ -10,7 +10,8 @@ const Wrapper = styled.div`
   width: 280px;
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: ${(props) => props.theme.ContainColor};
+  color: ${(props) => props.theme.textColor};
   padding: 20px;
   border-radius: var(--border-radius-30);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
@@ -18,8 +19,8 @@ const Wrapper = styled.div`
   overflow-y: auto;
   -ms-overflow-style: none; /* IE, Edge */
   scrollbar-width: none;
+  cursor: pointer;
   @media screen and (max-width: 1050px) {
-    top: 130px;
     right: 10px;
   }
   @media screen and (max-width: 768px) {
@@ -37,14 +38,15 @@ const Item = styled.div`
   gap: 30px;
   transition: all 0.3s;
   &:hover {
-    background-color: var(--color-light-gray-01);
+    background-color: ${(props) => props.theme.cardColor};
+    color: ${(props) => props.theme.subTextColor};
   }
   svg {
     width: 40px;
   }
 `;
 /* eslint-disable react/prop-types */
-const SideBarMenu = ({ openGroup, closeModal }) => {
+const SideBarMenu = ({ openGroup, closeModal, sideMenuOpen }) => {
   const closeRef = useRef(null);
   const handleClickOutside = (event) => {
     if (closeRef.current && !closeRef.current.contains(event.target)) {
@@ -52,17 +54,21 @@ const SideBarMenu = ({ openGroup, closeModal }) => {
     }
   };
   useEffect(() => {
-    // 모달이 마운트되면 클릭 이벤트 추가
-    document.addEventListener("mousedown", handleClickOutside);
-
+    document.addEventListener("click", handleClickOutside);
     return () => {
-      // 모달이 언마운트되면 클릭 이벤트 제거
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, []);
 
   return (
-    <Wrapper ref={closeRef}>
+    <Wrapper
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      ref={closeRef}
+      onClick={(e) => e.stopPropagation()}
+    >
       <Item onClick={openGroup}>
         <svg
           width="36"
@@ -154,7 +160,7 @@ const SideBarMenu = ({ openGroup, closeModal }) => {
         </svg>
         <span>그룹</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="34"
           height="34"
@@ -182,7 +188,7 @@ const SideBarMenu = ({ openGroup, closeModal }) => {
         </svg>
         <span>Messenger</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="36"
           height="26"
@@ -225,7 +231,7 @@ const SideBarMenu = ({ openGroup, closeModal }) => {
         </svg>
         <span>친구</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="30"
           height="30"
@@ -255,7 +261,7 @@ const SideBarMenu = ({ openGroup, closeModal }) => {
 
         <span>과거의 오늘</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="24"
           height="36"
@@ -284,7 +290,7 @@ const SideBarMenu = ({ openGroup, closeModal }) => {
 
         <span>저장됨</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="28"
           height="26"
@@ -300,7 +306,7 @@ const SideBarMenu = ({ openGroup, closeModal }) => {
 
         <span>동영상</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="36"
           height="26"
@@ -359,7 +365,7 @@ const SideBarMenu = ({ openGroup, closeModal }) => {
 
         <span>피드</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="36"
           height="36"
@@ -421,7 +427,7 @@ const SideBarMenu = ({ openGroup, closeModal }) => {
 
         <span>이벤트</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="36"
           height="36"
@@ -483,7 +489,7 @@ const SideBarMenu = ({ openGroup, closeModal }) => {
 
         <span>광고 관리자</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="36"
           height="36"
@@ -575,7 +581,7 @@ const SideBarMenu = ({ openGroup, closeModal }) => {
 
         <span>Meta Quest</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="28"
           height="28"
@@ -591,7 +597,7 @@ const SideBarMenu = ({ openGroup, closeModal }) => {
 
         <span>게시물</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="32"
           height="26"
@@ -607,7 +613,7 @@ const SideBarMenu = ({ openGroup, closeModal }) => {
 
         <span>스토리</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="28"
           height="26"
@@ -623,7 +629,7 @@ const SideBarMenu = ({ openGroup, closeModal }) => {
 
         <span>릴스</span>
       </Item>
-      <Item>
+      <Item onClick={() => alert("서비스 준비중 입니다")}>
         <svg
           width="24"
           height="28"

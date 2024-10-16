@@ -1,5 +1,4 @@
 import { createGlobalStyle, css } from "styled-components";
-
 import font from "../font/NotoSansKR-VariableFont_wght.ttf";
 
 const GlobalStyles = createGlobalStyle`
@@ -28,6 +27,7 @@ input{
 body{
     font-family: 'Noto Sans KR', sans-serif;
     letter-spacing:-1px;
+    background-color: ${(props) => props.theme.bgColor};
 }
 :root {
    /* Color */
@@ -39,6 +39,7 @@ body{
     --color-light-gray-01: #E6E6E6;
     --color-light-gray-02: #F4F4F4;
     --color-white: #FFFFFF;
+    --color-error: #F0284A;
    /* Border Radius */
     --border-radius-08: 8px;
     --border-radius-30: 30px;
@@ -52,6 +53,7 @@ body{
     
      /* Inner size */
     --inner-width: 1050px;
+    --inner-width-02: 900px;
 }
 `;
 // Font

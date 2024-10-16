@@ -1,12 +1,17 @@
-import styled from "styled-components";
 import { Routes, Route } from "react-router-dom";
+import styled, { ThemeProvider } from "styled-components";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Layout from "./components/common/Layout.jsx";
+import LoadingScreen from "./components/common/LoadingScreen.jsx";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Detail from "./pages/Detail";
+import Detail from "./pages/Mypage.jsx";
 import ModalLive from "./components/Modal/ModalLive.jsx";
+import Comment from "./components/common/Comment.jsx";
+import ModalCont from "./components/Modal/ModalCont.jsx";
 import GlobalStyles from "./styles/GlobalStyles.styles.js";
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {
@@ -17,11 +22,52 @@ import {
   getDoc,
   getDocs,
   updateDoc,
+  setDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { auth, db } from "./firebase.js";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { darkTheme } from "./styles/theme.js";
+import { lightTheme } from "./styles/theme.js";
+import ProtectedRoute from "./components/common/ProtectedRoute.jsx";
+import { setLastAddedTime, canAddPoints } from "./utils/util.js";
 
-const Wrapper = styled.div``;
+// Page Router
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        path: "",
+        element: <Main />,
+      },
+      {
+        path: "mypage",
+        element: <Detail />,
+      },
+      {
+        path: "modallive/:id",
+        element: <ModalLive />,
+      },
+      {
+        path: "comment",
+        element: <Comment />,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+  },
+]);
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -49,7 +95,6 @@ const reducer = (state, action) => {
       const updatedPosts = state.posts.map((post) => {
         if (post.id === action.postId) {
           const updatedLikes = action.isLiked ? post.likes - 1 : post.likes + 1; // 좋아요 수 증가/감소
-
           return {
             ...post,
             likes: updatedLikes, // 업데이트된 좋아요 수
@@ -57,10 +102,8 @@ const reducer = (state, action) => {
         }
         return post;
       });
-
       return { ...state, posts: updatedPosts };
     }
-
     case "ADD_COMMENT": {
       // 포스트 ID에 맞는 포스트를 찾아서 댓글 추가
       const updatedPosts = state.posts.map((post) => {
@@ -83,13 +126,29 @@ const reducer = (state, action) => {
       );
       return { ...state, users: updatedUsers };
     }
-
     case "DELETE_POST": {
       const updatedPosts = state.posts.filter(
         (post) => post.id !== action.targetId
       );
       return { ...state, posts: updatedPosts };
     }
+    //라이브 커머스 포인트
+    case "INIT_POINTS": {
+      const storedPoints = localStorage.getItem("points");
+      const initialPoints = storedPoints ? parseInt(storedPoints) : 0;
+      return { ...state, points: initialPoints };
+    }
+    case "ADD_POINTS":
+      return {
+        ...state,
+        currentUserData: {
+          ...state.currentUserData,
+          wallet: {
+            ...state.currentUserData.wallet,
+            point: (state.currentUserData.wallet?.point || 0) + action.payload,
+          },
+        },
+      };
     case "SET_CURRENT_USER_DATA":
       return { ...state, currentUserData: action.data };
     default:
@@ -99,8 +158,36 @@ const reducer = (state, action) => {
 
 export const DataStateContext = React.createContext();
 export const DataDispatchContext = React.createContext();
+export const DarkThemeContext = React.createContext();
 
 function App() {
+  const [isDark, setIsDark] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true); // 인증 로딩 상태
+  const [dataLoading, setDataLoading] = useState(true); // 데이터 로딩 상태
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("isDark");
+    if (savedTheme) {
+      setIsDark(JSON.parse(savedTheme));
+    }
+  }, []);
+
+  // 다크 모드 상태가 변경될 때마다 로컬 스토리지에 저장
+  useEffect(() => {
+    localStorage.setItem("isDark", JSON.stringify(isDark));
+  }, [isDark]);
+
+  // Loading
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const init = async () => {
+      await auth.authStateReady(); // 인증 상태가 준비된 후 호출
+      await fetchData(); // 데이터를 불러오는 함수 호출
+      setIsLoading(false); // 데이터가 모두 준비된 후 로딩 상태 해제
+    };
+    init();
+  }, []);
+
   const initialState = {
     users: [],
     posts: [],
@@ -108,75 +195,122 @@ function App() {
     groups: [],
     liveCommerce: [],
     likeCategory: [],
+    category: [],
     currentUserData: null,
   };
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  // //라이브 포인트
+  // useEffect(() => {
+  //   dispatch({ type: "INIT_POINTS" });
+  // }, []);
+  // // 7초마다 포인트 지급 시도 (페이지 이름을 전달)
+  // useEffect(() => {
+  //   const pageName = window.location.pathname; // 현재 페이지 경로 가져오기
+  //   const interval = setInterval(() => {
+  //     if (canAddPoints(pageName)) {
+  //       dispatch({ type: "ADD_POINTS", value: 500, page: pageName });
+  //     }
+  //   }, 7000);
+
+  //   return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 해제
+  // }, []);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        await fetchUserData(user);
+      }
+      setAuthLoading(false); // 인증 로딩 해제
+    });
+    return () => unsubscribe();
+  }, []);
 
   const fetchData = async () => {
     try {
       const usersSnapshot = await getDocs(collection(db, "users"));
       const postsSnapshot = await getDocs(collection(db, "posts"));
-
+      const categorySnapshot = await getDocs(collection(db, "category"));
       const users = usersSnapshot.docs.map((doc) => ({
         id: doc.id,
+        posts: [],
         ...doc.data(),
       }));
+
       const posts = postsSnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
+      const categories = categorySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      const response = await fetch("/mockData/mockData.json");
+      const mockData = await response.json();
 
-      // 데이터를 상태에 저장
-      dispatch({ type: "INIT", data: { users, posts } });
-
-      // 목업 사용자 설정 (예: 첫 번째 사용자)
-      if (users.length > 0) {
-        const mockUser = users[0]; // 첫 번째 사용자를 현재 사용자로 설정
-        dispatch({ type: "SET_CURRENT_USER_DATA", data: mockUser });
-      }
+      dispatch({
+        type: "INIT",
+        data: { users, posts, mockData, category: categories },
+      });
+      setDataLoading(false);
     } catch (error) {
       console.error("데이터를 불러오지 못했습니다.", error);
     }
   };
+
+  const fetchUserData = async (user) => {
+    try {
+      const userDocRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userDocRef);
+
+      if (userDoc.exists()) {
+        const data = userDoc.data();
+        dispatch({
+          type: "SET_CURRENT_USER_DATA",
+          data: {
+            ...data,
+            profileImage: data.profileImage || "", // 기본값 설정
+          },
+        });
+      } else {
+        dispatch({ type: "SET_CURRENT_USER_DATA", data: null });
+      }
+    } catch (error) {
+      console.error("사용자 데이터 가져오기 오류:", error);
+    }
+  };
+
   useEffect(() => {
-    fetchData();
-    // 로그인 기능이 구현되지 않았으므로, Firebase Auth 리스너는 일단 생략
-    // 나중에 로그인 기능을 구현한 후 아래 코드를 사용하세요.
-    // const unsubscribe = auth.onAuthStateChanged(async (user) => {
-    //   if (user) {
-    //     // 로그인한 사용자 정보 가져오기
-    //     try {
-    //       const userDocRef = doc(db, "users", user.uid);
-    //       const userDoc = await getDoc(userDocRef);
-    //       if (userDoc.exists()) {
-    //         dispatch({ type: "SET_CURRENT_USER_DATA", data: userDoc.data() });
-    //       } else {
-    //         console.log("사용자 데이터가 없습니다.");
-    //         dispatch({ type: "SET_CURRENT_USER_DATA", data: null });
-    //       }
-    //     } catch (error) {
-    //       console.error("사용자 데이터 가져오기 오류:", error);
-    //     }
-    //   } else {
-    //     // 로그아웃 상태
-    //     dispatch({ type: "SET_CURRENT_USER_DATA", data: null });
-    //   }
-    // });
-    // return () => unsubscribe();
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        await fetchUserData(user); // 사용자 데이터 가져오기
+        setIsLoading(false); // 로딩 완료 후 false 설정
+      } else {
+        dispatch({ type: "SET_CURRENT_USER_DATA", data: null });
+        setIsLoading(false); // 로딩 완료 후 false 설정
+      }
+    });
+
+    return () => unsubscribe(); // 클린업 함수로 리스너 해제
   }, []);
+
   const onCreatePost = async (userId, userName, content, image = null) => {
+    const { currentUserData } = state;
     const newPost = {
       userId,
       userName,
+      profileImage: currentUserData.profileImage || "",
       content,
-      image: image ? [image] : [],
       createdAt: new Date().toISOString(),
       likes: 0,
       comments: [],
     };
+    // 이미지가 존재할 때만 newPost에 image 필드를 추가
+    if (image) {
+      newPost.image = [image];
+    }
     try {
       const docRef = await addDoc(collection(db, "posts"), newPost);
-
       // Firestore에 추가된 데이터로 상태를 업데이트
       dispatch({
         type: "ADD_POST",
@@ -193,54 +327,85 @@ function App() {
     }
   };
 
+  const onUpdatePost = async (postId, updatedData) => {
+    try {
+      const postRef = doc(db, "posts", postId);
+      await updateDoc(postRef, updatedData);
+    } catch (error) {
+      console.error("게시물 수정 중 오류:", error);
+    }
+  };
+
   const onAddUser = async (
     userId,
     firstName,
     lastName,
-    emailOrPhone,
-    password,
+    email,
+    point = 0,
+    won = 0,
     gender = null,
     birthdate = null,
     city = null,
-    likeCategory = null
+    likeCategory = [],
+    profileImage = "",
+    backgroundImage = "",
+    introduction = ""
   ) => {
     try {
-      const docRef = await addDoc(collection(db, "users"), {
+      const userDoc = {
         userId,
         userName: {
           firstName,
           lastName,
         },
-        emailOrPhone,
-        password,
+        email,
         gender,
         birthdate,
         city,
         likeCategory,
-      });
+        profileImage,
+        backgroundImage,
+        introduction,
+        wallet: {
+          point,
+          won,
+        },
+      };
+      await setDoc(doc(db, "users", userId), userDoc);
+
       dispatch({
         type: "ADD_USER",
         newUser: {
-          id: docRef.id,
-          userId,
-          userName: {
-            firstName,
-            lastName,
-          },
-          emailOrPhone,
-          password,
-          gender,
-          birthdate,
-          city,
-          likeCategory,
+          ...userDoc,
+          posts: [],
         },
       });
+      // 포인트 적립 로직 추가
+      // 7초마다 포인트 지급 시도 (개별 사용자로 포인트를 관리)
+      const pageName = window.location.pathname; // 현재 페이지 경로 가져오기
+      const interval = setInterval(() => {
+        if (canAddPoints(pageName)) {
+          dispatch({ type: "ADD_POINTS", value: 500, userId }); // userId별로 포인트 추가
+        }
+      }, 7000);
+
+      // 컴포넌트가 언마운트될 때 인터벌 해제
+      return () => clearInterval(interval);
     } catch (error) {
       console.error("Firestore에 유저 추가 중 오류 발생:", error);
     }
   };
+  const onToggleLike = async (postId, isLiked) => {
+    // try {
+    //   const postDocRef = doc(db, "posts", postId);
 
-  const onToggleLike = (postId, isLiked) => {
+    //   await updateDoc(postDocRef, {
+    //     likes: isLiked ? true : false,
+    //   });
+    // } catch (err) {
+    //   console.error("Like error :", err);
+    // }
+
     dispatch({
       type: "LIKE_POST",
       postId: postId, // 좋아요가 눌린 포스트 ID
@@ -249,66 +414,112 @@ function App() {
   };
 
   const onCreateComment = async (postId, userId, userName, content) => {
+    if (!userId || !content) {
+      console.error("userId나 content가 누락되었습니다.");
+      return;
+    }
+
     const newComment = {
-      id: Date.now().toString(), // 고유한 댓글 ID
-      userId: userId, // 댓글 작성자 ID
-      userName: userName, // 댓글 작성자 이름
-      content: content, // 댓글 내용
-      createdAt: new Date().toISOString(), // 댓글 작성 시간
-      likes: 0, // 좋아요 기본값
+      id: Date.now().toString(), // 고유한 ID
+      userId: userId || "guest", // 기본값 설정
+      userName: userName || "Anonymous", // 기본값 설정
+      content,
+      createdAt: new Date().toISOString(),
+      likes: 0,
     };
 
     try {
-      // Firestore에서 해당 포스트 문서 참조
       const postDocRef = doc(db, "posts", postId);
+      const postDoc = await getDoc(postDocRef);
 
-      // Firestore의 해당 포스트에 댓글 추가 (comments 필드에 array로 저장)
+      if (!postDoc.exists()) {
+        console.error("해당 포스트가 존재하지 않습니다:", postId);
+        return;
+      }
+
       await updateDoc(postDocRef, {
         comments: arrayUnion(newComment),
       });
 
-      // 상태 업데이트 (옵션)
       dispatch({
         type: "ADD_COMMENT",
-        postId: postId, // 댓글이 달릴 포스트 ID
-        newComment: newComment,
+        postId,
+        newComment,
       });
     } catch (error) {
       console.error("댓글 추가 중 오류 발생:", error);
     }
+  };
 
+  const onDeleteComment = async (postId, commentId) => {
+    try {
+      // Firestore에서 해당 포스트 참조
+      const postDocRef = doc(db, "posts", postId);
+      const postDoc = await getDoc(postDocRef);
+
+      if (postDoc.exists()) {
+        const postData = postDoc.data();
+
+        // 해당 댓글을 제외한 새로운 댓글 배열 생성
+        const updatedComments = postData.comments.filter(
+          (comment) => comment.id !== commentId
+        );
+
+        // Firestore에 업데이트된 댓글 배열 저장
+        await updateDoc(postDocRef, { comments: updatedComments });
+
+        // 상태 업데이트
+        dispatch({
+          type: "DELETE_COMMENT",
+          postId,
+          commentId,
+        });
+      }
+    } catch (error) {
+      console.error("댓글 삭제 중 오류 발생:", error);
+    }
   };
-  const onDeletePost = (postId) => {
-    dispatch({
-      type: "DELETE_POST",
-      targetId: postId, // 삭제할 포스트의 ID
-    });
+
+  const onDeletePost = async (postId) => {
+    try {
+      await deleteDoc(doc(db, "posts", postId));
+      dispatch({ type: "DELETE_POST", targetId: postId });
+    } catch (error) {
+      console.error("Firestore에서 포스트 삭제 중 오류 발생:", error);
+    }
   };
+
+  if (authLoading || dataLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <>
-      <GlobalStyles />
-      <DataStateContext.Provider value={state}>
-        <DataDispatchContext.Provider
-          value={{
-            onCreatePost,
-            onAddUser,
-            onCreateComment,
-            onToggleLike,
-            onDeletePost,
-          }}
-        >
-          <Wrapper>
-            <Routes>
-              <Route path="/" element={<Main />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/detail" element={<Detail />} />
-              <Route path="/ModalLive" element={<ModalLive />} />
-            </Routes>
-          </Wrapper>
-        </DataDispatchContext.Provider>
-      </DataStateContext.Provider>
+      <DarkThemeContext.Provider value={{ isDark, setIsDark }}>
+        <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+          <GlobalStyles />
+          <DataStateContext.Provider value={state}>
+            <DataDispatchContext.Provider
+              value={{
+                onCreatePost,
+                onUpdatePost,
+                onAddUser,
+                onCreateComment,
+                onToggleLike,
+                onDeletePost,
+                ...state,
+                dispatch,
+              }}
+            >
+              {isLoading ? (
+                <LoadingScreen />
+              ) : (
+                <RouterProvider router={router} />
+              )}
+            </DataDispatchContext.Provider>
+          </DataStateContext.Provider>
+        </ThemeProvider>
+      </DarkThemeContext.Provider>
     </>
   );
 }
