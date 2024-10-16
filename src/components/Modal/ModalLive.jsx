@@ -13,6 +13,10 @@ import { IoCloseOutline } from "react-icons/io5";
 import { auth, db } from "../../firebase";
 import { doc, updateDoc } from "firebase/firestore";
 
+import { BsArrowReturnLeft } from "react-icons/bs";
+import { FaSpinner } from "react-icons/fa";
+import testCat from "/img/testcat.jpg";
+
 const Commerce = styled.div`
   width: 100%;
   height: 100vh;
@@ -167,7 +171,6 @@ const CommenstMb = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background-color: rgba(0, 0, 0, 0.6);
   overflow: hidden;
   height: 100px;
   @media screen and (max-width: 768px) {
@@ -211,6 +214,15 @@ const CommentLiveInfomb = styled.div`
         opacity: 1;
       }
     }
+  }
+`;
+
+const CommentLiveInfomb2 = styled.div`
+  display: flex;
+  position: relative;
+  right: 0;
+  @media screen and (max-width: 768px) {
+    display: none;
   }
 `;
 
@@ -501,7 +513,6 @@ const SellItemDesc = styled.div`
 
 const Comment = styled.div`
   border: 1px solid #f00;
-
   width: 100%;
   height: 100%;
   padding: 0 40px;
@@ -568,7 +579,87 @@ const NoComment = styled.div`
   }
 `;
 
-const ModalLive = ({ item, closeModal }) => {
+const WrapperForm = styled.form`
+  width: 100%;
+  height: fit-content;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+`;
+
+const CommentCont = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+
+  .commentUpLoadprofile {
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    .profileImg {
+      width: 45px;
+      height: 45px;
+      border-radius: 100px;
+    }
+
+    .profileuploadText {
+      width: 100%;
+      height: 40px;
+      margin: 0 15px;
+      padding: 0 20px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .submitBtn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      /* width: 55px;
+      height: 55px; */
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+    }
+
+    .submitBtn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+`;
+
+const CommenstMb2 = styled.div``;
+
+const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [content, setContent] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Content to be submitted:", content); // 입력 값 확인
+
+    if (!content.trim()) return; // 공백 방지
+
+    try {
+      setIsLoading(true);
+      await onCreateComment(content); // postId는 CommentSection에서 이미 처리됨
+      setContent(""); // 입력창 초기화
+    } catch (error) {
+      console.error("댓글 업로드 실패:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const comments = [
     {
       id: 1,
@@ -815,17 +906,39 @@ const ModalLive = ({ item, closeModal }) => {
               영상과 무관하거나 욕설, 비방 등의 댓글은 관리자에 의해 삭제될 수
               있습니다.
             </span>
-            {/* <CommenstMb>
+            <CommenstMb2>
               {visibleComments.map((comment) => (
-                <CommentLiveInfomb key={comment.id}>
+                <CommentLiveInfomb2 key={comment.id}>
                   <img src={comment.img} alt={`${comment.name}의 프로필`} />
                   <div className="desc">
-                    <h3>{comment.name}</h3>
+                    <h4>{comment.name}</h4>
                     <p>{comment.text}</p>
                   </div>
-                </CommentLiveInfomb>
+                </CommentLiveInfomb2>
               ))}
-            </CommenstMb> */}
+            </CommenstMb2>
+            <WrapperForm onSubmit={handleSubmit}>
+              <CommentCont>
+                <div className="commentUpLoadprofile">
+                  <img src={testCat} className="profileImg" alt="profileImg" />
+                  <input
+                    className="profileuploadText"
+                    onChange={(e) => setContent(e.target.value)}
+                    type="text"
+                    placeholder="댓글을 입력하세요"
+                    value={content}
+                    required
+                  />
+                  <button
+                    disabled={isLoading}
+                    type="submit"
+                    className="submitBtn"
+                  >
+                    {isLoading ? <FaSpinner /> : <BsArrowReturnLeft />}
+                  </button>
+                </div>
+              </CommentCont>
+            </WrapperForm>
           </Comment>
         </RightContent>
       </Commerce>

@@ -264,7 +264,6 @@ const InfoItem = styled.div`
     cursor: pointer;
     transition: all 0.3s;
     &:hover {
-      padding: 4px 10px;
       border-radius: 50%;
       color: var(--color-facebookblue);
     }
@@ -354,11 +353,13 @@ const PostUpload = ({ placeholder }) => {
     <WrapperForm onSubmit={handleSubmit}>
       <CommentCont>
         <div className="commentUpLoadprofile">
-          <img
-            className="profileImg"
-            src={currentUserData?.profileImage || "/img/defaultProfile.jpg"}
-            alt="Profile"
-          />
+          <div className="profileImgWrap">
+            <img
+              className="profileImg"
+              src={currentUserData?.profileImage || "/img/defaultProfile.jpg"}
+              alt="Profile"
+            />
+          </div>
           <input
             className="profileuploadText"
             type="text"

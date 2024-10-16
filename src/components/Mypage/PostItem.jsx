@@ -172,6 +172,7 @@ const ContImg = styled.img`
   width: 100%;
   height: 350px;
   background: var(--color-light-gray-01);
+  border-radius: 8px;
   object-fit: cover;
   cursor: pointer;
   @media (max-width: 768px) {
@@ -180,7 +181,6 @@ const ContImg = styled.img`
     height: 200px;
   }
 `;
-const PostUploadFidle = styled.div``;
 
 const PostItem = ({ post, onDeletePost, handleModalContOpen }) => {
   const { currentUserData } = useContext(DataStateContext);
@@ -292,6 +292,7 @@ const PostItem = ({ post, onDeletePost, handleModalContOpen }) => {
           createdAt={createdAt}
           isEditing={isEditing}
           currentUserData={currentUserData}
+          postDeleteBtn={postDeleteBtn}
         />
       ) : null}
     </>

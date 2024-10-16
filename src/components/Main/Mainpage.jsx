@@ -166,6 +166,7 @@ const ContImg = styled.img`
   width: 100%;
   height: 350px;
   background: var(--color-light-gray-01);
+  border-radius: 8px;
   object-fit: cover;
   cursor: pointer;
   @media (max-width: 768px) {

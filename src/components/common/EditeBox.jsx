@@ -90,8 +90,21 @@ const EditeBox = ({ Title, postId, handleEditBtn }) => {
   const onEditClick = () => {
     if (postId) {
       console.log(`Editing postId: ${postId}`); // 디버깅 로그
+
+      // 수정할 데이터 객체를 생성 (예: content 업데이트)
+      const updatedData = {
+        content: "Updated content here", // 실제로는 사용자가 수정한 데이터를 여기에 추가
+        updatedAt: new Date().toISOString(), // 업데이트 시간을 기록
+      };
+
       handleEditBtn(postId); // 수정 버튼 클릭 시 처리
-      onUpdatePost(postId, { content: "수정된 내용" }); // 게시물 업데이트
+      onUpdatePost(postId, updatedData) // 수정할 데이터 전달
+        .then(() => {
+          console.log("게시물이 성공적으로 수정되었습니다.");
+        })
+        .catch((error) => {
+          console.error("게시물 수정 중 오류 발생:", error);
+        });
     } else {
       console.error("postId가 정의되지 않았습니다.");
     }

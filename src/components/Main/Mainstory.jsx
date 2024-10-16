@@ -19,7 +19,7 @@ const Wrapper = styled.div`
   justify-content: center;
   margin: 20px 0;
   @media screen and (max-width: 768px) {
-    margin: 0;
+    margin: 100px 0 0;
   }
 `;
 
@@ -70,46 +70,6 @@ const StoryItem = styled.div`
   border-radius: 8px;
   position: relative;
   overflow: hidden;
-  div {
-    width: 100%;
-    height: 70%;
-    background-color: var(--color-light-gray-01);
-    position: relative;
-    svg {
-      color: var(--color-gray-01);
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 160px;
-    }
-  }
-  span {
-    border: 5px solid #fff;
-    position: absolute;
-    background-color: var(--color-facebookblue);
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    left: 50%;
-    top: 61%;
-    transform: translateX(-50%);
-    svg {
-      font-size: 30px;
-      color: #fff;
-    }
-    cursor: pointer; /* 커서 포인터로 변경 */
-  }
-  h2 {
-    ${SubDescription_16_n}
-    display: flex;
-    justify-content: center;
-    line-height: 8;
-    color: ${(props) => props.theme.textColor};
-  }
   @media screen and (max-width: 768px) {
     height: 200px;
     div {
@@ -124,9 +84,6 @@ const StoryItem = styled.div`
       svg {
         font-size: 16px;
       }
-    }
-    h2 {
-      line-height: 5;
     }
   }
 `;
@@ -211,14 +168,14 @@ const NextBtn = styled.span`
   align-items: center;
   position: absolute;
   top: 50%;
-  right: 10px;
+  right: -30px;
   transform: translateY(-50%);
   font-size: 40px;
   color: #fff;
+  cursor: pointer;
+  opacity: 0.9;
   transition: all 0.3s;
   scale: 0.8;
-  cursor: pointer;
-  opacity: 0.4;
   svg {
     margin-left: 5px;
   }
@@ -251,14 +208,14 @@ const PrevBtn = styled.span`
   z-index: 1;
   position: absolute;
   top: 50%;
-  left: 10px;
+  left: -30px;
   transform: translateY(-50%);
   font-size: 40px;
   color: #fff;
+  cursor: pointer;
+  opacity: 0.9;
   transition: all 0.3s;
   scale: 0.8;
-  cursor: pointer;
-  opacity: 0.4;
   svg {
     margin-left: 3px;
   }
@@ -279,6 +236,72 @@ const PrevArrow = ({ onClick, currentSlide }) => {
     </PrevBtn>
   );
 };
+
+const StoryProfileImg = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .storyTextBox {
+    position: absolute;
+    width: 100%;
+    height: 80px;
+    bottom: 0;
+    background: #fff;
+    span:first-child {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 55px;
+      height: 55px;
+      border: 5px solid #fff;
+      background-color: var(--color-facebookblue);
+      border-radius: 50%;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%);
+      svg {
+        font-size: 30px;
+        color: #fff;
+      }
+      cursor: pointer;
+    }
+    span:last-child {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 55px;
+      border-radius: 50%;
+      left: 50%;
+      bottom: 26px;
+      transform: translateX(-50%);
+      ${SubDescription_16_n}
+      color: ${(props) => props.theme.textColor};
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .storyTextBox {
+      span:first-child {
+        border: 3px solid #fff;
+        width: 34px;
+        height: 34px;
+        svg {
+          font-size: 16px;
+        }
+      }
+      span:last-child {
+      }
+    }
+  }
+`;
 
 const MainStory = () => {
   const [currentSlide, setCurrentSlide] = useState(0); // 현재 슬라이드 상태
@@ -359,19 +382,25 @@ const MainStory = () => {
     ],
   };
 
+  console.log(currentUserData);
   return (
     <Wrapper>
       <Inner>
         <Items>
           <Slider className="slider" {...settings}>
             <StoryItem>
-              <div>
-                <FaUser />
-              </div>
-              <span onClick={openModal}>
-                <FaPlus />
-              </span>
-              <h2>스토리 만들기</h2>
+              <StoryProfileImg>
+                <div className="storyTextBox" onClick={openModal}>
+                  <span>
+                    <FaPlus />
+                  </span>
+                  <span>스토리 만들기</span>
+                </div>
+                <img
+                  src={currentUserData.profileImage || defaultProfile}
+                  alt="Profile"
+                />
+              </StoryProfileImg>
             </StoryItem>
             {storys.map((story) => (
               <StoryFriend key={story.id}>

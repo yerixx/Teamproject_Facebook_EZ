@@ -46,9 +46,20 @@ const Comment = ({ comment, onDelete, showDelete }) => {
   );
 };
 
-const Wrapper = styled.div`
+const CommentList = styled.div`
   height: 100%;
+  max-height: 300px;
+  overflow-y: scroll;
   padding: 20px 0;
+  @media (max-width: 768px) {
+    padding: 0;
+    max-height: 200px;
+  }
+`;
+
+const CommentTitle = styled.div`
+  font-weight: 600;
+  padding: 10px 20px;
 `;
 
 const CommentSection = ({ post }) => {
@@ -119,16 +130,18 @@ const CommentSection = ({ post }) => {
   );
 
   return (
-    <Wrapper>
-      <h4>댓글</h4>
-      {sortedPosts.map((comment) => (
-        <Comment
-          key={comment.id}
-          comment={comment}
-          onDelete={() => handleDeleteComment(comment.id)}
-          showDelete={comment.userId === currentUserData?.userId}
-        />
-      ))}
+    <>
+      <CommentTitle>댓글</CommentTitle>
+      <CommentList>
+        {sortedPosts.map((comment) => (
+          <Comment
+            key={comment.id}
+            comment={comment}
+            onDelete={() => handleDeleteComment(comment.id)}
+            showDelete={comment.userId === currentUserData?.userId}
+          />
+        ))}
+      </CommentList>
       <CommentUpload
         postId={post.id}
         onCreateComment={(content) => {
@@ -139,7 +152,7 @@ const CommentSection = ({ post }) => {
           handleCreateComment(post.id, content);
         }}
       />
-    </Wrapper>
+    </>
   );
 };
 

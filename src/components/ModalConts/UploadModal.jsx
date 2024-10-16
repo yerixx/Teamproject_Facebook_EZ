@@ -23,6 +23,7 @@ const Wrapper = styled.div`
   align-items: center;
   z-index: 1000;
 `;
+
 const Inner = styled.div`
   width: 820px;
   padding: 30px 20px 50px;
@@ -94,11 +95,24 @@ const Posting = styled.div`
   }
 `;
 const PostingImg = styled.div`
+  position: relative;
   width: 100%;
   height: 360px;
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
+  .deletIcon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 5px 8px 4px;
+    color: #fff;
+    font-size: 20px;
+
+    cursor: pointer;
+  }
   img {
     width: 100%;
     object-fit: cover;
@@ -157,7 +171,6 @@ const InfoItem = styled.div`
     cursor: pointer;
     transition: all 0.3s;
     &:hover {
-      padding: 4px 10px;
       border-radius: 50%;
       color: var(--color-facebookblue);
     }
@@ -176,6 +189,7 @@ const UploadModal = ({
   const [isLoading, setIsLoading] = useState(false);
   const [uploadText, setUploadText] = useState("");
   const [uploadFile, setUploadFile] = useState(null);
+  const [closeImg, setCloseImg] = useState(true);
   useEffect(() => {
     if (isEditing) {
       setUploadText(contentDesc || "");
@@ -205,7 +219,7 @@ const UploadModal = ({
     try {
       if (isEditing) {
         await onUpdatePost(postId, {
-          content: uploadText || contentDesc,
+          content: uploadText || contentDesc || "",
           image: imageUrl || null,
           updatedAt: new Date().toISOString(),
         });
@@ -214,8 +228,8 @@ const UploadModal = ({
         await onCreatePost({
           userId: "testUserId", // 여기에 실제 사용자 ID를 사용
           userName: "TestUser", // 여기에 실제 사용자 이름을 사용
-          content: uploadText,
-          image: imageUrl,
+          content: uploadText || "",
+          image: imageUrl || null,
           createdAt: new Date().toISOString(),
         });
         alert("게시물이 성공적으로 업로드되었습니다.");
@@ -255,6 +269,9 @@ const UploadModal = ({
     }
   };
 
+  const closeImgOpen = () => {
+    setCloseImg(false);
+  };
   return (
     <Wrapper>
       <Inner>
@@ -271,7 +288,7 @@ const UploadModal = ({
             <div className="info">
               <img
                 className="profileImg"
-                src={currentUserData.fileImage || defaultProfile}
+                src={currentUserData.profileImage || defaultProfile}
                 alt="profile Image"
               ></img>
               <div className="profilename">
@@ -290,12 +307,18 @@ const UploadModal = ({
             required
           />
           {(uploadFile || imageSrc) && (
-            <PostingImg>
-              <img
-                src={uploadFile ? URL.createObjectURL(uploadFile) : imageSrc}
-                alt="게시물 이미지"
-              />
-            </PostingImg>
+            <>
+              {!closeImg ? (
+                ""
+              ) : (
+                <PostingImg>
+                  <div className="deletIcon" onClick={closeImgOpen}>
+                    <FiX />
+                  </div>
+                  <img src={uploadFile ? "" : imageSrc} alt="Post Image" />
+                </PostingImg>
+              )}
+            </>
           )}
           <input
             id="upload-image"
