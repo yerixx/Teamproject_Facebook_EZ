@@ -1,69 +1,58 @@
 {
-  "stories": [
-    {
-      "id": "1",
-      "userId": "1",
-      "image": "path/to/story1.jpg",
-      "userImg": "path/to/story1.jpg",
-      "text": "김정하"
-    }
-  ],
-  "groups": [
+  "category": [
     {
       "id": "1",
       "name": "참여하는 세계여행",
-      "description": "참여하는 여행 그룹입니다.",
-      "image": "path/to/group1.jpg",
-      "members": 42150
+      "image": "/../img/category/7.jpg",
+      "members": "2.4천"
     },
     {
       "id": "2",
       "name": "반려동물",
-      "description": "반려동물 애호가들의 모임.",
-      "image": "path/to/group2.jpg",
-      "members": 32240
+      "image": "/../img/category/5.jpg",
+      "members": "2.4천"
     },
     {
       "id": "3",
       "name": "해외축구 모음집!",
-      "image": "path/to/group3.jpg",
-      "members": 15450
+      "image": "/../img/category/3.jpg",
+      "members": "5.8천"
     },
     {
       "id": "4",
       "name": "사진을 좋아하는 사람들",
-      "image": "path/to/group4.jpg",
-      "members": 15450
+      "image": "/../img/category/6.jpg",
+      "members": "2.4천"
     },
     {
       "id": "5",
       "name": "자연은 아름답다",
-      "image": "path/to/group5.jpg",
-      "members": 15450
+      "image": "/../img/category/9.jpg",
+      "members": "1.2천"
     },
     {
       "id": "6",
       "name": "쉽게하는 쿠킹클래스",
-      "image": "path/to/group6.jpg",
-      "members": 15450
+      "image": "/../img/category/8.jpg",
+      "members": "4.4천"
     },
     {
       "id": "7",
       "name": "예능.ZIF",
-      "image": "path/to/group7.jpg",
-      "members": 15450
+      "image": "/../img/category/2.jpg",
+      "members": "5.6천"
     },
     {
       "id": "8",
       "name": "영화를 사랑하는 모음",
-      "image": "path/to/group8.jpg",
-      "members": 15450
+      "image": "/../img/category/1.jpg",
+      "members": "3.2천"
     },
     {
       "id": "9",
       "name": "전국 맛집 어디어디 있을까",
-      "image": "path/to/group9.jpg",
-      "members": 15450
+      "image": "/../img/category/4.jpg",
+      "members": "6.4천"
     }
   ],
   "liveCommerce": [

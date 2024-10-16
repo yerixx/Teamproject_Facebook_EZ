@@ -27,7 +27,6 @@ const Inner = styled.div`
   height: fit-content;
   margin: 0 auto;
   border-radius: 30px 30px 0 0;
-
   box-shadow: var(--box-shadow-01);
   @media (max-width: 768px) {
     max-width: 100%;
@@ -72,8 +71,37 @@ const ContChangeBtn = styled(motion.div)`
 `;
 
 const UploadInner = styled.div`
-  padding: 30px;
+  margin: 40px auto;
+  width: 820px;
+  background-color: ${(props) => props.theme.ContainColor};
+  box-shadow: var(--box-shadow-01);
+  padding: 10px 0px;
+  border-radius: var(--border-radius-30);
+  @media (max-width: 768px) {
+    width: 90vw;
+    height: 80px;
+    margin: 80px auto 20px;
+  }
 `;
+// const UploadInner = styled.div`
+//   padding: 30px;
+//   background-color: ${(props) => props.theme.ContainColor};
+//   box-shadow: var(--box-shadow-01);
+//   border-radius: var(--border-radius-30);
+//   z-index: 4;
+//   @media (max-width: 768px) {
+//     padding-bottom: 0px;
+//     margin-bottom: -40px;
+//   }
+// `;
+
+// const UploadInner = styled.div`
+
+//   @media (max-width: 768px) {
+//     width: 90vw;
+//     height: 80px;
+//   }
+// `;
 
 const Mypage = () => {
   const [id, setId] = useState(0);

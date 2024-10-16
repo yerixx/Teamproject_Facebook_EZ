@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import letterLogoImg from "../img/HeaderLogo.svg";
-import circleLogoImg from "../img/Logo.svg";
+import { useNavigate } from "react-router-dom";
+
 import AccountLogin from "../components/login/AccountLogin";
 import OtherLogin from "../components/login/OtherLogin";
 import LoginForm from "../components/login/LoginForm";
@@ -12,7 +12,17 @@ import {
   Logo,
   FormContainer,
 } from "../components/login/login-components";
-import { useNavigate } from "react-router-dom";
+
+import styled from "styled-components";
+
+import letterLogoImg from "/img/HeaderLogo.svg";
+import circleLogoImg from "/img/Logo.svg";
+
+const DividingLine = styled.div`
+  width: 1px;
+  height: 430px;
+  background: var(--color-gray-02);
+`;
 
 const Login = () => {
   const navigate = useNavigate();
@@ -61,6 +71,7 @@ const Login = () => {
           ) : (
             <>
               <AccountLogin />
+              <DividingLine />
               <OtherLogin />
             </>
           )}

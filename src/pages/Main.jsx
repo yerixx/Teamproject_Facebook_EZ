@@ -87,10 +87,8 @@ const Main = ({ placeholder }) => {
       <HeaderBottom onSearch={(term) => setSearchTerm(term)} />
       <MainSection>
         {isSearching ? (
-          // 검색 중일 때 Mainpage만 보여줌
           <Mainpage searchTerm={searchTerm} />
         ) : (
-          // 검색어가 없을 때 전체 섹션 표시
           <>
             <Mainstory />
             <PostUploadField style={{ padding: "10px 0" }}>

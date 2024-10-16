@@ -1,12 +1,14 @@
 import styled from "styled-components";
-import checkImg from "../../img/check.svg";
-import calendarImg from "../../img/calendar-icon.svg";
+
 import {
   MainTitle_24_m,
   Paragraph_20_n,
   SubDescription_16_n,
   MainTitle_18_b,
 } from "../../styles/GlobalStyles.styles";
+
+import checkImg from "/img/check.svg";
+import calendarImg from "/img/calendar-icon.svg";
 
 // Common
 export const Logo = styled.div`

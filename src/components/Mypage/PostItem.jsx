@@ -43,7 +43,7 @@ const Inner = styled.article`
   align-content: space-between;
   @media (max-width: 768px) {
     max-width: 90%;
-    padding: 0 20px;
+    padding: 0;
   }
 `;
 const Profile = styled.div`
@@ -51,7 +51,7 @@ const Profile = styled.div`
   justify-content: space-between;
   @media (max-width: 768px) {
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 `;
 const ProfileContent = styled.div`
@@ -67,6 +67,10 @@ const ProfileContent = styled.div`
     height: 60px;
     object-fit: cover;
     border-radius: 100px;
+    @media (max-width: 768px) {
+      width: 48px;
+      height: 48px;
+    }
   }
   .profileName {
     ${MainTitle_22_b}
@@ -127,13 +131,13 @@ const Contents = styled.div`
   .contentDesc {
     ${SubDescription_16_n};
     color: ${(props) => props.theme.textColor};
-
     font-weight: normal;
     word-break: break-all;
     min-height: 50px;
     @media (max-width: 768px) {
       ${SubDescription_14_n}
       padding:0 4px;
+      min-height: 30px;
     }
   }
   .contentImgs {
@@ -176,9 +180,10 @@ const ContImg = styled.img`
   object-fit: cover;
   cursor: pointer;
   @media (max-width: 768px) {
-    padding: 0;
     max-width: 100%;
     height: 200px;
+    margin-bottom: 0px;
+    padding: 0;
   }
 `;
 

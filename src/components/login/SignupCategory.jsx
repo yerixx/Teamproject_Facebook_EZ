@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+
+import { FormTitle, FormDesc, Pager, Button } from "./login-components";
+
 import styled from "styled-components";
-import { FormTitle, FormDesc, Pager, Button, Input } from "./login-components";
-import categoryImg01 from "../../img/signup-category01.jpg";
-import categoryImg02 from "../../img/signup-category02.jpg";
-import categoryImg03 from "../../img/signup-category03.jpg";
-import categoryImg04 from "../../img/signup-category04.jpg";
-import categoryImg05 from "../../img/signup-category05.jpg";
-import categoryImg06 from "../../img/signup-category06.jpg";
-import categoryImg07 from "../../img/signup-category07.jpg";
-import categoryImg08 from "../../img/signup-category08.jpg";
-import categoryImg09 from "../../img/signup-category09.jpg";
-import checkImg from "../../img/check-white.svg";
-import { useNavigate, useSearchParams } from "react-router-dom";
+
+import categoryImg01 from "/img/signup-category01.jpg";
+import categoryImg02 from "/img/signup-category02.jpg";
+import categoryImg03 from "/img/signup-category03.jpg";
+import categoryImg04 from "/img/signup-category04.jpg";
+import categoryImg05 from "/img/signup-category05.jpg";
+import categoryImg06 from "/img/signup-category06.jpg";
+import categoryImg07 from "/img/signup-category07.jpg";
+import categoryImg08 from "/img/signup-category08.jpg";
+import categoryImg09 from "/img/signup-category09.jpg";
+import checkImg from "/img/check-white.svg";
 
 const Wrapper = styled.div`
   height: 680px;
