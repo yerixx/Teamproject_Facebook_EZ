@@ -2,20 +2,25 @@ import React, { useState } from "react";
 import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import {
-  Form,
-  InputWrapperColumn,
-  Input,
-  FormTitle,
-  FormItemDesc,
-} from "./login-components";
+import { Form, InputWrapperColumn, Input, FormTitle } from "./login-components";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { sendPasswordResetEmail } from "firebase/auth";
+import { SubDescription_16_n } from "../../styles/GlobalStyles.styles";
 
 const Error = styled.p`
   text-align: center;
   color: var(--color-error);
-  font-weight: 600;
+  font-weight: 500;
+`;
+const FindAccount = styled.div`
+  padding-bottom: 10px;
+  text-align: center;
+  ${SubDescription_16_n}
+  color: var(--color-gray-01);
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const LoginForm = ({ mobileSize }) => {
@@ -131,14 +136,11 @@ const LoginForm = ({ mobileSize }) => {
           value={password}
         />
       </InputWrapperColumn>
-      <FormItemDesc
-        style={{ textAlign: "center", cursor: "pointer" }}
-        onClick={handlePasswordReset}
-      >
-        아이디, 비밀번호를 잊으셨나요?
-      </FormItemDesc>
       <Input name="submit" type="submit" required width={430} value="로그인" />
       {error !== "" ? <Error>{error}</Error> : null}
+      <FindAccount onClick={handlePasswordReset}>
+        아이디, 비밀번호를 잊으셨나요?
+      </FindAccount>
     </Form>
   );
 };
