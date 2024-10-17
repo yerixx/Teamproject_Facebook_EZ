@@ -400,7 +400,6 @@ const MainStory = () => {
     ],
   };
 
-  console.log(currentUserData);
   return (
     <Wrapper>
       <Inner>

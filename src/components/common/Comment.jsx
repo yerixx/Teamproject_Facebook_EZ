@@ -12,6 +12,22 @@ import "./Comment.css";
 import { DataStateContext } from "../../App";
 import { styled } from "styled-components";
 
+const LikeButton = styled.div`
+  margin-left: 10px;
+  font-size: 10px;
+  padding: 5px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.3s;
+  color: ${(props) => props.theme.iconColorB};
+  @media (max-width: 768px) {
+    padding: 0px 5px 3px;
+    font-size: 12px;
+  }
+`;
+
 // 개별 댓글 컴포넌트
 const Comment = ({ comment, onDelete }) => {
   const { users } = useContext(DataStateContext);
@@ -32,7 +48,6 @@ const Comment = ({ comment, onDelete }) => {
   }, [comment.id]);
 
   const authorDats = users?.find((user) => user.userId === comment.userId);
-  console.log(authorDats);
 
   const handleToggleLike = () => {
     setLiked((prev) => {
@@ -61,9 +76,12 @@ const Comment = ({ comment, onDelete }) => {
           <p>{comment.content}</p>
         </div>
         <div className="actions">
-          <button className={liked ? "liked" : ""} onClick={handleToggleLike}>
+          <LikeButton
+            className={liked ? "liked" : ""}
+            onClick={handleToggleLike}
+          >
             {liked ? "좋아요 취소" : "좋아요"} {likes}
-          </button>
+          </LikeButton>
           <button className="deleteBtn" onClick={onDelete}>
             삭제
           </button>
@@ -78,7 +96,7 @@ const Wrapper = styled.div`
   padding: 30px 0;
   border-top: 1px solid #ccc;
   @media (max-width: 768px) {
-    padding: 30px 0 10px;
+    padding: 10px 0 10px;
   }
 `;
 

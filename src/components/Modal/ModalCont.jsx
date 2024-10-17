@@ -214,7 +214,8 @@ const SocialIcon = styled.div`
     scrollbar-width: none;
     bottom: 0;
     font-size: 12px;
-    background-color: #fff;
+    padding-bottom: 10px;
+    background-color: ${(props) => props.theme.ContainColor};
     border-radius: 8px 8px 0 0;
   }
 `;

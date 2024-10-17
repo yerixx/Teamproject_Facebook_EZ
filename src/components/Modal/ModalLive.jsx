@@ -59,11 +59,10 @@ const CloseIconmb = styled.div`
   @media screen and (max-width: 768px) {
     display: flex;
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 34px;
+    right: 24px;
     font-size: 25px;
     color: var(--color-white);
-    background: rgb(0, 0, 0, 0.5);
     border-radius: 50%;
     padding: 7px;
     cursor: pointer;
@@ -190,6 +189,7 @@ const CommenstMb = styled.div`
   height: 100px;
   @media screen and (max-width: 768px) {
     width: 390px;
+    height: 190px;
     position: absolute;
     bottom: 69px;
     display: flex;
@@ -197,7 +197,6 @@ const CommenstMb = styled.div`
     gap: 10px;
     background-color: rgba(0, 0, 0, 0.6);
     overflow: hidden;
-    height: 100px;
   }
 `;
 
@@ -322,6 +321,7 @@ const LivePoint = styled.div`
   .pointDS {
     text-align: end;
     width: 290px;
+    margin-right: 10px;
     color: var(--color-white);
   }
 
@@ -330,8 +330,8 @@ const LivePoint = styled.div`
     height: 70px;
     padding: 0 20px;
     .point {
-      width: 100px;
-      height: 26px;
+      width: 140px;
+      height: 30px;
       font-size: 12px;
     }
     .pointDS {
@@ -612,7 +612,6 @@ const CommentCont = styled.div`
 const CommenstMb2 = styled.div`
   display: flex;
   flex-direction: column;
-  border: 1px solid #f00;
 `;
 
 const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {
