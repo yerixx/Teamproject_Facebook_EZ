@@ -41,36 +41,7 @@ const LoginForm = ({ mobileSize }) => {
     if (name === "email") setEmailTel(value);
     if (name === "password") setPassword(value);
   };
-  // const onSubmit = async (e) => {
-  //   e.preventDefault();
 
-  //   if (isLoading || email === "" || password === "") return;
-
-  //   try {
-  //     setIsLoading(true);
-
-  //     await signInWithEmailAndPassword(auth, email, password);
-
-  //     navigate("/");
-  //   } catch (e) {
-  //     console.log(e);
-  //     setIsLoading(true);
-  //     if (e) {
-  //       let errorCode;
-  //       switch (e.message) {
-  //         case "Firebase: Error (auth/invalid-credential).":
-  //           errorCode = "유효하지 않은 계정입니다.";
-  //           break;
-  //       }
-  //       setError(errorCode);
-  //     }
-  //     // if (e) {
-  //     //   setError(e.message);
-  //     // }
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
   const handlePasswordReset = async (email) => {
     try {
       await sendPasswordResetEmail(auth, email);

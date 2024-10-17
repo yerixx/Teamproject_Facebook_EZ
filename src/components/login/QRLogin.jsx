@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FormTitle, FormDesc } from "./login-components";
-import QRimg from "/img/QRLogin.png";
+import QRimg from "/img/FacebookQr.png";
 
 const Wrapper = styled.div`
   width: 100%;

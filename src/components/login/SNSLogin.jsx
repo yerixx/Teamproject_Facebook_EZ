@@ -58,14 +58,20 @@ const SNSLogin = () => {
     <Wrapper>
       <FormDesc>다른 방법으로 로그인</FormDesc>
       <ul>
-        <li onClick={onClick}>
-          <img src={githubIcon} />
+        <li>
+          <a href="https://github.com/login">
+            <img src={githubIcon} />
+          </a>
         </li>
         <li>
-          <img src={googleIcon} />
+          <a href="https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fwww.google.co.kr%2F%3Fclient%3Dsafari%26channel%3Diphone_bm&ec=GAZAmgQ&hl=ko&ifkv=ARpgrqcJqAo9GBBw8riYeYl4aoXateqwAIPtZdHf5SXGbIqnGtmep8VNYlB83G1ZjfmE2jNMW3X5-g&passive=true&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S1209034674%3A1729184524753367&ddm=0">
+            <img src={googleIcon} />
+          </a>
         </li>
         <li>
-          <img src={appleIcon} />
+          <a href="https://account.apple.com/sign-in">
+            <img src={appleIcon} />
+          </a>
         </li>
       </ul>
     </Wrapper>
