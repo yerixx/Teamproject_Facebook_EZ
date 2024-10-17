@@ -36,7 +36,12 @@ const Title = styled.div`
   display: flex;
   justify-content: space-between;
   span {
+    font-size: 20px;
     cursor: pointer;
+    transition: all 0.3s;
+    &:hover {
+      opacity: 0.5;
+    }
   }
 `;
 
@@ -97,6 +102,7 @@ const RecentProductItem = styled.div`
     background-color: var(--color-white);
     border-radius: 50%;
     align-items: center;
+    cursor: pointer;
     svg {
       font-size: 30px;
     }
@@ -207,7 +213,10 @@ const SideBarWallet = ({ onClick, closeModal }) => {
                   <span>{product.discountPrice}</span>
                 </div>
               </ProductItemInfo>
-              <div className="icon">
+              <div
+                className="icon"
+                onClick={() => alert("서비스 준비중 입니다.")}
+              >
                 <MdOutlineShoppingBag />
               </div>
             </RecentProductItem>

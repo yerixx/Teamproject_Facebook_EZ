@@ -88,12 +88,14 @@ const Left = styled.div`
       width: 254px;
       height: 48px;
       border-radius: 140px;
-      border: 1px solid ${(props) => props.theme.borderColor};
+      border: none;
+      color: ${(props) => props.theme.iconColorB};
       background-color: ${(props) => props.theme.inputColor};
       padding-left: 50px;
       font-size: 16px;
       &::placeholder {
         transition: all 0.3s;
+        color: ${(props) => props.theme.placeholderColor};
       }
       &:focus {
         outline: none;

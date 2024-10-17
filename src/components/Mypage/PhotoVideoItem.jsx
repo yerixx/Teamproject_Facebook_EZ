@@ -14,7 +14,7 @@ const Inner = styled.article`
   width: 230px;
   height: 310px;
   cursor: pointer;
-  border: 1px solid var(--color-light-gray-02);
+  border: 1px solid ${(props) => props.theme.albumBorder};
   border-radius: var(--border-radius-08);
   @media (max-width: 768px) {
     display: flex;
@@ -25,7 +25,7 @@ const Inner = styled.article`
 `;
 const Contents = styled.div`
   width: 100%;
-  border: 1px solid var(--color-light-gray-02);
+  border: 1px solid ${(props) => props.theme.albumBorder};
   border-radius: var(--border-radius-08);
   box-shadow: var(--box-shadow-01);
   @media (max-width: 768px) {
@@ -58,6 +58,7 @@ const ContText = styled.div`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: ${(props) => props.theme.iconColorB};
     @media (max-width: 768px) {
       ${SubDescription_12_m}
       width:160px;

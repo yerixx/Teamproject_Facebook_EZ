@@ -8,6 +8,7 @@ export const darkTheme = {
   subTextColor: "#C9D1D9",
   inputTextColor: "#C9D1D9",
   borderColor: "#fff",
+  placeholderColor: "#fff",
   inputColor: "#161B22",
   iconColor: "#C9D1D9",
   iconColorB: "#fff",
@@ -15,6 +16,9 @@ export const darkTheme = {
   cardBtnColorB: "#C9D1D9",
   btnTextColor: "#0D1117",
   modalBgColor: "#000",
+  storyBox: "rgba(0, 0, 0, 0.5)",
+  storyBorder: "rgba(0, 0, 0, 0.2)",
+  albumBorder: "rgba(255, 255, 255, 0.1)",
   boxShadow: "rgba(0, 0, 0, 0.8)",
 };
 export const lightTheme = {
@@ -27,6 +31,7 @@ export const lightTheme = {
   subTextColor: "var(--color-gray-01)",
   inputTextColor: "#fff",
   borderColor: "#fff",
+  placeholderColor: "var(--color-gray-01)",
   inputColor: "#ddd",
   iconColor: "#000",
   iconColorB: "#000",
@@ -34,5 +39,8 @@ export const lightTheme = {
   cardBtnColorB: "var(--color-light-gray-01)",
   btnTextColor: "#0D1117",
   modalBgColor: "rgba(0, 0, 0, 0.9)",
+  storyBox: "var(--color-white)",
+  storyBorder: "var(--color-white)",
+  albumBorder: "var(--color-light-gray-02)",
   boxShadow: "rgba(182, 182, 182, 0.8)",
 };

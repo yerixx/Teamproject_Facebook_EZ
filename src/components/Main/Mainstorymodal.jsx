@@ -169,7 +169,7 @@ const Inner = styled.div`
 
     button {
       background: ${(props) =>
-        props.disabled || (!props.hasImage && !props.hasVideo)
+        props.disabled || (!props.$hasImage && !props.$hasVideo)
           ? "#ccc"
           : "var(--color-facebookblue)"};
       width: 100%;
@@ -183,10 +183,9 @@ const Inner = styled.div`
       align-items: center;
       justify-content: center;
       cursor: ${(props) =>
-        props.disabled || (!props.hasImage && !props.hasVideo)
+        props.disabled || (!props.$hasImage && !props.$hasVideo)
           ? "not-allowed"
           : "pointer"};
-
       @media screen and (max-width: 768px) {
         ${SubDescription_16_n}
       }
@@ -318,6 +317,7 @@ const Mainstorymodal = ({ onClose }) => {
                 <video autoPlay muted loop controls>
                   <source
                     src={URL.createObjectURL(storyVideo)} // 선택한 비디오 미리보기
+                    alt={"스토리 비디오"}
                     type={storyVideo.type}
                   />
                   지원되지 않는 비디오 형식입니다.

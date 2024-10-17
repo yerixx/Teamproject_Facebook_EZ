@@ -209,6 +209,9 @@ const PostingImg = styled.div`
   justify-content: center;
   margin-bottom: 10px;
   position: relative;
+  @media (max-width: 768px) {
+    height: fit-content;
+  }
   .deletIcon {
     position: absolute;
     top: 10px;
@@ -225,6 +228,9 @@ const PostingImg = styled.div`
     width: 100%;
     object-fit: cover;
     border-radius: 8px;
+    @media (max-width: 768px) {
+      height: 200px;
+    }
   }
 `;
 const PostingBtn = styled.button`
@@ -235,11 +241,12 @@ const PostingBtn = styled.button`
   font-size: 18px;
   font-weight: bold;
   color: var(--color-white);
-  background: var(--color-facebookblue);
+  background: ${(props) =>
+    props.disabled ? "#ccc" : "var(--color-facebookblue)"};
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   transition: opacity 0.3s;
   &:hover {
     opacity: 0.8;
@@ -249,6 +256,7 @@ const PostingBtn = styled.button`
     height: 40px;
   }
 `;
+
 const InfoItem = styled.div`
   display: flex;
   justify-content: space-between;
@@ -464,7 +472,10 @@ const PostUpload = ({ placeholder }) => {
                 style={{ display: "none" }}
                 onChange={handleImageChange}
               />
-              <PostingBtn onClick={handleSubmit} disabled={isLoading}>
+              <PostingBtn
+                onClick={handleSubmit}
+                disabled={isLoading || (!uploadText && !uploadFile)}
+              >
                 {isLoading ? "게시 중..." : "게시하기"}
               </PostingBtn>
             </Posting>
