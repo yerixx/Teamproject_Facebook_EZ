@@ -77,7 +77,6 @@ const LeftSideBar = () => {
               <span>동영상 크리에이터</span> ・ <span>팔로워 10만명</span>
             </div>
           </GroupTitle>
-
           <span>팔로우</span>
         </GroupContents>
         <GroupContents>
@@ -88,7 +87,6 @@ const LeftSideBar = () => {
               <span>동영상 크리에이터</span> ・ <span>팔로워 6111만명</span>
             </div>
           </GroupTitle>
-
           <span>팔로우</span>
         </GroupContents>
         <GroupContents>
@@ -99,7 +97,6 @@ const LeftSideBar = () => {
               <span>동영상 크리에이터</span> ・ <span>팔로워 1만명</span>
             </div>
           </GroupTitle>
-
           <span>팔로우</span>
         </GroupContents>
       </Group>
@@ -135,7 +132,6 @@ const LeftSideBar = () => {
               <span>동영상 크리에이터</span> ・ <span>팔로워 1만명</span>
             </div>
           </GroupTitle>
-
           <span>팔로우</span>
         </GroupContents>
       </Group>
