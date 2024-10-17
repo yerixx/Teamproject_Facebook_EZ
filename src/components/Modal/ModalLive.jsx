@@ -11,7 +11,7 @@ import CountdownCircle from "../common/CountdownCircle";
 
 import fbIcon from "/img/fbIcon.svg";
 import liveIcon from "/img/liveIcon.svg";
-import LiveView from "/img/Live.jpg";
+import LiveView from "/img/live.jpg";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
