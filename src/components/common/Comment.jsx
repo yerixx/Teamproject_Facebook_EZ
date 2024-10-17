@@ -31,6 +31,7 @@ const LikeButton = styled.div`
 // 개별 댓글 컴포넌트
 const Comment = ({ comment, onDelete, currentUserId }) => {
   const { users } = useContext(DataStateContext);
+  const state = useContext(DataStateContext);
   const [likes, setLikes] = useState(0);
   const [liked, setLiked] = useState(false);
 
@@ -81,9 +82,13 @@ const Comment = ({ comment, onDelete, currentUserId }) => {
           >
             {liked ? "좋아요 취소" : "좋아요"} {likes}
           </LikeButton>
-          <button className="deleteBtn" onClick={onDelete}>
-            삭제
-          </button>
+          {comment.userId === currentUserId ? (
+            <button className="deleteBtn" onClick={onDelete}>
+              삭제
+            </button>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>
@@ -104,9 +109,8 @@ const CommentList = styled.div`
   flex-direction: column;
   align-items: start;
   max-height: ${(props) =>
-    props.isModal ? "100%" : "250px"}; // 모달일 때는 높이 제한을 없앰
-  height: ${(props) =>
-    props.isModal ? "100%" : "auto"}; // 모달일 때는 100%로 설정하여 전체 차지
+    props.$isModal ? "400px" : "250px"}; // 모달일 때는 높이 제한을 없앰
+  /* height: 400px; */
   overflow-y: auto;
   .profileImg {
     width: 45px;
@@ -127,7 +131,7 @@ const CommentSection = ({
   className,
   post,
   showCommentUpload = true,
-  isModal = false,
+  $isModal,
 }) => {
   const { currentUserData } = useContext(DataStateContext);
   const [comments, setComments] = useState([]);
@@ -185,7 +189,7 @@ const CommentSection = ({
 
   return (
     <Wrapper>
-      <CommentList className={className} isModal={isModal}>
+      <CommentList className={className} $isModal={$isModal}>
         {comments.map((comment) => (
           <Comment
             key={comment.id}

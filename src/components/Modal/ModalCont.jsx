@@ -180,10 +180,8 @@ const ModalDesc = styled.div`
     height: 100px;
     padding: 0;
     font-size: 14px;
-    overflow-y: scroll;
-    color: var(--color-white);
-    background: rgba(0, 0, 0, 0.5);
   }
+
   p {
     word-wrap: keep-all;
     padding-bottom: 15px;
@@ -205,7 +203,7 @@ const SocialIcon = styled.div`
     flex: 1;
   }
   .list {
-    height: 450px;
+    height: 600px;
     flex: 1;
   }
   .upload {
@@ -220,7 +218,7 @@ const SocialIcon = styled.div`
     //모바일 댓글
     position: absolute;
     width: 100%;
-    height: ${({ isCommentsOpen }) => (isCommentsOpen ? "200px" : "60px")};
+    height: ${({ $isCommentsOpen }) => ($isCommentsOpen ? "300px" : "60px")};
     overflow-y: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -235,7 +233,18 @@ const SocialIcon = styled.div`
 const StyledCommentSection = styled(CommentSection)`
   flex: 1;
   @media (max-width: 768px) {
-    max-height: 120px; // 모바일에서 최대 높이 조정
+    position: absolute;
+    bottom: 60px; /* SocialIcon 높이에 맞춰 조정 */
+    left: 0;
+    width: 100%;
+    max-height: 0;
+    /* overflow: hidden; */
+    transition: max-height 0.3s ease;
+    ${({ $isModal }) =>
+      $isModal &&
+      `
+      max-height: 200px;
+    `}
   }
 `;
 
@@ -258,6 +267,7 @@ const ModalCont = ({ post, closeModal }) => {
 
   const handleCommentToggle = () => {
     setShowComments((prev) => !prev);
+    console.log("showComments 상태:", showComments);
   };
 
   const formatDate = (isoString) => {
@@ -329,7 +339,7 @@ const ModalCont = ({ post, closeModal }) => {
           <ModalDesc>
             <p>{post.content}</p>
           </ModalDesc>
-          <SocialIcon isCommentsOpen={showComments}>
+          <SocialIcon>
             <SocialBtnIcon
               className="icon"
               post={post}
@@ -342,7 +352,7 @@ const ModalCont = ({ post, closeModal }) => {
                 className="list"
                 post={post}
                 showCommentUpload={false}
-                isModal={true}
+                $isModal={showComments}
               />
             )}
             <CommentUpload
@@ -379,9 +389,26 @@ const ModalCont = ({ post, closeModal }) => {
         <ModalDesc>
           <p>{post.content}</p>
         </ModalDesc>
-        <SocialIcon>
-          <SocialBtnIcon className="SocialBtnIcon" post={post} />
+        {/* 여기서 isCommentsOpen prop을 전달 */}
+        <SocialIcon $isCommentsOpen={showComments}>
+          <SocialBtnIcon
+            className="SocialBtnIcon"
+            post={post}
+            onCommentClick={handleCommentToggle} // 댓글 토글 핸들러 전달
+          />
         </SocialIcon>
+        {/* 모바일에서 댓글 리스트 렌더링 추가 */}
+        <StyledCommentSection
+          className="mobile-comment-section"
+          post={post}
+          showCommentUpload={false}
+          $isModal={showComments}
+        />
+        <CommentUpload
+          className="mobile-upload"
+          postId={post.id}
+          onCreateComment={(content) => handleCreateComment(post.id, content)}
+        />
       </Mobile>
     </Wrapper>
   );
