@@ -354,7 +354,7 @@ export const HeaderBottom = ({ onSearch }) => {
       navigate("/login");
     }
   };
-  console.log(currentUserData);
+  // console.log(currentUserData);
   if (loading) {
     return <div>Loading...</div>;
   }

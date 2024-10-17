@@ -25,7 +25,8 @@ const SocialIcon = styled.div`
   height: 4px;
   padding: 10px 20px;
   margin-bottom: 20px;
-  color: ${(props) => props.theme.textColor};
+  background-color: ${(props) => props.theme.ContainColor};
+  color: ${(props) => props.theme.iconColorB};
   & *:hover {
     color: var(--color-facebookblue) !important;
   }
@@ -34,6 +35,7 @@ const SocialIcon = styled.div`
     justify-content: space-between;
     align-items: center;
     font-size: 20px;
+    padding: 20px 20px 0px;
   }
   .socialIcon {
     ${SubDescription_16_n}

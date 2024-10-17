@@ -245,7 +245,6 @@ const PrevArrow = ({ onClick }) => {
 const MainGroup = () => {
   const { currentUserData, mockData } = useContext(DataStateContext);
   const [recommendedGroups, setRecommendedGroups] = useState([]);
-  console.log(mockData);
   useEffect(() => {
     if (currentUserData) {
       fetchGroups();

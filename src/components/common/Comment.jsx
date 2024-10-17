@@ -47,7 +47,6 @@ const Comment = ({ comment, onDelete, currentUserId }) => {
   }, [comment.id]);
 
   const authorDats = users?.find((user) => user.userId === comment.userId);
-  console.log(authorDats);
 
   const handleToggleLike = () => {
     setLiked((prev) => {
@@ -96,7 +95,7 @@ const Wrapper = styled.div`
   padding: 30px 0;
   border-top: 1px solid #ccc;
   @media (max-width: 768px) {
-    padding: 30px 0 10px;
+    padding: 10px 0 10px;
   }
 `;
 

@@ -217,21 +217,26 @@ const SocialIcon = styled.div`
     bottom: 0;
   }
   @media (max-width: 768px) {
+    //모바일 댓글
     position: absolute;
     width: 100%;
-    max-height: 300px;
+    height: ${({ isCommentsOpen }) => (isCommentsOpen ? "200px" : "60px")};
     overflow-y: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
     bottom: 0;
     font-size: 12px;
-    background-color: #fff;
+    padding-bottom: 10px;
+    background-color: ${(props) => props.theme.ContainColor};
     border-radius: 8px 8px 0 0;
   }
 `;
 
 const StyledCommentSection = styled(CommentSection)`
   flex: 1;
+  @media (max-width: 768px) {
+    max-height: 120px; // 모바일에서 최대 높이 조정
+  }
 `;
 
 const Mobile = styled.div`
@@ -324,7 +329,7 @@ const ModalCont = ({ post, closeModal }) => {
           <ModalDesc>
             <p>{post.content}</p>
           </ModalDesc>
-          <SocialIcon>
+          <SocialIcon isCommentsOpen={showComments}>
             <SocialBtnIcon
               className="icon"
               post={post}
