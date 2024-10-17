@@ -12,6 +12,22 @@ import "./Comment.css";
 import { DataStateContext } from "../../App";
 import { styled } from "styled-components";
 
+const LikeButton = styled.div`
+  margin-left: 10px;
+  font-size: 10px;
+  padding: 5px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.3s;
+  color: ${(props) => props.theme.iconColorB};
+  @media (max-width: 768px) {
+    padding: 0px 5px 3px;
+    font-size: 12px;
+  }
+`;
+
 // 개별 댓글 컴포넌트
 const Comment = ({ comment, onDelete, currentUserId }) => {
   const { users } = useContext(DataStateContext);
@@ -60,14 +76,15 @@ const Comment = ({ comment, onDelete, currentUserId }) => {
           <p>{comment.content}</p>
         </div>
         <div className="actions">
-          <button className={liked ? "liked" : ""} onClick={handleToggleLike}>
+          <LikeButton
+            className={liked ? "liked" : ""}
+            onClick={handleToggleLike}
+          >
             {liked ? "좋아요 취소" : "좋아요"} {likes}
+          </LikeButton>
+          <button className="deleteBtn" onClick={onDelete}>
+            삭제
           </button>
-          {comment.userId === currentUserId && (
-            <button className="deleteBtn" onClick={onDelete}>
-              삭제
-            </button>
-          )}
         </div>
       </div>
     </div>
