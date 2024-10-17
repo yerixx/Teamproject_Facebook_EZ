@@ -42,6 +42,7 @@ const SocialIcon = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
+    position: relative;
     .socialIconText {
       width: 80px;
       @media (max-width: 768px) {
@@ -61,8 +62,7 @@ const SocialIcon = styled.div`
   }
 `;
 
-const SocialBtnIcon = ({ post }) => {
-  const { onToggleLike } = useContext(DataDispatchContext);
+const SocialBtnIcon = ({ post, onCommentClick }) => {
   const { currentUserData } = useContext(DataStateContext);
   const [toggle, setToggle] = useState(false);
   const [like, setLike] = useState(false);
@@ -86,8 +86,6 @@ const SocialBtnIcon = ({ post }) => {
     }
   }, [post, currentUserData]);
 
-  const handleCommentToggle = () => setToggle((prev) => !prev);
-
   const handleLikeToggle = async () => {
     const postRef = doc(db, "posts", post.id);
     try {
@@ -95,12 +93,12 @@ const SocialBtnIcon = ({ post }) => {
         await updateDoc(postRef, {
           likes: arrayRemove(currentUserData.userId),
         });
-        setLikes((prev) => prev - 1); // 좋아요 수 감소
+        setLikes((prev) => prev - 1);
       } else {
         await updateDoc(postRef, {
           likes: arrayUnion(currentUserData.userId),
         });
-        setLikes((prev) => prev + 1); // 좋아요 수 증가
+        setLikes((prev) => prev + 1);
       }
       setLike((prev) => !prev);
     } catch (err) {
@@ -111,6 +109,14 @@ const SocialBtnIcon = ({ post }) => {
     e.stopPropagation();
     setShare((prev) => !prev);
   };
+  const handleCommentClick = () => {
+    if (onCommentClick) {
+      onCommentClick();
+    } else {
+      setToggle((prev) => !prev);
+    }
+  };
+
   const handleSaveToggle = async () => {
     const userRef = doc(db, "users", currentUserData.userId);
     try {
@@ -129,18 +135,7 @@ const SocialBtnIcon = ({ post }) => {
     }
   };
 
-  const handleCopyClipBoard = async (text) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      alert("클립보드에 링크가 복사되었어요.");
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  // post가 없을 때 안전하게 렌더링 처리
   if (!post) return null;
-
   return (
     <>
       <SocialIcon>
@@ -156,7 +151,7 @@ const SocialBtnIcon = ({ post }) => {
             {like ? "좋아요" : "좋아요"} {likes > 0 ? likes : ""}
           </div>
         </div>
-        <div onClick={handleCommentToggle} className="socialIcon">
+        <div onClick={handleCommentClick} className="socialIcon">
           <FaRegComment />
           <div className="socialIconText">댓글</div>
         </div>

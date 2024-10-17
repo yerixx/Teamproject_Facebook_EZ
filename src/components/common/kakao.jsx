@@ -16,8 +16,9 @@ const Wrapper = styled.div`
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   position: absolute;
-  bottom: -220px;
-  right: -110px;
+  top: 50px;
+  right: -100px;
+
   z-index: 30;
   & > svg {
     position: absolute;

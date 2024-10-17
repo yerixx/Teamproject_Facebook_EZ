@@ -13,9 +13,8 @@ import { DataStateContext } from "../../App";
 import { styled } from "styled-components";
 
 // 개별 댓글 컴포넌트
-const Comment = ({ comment, onDelete }) => {
+const Comment = ({ comment, onDelete, currentUserId }) => {
   const { users } = useContext(DataStateContext);
-
   const [likes, setLikes] = useState(0);
   const [liked, setLiked] = useState(false);
 
@@ -64,9 +63,11 @@ const Comment = ({ comment, onDelete }) => {
           <button className={liked ? "liked" : ""} onClick={handleToggleLike}>
             {liked ? "좋아요 취소" : "좋아요"} {likes}
           </button>
-          <button className="deleteBtn" onClick={onDelete}>
-            삭제
-          </button>
+          {comment.userId === currentUserId && (
+            <button className="deleteBtn" onClick={onDelete}>
+              삭제
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -86,7 +87,10 @@ const CommentList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
-  max-height: 250px;
+  max-height: ${(props) =>
+    props.isModal ? "100%" : "250px"}; // 모달일 때는 높이 제한을 없앰
+  height: ${(props) =>
+    props.isModal ? "100%" : "auto"}; // 모달일 때는 100%로 설정하여 전체 차지
   overflow-y: auto;
   .profileImg {
     width: 45px;
@@ -103,7 +107,12 @@ const CommentList = styled.div`
   }
 `;
 
-const CommentSection = ({ post }) => {
+const CommentSection = ({
+  className,
+  post,
+  showCommentUpload = true,
+  isModal = false,
+}) => {
   const { currentUserData } = useContext(DataStateContext);
   const [comments, setComments] = useState([]);
 
@@ -160,19 +169,22 @@ const CommentSection = ({ post }) => {
 
   return (
     <Wrapper>
-      <CommentList>
+      <CommentList className={className} isModal={isModal}>
         {comments.map((comment) => (
           <Comment
             key={comment.id}
             comment={comment}
+            currentUserId={currentUserData?.userId}
             onDelete={() => handleDeleteComment(comment.id)}
           />
         ))}
       </CommentList>
-      <CommentUpload
-        postId={post.id}
-        onCreateComment={(content) => handleCreateComment(post.id, content)}
-      />
+      {showCommentUpload && (
+        <CommentUpload
+          postId={post.id}
+          onCreateComment={(content) => handleCreateComment(post.id, content)}
+        />
+      )}
     </Wrapper>
   );
 };

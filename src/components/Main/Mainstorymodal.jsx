@@ -255,7 +255,8 @@ const Mainstorymodal = ({ onClose }) => {
         text: storyText,
         imageUrl,
         videoUrl,
-        name: currentUserData.userName, // 작성자 이름 추가
+        name: currentUserData.userName,
+        profileImg: currentUserData.profileImage,
         createdAt: Timestamp.fromDate(new Date()),
       });
 

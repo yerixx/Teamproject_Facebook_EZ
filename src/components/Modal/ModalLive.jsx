@@ -577,6 +577,7 @@ const CommentCont = styled.div`
       width: 45px;
       height: 45px;
       border-radius: 100px;
+      object-fit: cover;
     }
     .profileuploadText {
       width: 100%;
@@ -612,7 +613,6 @@ const CommentCont = styled.div`
 const CommenstMb2 = styled.div`
   display: flex;
   flex-direction: column;
-  border: 1px solid #f00;
 `;
 
 const ModalLive = ({ item, closeModal, postId, onCreateComment }) => {

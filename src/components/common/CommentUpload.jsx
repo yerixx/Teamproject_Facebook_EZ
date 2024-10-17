@@ -62,11 +62,10 @@ const CommentUpload = ({ postId, onCreateComment }) => {
   const [content, setContent] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Content to be submitted:", content); // 입력 값 확인
     if (!content.trim()) return; // 공백 방지
     try {
       setIsLoading(true);
-      await onCreateComment(content); // postId는 CommentSection에서 이미 처리됨
+      await onCreateComment(content); // postId는 상위 컴포넌트에서 처리됨
       setContent(""); // 입력창 초기화
     } catch (error) {
       console.error("댓글 업로드 실패:", error);

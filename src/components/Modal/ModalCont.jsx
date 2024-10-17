@@ -1,23 +1,19 @@
 import React, { useState, useContext } from "react";
-
 import { DataStateContext } from "../../App.jsx";
 import { styled } from "styled-components";
-
-import EditeBox from "../common/EditeBox.jsx";
+import { collection, addDoc } from "firebase/firestore";
 import SocialBtnIcon from "../common/SocialBtnIcon.jsx";
-
-import { BsThreeDots } from "react-icons/bs";
 import { IoCloseOutline } from "react-icons/io5";
 import { FaEarthAmericas } from "react-icons/fa6";
-
 import defaultProfile from "/img/defaultProfile.jpg";
-
 import {
   MainTitle_18_b,
   SubDescription_16_n,
   SubDescription_14_n,
 } from "../../styles/GlobalStyles.styles.js";
-
+import CommentSection from "../common/Comment.jsx";
+import CommentUpload from "../common/CommentUpload.jsx";
+import { db } from "../../firebase";
 const Wrapper = styled.div`
   position: fixed;
   top: 0;
@@ -54,9 +50,8 @@ const RightContent = styled.section`
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
-  height: 100%;
   margin: 0 auto;
   padding-top: 40px;
   gap: 20px;
@@ -201,10 +196,26 @@ const ModalDesc = styled.div`
 `;
 const SocialIcon = styled.div`
   width: 90%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   gap: 10px;
+  .icon {
+    flex: 1;
+  }
+  .list {
+    height: 450px;
+    flex: 1;
+  }
+  .upload {
+    flex: 1;
+    padding: 10px 0;
+    width: 100%;
+    background-color: ${(props) => props.theme.bgColor};
+    position: absolute;
+    bottom: 0;
+  }
   @media (max-width: 768px) {
     position: absolute;
     width: 100%;
@@ -219,6 +230,10 @@ const SocialIcon = styled.div`
   }
 `;
 
+const StyledCommentSection = styled(CommentSection)`
+  flex: 1;
+`;
+
 const Mobile = styled.div`
   display: none;
   @media (max-width: 768px) {
@@ -230,11 +245,16 @@ const Mobile = styled.div`
 
 const ModalCont = ({ post, closeModal }) => {
   const { currentUserData } = useContext(DataStateContext);
+  const [showComments, setShowComments] = useState(false);
 
-  const [closeBtn, setCloseBtn] = useState(false);
   const closeButton = () => {
     closeModal();
   };
+
+  const handleCommentToggle = () => {
+    setShowComments((prev) => !prev);
+  };
+
   const formatDate = (isoString) => {
     const date = new Date(isoString);
     const year = date.getFullYear();
@@ -243,8 +263,29 @@ const ModalCont = ({ post, closeModal }) => {
     return `${year}.${month}.${day}`;
   };
 
+  const handleCreateComment = async (postId, content) => {
+    if (!content.trim()) return;
+
+    const formattedUserName = currentUserData?.userName
+      ? `${currentUserData.userName.firstName}${currentUserData.userName.lastName}`
+      : "Anonymous";
+
+    const newComment = {
+      content,
+      formattedUserName,
+      userId: currentUserData?.userId || "guest",
+      createdAt: new Date().toISOString(),
+    };
+
+    try {
+      await addDoc(collection(db, `posts/${postId}/comments`), newComment);
+    } catch (error) {
+      console.error("댓글 생성 중 오류 발생:", error);
+    }
+  };
+
   return (
-    <Wrapper style={{ display: closeBtn ? "none" : "block" }}>
+    <Wrapper>
       {/* Desktop */}
       <DeskTop>
         <LeftContent>
@@ -263,14 +304,11 @@ const ModalCont = ({ post, closeModal }) => {
           <ModalProfileImg>
             <img
               className="profileImg"
-              src={currentUserData.fileImage || defaultProfile}
+              src={post.profileImage || defaultProfile}
               alt="profile Image"
             />
             <ModalProfileSelf>
-              <div className="profileName">
-                {currentUserData.userName.firstName}
-                {currentUserData.userName.lastName}
-              </div>
+              <div className="profileName">{post.userName}</div>
               <div className="profiledesc">
                 {formatDate(post.createdAt)}
                 <FaEarthAmericas
@@ -287,7 +325,28 @@ const ModalCont = ({ post, closeModal }) => {
             <p>{post.content}</p>
           </ModalDesc>
           <SocialIcon>
-            <SocialBtnIcon post={post} />
+            <SocialBtnIcon
+              className="icon"
+              post={post}
+              onCommentClick={handleCommentToggle}
+            />
+            {/* 댓글 작성 부분은 항상 표시 */}
+            {/* 댓글 목록은 showComments 상태에 따라 표시 */}
+            {showComments && (
+              <StyledCommentSection
+                className="list"
+                post={post}
+                showCommentUpload={false}
+                isModal={true}
+              />
+            )}
+            <CommentUpload
+              className="upload"
+              postId={post.id}
+              onCreateComment={(content) =>
+                handleCreateComment(post.id, content)
+              }
+            />
           </SocialIcon>
         </RightContent>
       </DeskTop>
@@ -301,14 +360,11 @@ const ModalCont = ({ post, closeModal }) => {
         <ModalProfileImg>
           <img
             className="profileImg"
-            src={currentUserData.fileImage || defaultProfile}
+            src={post.profileImage || defaultProfile}
             alt="profile Image"
           />
           <ModalProfileSelf>
-            <div className="profileName">
-              {currentUserData.userName.firstName}
-              {currentUserData.userName.lastName}
-            </div>
+            <div className="profileName">{post.userName}</div>
             <div className="profiledesc">{formatDate(post.createdAt)}</div>
           </ModalProfileSelf>
         </ModalProfileImg>

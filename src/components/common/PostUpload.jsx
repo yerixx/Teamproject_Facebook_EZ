@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { DataDispatchContext, DataStateContext } from "../../App.jsx";
 
 import styled from "styled-components";
@@ -49,16 +49,13 @@ const CommentCont = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     .profileImg {
       width: 60px;
       height: 60px;
       border-radius: 50%;
       object-fit: cover;
       @media (max-width: 768px) {
-        width: 48px;
-        height: 48px;
-        object-fit: cover;
+        display: none;
       }
     }
     .profileuploadText {
@@ -294,11 +291,24 @@ const InfoItem = styled.div`
 const PostUpload = ({ placeholder }) => {
   const { onCreatePost } = useContext(DataDispatchContext);
   const { currentUserData } = useContext(DataStateContext);
-  const [closeImg, setCloseImg] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [uploadText, setUploadText] = useState("");
   const [uploadFile, setUploadFile] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [previewImg, setPreviewImg] = useState(null);
+
+  useEffect(() => {
+    let imageUrl;
+    if (uploadFile) {
+      imageUrl = URL.createObjectURL(uploadFile);
+      setPreviewImg(imageUrl);
+    }
+    return () => {
+      if (imageUrl) {
+        URL.revokeObjectURL(imageUrl);
+      }
+    };
+  }, [uploadFile]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -359,10 +369,12 @@ const PostUpload = ({ placeholder }) => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (file.size <= 5 * 1024 * 1024) {
-      setUploadFile(file);
-    } else {
-      alert("업로드할 수 있는 파일의 최대 크기는 5MB입니다");
+    if (file) {
+      if (file.size <= 50 * 1024 * 1024) {
+        setUploadFile(file);
+      } else {
+        alert("업로드할 수 있는 파일의 최대 크기는 50MB입니다");
+      }
     }
   };
 
@@ -372,7 +384,11 @@ const PostUpload = ({ placeholder }) => {
     }
   };
   const closeImgOpen = () => {
-    setCloseImg(false);
+    if (previewImg) {
+      URL.revokeObjectURL(previewImg);
+    }
+    setUploadFile(null);
+    setPreviewImg(null);
   };
   return (
     <WrapperForm onSubmit={handleSubmit}>
@@ -447,22 +463,13 @@ const PostUpload = ({ placeholder }) => {
                 placeholder="오늘 어떤일이 있으셨나요?"
                 required
               />
-              {uploadFile && (
-                <>
-                  {!closeImg ? (
-                    ""
-                  ) : (
-                    <PostingImg type="button" disabled={isLoading}>
-                      <div className="deletIcon" onClick={closeImgOpen}>
-                        <FiX />
-                      </div>
-                      <img
-                        src={URL.createObjectURL(uploadFile)}
-                        alt="게시물 이미지"
-                      />
-                    </PostingImg>
-                  )}
-                </>
+              {previewImg && (
+                <PostingImg type="button" disabled={isLoading}>
+                  <div className="deletIcon" onClick={closeImgOpen}>
+                    <FiX />
+                  </div>
+                  <img src={previewImg} alt="게시물 이미지" />
+                </PostingImg>
               )}
               <input
                 type="file"

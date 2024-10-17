@@ -194,12 +194,25 @@ const UploadModal = ({
   const [isLoading, setIsLoading] = useState(false);
   const [uploadText, setUploadText] = useState("");
   const [uploadFile, setUploadFile] = useState(null);
-  const [closeImg, setCloseImg] = useState(true);
+  const [previewImg, setPreviewImg] = useState(imageSrc || null);
+
   useEffect(() => {
     if (isEditing) {
       setUploadText(contentDesc || "");
     }
-  }, [isEditing]);
+  }, [isEditing, contentDesc]);
+
+  useEffect(() => {
+    if (uploadFile) {
+      const imageUrl = URL.createObjectURL(uploadFile);
+      setPreviewImg(imageUrl);
+
+      // 컴포넌트 언마운트 시 URL 해제
+      return () => {
+        URL.revokeObjectURL(imageUrl);
+      };
+    }
+  }, [uploadFile]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -243,6 +256,7 @@ const UploadModal = ({
       // 폼 리셋
       setUploadText("");
       setUploadFile(null);
+      setPreviewImg(null);
 
       // 모달 닫기
 
@@ -265,17 +279,23 @@ const UploadModal = ({
     }
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file.size <= 5 * 1024 * 1024) {
-      setUploadFile(file);
-    } else {
-      alert("업로드할 수 있는 파일의 최대 크기는 5MB입니다");
+  const closeImgOpen = () => {
+    if (typeof previewImg === "string" && previewImg.startsWith("blob:")) {
+      URL.revokeObjectURL(previewImg); // 미리보기 URL 해제
     }
+    setUploadFile(null);
+    setPreviewImg(null);
   };
 
-  const closeImgOpen = () => {
-    setCloseImg(false);
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size <= 50 * 1024 * 1024) {
+        setUploadFile(file);
+      } else {
+        alert("업로드할 수 있는 파일의 최대 크기는 50MB입니다");
+      }
+    }
   };
   return (
     <Wrapper>
@@ -311,19 +331,13 @@ const UploadModal = ({
             placeholder="오늘 어떤 일이 있으셨나요?"
             required
           />
-          {(uploadFile || imageSrc) && (
-            <>
-              {!closeImg ? (
-                ""
-              ) : (
-                <PostingImg>
-                  <div className="deletIcon" onClick={closeImgOpen}>
-                    <FiX />
-                  </div>
-                  <img src={uploadFile ? "" : imageSrc} alt="Post Image" />
-                </PostingImg>
-              )}
-            </>
+          {previewImg && (
+            <PostingImg>
+              <div className="deletIcon" onClick={closeImgOpen}>
+                <FiX />
+              </div>
+              <img src={previewImg} alt="Post Image" />
+            </PostingImg>
           )}
           <input
             id="upload-image"

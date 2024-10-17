@@ -18,8 +18,12 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   margin: 20px 0;
+  @media screen and (max-width: 1050px) {
+    /* width: 90vw; */
+  }
   @media screen and (max-width: 768px) {
     margin: 100px 0 0;
+    width: 90vw;
   }
 `;
 
@@ -414,7 +418,10 @@ const MainStory = () => {
                   <span>스토리 만들기</span>
                 </div>
                 <img
-                  src={currentUserData.profileImage || defaultProfile}
+                  src={
+                    (currentUserData && currentUserData.profileImage) ||
+                    defaultProfile
+                  }
                   alt="Profile"
                 />
               </StoryProfileImg>

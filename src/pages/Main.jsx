@@ -44,6 +44,7 @@ const MainSection = styled.section`
   gap: 30px;
   top: 140px;
   @media screen and (max-width: 768px) {
+    width: 100%;
     top: 70px;
   }
 `;

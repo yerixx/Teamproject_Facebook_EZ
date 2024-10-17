@@ -26,14 +26,19 @@ const Wrapper = styled.section`
   justify-content: center;
   width: 100%;
   height: fit-content;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   padding-top: 20px;
   border-radius: var(--border-radius-30);
   background-color: ${(props) => props.theme.ContainColor};
   box-shadow: var(--box-shadow-01);
+  @media screen and (max-width: 1050px) {
+    width: 100%;
+  }
   @media (max-width: 768px) {
     width: 90vw;
+    min-width: 360px;
     padding-top: 10px;
+    left: 0;
   }
 `;
 const Inner = styled.article`
